@@ -1,16 +1,135 @@
-# SkyNotes — Spécification Technique v2.0
+# SkyNotes — Notes projet & checklists
 
+Version: 1.0.0 (iOS & macOS)  
 Auteur: Valérie Otero  
-Application: SkyNotes (iOS & macOS, SwiftUI + SwiftData)  
 Date: 22/11/2025
+
+SkyNotes est une application de prise de notes structurées pour projets, avec des checklists colorées et des listes de tâches. Elle est conçue pour être simple, rapide et fiable en vol comme au sol.
+
+Ce document sert de **présentation fonctionnelle** pour les utilisateurs, avec en fin de page une **annexe technique** utile aux développeurs.
 
 ---
 
-## 1. Objet et périmètre
+## 1. Principales fonctionnalités
 
-Document de référence pour développeurs et chefs de projet. Décrit les fonctionnalités, modèles de données, formats d’échange, flux UI, choix techniques et lignes directrices pour portage multi‑plateformes (Android, desktop macOS/Windows, Web). Cible la version 2.0 (iOS & macOS).
+- **Projets**: créez un projet par sujet (brief, mission, préparation vol, formation…).
+- **Checklists colorées**: attachez plusieurs checklists à un projet, avec une couleur par liste (post‑it).
+- **Items réordonnables**: déplacez les items par glisser‑déposer pour adapter l’ordre à votre usage.
+- **Deux types de listes**:
+  - **Checklist**: pour vérifier un ensemble d’actions à cocher (prévol, briefing…).
+  - **To‑Do**: pour suivre des tâches à réaliser dans le temps (suivi dossier, TODO généraux).
+- **Recherche rapide**: retrouvez un projet, une checklist ou un item en tapant quelques lettres.
+- **Tri local**: triez les projets et listes par titre, date ou nombre d’items.
+- **Duplication**: dupliquez un projet ou une checklist pour créer rapidement un nouveau modèle.
+- **Corbeille**: récupérez un élément supprimé par erreur ou videz la corbeille définitivement.
+- **Import / Export**: en Markdown (.md) ou CSV (.csv), pour archiver ou partager vos listes.
+- **Écran À propos**: version de l’app, crédits et lien vers la politique de confidentialité.
 
-## 2. Résumé fonctionnel
+---
+
+## 2. Utiliser SkyNotes au quotidien
+
+### 2.1 Créer et organiser vos projets
+
+- Ouvrez l’onglet `Projets`.
+- Touchez le bouton `+` pour créer un **nouveau projet** (titre + description optionnelle).
+- Les projets sont affichés dans une liste que vous pouvez **rechercher** et **trier**.
+- Depuis un projet, vous pouvez:
+  - le **renommer**,
+  - le **dupliquer** comme modèle pour une nouvelle situation,
+  - l’**exporter** (Markdown/CSV),
+  - le **supprimer** (il ira dans la Corbeille).
+
+### 2.2 Créer et personnaliser vos checklists
+
+- Dans un projet, utilisez `+` pour créer une **nouvelle checklist**.
+- Choisissez:
+  - un **titre** (ex: « Prévol DR400 », « Briefing élève »),
+  - un **type**: `Checklist` ou `To‑Do`,
+  - une **couleur** (via la palette de couleurs `PostItColor`).
+- Ajoutez ensuite vos **items** un par un.
+- Vous pouvez:
+  - **réordonner** les items en les faisant glisser,
+  - marquer un item comme **coché** / **non coché**,
+  - ajouter une **note** détaillée (ex: valeurs, mémos, rappels).
+
+### 2.3 Vue globale des checklists
+
+- L’onglet `Accueil` affiche une **grille globale** de toutes les checklists.
+- Vous pouvez:
+  - **rechercher** dans toutes les listes,
+  - **trier** par différents critères,
+  - **filtrer** par type (Checklist ou To‑Do).
+
+### 2.4 Corbeille et restauration
+
+- L’onglet `Corbeille` liste les éléments marqués comme supprimés.
+- Depuis cette vue, pour chaque élément vous pouvez:
+  - le **restaurer** dans son projet d’origine,
+  - le **supprimer définitivement**.
+
+### 2.5 Import / Export
+
+Les échanges se font via l’application Fichiers (iOS) ou Finder (macOS).
+
+- **Exporter**:
+  - depuis un **projet**: export en Markdown ou CSV d’un seul projet,
+  - depuis la vue **Projets**: export de **plusieurs projets** en un seul fichier.
+- **Importer**:
+  - sélectionnez un fichier `.md` ou `.csv`,
+  - SkyNotes recrée les projets, checklists et items à partir du contenu.
+
+Les formats sont **ouverts** (Markdown/CSV) afin que vous puissiez:
+
+- les relire facilement dans n’importe quel éditeur de texte ou tableur,
+- les archiver ou les partager avec d’autres outils.
+
+---
+
+## 3. Spécificités iOS & macOS
+
+- **Interface SwiftUI adaptative**: l’app s’adapte à l’écran de l’iPhone, de l’iPad et du Mac.
+- **macOS**:
+  - boutons sans ombre ni contour système superflus,
+  - fonds blancs pour les vues principales pour un rendu plus « document »,
+  - intégration aux fenêtres et menus natifs.
+- **iOS / iPadOS**:
+  - navigation par piles (`NavigationStack`),
+  - gestion des documents via l’app Fichiers.
+
+---
+
+## 4. Confidentialité et données
+
+- Toutes les données sont **stockées localement** sur votre appareil via SwiftData.
+- SkyNotes **ne crée aucun compte** et **n’envoie pas vos données sur un serveur**.
+- L’accès aux fichiers pour import/export se fait **uniquement à la demande** (sandbox Apple).
+- Aucune mesure d’audience ni collecte de statistiques par défaut.
+- La politique de confidentialité détaillée est disponible dans `docs/SkyNotes/privacy_policy.html` et via l’écran `À propos` dans l’app.
+
+---
+
+## 5. Foire aux questions (FAQ)
+
+**Q. Puis‑je réutiliser mes checklists dans un autre projet ?**  
+Oui. Dupliquez soit la **checklist** directement, soit le **projet** complet et adaptez‑le.
+
+**Q. Comment sauvegarder mes données ?**  
+Vous pouvez régulièrement **exporter** vos projets (Markdown ou CSV) et les stocker dans iCloud Drive, un NAS, etc.
+
+**Q. Que se passe‑t‑il si je supprime un élément par erreur ?**  
+Consultez l’onglet `Corbeille` pour le **restaurer** tant qu’il n’a pas été supprimé définitivement.
+
+**Q. Puis‑je éditer mes fichiers exportés ailleurs ?**  
+Oui, ils sont au format Markdown/CSV lisible par la plupart des éditeurs de texte et tableurs.
+
+---
+
+## 6. Annexe technique (pour les développeurs)
+
+La section suivante reprend les éléments clés de la spécification technique.
+
+### 6.1 Architecture et technologies
 
 - Projets (titre, détail, dates) et checklists associées
 - Checklists colorées, items réordonnables, statut coché/non coché
@@ -24,21 +143,21 @@ Document de référence pour développeurs et chefs de projet. Décrit les fonct
 - Export multi-projets (sélection ou global)
 - À propos (métadonnées, crédits, politique de confidentialité)
 
-## 3. Architecture et technologies (référence iOS & macOS)
+#### Architecture (iOS & macOS)
 
 - UI: SwiftUI (adaptatif iOS/macOS)
-- Persistance: SwiftData (@Model, @Query, ModelContext)
-- Navigation: NavigationStack + navigation par UUID (refetch sécurisé)
-- Fichiers: FileDocument/UTType; sandbox avec accès « security‑scoped »
-- Design system: couleurs via enum PostItColor, icônes SF Symbols
-- macOS Spécifique:
-  - Suppression des ombres et contours système sur les boutons
-  - Fonds blancs pour les vues principales
-  - Gestion des fenêtres et menus natifs
+- Persistance: SwiftData (`@Model`, `@Query`, `ModelContext`)
+- Navigation: `NavigationStack` + navigation par `UUID` (refetch sécurisé)
+- Fichiers: `FileDocument` / `UTType`; sandbox avec accès *security‑scoped*.
+- Design system: couleurs via enum `PostItColor`, icônes SF Symbols.
+- macOS spécifique:
+  - suppression des ombres et contours système sur les boutons,
+  - fonds blancs pour les vues principales,
+  - gestion des fenêtres et menus natifs.
 
-## 4. Modèle de données (conceptuel et iOS)
+### 6.2 Modèle de données (conceptuel et iOS)
 
-### 4.1 Entités
+#### Entités
 
 - Project
   - id: UUID (unique)
@@ -65,16 +184,16 @@ Document de référence pour développeurs et chefs de projet. Décrit les fonct
   - isChecked: Bool
   - order: Int
 
-### 4.2 Règles et contraintes
+#### Règles et contraintes
 
 - Cascade delete: suppression d’un Project supprime ses Checklists
 - position: compacte et réindexée lors des réordonnancements
 - typeRaw: expose `type: ChecklistType` (checklist|todo)
 - Sécurité: pas de navigation avec références invalides (refetch par id)
 
-## 5. Formats d’échange
+### 6.3 Formats d’échange
 
-### 5.1 Markdown (.md)
+#### Markdown (.md)
 
 - Projet (single):
   - Titre: `# <Project Title>`
@@ -85,7 +204,7 @@ Document de référence pour développeurs et chefs de projet. Décrit les fonct
   - Concaténation de blocs single séparés par `---` (lignes seules)
   - À l’import: split par `---` ou par titres `#` multiples
 
-### 5.2 CSV (.csv)
+#### CSV (.csv)
 
 - Projet (single):
   - En‑tête: `ChecklistTitle,Type,Color,ItemOrder,Checked,Text,Note`
@@ -93,14 +212,14 @@ Document de référence pour développeurs et chefs de projet. Décrit les fonct
   - En‑tête: `ProjectTitle,ChecklistTitle,Type,Color,ItemOrder,Checked,Text,Note`
   - Groupement à l’import par `ProjectTitle` puis `ChecklistTitle`
 
-### 5.3 Règles communes
+#### Règles communes
 
 - Échappement CSV: guillemets doublés, champs entre quotes si nécessaire
 - Markdown: `:::` dans les notes est échappé en `::‧` à l’export
 - Import diacritique‑robuste pour `type` et `color` (fallback par défaut)
 - Titre projet unique: suffixe `(n)` en cas de collision
 
-## 6. Flux UI (référence iOS)
+### 6.4 Flux UI (référence iOS)
 
 - ProjectsView
   - Liste triée/recherchable, création/renommage/duplication, import/export (mono, multi), About
@@ -113,21 +232,21 @@ Document de référence pour développeurs et chefs de projet. Décrit les fonct
 - TrashView
   - Restauration/suppression définitive
 
-## 7. Recherche et tri
+### 6.5 Recherche et tri
 
 - Recherche par tokens (split espaces), pliage diacritique + case‑insensitive
 - AND logique: tous les tokens doivent correspondre dans (titres, items, notes, titre projet)
 - Tri: titre (A→Z/Z→A), dates (créé/MAJ), position, nombre d’items
 
-## 8. Règles de migration / portage multi‑plateformes
+### 6.6 Portage multi‑plateformes (résumé)
 
-### 8.1 Couches à isoler
+#### Couches à isoler
 
 - Domaine (entités, services import/export, règles métier)
 - Persistance (ORM/DB) : adapter selon plateforme
 - UI (composants, navigation)
 
-### 8.2 Mapping par plateforme
+#### Mapping par plateforme
 
 - Android (Kotlin)
   - UI: Jetpack Compose
@@ -145,26 +264,26 @@ Document de référence pour développeurs et chefs de projet. Décrit les fonct
   - Persistance: IndexedDB/SQLite WASM si offline
   - Import/Export via Blob (text/markdown; text/csv)
 
-### 8.3 Modèle de données (agnostique)
+#### Modèle de données (agnostique)
 
 - Project { id: UUID, title: string, detail: string, createdAt: date, updatedAt: date }
 - Checklist { id: UUID, projectId: UUID, title: string, color: string, createdAt: date, updatedAt: date, isDeleted: bool, position: int?, type: string }
 - ChecklistItem { id: UUID, checklistId: UUID, text: string, note?: string, isChecked: bool, order: int }
 - Contraintes: FK (on delete cascade), index: (projectId, position), (checklistId, order)
 
-### 8.4 Services d’import/export (agnostiques)
+#### Services d’import/export (agnostiques)
 
 - MarkdownService: `toMarkdown(project)`, `toMarkdownMany(projects)`; `fromMarkdown(string)` → [Project]
 - CsvService: `toCsv(project)`, `toCsvMany(projects)`; `fromCsv(string)` → [Project]
 - Invariants: id internes non exportés; titres servent de clé humaine
 
-### 8.5 Migrations de données
+#### Migrations de données
 
 - Ajout de `type` et `position`: valeurs par défaut si absentes
 - Conversion de couleurs: énumération stable en chaîne
 - Corbeille: transformer soft‑delete (booléen) en table/flag équivalent
 
-## 9. Qualité, tests et outillage
+### 6.7 Qualité, tests et outillage
 
 - Unitaires: parse/serialize Markdown & CSV (happy path + champs manquants, couleurs/Type inconnus)
 - Intégration: export→import (round‑trip) multi‑projets
@@ -174,40 +293,30 @@ Document de référence pour développeurs et chefs de projet. Décrit les fonct
   - Kotlin/Android: JUnit, Espresso
   - .NET: xUnit/NUnit, Playwright pour desktop/web
 
-## 10. Sécurité et confidentialité
-
-- Données locales par défaut; pas de comptes ni de réseau
-- Permissions: accès fichiers (import/export) seulement à la demande
-- Aucune collecte de données analytics par défaut
-- Politique de confidentialité:
-  - Fichier inclus: `docs/privacy_policy.html`
-  - Lien dans l'application (À propos)
-  - Stockage local uniquement (SwiftData)
-
-## 11. Performance
+### 6.8 Performance
 
 - Recherches en mémoire (modèle local) ; pour gros volumes: predicate/SQL côté persistance
 - Export/Import en streaming pour fichiers volumineux (optionnel sur autres plateformes)
 
-## 12. Accessibilité
+### 6.9 Accessibilité
 
 - Labels et traits pour VoiceOver/TalkBack
 - Contrastes des couleurs (pastilles) ; tailles dynamiques
 
-## 13. Internationale/Localisation
+### 6.10 Internationale/Localisation
 
 - Chaînes en français actuellement; prévoir fichiers de ressources pour i18n
 
-## 14. Packaging et distribution
+### 6.11 Packaging et distribution
 
 - iOS: App Store / TestFlight
 - macOS: App Store / Notarisation (Build natif arm64)
 - Android: APK/AAB (Play Store) - *Prévu*
 - Desktop Windows: MSIX - *Prévu*
 
-## 15. Annexes
+### 6.12 Exemples de formats
 
-### 15.1 Exemple Markdown (multi‑projets)
+#### Exemple Markdown (multi‑projets)
 
 ```markdown
 # Projet Alpha
@@ -222,11 +331,11 @@ Document de référence pour développeurs et chefs de projet. Décrit les fonct
 # Projet Bravo
 ## Tâches [type=todo][color=blue]
 - [ ] Appeler tour
-```csv
-
-### 15.2 Exemple CSV (multi‑projets)
-
 ```
+
+#### Exemple CSV (multi‑projets)
+
+```csv
 ProjectTitle,ChecklistTitle,Type,Color,ItemOrder,Checked,Text,Note
 Alpha,Prévol,checklist,yellow,0,1,Batterie,12.6V
 Alpha,Prévol,checklist,yellow,1,0,Essence,
@@ -235,12 +344,12 @@ Bravo,Tâches,todo,blue,0,0,Appeler tour,
 
 ---
 
-## Export en PDF/DOCX
+## 7. Export en PDF/DOCX (optionnel)
 
 - PDF avec macOS: Ouvrir le fichier Markdown dans TextEdit → Fichier > Exporter en PDF
 - DOCX/PDF multi‑plateforme: utiliser Pandoc
 
 ```bash
-pandoc docs/SkyNotes-Technical-Spec-v2.0.md -o SkyNotes-Spec-v2.0.docx
-pandoc docs/SkyNotes-Technical-Spec-v2.0.md -o SkyNotes-Spec-v2.0.pdf
+pandoc README.md -o SkyNotes-Spec-v1.0.docx
+pandoc README.md -o SkyNotes-Spec-v1.0.pdf
 ```
