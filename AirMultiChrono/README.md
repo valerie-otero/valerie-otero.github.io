@@ -1,484 +1,265 @@
-# SkyNotes — Notes projet & checklists / Project Notes & Checklists
+# AirMultiChrono
 
-Version: 1.1 (iOS & macOS)  
-Auteur/Author: Valérie Otero  
-Date: 27/11/2025
+**Version 1.1**
 
-[Français](#français) | [English](#english)
+Chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad. Conçu pour les usages où plusieurs chronos indépendants et un cumulatif global sont utiles — notamment en aviation de loisir (gestion des réservoirs, branches de navigation, points d’origine/DCT, attentes), mais aussi pour le sport, la cuisine, les ateliers, ou toute activité nécessitant plusieurs temporisations parallèles.
+
+
+## Points forts
+
+- Jusqu’à 3 chronos principaux + 1 totalisateur global
+- Dispositions adaptables: Triangle, Grille, ou Libre (drag & drop)
+- Redimensionnement précis (pincement avec stabilisation, pas de 0,01/0,02)
+- Alarmes visuelles et sonores par piste, avec répétition jusqu’à arrêt
+- Choix de sons système intégrés avec pré-écoute (pas d’ID numériques visibles)
+- Styles personnalisables (forme, bordure, échelle des chiffres, couleur, nom)
+- Verrouillage de remise à zéro (sécurité anti-fausses manips)
+- État persistant (positions, tailles, styles, alarmes, sons)
+- iPhone et iPad, portrait/paysage, iOS 16+
+
+
+## Cas d’usage en aviation de loisir (VFR)
+
+Avertissement: AirMultiChrono est un outil d’assistance. Il ne remplace pas les procédures officielles, instruments certifiés, ou la vigilance du pilote. Vérifiez la réglementation en vigueur et gardez des marges.
+
+- Gestion d’utilisation des réservoirs
+  - Définissez un chrono par réservoir (L, R). Démarrez/Lancez la piste correspondante lors du basculement. Ajoutez une alarme répétée (ex. toutes 30 min) pour vous rappeler d’alterner.
+  - Le totalisateur global suit le temps de vol cumulé/mission.
+- Chronométrage d’une branche de navigation
+  - Démarrez une piste “Branche N” au passage d’un point d’origine. Mettez une alarme à l’ETA planifiée pour déclencher un rappel (son+visuel) au point d’arrivée de branche.
+- Point d’origine / DCT / TOT
+  - Utilisez une piste dédiée pour le temps écoulé depuis un point de report ou un TOT (time over target). Réglage d’alarme absolue (ex. +7 min) ou en mode répété selon votre usage.
+- Attente (holding)
+  - Chrono par tour d’attente (1 min/1 minute 30, selon vent). Répétition d’alarme pour guider les virages et sorties en sécurité.
+- Phases et check-lists
+  - Petite alarme pour “mise en route → roulage”, “alignement → montée”, “palier → croisière”, “descente → intégration”. Les rappels sonores répétitifs vous évitent d’oublier.
+
+Astuce: renvoyez les noms de pistes (ex. “L”, “R”, “BR1”, “DCT Ouest”) pour une lecture immédiate en cockpit.
+
+
+## Autres usages
+
+- Sport (intervalles, circuits, récupération)
+- Cuisine (plusieurs cuissons simultanées + total global)
+- Ateliers/formation (temps par groupe + macro)
+- Laboratoire/expériences (étapes parallèles + alarme)
+
+
+## Prise en main rapide
+
+- Démarrer/Arrêter un chrono: touchez ON/OFF.
+- Renommer: touchez le nom pour ouvrir la boîte de renommage.
+- Disposition: via le menu, choisissez Triangle, Grille ou Libre.
+- Mode Édition (Libre):
+  - Déplacer un cadran: glisser-déposer.
+  - Redimensionner un cadran: pincer; la taille est stabilisée (deadzone ~1,5%, lissage, pas 0,01). Relâchement = petit “snap” propre.
+- Totalisateur global:
+  - Pincer pour ajuster l’échelle (stabilisé, plage 0,5–3,0, pas 0,02).
+  - Bouton “stylo” pour régler au pas fin si besoin.
+- Styles (par piste): forme (rond/carré), bordure, échelle des chiffres, couleur, échelle du nom.
+- Verrou “reset”: empêche la remise à zéro accidentelle.
+
+Tout est enregistré automatiquement (positions, tailles, styles, alarmes, sons, échelle globale).
+
+
+## Alarmes (par piste)
+
+- Types: visuelle (flash) et sonore (sons système iOS)
+- Pré-écoute: choisissez un son et testez-le immédiatement
+- Répétition: le son se répète tant que l’alarme est “latchée” (jusqu’à OFF ou changement de chrono)
+- Modes de déclenchement:
+  - Absolu: alarme à t = valeur (ex. 00:07:00)
+  - Répétée/offset: alarme qui se relance par intervalle
+- Arrêt: OFF de la piste ou changement de chrono stoppe l’alarme et le son
+
+
+## Gestes et précision (important)
+
+- Pincement stabilisé: nous appliquons un delta progressif, une zone morte (~1,5%), une sensibilité adoucie et un lissage, plus un “snap” par pas (cadrans: 0,01; total: 0,02). Le but: des ajustements fluides, sans “sauts”.
+- Plages:
+  - Cadrans: 0,20 – 0,60 du côté court de l’écran (en mode Libre)
+  - Totalisateur: 0,50 – 3,00
+
+
+## Confidentialité et données
+
+- Aucune collecte de données personnelles.
+- Aucun suivi. Pas d’accès réseau requis pour fonctionner.
+- Politique de confidentialité (FR/EN):
+  - Web: <https://valerie-otero.github.io/AirMultiChrono/PrivacyPolicy.html> (la langue suit celle de l’app: ?lang=fr|en)
+  - In-app: rubrique “Confidentialité”, avec lien direct et bouton “copier”.
+
+
+## Compatibilité
+
+- iOS 16 ou supérieur
+- iPhone et iPad, portrait & paysage
+
+
+## Conseils sécurité (aviation)
+
+- Outil d’assistance non certifié: ne remplace ni l’horloge de bord, ni les instruments, ni les procédures de la checklist.
+- Conservez des marges temps/carburant, vérifiez les temps critiques avec une source secondaire.
+- Restez à l’écoute des fréquences et de la trajectoire; ne laissez pas un écran détourner l’attention.
+
+
+## Dépannage rapide (FAQ)
+
+- Je ne vois plus la bascule FR/EN de la politique dans l’app: l’app ouvre désormais la page Web dans la langue de l’OS, et affiche le lien (avec bouton copier).
+- Les vibrations n’existent pas? Oui, le mode haptique a été retiré. Utilisez les sons système.
+- Le son ne s’arrête pas: il se répète tant que l’alarme visuelle est active; passez OFF ou changez de chrono.
+- Le pincement “saute”: le lissage est actif; relâchez pour un snap propre au pas fin. Dites-nous si vous voulez une sensibilité différente.
+
+
+## Développement (pour contributeurs)
+
+- Ouvrir `AirMultiChrono.xcodeproj` dans Xcode (iOS 16+ SDK)
+- Cible: iPhone/iPad (SwiftUI)
+- Son: AudioServices (sons système) + lecture .caf embarqué en secours
+- Structure principale:
+  - `AirMultiChrono/ChronoView.swift` (UI, gestes, mises en page, totalisateur)
+  - `AirMultiChrono/ChronoModel.swift` (état, persistance, alarmes)
+  - `AirMultiChrono/PrivacyPolicyView.swift` (lien Web + copie)
+  - `docs/PrivacyPolicy.html` (police FR/EN publique)
+- Captures: dossier `Screenshots/` (génération via `scripts/`)
+
+
+## Licence et contact
+
+- Voir la politique de confidentialité ci-dessus.
+- Support: ouvrez une “Issue” GitHub pour bugs/suggestions.
+
+Bon vol — et bonne maîtrise du temps !
 
 ---
 
-<a name="français"></a>
-
-## Français
-
-SkyNotes est une application de prise de notes structurées pour projets, avec des checklists colorées et des listes de tâches. Elle est conçue pour être simple, rapide et fiable en vol comme au sol.
-
-Ce document sert de **présentation fonctionnelle** pour les utilisateurs, avec en fin de page une **annexe technique** utile aux développeurs.
-
-### 1. Principales fonctionnalités
-
-- **Projets**: créez un projet par sujet (brief, mission, préparation vol, formation…).
-- **Checklists colorées**: attachez plusieurs checklists à un projet, avec une couleur par liste (post‑it).
-- **Modèles (Templates)**: créez des modèles réutilisables pour vos checklists fréquentes.
-- **Items réordonnables**: déplacez les items par glisser‑déposer pour adapter l’ordre à votre usage.
-- **Deux types de listes**:
-  - **Checklist**: pour vérifier un ensemble d’actions à cocher (prévol, briefing…).
-  - **To‑Do**: pour suivre des tâches à réaliser dans le temps (suivi dossier, TODO généraux).
-- **Recherche rapide**: retrouvez un projet, une checklist ou un item en tapant quelques lettres.
-- **Tri local**: triez les projets et listes par titre, date ou nombre d’items.
-- **Duplication**: dupliquez un projet ou une checklist pour créer rapidement un nouveau modèle.
-- **Corbeille**: récupérez un élément supprimé par erreur ou videz la corbeille définitivement.
-- **Import / Export**: en Markdown (.md) ou CSV (.csv), pour archiver ou partager vos listes.
-- **Contenu de démarrage**: un projet de découverte et un tutoriel interactif sont inclus à l'installation.
-- **Soutien au développement**: une "Tip Jar" (Boîte à pourboires) pour soutenir le développeur.
-- **Écran À propos**: version de l’app, FAQ, crédits et lien vers la politique de confidentialité.
+# AirMultiChrono (English)
 
-### 2. Utiliser SkyNotes au quotidien
+Simple, powerful, and reliable multi-track stopwatch for iPhone and iPad. Designed for uses where multiple independent timers and a global cumulative timer are useful — particularly in recreational aviation (fuel tank management, navigation legs, origin points/DCT, holding patterns), but also for sports, cooking, workshops, or any activity requiring multiple parallel timings.
 
-#### 2.1 Créer et organiser vos projets
 
-- Ouvrez l’onglet `Projets`.
-- Touchez le bouton `+` pour créer un **nouveau projet** (titre + description optionnelle).
-- Les projets sont affichés dans une liste que vous pouvez **rechercher** et **trier**.
-- Depuis un projet, vous pouvez:
-  - le **renommer**,
-  - le **dupliquer** comme modèle pour une nouvelle situation,
-  - l’**exporter** (Markdown/CSV),
-  - le **supprimer** (il ira dans la Corbeille).
+## Highlights
 
-#### 2.2 Créer et personnaliser vos checklists
+- Up to 3 main timers + 1 global totalizer
+- Adaptable layouts: Triangle, Grid, or Free (drag & drop)
+- Precise resizing (pinch with stabilization, no 0.01/0.02 jitter)
+- Visual and sound alarms per track, repeating until stopped
+- Choice of built-in system sounds with preview (no visible numeric IDs)
+- Customizable styles (shape, border, digit scale, color, name)
+- Reset lock (protection against accidental resets)
+- Persistent state (positions, sizes, styles, alarms, sounds)
+- iPhone and iPad, portrait/landscape, iOS 16+
 
-- Dans un projet, utilisez `+` pour créer une **nouvelle checklist**.
-- Choisissez:
-  - un **titre** (ex: « Prévol DR400 », « Briefing élève »),
-  - un **type**: `Checklist` ou `To‑Do`,
-  - une **couleur** (via la palette de couleurs `PostItColor`).
-- Ajoutez ensuite vos **items** un par un.
-- Vous pouvez:
-  - **réordonner** les items en les faisant glisser,
-  - marquer un item comme **coché** / **non coché**,
-  - ajouter une **note** détaillée (ex: valeurs, mémos, rappels).
 
-#### 2.3 Modèles (Templates)
+## Use Cases in Recreational Aviation (VFR)
 
-- Créez des checklists marquées comme **Modèles** pour les réutiliser souvent.
-- Idéal pour les procédures standardisées (Checklist avion, Liste de voyage, etc.).
-- Les modèles apparaissent distinctement et peuvent être instanciés dans n'importe quel projet.
+Warning: AirMultiChrono is an assistance tool. It does not replace official procedures, certified instruments, or pilot vigilance. Check applicable regulations and keep margins.
 
-#### 2.4 Vue globale des checklists
+- Fuel Tank Management
+  - Define one timer per tank (L, R). Start/Launch the corresponding track when switching. Add a repeating alarm (e.g., every 30 min) to remind you to switch.
+  - The global totalizer tracks cumulative flight/mission time.
+- Navigation Leg Timing
+  - Start a "Leg N" track when passing an origin point. Set an alarm at the planned ETA to trigger a reminder (sound+visual) at the leg arrival point.
+- Origin Point / DCT / TOT
+  - Use a dedicated track for elapsed time since a reporting point or TOT (time over target). Absolute alarm setting (e.g., +7 min) or repeating mode depending on your usage.
+- Holding
+  - Timer per holding turn (1 min/1 minute 30, depending on wind). Alarm repetition to guide turns and exits safely.
+- Phases and Checklists
+  - Short alarm for "startup → taxi", "alignment → climb", "level → cruise", "descent → integration". Repetitive sound reminders prevent forgetting.
 
-- L’onglet `Accueil` affiche une **grille globale** de toutes les checklists.
-- Vous pouvez:
-  - **rechercher** dans toutes les listes,
-  - **trier** par différents critères,
-  - **filtrer** par type (Checklist ou To‑Do).
+Tip: Rename track names (e.g., "L", "R", "BR1", "DCT West") for immediate reading in the cockpit.
 
-#### 2.5 Corbeille et restauration
 
-- L’onglet `Corbeille` liste les éléments marqués comme supprimés.
-- Depuis cette vue, pour chaque élément vous pouvez:
-  - le **restaurer** dans son projet d’origine,
-  - le **supprimer définitivement**.
-
-#### 2.6 Import / Export
-
-Les échanges se font via l’application Fichiers (iOS) ou Finder (macOS).
-
-- **Exporter**:
-  - depuis un **projet**: export en Markdown ou CSV d’un seul projet,
-  - depuis la vue **Projets**: export de **plusieurs projets** en un seul fichier.
-- **Importer**:
-  - sélectionnez un fichier `.md` ou `.csv`,
-  - SkyNotes recrée les projets, checklists et items à partir du contenu.
-
-Les formats sont **ouverts** (Markdown/CSV) afin que vous puissiez:
-
-- les relire facilement dans n’importe quel éditeur de texte ou tableur,
-- les archiver ou les partager avec d’autres outils.
-
-### 3. Spécificités iOS & macOS
-
-- **Interface SwiftUI adaptative**: l’app s’adapte à l’écran de l’iPhone, de l’iPad et du Mac.
-- **macOS**:
-  - boutons sans ombre ni contour système superflus,
-  - fonds blancs pour les vues principales pour un rendu plus « document »,
-  - intégration aux fenêtres et menus natifs.
-- **iOS / iPadOS**:
-  - navigation par piles (`NavigationStack`),
-  - gestion des documents via l’app Fichiers.
+## Other Uses
 
-### 4. Confidentialité et données
+- Sports (intervals, circuits, recovery)
+- Cooking (multiple simultaneous cooking times + global total)
+- Workshops/Training (time per group + macro)
+- Laboratory/Experiments (parallel steps + alarm)
 
-- Toutes les données sont **stockées localement** sur votre appareil via SwiftData.
-- SkyNotes **ne crée aucun compte** et **n’envoie pas vos données sur un serveur**.
-- L’accès aux fichiers pour import/export se fait **uniquement à la demande** (sandbox Apple).
-- Aucune mesure d’audience ni collecte de statistiques par défaut.
-- La politique de confidentialité détaillée est disponible dans `docs/SkyNotes/privacy_policy.html` et via l’écran `À propos` dans l’app.
 
-### 5. Foire aux questions (FAQ)
+## Quick Start
 
-**Q. Puis‑je réutiliser mes checklists dans un autre projet ?**  
-Oui. Dupliquez soit la **checklist** directement, soit le **projet** complet et adaptez‑le.
+- Start/Stop a timer: tap ON/OFF.
+- Rename: tap the name to open the rename box.
+- Layout: via the menu, choose Triangle, Grid, or Free.
+- Edit Mode (Free):
+  - Move a dial: drag and drop.
+  - Resize a dial: pinch; size is stabilized (deadzone ~1.5%, smoothing, no 0.01). Release = clean small "snap".
+- Global Totalizer:
+  - Pinch to adjust scale (stabilized, range 0.5–3.0, step 0.02).
+  - "Pencil" button to adjust with fine steps if needed.
+- Styles (per track): shape (round/square), border, digit scale, color, name scale.
+- "Reset" Lock: prevents accidental reset.
 
-**Q. Comment sauvegarder mes données ?**  
-Vous pouvez régulièrement **exporter** vos projets (Markdown ou CSV) et les stocker dans iCloud Drive, un NAS, etc.
+Everything is saved automatically (positions, sizes, styles, alarms, sounds, global scale).
 
-**Q. Que se passe‑t‑il si je supprime un élément par erreur ?**  
-Consultez l’onglet `Corbeille` pour le **restaurer** tant qu’il n’a pas été supprimé définitivement.
 
-**Q. Puis‑je éditer mes fichiers exportés ailleurs ?**  
-Oui, ils sont au format Markdown/CSV lisible par la plupart des éditeurs de texte et tableurs.
+## Alarms (per track)
 
----
+- Types: visual (flash) and sound (iOS system sounds)
+- Preview: choose a sound and test it immediately
+- Repetition: sound repeats as long as the alarm is "latched" (until OFF or timer change)
+- Trigger Modes:
+  - Absolute: alarm at t = value (e.g., 00:07:00)
+  - Repeated/Offset: alarm that restarts by interval
+- Stop: OFF on the track or changing timer stops the alarm and sound
 
-<a name="english"></a>
 
-## English
+## Gestures and Precision (Important)
 
-SkyNotes is a structured note-taking application for projects, featuring colored checklists and task lists. It is designed to be simple, fast, and reliable, both in flight and on the ground.
+- Stabilized Pinch: we apply a progressive delta, a deadzone (~1.5%), smoothed sensitivity, and smoothing, plus a "snap" per step (dials: 0.01; total: 0.02). The goal: fluid adjustments without "jumps".
+- Ranges:
+  - Dials: 0.20 – 0.60 of the screen's short side (in Free mode)
+  - Totalizer: 0.50 – 3.00
 
-This document serves as a **functional presentation** for users, with a **technical appendix** for developers at the end.
 
-### 1. Key Features
+## Privacy and Data
 
-- **Projects**: Create one project per subject (briefing, mission, flight prep, training...).
-- **Colored Checklists**: Attach multiple checklists to a project, with one color per list (post-it style).
-- **Templates**: Create reusable templates for your frequent checklists.
-- **Reorderable Items**: Move items via drag-and-drop to adapt the order to your usage.
-- **Two List Types**:
-  - **Checklist**: To verify a set of actions to check off (pre-flight, briefing...).
-  - **To-Do**: To track tasks to be done over time (file follow-up, general TODOs).
-- **Quick Search**: Find a project, checklist, or item by typing a few letters.
-- **Local Sort**: Sort projects and lists by title, date, or item count.
-- **Duplication**: Duplicate a project or checklist to quickly create a new template.
-- **Trash**: Recover an item deleted by mistake or empty the trash permanently.
-- **Import / Export**: In Markdown (.md) or CSV (.csv), to archive or share your lists.
-- **Starter Content**: A discovery project and interactive tutorial are included upon installation.
-- **Development Support**: A "Tip Jar" to support the developer.
-- **About Screen**: App version, FAQ, credits, and link to privacy policy.
+- No personal data collection.
+- No tracking. No network access required to function.
+- Privacy Policy (FR/EN):
+  - Web: <https://valerie-otero.github.io/AirMultiChrono/PrivacyPolicy.html> (language follows app: ?lang=fr|en)
+  - In-app: "Privacy" section, with direct link and "copy" button.
 
-### 2. Using SkyNotes Daily
 
-#### 2.1 Creating and Organizing Your Projects
+## Compatibility
 
-- Open the `Projects` tab.
-- Tap the `+` button to create a **new project** (title + optional description).
-- Projects are displayed in a list that you can **search** and **sort**.
-- From a project, you can:
-  - **Rename** it,
-  - **Duplicate** it as a template for a new situation,
-  - **Export** it (Markdown/CSV),
-  - **Delete** it (it will go to the Trash).
+- iOS 16 or higher
+- iPhone and iPad, portrait & landscape
 
-#### 2.2 Creating and Customizing Your Checklists
 
-- Inside a project, use `+` to create a **new checklist**.
-- Choose:
-  - A **title** (e.g., "DR400 Pre-flight", "Student Briefing"),
-  - A **type**: `Checklist` or `To-Do`,
-  - A **color** (via the `PostItColor` palette).
-- Then add your **items** one by one.
-- You can:
-  - **Reorder** items by dragging them,
-  - Mark an item as **checked** / **unchecked**,
-  - Add a detailed **note** (e.g., values, memos, reminders).
+## Safety Tips (Aviation)
 
-#### 2.3 Templates
+- Non-certified assistance tool: does not replace the onboard clock, instruments, or checklist procedures.
+- Keep time/fuel margins, verify critical times with a secondary source.
+- Stay tuned to frequencies and trajectory; do not let a screen distract attention.
 
-- Create checklists marked as **Templates** to reuse them often.
-- Ideal for standardized procedures (Aircraft Checklist, Travel List, etc.).
-- Templates appear distinctly and can be instantiated in any project.
 
-#### 2.4 Global Checklist View
+## Quick Troubleshooting (FAQ)
 
-- The `Home` tab displays a **global grid** of all checklists.
-- You can:
-  - **Search** across all lists,
-  - **Sort** by different criteria,
-  - **Filter** by type (Checklist or To-Do).
-
-#### 2.5 Trash and Restoration
-
-- The `Trash` tab lists items marked as deleted.
-- From this view, for each item you can:
-  - **Restore** it to its original project,
-  - **Delete** it permanently.
-
-#### 2.6 Import / Export
-
-Exchanges are done via the Files app (iOS) or Finder (macOS).
-
-- **Export**:
-  - From a **project**: Export a single project in Markdown or CSV.
-  - From the **Projects** view: Export **multiple projects** into a single file.
-- **Import**:
-  - Select a `.md` or `.csv` file.
-  - SkyNotes recreates the projects, checklists, and items from the content.
-
-The formats are **open** (Markdown/CSV) so that you can:
-
-- Read them easily in any text editor or spreadsheet software.
-- Archive or share them with other tools.
-
-### 3. iOS & macOS Specifics
-
-- **Adaptive SwiftUI Interface**: The app adapts to iPhone, iPad, and Mac screens.
-- **macOS**:
-  - Buttons without superfluous system shadows or outlines.
-  - White backgrounds for main views for a more "document" look.
-  - Integration with native windows and menus.
-- **iOS / iPadOS**:
-  - Stack navigation (`NavigationStack`).
-  - Document management via the Files app.
-
-### 4. Privacy and Data
-
-- All data is **stored locally** on your device via SwiftData.
-- SkyNotes **creates no account** and **sends no data to a server**.
-- File access for import/export is done **only on demand** (Apple sandbox).
-- No audience measurement or statistics collection by default.
-- The detailed privacy policy is available in `docs/SkyNotes/privacy_policy.html` and via the `About` screen in the app.
-
-### 5. Frequently Asked Questions (FAQ)
-
-**Q. Can I reuse my checklists in another project?**  
-Yes. Duplicate either the **checklist** directly, or the entire **project** and adapt it.
-
-**Q. How do I back up my data?**  
-You can regularly **export** your projects (Markdown or CSV) and store them in iCloud Drive, a NAS, etc.
-
-**Q. What happens if I delete an item by mistake?**  
-Check the `Trash` tab to **restore** it as long as it hasn't been permanently deleted.
-
-**Q. Can I edit my exported files elsewhere?**  
-Yes, they are in Markdown/CSV format, readable by most text editors and spreadsheet software.
-
----
-
-## 6. Annexe technique / Technical Appendix
-
-### 6.1 Architecture and Technologies
-
-- Projets (titre, détail, dates) et checklists associées
-- Checklists colorées, items réordonnables, statut coché/non coché
-- Types de liste: Checklist vs To‑Do (icône, teinte, sémantique)
-- Recherche par mots‑clés sur titres et contenu (items et notes), insensible aux accents/majuscules
-- Tri local (titre, dates, position, nombre d’items)
-- Duplication de projets et de checklists
-- Corbeille (isDeleted) avec restauration/suppression définitive
-- Import/Export: Markdown (.md) et CSV (.csv)
-  - Single project & multi-projets (séparateurs Markdown ou colonne ProjectTitle)
-- Export multi-projets (sélection ou global)
-- À propos (métadonnées, crédits, politique de confidentialité)
-
-#### Architecture (iOS & macOS)
-
-- UI: SwiftUI (adaptatif iOS/macOS)
-- Persistance: SwiftData (`@Model`, `@Query`, `ModelContext`)
-- Navigation: `NavigationStack` + navigation par `UUID` (refetch sécurisé)
-- Fichiers: `FileDocument` / `UTType`; sandbox avec accès *security‑scoped*.
-- Design system: couleurs via enum `PostItColor`, icônes SF Symbols.
-- macOS spécifique:
-  - suppression des ombres et contours système sur les boutons,
-  - fonds blancs pour les vues principales,
-  - gestion des fenêtres et menus natifs.
-
-### 6.2 Modèle de données (conceptuel et iOS)
-
-#### Entités
-
-- Project
-  - id: UUID (unique)
-  - title: String
-  - detail: String
-  - createdAt: Date
-  - updatedAt: Date
-  - checklists: [Checklist] (deleteRule: cascade)
-- Checklist
-  - id: UUID (unique)
-  - title: String
-  - color: PostItColor (String rawValue)
-  - items: [ChecklistItem]
-  - project: Project?
-  - createdAt: Date
-  - updatedAt: Date
-  - isDeleted: Bool (corbeille)
-  - position: Int? (ordre visuel)
-  - typeRaw: String (Checklist | todo)
-- ChecklistItem
-  - id: UUID (unique)
-  - text: String
-  - note: String?
-  - isChecked: Bool
-  - order: Int
-
-#### Règles et contraintes
-
-- Cascade delete: suppression d’un Project supprime ses Checklists
-- position: compacte et réindexée lors des réordonnancements
-- typeRaw: expose `type: ChecklistType` (checklist|todo)
-- Sécurité: pas de navigation avec références invalides (refetch par id)
-
-### 6.3 Formats d’échange
-
-#### Markdown (.md)
-
-- Projet (single):
-  - Titre: `# <Project Title>`
-  - Détail (optionnel): `> Detail: <one-line>`
-  - Checklist: `## <Checklist Title> [type=<checklist|todo>][color=<postitcolor>]`
-  - Item: `- [x] Text ::: Note` (or `[ ]`)
-- Multi-projets:
-  - Concaténation de blocs single séparés par `---` (lignes seules)
-  - À l’import: split par `---` ou par titres `#` multiples
-
-#### CSV (.csv)
-
-- Projet (single):
-  - En‑tête: `ChecklistTitle,Type,Color,ItemOrder,Checked,Text,Note`
-- Multi-projets:
-  - En‑tête: `ProjectTitle,ChecklistTitle,Type,Color,ItemOrder,Checked,Text,Note`
-  - Groupement à l’import par `ProjectTitle` puis `ChecklistTitle`
-
-#### Règles communes
-
-- Échappement CSV: guillemets doublés, champs entre quotes si nécessaire
-- Markdown: `:::` dans les notes est échappé en `::‧` à l’export
-- Import diacritique‑robuste pour `type` et `color` (fallback par défaut)
-- Titre projet unique: suffixe `(n)` en cas de collision
-
-### 6.4 Flux UI (référence iOS)
-
-- ProjectsView
-  - Liste triée/recherchable, création/renommage/duplication, import/export (mono, multi), About
-  - Navigation vers ProjectDetail via UUID
-- ProjectDetailView
-  - Grille de checklists, ajout avec type, tri, recherche locale, export projet
-  - Couleurs via menu, réordonnancement, corbeille
-- HomeView
-  - Grille globale des checklists, recherche/tri, filtrage par type
-- TrashView
-  - Restauration/suppression définitive
-
-### 6.5 Recherche et tri
-
-- Recherche par tokens (split espaces), pliage diacritique + case‑insensitive
-- AND logique: tous les tokens doivent correspondre dans (titres, items, notes, titre projet)
-- Tri: titre (A→Z/Z→A), dates (créé/MAJ), position, nombre d’items
-
-### 6.6 Portage multi‑plateformes (résumé)
-
-#### Couches à isoler
-
-- Domaine (entités, services import/export, règles métier)
-- Persistance (ORM/DB) : adapter selon plateforme
-- UI (composants, navigation)
-
-#### Mapping par plateforme
+- I don't see the FR/EN toggle for the policy in the app anymore: the app now opens the Web page in the OS language, and displays the link (with copy button).
+- Do vibrations exist? Yes, but haptic mode has been removed in favor of system sounds.
+- The sound doesn't stop: it repeats as long as the visual alarm is active; switch OFF or change timer.
+- The pinch "jumps": smoothing is active; release for a clean snap at the fine step. Let us know if you want different sensitivity.
 
-- Android (Kotlin)
-  - UI: Jetpack Compose
-  - Persistance: Room/SQLDelight (entities: Project, Checklist, ChecklistItem)
-  - Fichiers: SAF (Storage Access Framework) ; import/export en `text/markdown` et `text/csv`
-  - Sélection fichiers: ACTION_OPEN_DOCUMENT / CREATE_DOCUMENT
-- Desktop macOS (Swift)
-  - AppKit/SwiftUI + CoreData/SwiftData équivalent
-- Windows (C#/.NET)
-  - UI: WPF/WinUI/MAUI
-  - Persistance: EF Core (SQLite), classes POCO mappées
-  - Fichiers: FilePicker/SavePicker, encodage UTF‑8
-- Web
-  - UI: React/Vue/Svelte
-  - Persistance: IndexedDB/SQLite WASM si offline
-  - Import/Export via Blob (text/markdown; text/csv)
-
-#### Modèle de données (agnostique)
-
-- Project { id: UUID, title: string, detail: string, createdAt: date, updatedAt: date }
-- Checklist { id: UUID, projectId: UUID, title: string, color: string, createdAt: date, updatedAt: date, isDeleted: bool, position: int?, type: string }
-- ChecklistItem { id: UUID, checklistId: UUID, text: string, note?: string, isChecked: bool, order: int }
-- Contraintes: FK (on delete cascade), index: (projectId, position), (checklistId, order)
-
-#### Services d’import/export (agnostiques)
-
-- MarkdownService: `toMarkdown(project)`, `toMarkdownMany(projects)`; `fromMarkdown(string)` → [Project]
-- CsvService: `toCsv(project)`, `toCsvMany(projects)`; `fromCsv(string)` → [Project]
-- Invariants: id internes non exportés; titres servent de clé humaine
-
-#### Migrations de données
-
-- Ajout de `type` et `position`: valeurs par défaut si absentes
-- Conversion de couleurs: énumération stable en chaîne
-- Corbeille: transformer soft‑delete (booléen) en table/flag équivalent
-
-### 6.7 Qualité, tests et outillage
-
-- Unitaires: parse/serialize Markdown & CSV (happy path + champs manquants, couleurs/Type inconnus)
-- Intégration: export→import (round‑trip) multi‑projets
-- UI tests: création, recherche, tri, duplication, corbeille, export/import
-- Outils recommandés:
-  - iOS: XCTest, XCUITest
-  - Kotlin/Android: JUnit, Espresso
-  - .NET: xUnit/NUnit, Playwright pour desktop/web
-
-### 6.8 Performance
-
-- Recherches en mémoire (modèle local) ; pour gros volumes: predicate/SQL côté persistance
-- Export/Import en streaming pour fichiers volumineux (optionnel sur autres plateformes)
-
-### 6.9 Accessibilité
-
-- Labels et traits pour VoiceOver/TalkBack
-- Contrastes des couleurs (pastilles) ; tailles dynamiques
-
-### 6.10 Internationale/Localisation
-
-- Chaînes en français actuellement; prévoir fichiers de ressources pour i18n
-
-### 6.11 Packaging et distribution
-
-- iOS: App Store / TestFlight
-- macOS: App Store / Notarisation (Build natif arm64)
-- Android: APK/AAB (Play Store) - *Prévu*
-- Desktop Windows: MSIX - *Prévu*
-
-### 6.12 Exemples de formats
-
-#### Exemple Markdown (multi‑projets)
-
-```markdown
-# Projet Alpha
-> Detail: Description courte
-
-## Prévol [type=checklist][color=yellow]
-- [x] Batterie ::: 12.6V
-- [ ] Essence
-
----
-
-# Projet Bravo
-## Tâches [type=todo][color=blue]
-- [ ] Appeler tour
-```
-
-#### Exemple CSV (multi‑projets)
-
-```csv
-ProjectTitle,ChecklistTitle,Type,Color,ItemOrder,Checked,Text,Note
-Alpha,Prévol,checklist,yellow,0,1,Batterie,12.6V
-Alpha,Prévol,checklist,yellow,1,0,Essence,
-Bravo,Tâches,todo,blue,0,0,Appeler tour,
-```
-
----
-
-## 7. Export en PDF/DOCX (optionnel)
-
-- PDF avec macOS: Ouvrir le fichier Markdown dans TextEdit → Fichier > Exporter en PDF
-- DOCX/PDF multi‑plateforme: utiliser Pandoc
-
-```bash
-pandoc README.md -o SkyNotes-Spec-v1.0.docx
-pandoc README.md -o SkyNotes-Spec-v1.0.pdf
-```
+
+## Development (for contributors)
+
+- Open `AirMultiChrono.xcodeproj` in Xcode (iOS 16+ SDK)
+- Target: iPhone/iPad (SwiftUI)
+- Sound: AudioServices (system sounds) + embedded .caf playback as backup
+- Main Structure:
+  - `AirMultiChrono/ChronoView.swift` (UI, gestures, layouts, totalizer)
+  - `AirMultiChrono/ChronoModel.swift` (state, persistence, alarms)
+  - `AirMultiChrono/PrivacyPolicyView.swift` (Web link + copy)
+  - `docs/PrivacyPolicy.html` (public FR/EN font)
+- Screenshots: `Screenshots/` folder (generation via `scripts/`)
+
+
+## License and Contact
+
+- See privacy policy above.
+- Support: open a GitHub "Issue" for bugs/suggestions.
+
+Have a good flight — and good time mastery!
