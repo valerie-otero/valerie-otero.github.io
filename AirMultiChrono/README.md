@@ -1,13 +1,13 @@
 # AirMultiChrono
 
-**Version 1.1**
+**Version 1.2**
 
 Chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad. Conçu pour les usages où plusieurs chronos indépendants et un cumulatif global sont utiles — notamment en aviation de loisir (gestion des réservoirs, branches de navigation, points d’origine/DCT, attentes), mais aussi pour le sport, la cuisine, les ateliers, ou toute activité nécessitant plusieurs temporisations parallèles.
 
 
 ## Points forts
 
-- Jusqu’à 3 chronos principaux + 1 totalisateur global
+- Multiples chronomètres + 1 totalisateur global
 - Dispositions adaptables: Triangle, Grille, ou Libre (drag & drop)
 - Redimensionnement précis (pincement avec stabilisation, pas de 0,01/0,02)
 - Alarmes visuelles et sonores par piste, avec répétition jusqu’à arrêt
@@ -29,12 +29,6 @@ Avertissement: AirMultiChrono est un outil d’assistance. Il ne remplace pas le
   - Démarrez une piste “Branche N” au passage d’un point d’origine. Mettez une alarme à l’ETA planifiée pour déclencher un rappel (son+visuel) au point d’arrivée de branche.
 - Point d’origine / DCT / TOT
   - Utilisez une piste dédiée pour le temps écoulé depuis un point de report ou un TOT (time over target). Réglage d’alarme absolue (ex. +7 min) ou en mode répété selon votre usage.
-- Attente (holding)
-  - Chrono par tour d’attente (1 min/1 minute 30, selon vent). Répétition d’alarme pour guider les virages et sorties en sécurité.
-- Phases et check-lists
-  - Petite alarme pour “mise en route → roulage”, “alignement → montée”, “palier → croisière”, “descente → intégration”. Les rappels sonores répétitifs vous évitent d’oublier.
-
-Astuce: renvoyez les noms de pistes (ex. “L”, “R”, “BR1”, “DCT Ouest”) pour une lecture immédiate en cockpit.
 
 
 ## Autres usages
@@ -140,7 +134,7 @@ Simple, powerful, and reliable multi-track stopwatch for iPhone and iPad. Design
 
 ## Highlights
 
-- Up to 3 main timers + 1 global totalizer
+- Multiple timers + 1 global totalizer
 - Adaptable layouts: Triangle, Grid, or Free (drag & drop)
 - Precise resizing (pinch with stabilization, no 0.01/0.02 jitter)
 - Visual and sound alarms per track, repeating until stopped
@@ -162,12 +156,6 @@ Warning: AirMultiChrono is an assistance tool. It does not replace official proc
   - Start a "Leg N" track when passing an origin point. Set an alarm at the planned ETA to trigger a reminder (sound+visual) at the leg arrival point.
 - Origin Point / DCT / TOT
   - Use a dedicated track for elapsed time since a reporting point or TOT (time over target). Absolute alarm setting (e.g., +7 min) or repeating mode depending on your usage.
-- Holding
-  - Timer per holding turn (1 min/1 minute 30, depending on wind). Alarm repetition to guide turns and exits safely.
-- Phases and Checklists
-  - Short alarm for "startup → taxi", "alignment → climb", "level → cruise", "descent → integration". Repetitive sound reminders prevent forgetting.
-
-Tip: Rename track names (e.g., "L", "R", "BR1", "DCT West") for immediate reading in the cockpit.
 
 
 ## Other Uses
