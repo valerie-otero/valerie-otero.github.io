@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirMultiChrono - Documentation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.8em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.9em;
+        }
+        a {
+            color: #007aff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AirMultiChrono</h1>
+        <p><strong>Version 1.1</strong></p>
+
+        <p>Chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad. Conçu pour les usages où plusieurs chronos indépendants et un cumulatif global sont utiles — notamment en aviation de loisir (gestion des réservoirs, branches de navigation, points d’origine/DCT, attentes), mais aussi pour le sport, la cuisine, les ateliers, ou toute activité nécessitant plusieurs temporisations parallèles.</p>
+
+        <h2>Points forts</h2>
+        <ul>
+            <li>Jusqu’à 3 chronos principaux + 1 totalisateur global</li>
+            <li>Dispositions adaptables: Triangle, Grille, ou Libre (drag & drop)</li>
+            <li>Redimensionnement précis (pincement avec stabilisation, pas de 0,01/0,02)</li>
+            <li>Alarmes visuelles et sonores par piste, avec répétition jusqu’à arrêt</li>
+            <li>Choix de sons système intégrés avec pré-écoute (pas d’ID numériques visibles)</li>
+            <li>Styles personnalisables (forme, bordure, échelle des chiffres, couleur, nom)</li>
+            <li>Verrouillage de remise à zéro (sécurité anti-fausses manips)</li>
+            <li>État persistant (positions, tailles, styles, alarmes, sons)</li>
+            <li>iPhone et iPad, portrait/paysage, iOS 16+</li>
+        </ul>
+
+        <h2>Cas d’usage en aviation de loisir (VFR)</h2>
+        <div class="warning">
+            <strong>Avertissement:</strong> AirMultiChrono est un outil d’assistance. Il ne remplace pas les procédures officielles, instruments certifiés, ou la vigilance du pilote. Vérifiez la réglementation en vigueur et gardez des marges.
+        </div>
+        <ul>
+            <li><strong>Gestion d’utilisation des réservoirs</strong>
+                <ul>
+                    <li>Définissez un chrono par réservoir (L, R). Démarrez/Lancez la piste correspondante lors du basculement. Ajoutez une alarme répétée (ex. toutes 30 min) pour vous rappeler d’alterner.</li>
+                    <li>Le totalisateur global suit le temps de vol cumulé/mission.</li>
+                </ul>
+            </li>
+            <li><strong>Chronométrage d’une branche de navigation</strong>
+                <ul>
+                    <li>Démarrez une piste “Branche N” au passage d’un point d’origine. Mettez une alarme à l’ETA planifiée pour déclencher un rappel (son+visuel) au point d’arrivée de branche.</li>
+                </ul>
+            </li>
+            <li><strong>Point d’origine / DCT / TOT</strong>
+                <ul>
+                    <li>Utilisez une piste dédiée pour le temps écoulé depuis un point de report ou un TOT (time over target). Réglage d’alarme absolue (ex. +7 min) ou en mode répété selon votre usage.</li>
+                </ul>
+            </li>
+            <li><strong>Attente (holding)</strong>
+                <ul>
+                    <li>Chrono par tour d’attente (1 min/1 minute 30, selon vent). Répétition d’alarme pour guider les virages et sorties en sécurité.</li>
+                </ul>
+            </li>
+            <li><strong>Phases et check-lists</strong>
+                <ul>
+                    <li>Petite alarme pour “mise en route → roulage”, “alignement → montée”, “palier → croisière”, “descente → intégration”. Les rappels sonores répétitifs vous évitent d’oublier.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><em>Astuce: renvoyez les noms de pistes (ex. “L”, “R”, “BR1”, “DCT Ouest”) pour une lecture immédiate en cockpit.</em></p>
+
+        <h2>Autres usages</h2>
+        <ul>
+            <li>Sport (intervalles, circuits, récupération)</li>
+            <li>Cuisine (plusieurs cuissons simultanées + total global)</li>
+            <li>Ateliers/formation (temps par groupe + macro)</li>
+            <li>Laboratoire/expériences (étapes parallèles + alarme)</li>
+        </ul>
+
+        <h2>Prise en main rapide</h2>
+        <ul>
+            <li><strong>Démarrer/Arrêter un chrono:</strong> touchez ON/OFF.</li>
+            <li><strong>Renommer:</strong> touchez le nom pour ouvrir la boîte de renommage.</li>
+            <li><strong>Disposition:</strong> via le menu, choisissez Triangle, Grille ou Libre.</li>
+            <li><strong>Mode Édition (Libre):</strong>
+                <ul>
+                    <li>Déplacer un cadran: glisser-déposer.</li>
+                    <li>Redimensionner un cadran: pincer; la taille est stabilisée (deadzone ~1,5%, lissage, pas 0,01). Relâchement = petit “snap” propre.</li>
+                </ul>
+            </li>
+            <li><strong>Totalisateur global:</strong>
+                <ul>
+                    <li>Pincer pour ajuster l’échelle (stabilisé, plage 0,5–3,0, pas 0,02).</li>
+                    <li>Bouton “stylo” pour régler au pas fin si besoin.</li>
+                </ul>
+            </li>
+            <li><strong>Styles (par piste):</strong> forme (rond/carré), bordure, échelle des chiffres, couleur, échelle du nom.</li>
+            <li><strong>Verrou “reset”:</strong> empêche la remise à zéro accidentelle.</li>
+        </ul>
+        <p>Tout est enregistré automatiquement (positions, tailles, styles, alarmes, sons, échelle globale).</p>
+
+        <h2>Alarmes (par piste)</h2>
+        <ul>
+            <li><strong>Types:</strong> visuelle (flash) et sonore (sons système iOS)</li>
+            <li><strong>Pré-écoute:</strong> choisissez un son et testez-le immédiatement</li>
+            <li><strong>Répétition:</strong> le son se répète tant que l’alarme est “latchée” (jusqu’à OFF ou changement de chrono)</li>
+            <li><strong>Modes de déclenchement:</strong>
+                <ul>
+                    <li>Absolu: alarme à t = valeur (ex. 00:07:00)</li>
+                    <li>Répétée/offset: alarme qui se relance par intervalle</li>
+                </ul>
+            </li>
+            <li><strong>Arrêt:</strong> OFF de la piste ou changement de chrono stoppe l’alarme et le son</li>
+        </ul>
+
+        <h2>Gestes et précision (important)</h2>
+        <ul>
+            <li><strong>Pincement stabilisé:</strong> nous appliquons un delta progressif, une zone morte (~1,5%), une sensibilité adoucie et un lissage, plus un “snap” par pas (cadrans: 0,01; total: 0,02). Le but: des ajustements fluides, sans “sauts”.</li>
+            <li><strong>Plages:</strong>
+                <ul>
+                    <li>Cadrans: 0,20 – 0,60 du côté court de l’écran (en mode Libre)</li>
+                    <li>Totalisateur: 0,50 – 3,00</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Confidentialité et données</h2>
+        <ul>
+            <li>Aucune collecte de données personnelles.</li>
+            <li>Aucun suivi. Pas d’accès réseau requis pour fonctionner.</li>
+            <li>Politique de confidentialité (FR/EN):
+                <ul>
+                    <li>Web: <a href="https://valerie-otero.github.io/AirMultiChrono/PrivacyPolicy.html">https://valerie-otero.github.io/AirMultiChrono/PrivacyPolicy.html</a> (la langue suit celle de l’app: ?lang=fr|en)</li>
+                    <li>In-app: rubrique “Confidentialité”, avec lien direct et bouton “copier”.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Compatibilité</h2>
+        <ul>
+            <li>iOS 16 ou supérieur</li>
+            <li>iPhone et iPad, portrait & paysage</li>
+        </ul>
+
+        <h2>Conseils sécurité (aviation)</h2>
+        <ul>
+            <li>Outil d’assistance non certifié: ne remplace ni l’horloge de bord, ni les instruments, ni les procédures de la checklist.</li>
+            <li>Conservez des marges temps/carburant, vérifiez les temps critiques avec une source secondaire.</li>
+            <li>Restez à l’écoute des fréquences et de la trajectoire; ne laissez pas un écran détourner l’attention.</li>
+        </ul>
+
+        <h2>Dépannage rapide (FAQ)</h2>
+        <ul>
+            <li><strong>Je ne vois plus la bascule FR/EN de la politique dans l’app:</strong> l’app ouvre désormais la page Web dans la langue de l’OS, et affiche le lien (avec bouton copier).</li>
+            <li><strong>Les vibrations n’existent pas?</strong> Oui, le mode haptique a été retiré. Utilisez les sons système.</li>
+            <li><strong>Le son ne s’arrête pas:</strong> il se répète tant que l’alarme visuelle est active; passez OFF ou changez de chrono.</li>
+            <li><strong>Le pincement “saute”:</strong> le lissage est actif; relâchez pour un snap propre au pas fin. Dites-nous si vous voulez une sensibilité différente.</li>
+        </ul>
+
+        <h2>Développement (pour contributeurs)</h2>
+        <ul>
+            <li>Ouvrir <code>AirMultiChrono.xcodeproj</code> dans Xcode (iOS 16+ SDK)</li>
+            <li>Cible: iPhone/iPad (SwiftUI)</li>
+            <li>Son: AudioServices (sons système) + lecture .caf embarqué en secours</li>
+            <li>Structure principale:
+                <ul>
+                    <li><code>AirMultiChrono/ChronoView.swift</code> (UI, gestes, mises en page, totalisateur)</li>
+                    <li><code>AirMultiChrono/ChronoModel.swift</code> (état, persistance, alarmes)</li>
+                    <li><code>AirMultiChrono/PrivacyPolicyView.swift</code> (lien Web + copie)</li>
+                    <li><code>docs/PrivacyPolicy.html</code> (police FR/EN publique)</li>
+                </ul>
+            </li>
+            <li>Captures: dossier <code>Screenshots/</code> (génération via <code>scripts/</code>)</li>
+        </ul>
+
+        <h2>Licence et contact</h2>
+        <ul>
+            <li>Voir la politique de confidentialité ci-dessus.</li>
+            <li>Support: ouvrez une “Issue” GitHub pour bugs/suggestions.</li>
+        </ul>
+
+        <footer>
+            <p>Bon vol — et bonne maîtrise du temps !</p>
+        </footer>
+    </div>
+
+    <hr style="margin: 50px auto; max-width: 800px; border: 0; border-top: 1px solid #ccc;">
+
+    <div class="container">
+        <h1>AirMultiChrono (English)</h1>
+
+        <p>Simple, powerful, and reliable multi-track stopwatch for iPhone and iPad. Designed for uses where multiple independent timers and a global cumulative timer are useful — particularly in recreational aviation (fuel tank management, navigation legs, origin points/DCT, holding patterns), but also for sports, cooking, workshops, or any activity requiring multiple parallel timings.</p>
+
+        <h2>Highlights</h2>
+        <ul>
+            <li>Up to 3 main timers + 1 global totalizer</li>
+            <li>Adaptable layouts: Triangle, Grid, or Free (drag & drop)</li>
+            <li>Precise resizing (pinch with stabilization, no 0.01/0.02 jitter)</li>
+            <li>Visual and sound alarms per track, repeating until stopped</li>
+            <li>Choice of built-in system sounds with preview (no visible numeric IDs)</li>
+            <li>Customizable styles (shape, border, digit scale, color, name)</li>
+            <li>Reset lock (protection against accidental resets)</li>
+            <li>Persistent state (positions, sizes, styles, alarms, sounds)</li>
+            <li>iPhone and iPad, portrait/landscape, iOS 16+</li>
+        </ul>
+
+        <h2>Use Cases in Recreational Aviation (VFR)</h2>
+        <div class="warning">
+            <strong>Warning:</strong> AirMultiChrono is an assistance tool. It does not replace official procedures, certified instruments, or pilot vigilance. Check applicable regulations and keep margins.
+        </div>
+        <ul>
+            <li><strong>Fuel Tank Management</strong>
+                <ul>
+                    <li>Define one timer per tank (L, R). Start/Launch the corresponding track when switching. Add a repeating alarm (e.g., every 30 min) to remind you to switch.</li>
+                    <li>The global totalizer tracks cumulative flight/mission time.</li>
+                </ul>
+            </li>
+            <li><strong>Navigation Leg Timing</strong>
+                <ul>
+                    <li>Start a "Leg N" track when passing an origin point. Set an alarm at the planned ETA to trigger a reminder (sound+visual) at the leg arrival point.</li>
+                </ul>
+            </li>
+            <li><strong>Origin Point / DCT / TOT</strong>
+                <ul>
+                    <li>Use a dedicated track for elapsed time since a reporting point or TOT (time over target). Absolute alarm setting (e.g., +7 min) or repeating mode depending on your usage.</li>
+                </ul>
+            </li>
+            <li><strong>Holding</strong>
+                <ul>
+                    <li>Timer per holding turn (1 min/1 minute 30, depending on wind). Alarm repetition to guide turns and exits safely.</li>
+                </ul>
+            </li>
+            <li><strong>Phases and Checklists</strong>
+                <ul>
+                    <li>Short alarm for "startup → taxi", "alignment → climb", "level → cruise", "descent → integration". Repetitive sound reminders prevent forgetting.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><em>Tip: Rename track names (e.g., "L", "R", "BR1", "DCT West") for immediate reading in the cockpit.</em></p>
+
+        <h2>Other Uses</h2>
+        <ul>
+            <li>Sports (intervals, circuits, recovery)</li>
+            <li>Cooking (multiple simultaneous cooking times + global total)</li>
+            <li>Workshops/Training (time per group + macro)</li>
+            <li>Laboratory/Experiments (parallel steps + alarm)</li>
+        </ul>
+
+        <h2>Quick Start</h2>
+        <ul>
+            <li><strong>Start/Stop a timer:</strong> tap ON/OFF.</li>
+            <li><strong>Rename:</strong> tap the name to open the rename box.</li>
+            <li><strong>Layout:</strong> via the menu, choose Triangle, Grid, or Free.</li>
+            <li><strong>Edit Mode (Free):</strong>
+                <ul>
+                    <li>Move a dial: drag and drop.</li>
+                    <li>Resize a dial: pinch; size is stabilized (deadzone ~1.5%, smoothing, no 0.01). Release = clean small "snap".</li>
+                </ul>
+            </li>
+            <li><strong>Global Totalizer:</strong>
+                <ul>
+                    <li>Pinch to adjust scale (stabilized, range 0.5–3.0, step 0.02).</li>
+                    <li>"Pencil" button to adjust with fine steps if needed.</li>
+                </ul>
+            </li>
+            <li><strong>Styles (per track):</strong> shape (round/square), border, digit scale, color, name scale.</li>
+            <li><strong>"Reset" Lock:</strong> prevents accidental reset.</li>
+        </ul>
+        <p>Everything is saved automatically (positions, sizes, styles, alarms, sounds, global scale).</p>
+
+        <h2>Alarms (per track)</h2>
+        <ul>
+            <li><strong>Types:</strong> visual (flash) and sound (iOS system sounds)</li>
+            <li><strong>Preview:</strong> choose a sound and test it immediately</li>
+            <li><strong>Repetition:</strong> sound repeats as long as the alarm is "latched" (until OFF or timer change)</li>
+            <li><strong>Trigger Modes:</strong>
+                <ul>
+                    <li>Absolu: alarm at t = value (e.g., 00:07:00)</li>
+                    <li>Repeated/Offset: alarm that restarts by interval</li>
+                </ul>
+            </li>
+            <li><strong>Stop:</strong> OFF on the track or changing timer stops the alarm and sound</li>
+        </ul>
+
+        <h2>Gestures and Precision (Important)</h2>
+        <ul>
+            <li><strong>Stabilized Pinch:</strong> we apply a progressive delta, a deadzone (~1.5%), smoothed sensitivity, and smoothing, plus a "snap" per step (dials: 0.01; total: 0.02). The goal: fluid adjustments without "jumps".</li>
+            <li><strong>Ranges:</strong>
+                <ul>
+                    <li>Dials: 0.20 – 0.60 of the screen's short side (in Free mode)</li>
+                    <li>Totalizer: 0.50 – 3.00</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Privacy and Data</h2>
+        <ul>
+            <li>No personal data collection.</li>
+            <li>No tracking. No network access required to function.</li>
+            <li>Privacy Policy (FR/EN):
+                <ul>
+                    <li>Web: <a href="https://valerie-otero.github.io/AirMultiChrono/PrivacyPolicy.html">https://valerie-otero.github.io/AirMultiChrono/PrivacyPolicy.html</a> (language follows app: ?lang=fr|en)</li>
+                    <li>In-app: "Privacy" section, with direct link and "copy" button.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Compatibility</h2>
+        <ul>
+            <li>iOS 16 or higher</li>
+            <li>iPhone and iPad, portrait & landscape</li>
+        </ul>
+
+        <h2>Safety Tips (Aviation)</h2>
+        <ul>
+            <li>Non-certified assistance tool: does not replace the onboard clock, instruments, or checklist procedures.</li>
+            <li>Keep time/fuel margins, verify critical times with a secondary source.</li>
+            <li>Stay tuned to frequencies and trajectory; do not let a screen distract attention.</li>
+        </ul>
+
+        <h2>Quick Troubleshooting (FAQ)</h2>
+        <ul>
+            <li><strong>I don't see the FR/EN toggle for the policy in the app anymore:</strong> the app now opens the Web page in the OS language, and displays the link (with copy button).</li>
+            <li><strong>Do vibrations exist?</strong> Yes, but haptic mode has been removed in favor of system sounds.</li>
+            <li><strong>The sound doesn't stop:</strong> it repeats as long as the visual alarm is active; switch OFF or change timer.</li>
+            <li><strong>The pinch "jumps":</strong> smoothing is active; release for a clean snap at the fine step. Let us know if you want different sensitivity.</li>
+        </ul>
+
+        <h2>Development (for contributors)</h2>
+        <ul>
+            <li>Open <code>AirMultiChrono.xcodeproj</code> in Xcode (iOS 16+ SDK)</li>
+            <li>Target: iPhone/iPad (SwiftUI)</li>
+            <li>Sound: AudioServices (system sounds) + embedded .caf playback as backup</li>
+            <li>Structure:
+                <ul>
+                    <li><code>AirMultiChrono/ChronoView.swift</code> (UI, gestures, layouts, totalizer)</li>
+                    <li><code>AirMultiChrono/ChronoModel.swift</code> (state, persistence, alarms)</li>
+                    <li><code>AirMultiChrono/PrivacyPolicyView.swift</code> (Web link + copy)</li>
+                    <li><code>docs/PrivacyPolicy.html</code> (public FR/EN font)</li>
+                </ul>
+            </li>
+            <li>Screenshots: <code>Screenshots/</code> folder (generation via <code>scripts/</code>)</li>
+        </ul>
+
+        <h2>License and Contact</h2>
+        <ul>
+            <li>See privacy policy above.</li>
+            <li>Support: open a GitHub "Issue" for bugs/suggestions.</li>
+        </ul>
+
+        <footer>
+            <p>Have a good flight — and good time mastery!</p>
+        </footer>
+    </div>

@@ -1,5 +1,7 @@
 # AirMultiChrono
 
+**Version 1.1**
+
 Chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad. Conçu pour les usages où plusieurs chronos indépendants et un cumulatif global sont utiles — notamment en aviation de loisir (gestion des réservoirs, branches de navigation, points d’origine/DCT, attentes), mais aussi pour le sport, la cuisine, les ateliers, ou toute activité nécessitant plusieurs temporisations parallèles.
 
 
@@ -128,3 +130,136 @@ Tout est enregistré automatiquement (positions, tailles, styles, alarmes, sons,
 - Support: ouvrez une “Issue” GitHub pour bugs/suggestions.
 
 Bon vol — et bonne maîtrise du temps !
+
+---
+
+# AirMultiChrono (English)
+
+Simple, powerful, and reliable multi-track stopwatch for iPhone and iPad. Designed for uses where multiple independent timers and a global cumulative timer are useful — particularly in recreational aviation (fuel tank management, navigation legs, origin points/DCT, holding patterns), but also for sports, cooking, workshops, or any activity requiring multiple parallel timings.
+
+
+## Highlights
+
+- Up to 3 main timers + 1 global totalizer
+- Adaptable layouts: Triangle, Grid, or Free (drag & drop)
+- Precise resizing (pinch with stabilization, no 0.01/0.02 jitter)
+- Visual and sound alarms per track, repeating until stopped
+- Choice of built-in system sounds with preview (no visible numeric IDs)
+- Customizable styles (shape, border, digit scale, color, name)
+- Reset lock (protection against accidental resets)
+- Persistent state (positions, sizes, styles, alarms, sounds)
+- iPhone and iPad, portrait/landscape, iOS 16+
+
+
+## Use Cases in Recreational Aviation (VFR)
+
+Warning: AirMultiChrono is an assistance tool. It does not replace official procedures, certified instruments, or pilot vigilance. Check applicable regulations and keep margins.
+
+- Fuel Tank Management
+  - Define one timer per tank (L, R). Start/Launch the corresponding track when switching. Add a repeating alarm (e.g., every 30 min) to remind you to switch.
+  - The global totalizer tracks cumulative flight/mission time.
+- Navigation Leg Timing
+  - Start a "Leg N" track when passing an origin point. Set an alarm at the planned ETA to trigger a reminder (sound+visual) at the leg arrival point.
+- Origin Point / DCT / TOT
+  - Use a dedicated track for elapsed time since a reporting point or TOT (time over target). Absolute alarm setting (e.g., +7 min) or repeating mode depending on your usage.
+- Holding
+  - Timer per holding turn (1 min/1 minute 30, depending on wind). Alarm repetition to guide turns and exits safely.
+- Phases and Checklists
+  - Short alarm for "startup → taxi", "alignment → climb", "level → cruise", "descent → integration". Repetitive sound reminders prevent forgetting.
+
+Tip: Rename track names (e.g., "L", "R", "BR1", "DCT West") for immediate reading in the cockpit.
+
+
+## Other Uses
+
+- Sports (intervals, circuits, recovery)
+- Cooking (multiple simultaneous cooking times + global total)
+- Workshops/Training (time per group + macro)
+- Laboratory/Experiments (parallel steps + alarm)
+
+
+## Quick Start
+
+- Start/Stop a timer: tap ON/OFF.
+- Rename: tap the name to open the rename box.
+- Layout: via the menu, choose Triangle, Grid, or Free.
+- Edit Mode (Free):
+  - Move a dial: drag and drop.
+  - Resize a dial: pinch; size is stabilized (deadzone ~1.5%, smoothing, no 0.01). Release = clean small "snap".
+- Global Totalizer:
+  - Pinch to adjust scale (stabilized, range 0.5–3.0, step 0.02).
+  - "Pencil" button to adjust with fine steps if needed.
+- Styles (per track): shape (round/square), border, digit scale, color, name scale.
+- "Reset" Lock: prevents accidental reset.
+
+Everything is saved automatically (positions, sizes, styles, alarms, sounds, global scale).
+
+
+## Alarms (per track)
+
+- Types: visual (flash) and sound (iOS system sounds)
+- Preview: choose a sound and test it immediately
+- Repetition: sound repeats as long as the alarm is "latched" (until OFF or timer change)
+- Trigger Modes:
+  - Absolute: alarm at t = value (e.g., 00:07:00)
+  - Repeated/Offset: alarm that restarts by interval
+- Stop: OFF on the track or changing timer stops the alarm and sound
+
+
+## Gestures and Precision (Important)
+
+- Stabilized Pinch: we apply a progressive delta, a deadzone (~1.5%), smoothed sensitivity, and smoothing, plus a "snap" per step (dials: 0.01; total: 0.02). The goal: fluid adjustments without "jumps".
+- Ranges:
+  - Dials: 0.20 – 0.60 of the screen's short side (in Free mode)
+  - Totalizer: 0.50 – 3.00
+
+
+## Privacy and Data
+
+- No personal data collection.
+- No tracking. No network access required to function.
+- Privacy Policy (FR/EN):
+  - Web: <https://valerie-otero.github.io/AirMultiChrono/PrivacyPolicy.html> (language follows app: ?lang=fr|en)
+  - In-app: "Privacy" section, with direct link and "copy" button.
+
+
+## Compatibility
+
+- iOS 16 or higher
+- iPhone and iPad, portrait & landscape
+
+
+## Safety Tips (Aviation)
+
+- Non-certified assistance tool: does not replace the onboard clock, instruments, or checklist procedures.
+- Keep time/fuel margins, verify critical times with a secondary source.
+- Stay tuned to frequencies and trajectory; do not let a screen distract attention.
+
+
+## Quick Troubleshooting (FAQ)
+
+- I don't see the FR/EN toggle for the policy in the app anymore: the app now opens the Web page in the OS language, and displays the link (with copy button).
+- Do vibrations exist? Yes, but haptic mode has been removed in favor of system sounds.
+- The sound doesn't stop: it repeats as long as the visual alarm is active; switch OFF or change timer.
+- The pinch "jumps": smoothing is active; release for a clean snap at the fine step. Let us know if you want different sensitivity.
+
+
+## Development (for contributors)
+
+- Open `AirMultiChrono.xcodeproj` in Xcode (iOS 16+ SDK)
+- Target: iPhone/iPad (SwiftUI)
+- Sound: AudioServices (system sounds) + embedded .caf playback as backup
+- Main Structure:
+  - `AirMultiChrono/ChronoView.swift` (UI, gestures, layouts, totalizer)
+  - `AirMultiChrono/ChronoModel.swift` (state, persistence, alarms)
+  - `AirMultiChrono/PrivacyPolicyView.swift` (Web link + copy)
+  - `docs/PrivacyPolicy.html` (public FR/EN font)
+- Screenshots: `Screenshots/` folder (generation via `scripts/`)
+
+
+## License and Contact
+
+- See privacy policy above.
+- Support: open a GitHub "Issue" for bugs/suggestions.
+
+Have a good flight — and good time mastery!
