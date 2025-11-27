@@ -1,19 +1,26 @@
-# SkyNotes — Notes projet & checklists
+# SkyNotes — Notes projet & checklists / Project Notes & Checklists
 
-Version: 1.0.0 (iOS & macOS)  
-Auteur: Valérie Otero  
-Date: 22/11/2025
+Version: 1.1 (iOS & macOS)  
+Auteur/Author: Valérie Otero  
+Date: 27/11/2025
+
+[Français](#français) | [English](#english)
+
+---
+
+<a name="français"></a>
+
+## Français
 
 SkyNotes est une application de prise de notes structurées pour projets, avec des checklists colorées et des listes de tâches. Elle est conçue pour être simple, rapide et fiable en vol comme au sol.
 
 Ce document sert de **présentation fonctionnelle** pour les utilisateurs, avec en fin de page une **annexe technique** utile aux développeurs.
 
----
-
-## 1. Principales fonctionnalités
+### 1. Principales fonctionnalités
 
 - **Projets**: créez un projet par sujet (brief, mission, préparation vol, formation…).
 - **Checklists colorées**: attachez plusieurs checklists à un projet, avec une couleur par liste (post‑it).
+- **Modèles (Templates)**: créez des modèles réutilisables pour vos checklists fréquentes.
 - **Items réordonnables**: déplacez les items par glisser‑déposer pour adapter l’ordre à votre usage.
 - **Deux types de listes**:
   - **Checklist**: pour vérifier un ensemble d’actions à cocher (prévol, briefing…).
@@ -23,13 +30,13 @@ Ce document sert de **présentation fonctionnelle** pour les utilisateurs, avec 
 - **Duplication**: dupliquez un projet ou une checklist pour créer rapidement un nouveau modèle.
 - **Corbeille**: récupérez un élément supprimé par erreur ou videz la corbeille définitivement.
 - **Import / Export**: en Markdown (.md) ou CSV (.csv), pour archiver ou partager vos listes.
-- **Écran À propos**: version de l’app, crédits et lien vers la politique de confidentialité.
+- **Contenu de démarrage**: un projet de découverte et un tutoriel interactif sont inclus à l'installation.
+- **Soutien au développement**: une "Tip Jar" (Boîte à pourboires) pour soutenir le développeur.
+- **Écran À propos**: version de l’app, FAQ, crédits et lien vers la politique de confidentialité.
 
----
+### 2. Utiliser SkyNotes au quotidien
 
-## 2. Utiliser SkyNotes au quotidien
-
-### 2.1 Créer et organiser vos projets
+#### 2.1 Créer et organiser vos projets
 
 - Ouvrez l’onglet `Projets`.
 - Touchez le bouton `+` pour créer un **nouveau projet** (titre + description optionnelle).
@@ -40,7 +47,7 @@ Ce document sert de **présentation fonctionnelle** pour les utilisateurs, avec 
   - l’**exporter** (Markdown/CSV),
   - le **supprimer** (il ira dans la Corbeille).
 
-### 2.2 Créer et personnaliser vos checklists
+#### 2.2 Créer et personnaliser vos checklists
 
 - Dans un projet, utilisez `+` pour créer une **nouvelle checklist**.
 - Choisissez:
@@ -53,7 +60,13 @@ Ce document sert de **présentation fonctionnelle** pour les utilisateurs, avec 
   - marquer un item comme **coché** / **non coché**,
   - ajouter une **note** détaillée (ex: valeurs, mémos, rappels).
 
-### 2.3 Vue globale des checklists
+#### 2.3 Modèles (Templates)
+
+- Créez des checklists marquées comme **Modèles** pour les réutiliser souvent.
+- Idéal pour les procédures standardisées (Checklist avion, Liste de voyage, etc.).
+- Les modèles apparaissent distinctement et peuvent être instanciés dans n'importe quel projet.
+
+#### 2.4 Vue globale des checklists
 
 - L’onglet `Accueil` affiche une **grille globale** de toutes les checklists.
 - Vous pouvez:
@@ -61,14 +74,14 @@ Ce document sert de **présentation fonctionnelle** pour les utilisateurs, avec 
   - **trier** par différents critères,
   - **filtrer** par type (Checklist ou To‑Do).
 
-### 2.4 Corbeille et restauration
+#### 2.5 Corbeille et restauration
 
 - L’onglet `Corbeille` liste les éléments marqués comme supprimés.
 - Depuis cette vue, pour chaque élément vous pouvez:
   - le **restaurer** dans son projet d’origine,
   - le **supprimer définitivement**.
 
-### 2.5 Import / Export
+#### 2.6 Import / Export
 
 Les échanges se font via l’application Fichiers (iOS) ou Finder (macOS).
 
@@ -84,9 +97,7 @@ Les formats sont **ouverts** (Markdown/CSV) afin que vous puissiez:
 - les relire facilement dans n’importe quel éditeur de texte ou tableur,
 - les archiver ou les partager avec d’autres outils.
 
----
-
-## 3. Spécificités iOS & macOS
+### 3. Spécificités iOS & macOS
 
 - **Interface SwiftUI adaptative**: l’app s’adapte à l’écran de l’iPhone, de l’iPad et du Mac.
 - **macOS**:
@@ -97,9 +108,7 @@ Les formats sont **ouverts** (Markdown/CSV) afin que vous puissiez:
   - navigation par piles (`NavigationStack`),
   - gestion des documents via l’app Fichiers.
 
----
-
-## 4. Confidentialité et données
+### 4. Confidentialité et données
 
 - Toutes les données sont **stockées localement** sur votre appareil via SwiftData.
 - SkyNotes **ne crée aucun compte** et **n’envoie pas vos données sur un serveur**.
@@ -107,9 +116,7 @@ Les formats sont **ouverts** (Markdown/CSV) afin que vous puissiez:
 - Aucune mesure d’audience ni collecte de statistiques par défaut.
 - La politique de confidentialité détaillée est disponible dans `docs/SkyNotes/privacy_policy.html` et via l’écran `À propos` dans l’app.
 
----
-
-## 5. Foire aux questions (FAQ)
+### 5. Foire aux questions (FAQ)
 
 **Q. Puis‑je réutiliser mes checklists dans un autre projet ?**  
 Oui. Dupliquez soit la **checklist** directement, soit le **projet** complet et adaptez‑le.
@@ -125,11 +132,133 @@ Oui, ils sont au format Markdown/CSV lisible par la plupart des éditeurs de tex
 
 ---
 
-## 6. Annexe technique (pour les développeurs)
+<a name="english"></a>
 
-La section suivante reprend les éléments clés de la spécification technique.
+## English
 
-### 6.1 Architecture et technologies
+SkyNotes is a structured note-taking application for projects, featuring colored checklists and task lists. It is designed to be simple, fast, and reliable, both in flight and on the ground.
+
+This document serves as a **functional presentation** for users, with a **technical appendix** for developers at the end.
+
+### 1. Key Features
+
+- **Projects**: Create one project per subject (briefing, mission, flight prep, training...).
+- **Colored Checklists**: Attach multiple checklists to a project, with one color per list (post-it style).
+- **Templates**: Create reusable templates for your frequent checklists.
+- **Reorderable Items**: Move items via drag-and-drop to adapt the order to your usage.
+- **Two List Types**:
+  - **Checklist**: To verify a set of actions to check off (pre-flight, briefing...).
+  - **To-Do**: To track tasks to be done over time (file follow-up, general TODOs).
+- **Quick Search**: Find a project, checklist, or item by typing a few letters.
+- **Local Sort**: Sort projects and lists by title, date, or item count.
+- **Duplication**: Duplicate a project or checklist to quickly create a new template.
+- **Trash**: Recover an item deleted by mistake or empty the trash permanently.
+- **Import / Export**: In Markdown (.md) or CSV (.csv), to archive or share your lists.
+- **Starter Content**: A discovery project and interactive tutorial are included upon installation.
+- **Development Support**: A "Tip Jar" to support the developer.
+- **About Screen**: App version, FAQ, credits, and link to privacy policy.
+
+### 2. Using SkyNotes Daily
+
+#### 2.1 Creating and Organizing Your Projects
+
+- Open the `Projects` tab.
+- Tap the `+` button to create a **new project** (title + optional description).
+- Projects are displayed in a list that you can **search** and **sort**.
+- From a project, you can:
+  - **Rename** it,
+  - **Duplicate** it as a template for a new situation,
+  - **Export** it (Markdown/CSV),
+  - **Delete** it (it will go to the Trash).
+
+#### 2.2 Creating and Customizing Your Checklists
+
+- Inside a project, use `+` to create a **new checklist**.
+- Choose:
+  - A **title** (e.g., "DR400 Pre-flight", "Student Briefing"),
+  - A **type**: `Checklist` or `To-Do`,
+  - A **color** (via the `PostItColor` palette).
+- Then add your **items** one by one.
+- You can:
+  - **Reorder** items by dragging them,
+  - Mark an item as **checked** / **unchecked**,
+  - Add a detailed **note** (e.g., values, memos, reminders).
+
+#### 2.3 Templates
+
+- Create checklists marked as **Templates** to reuse them often.
+- Ideal for standardized procedures (Aircraft Checklist, Travel List, etc.).
+- Templates appear distinctly and can be instantiated in any project.
+
+#### 2.4 Global Checklist View
+
+- The `Home` tab displays a **global grid** of all checklists.
+- You can:
+  - **Search** across all lists,
+  - **Sort** by different criteria,
+  - **Filter** by type (Checklist or To-Do).
+
+#### 2.5 Trash and Restoration
+
+- The `Trash` tab lists items marked as deleted.
+- From this view, for each item you can:
+  - **Restore** it to its original project,
+  - **Delete** it permanently.
+
+#### 2.6 Import / Export
+
+Exchanges are done via the Files app (iOS) or Finder (macOS).
+
+- **Export**:
+  - From a **project**: Export a single project in Markdown or CSV.
+  - From the **Projects** view: Export **multiple projects** into a single file.
+- **Import**:
+  - Select a `.md` or `.csv` file.
+  - SkyNotes recreates the projects, checklists, and items from the content.
+
+The formats are **open** (Markdown/CSV) so that you can:
+
+- Read them easily in any text editor or spreadsheet software.
+- Archive or share them with other tools.
+
+### 3. iOS & macOS Specifics
+
+- **Adaptive SwiftUI Interface**: The app adapts to iPhone, iPad, and Mac screens.
+- **macOS**:
+  - Buttons without superfluous system shadows or outlines.
+  - White backgrounds for main views for a more "document" look.
+  - Integration with native windows and menus.
+- **iOS / iPadOS**:
+  - Stack navigation (`NavigationStack`).
+  - Document management via the Files app.
+
+### 4. Privacy and Data
+
+- All data is **stored locally** on your device via SwiftData.
+- SkyNotes **creates no account** and **sends no data to a server**.
+- File access for import/export is done **only on demand** (Apple sandbox).
+- No audience measurement or statistics collection by default.
+- The detailed privacy policy is available in `docs/SkyNotes/privacy_policy.html` and via the `About` screen in the app.
+
+### 5. Frequently Asked Questions (FAQ)
+
+**Q. Can I reuse my checklists in another project?**  
+Yes. Duplicate either the **checklist** directly, or the entire **project** and adapt it.
+
+**Q. How do I back up my data?**  
+You can regularly **export** your projects (Markdown or CSV) and store them in iCloud Drive, a NAS, etc.
+
+**Q. What happens if I delete an item by mistake?**  
+Check the `Trash` tab to **restore** it as long as it hasn't been permanently deleted.
+
+**Q. Can I edit my exported files elsewhere?**  
+Yes, they are in Markdown/CSV format, readable by most text editors and spreadsheet software.
+
+---
+
+## 6. Annexe technique / Technical Appendix
+
+### 6.1 Architecture and Technologies
 
 - Projets (titre, détail, dates) et checklists associées
 - Checklists colorées, items réordonnables, statut coché/non coché
@@ -199,7 +328,7 @@ La section suivante reprend les éléments clés de la spécification technique.
   - Titre: `# <Project Title>`
   - Détail (optionnel): `> Detail: <one-line>`
   - Checklist: `## <Checklist Title> [type=<checklist|todo>][color=<postitcolor>]`
-  - Item: `- [x] Text ::: Note` (ou `[ ]`)
+  - Item: `- [x] Text ::: Note` (or `[ ]`)
 - Multi-projets:
   - Concaténation de blocs single séparés par `---` (lignes seules)
   - À l’import: split par `---` ou par titres `#` multiples

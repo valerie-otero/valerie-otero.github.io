@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyNotes — Notes projet & checklists</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #007AFF;
+        }
+        h1 { border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: "SF Mono", Consolas, "Courier New", monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        blockquote {
+            border-left: 4px solid #007AFF;
+            margin: 0;
+            padding-left: 15px;
+            color: #666;
+        }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 5px; }
+        hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; }
+        .metadata { color: #666; font-size: 0.9em; margin-bottom: 30px; }
+        .lang-nav {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .lang-nav a {
+            text-decoration: none;
+            color: #007AFF;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .lang-nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="lang-nav">
+    <a href="#fr">Français</a> | <a href="#en">English</a>
+</div>
+
+<h1>SkyNotes — Notes projet & checklists</h1>
+
+<div class="metadata">
+    <p>    <strong>Version:</strong> 1.1 (iOS & macOS)<br>
+    <strong>Auteur/Author:</strong> Valérie Otero<br>
+    <strong>Date:</strong> 27/11/2025</p>
+</div>
+
+<div id="fr">
+    <h2>Français</h2>
+    <p>SkyNotes est une application de prise de notes structurées pour projets, avec des checklists colorées et des listes de tâches. Elle est conçue pour être simple, rapide et fiable en vol comme au sol.</p>
+
+    <p>Ce document sert de <strong>présentation fonctionnelle</strong> pour les utilisateurs, avec en fin de page une <strong>annexe technique</strong> utile aux développeurs.</p>
+
+    <h3>1. Principales fonctionnalités</h3>
+    <ul>
+        <li><strong>Projets</strong>: créez un projet par sujet (brief, mission, préparation vol, formation…).</li>
+        <li><strong>Checklists colorées</strong>: attachez plusieurs checklists à un projet, avec une couleur par liste (post‑it).</li>
+        <li><strong>Modèles (Templates)</strong>: créez des modèles réutilisables pour vos checklists fréquentes.</li>
+        <li><strong>Items réordonnables</strong>: déplacez les items par glisser‑déposer pour adapter l’ordre à votre usage.</li>
+        <li><strong>Deux types de listes</strong>:
+            <ul>
+                <li><strong>Checklist</strong>: pour vérifier un ensemble d’actions à cocher (prévol, briefing…).</li>
+                <li><strong>To‑Do</strong>: pour suivre des tâches à réaliser dans le temps (suivi dossier, TODO généraux).</li>
+            </ul>
+        </li>
+        <li><strong>Recherche rapide</strong>: retrouvez un projet, une checklist ou un item en tapant quelques lettres.</li>
+        <li><strong>Tri local</strong>: triez les projets et listes par titre, date ou nombre d’items.</li>
+        <li><strong>Duplication</strong>: dupliquez un projet ou une checklist pour créer rapidement un nouveau modèle.</li>
+        <li><strong>Corbeille</strong>: récupérez un élément supprimé par erreur ou videz la corbeille définitivement.</li>
+        <li><strong>Import / Export</strong>: en Markdown (.md) ou CSV (.csv), pour archiver ou partager vos listes.</li>
+        <li><strong>Contenu de démarrage</strong>: un projet de découverte et un tutoriel interactif sont inclus à l'installation.</li>
+        <li><strong>Soutien au développement</strong>: une "Tip Jar" (Boîte à pourboires) pour soutenir le développeur.</li>
+        <li><strong>Écran À propos</strong>: version de l’app, FAQ, crédits et lien vers la politique de confidentialité.</li>
+    </ul>
+
+    <h3>2. Utiliser SkyNotes au quotidien</h3>
+    <h4>2.1 Créer et organiser vos projets</h4>
+    <ul>
+        <li>Ouvrez l’onglet <code>Projets</code>.</li>
+        <li>Touchez le bouton <code>+</code> pour créer un <strong>nouveau projet</strong> (titre + description optionnelle).</li>
+        <li>Les projets sont affichés dans une liste que vous pouvez <strong>rechercher</strong> et <strong>trier</strong>.</li>
+        <li>Depuis un projet, vous pouvez:
+            <ul>
+                <li>le <strong>renommer</strong>,</li>
+                <li>le <strong>dupliquer</strong> comme modèle pour une nouvelle situation,</li>
+                <li>l’<strong>exporter</strong> (Markdown/CSV),</li>
+                <li>le <strong>supprimer</strong> (il ira dans la Corbeille).</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>2.2 Créer et personnaliser vos checklists</h4>
+    <ul>
+        <li>Dans un projet, utilisez <code>+</code> pour créer une <strong>nouvelle checklist</strong>.</li>
+        <li>Choisissez:
+            <ul>
+                <li>un <strong>titre</strong> (ex: « Prévol DR400 », « Briefing élève »),</li>
+                <li>un <strong>type</strong>: <code>Checklist</code> ou <code>To‑Do</code>,</li>
+                <li>une <strong>couleur</strong> (via la palette de couleurs <code>PostItColor</code>).</li>
+            </ul>
+        </li>
+        <li>Ajoutez ensuite vos <strong>items</strong> un par un.</li>
+        <li>Vous pouvez:
+            <ul>
+                <li><strong>réordonner</strong> les items en les faisant glisser,</li>
+                <li>marquer un item comme <strong>coché</strong> / <strong>non coché</strong>,</li>
+                <li>ajouter une <strong>note</strong> détaillée (ex: valeurs, mémos, rappels).</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>2.3 Modèles (Templates)</h4>
+    <ul>
+        <li>Créez des checklists marquées comme <strong>Modèles</strong> pour les réutiliser souvent.</li>
+        <li>Idéal pour les procédures standardisées (Checklist avion, Liste de voyage, etc.).</li>
+        <li>Les modèles apparaissent distinctement et peuvent être instanciés dans n'importe quel projet.</li>
+    </ul>
+
+    <h4>2.4 Vue globale des checklists</h4>
+    <ul>
+        <li>L’onglet <code>Accueil</code> affiche une <strong>grille globale</strong> de toutes les checklists.</li>
+        <li>Vous pouvez:
+            <ul>
+                <li><strong>rechercher</strong> dans toutes les listes,</li>
+                <li><strong>trier</strong> par différents critères,</li>
+                <li><strong>filtrer</strong> par type (Checklist ou To‑Do).</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>2.5 Corbeille et restauration</h4>
+    <ul>
+        <li>L’onglet <code>Corbeille</code> liste les éléments marqués comme supprimés.</li>
+        <li>Depuis cette vue, pour chaque élément vous pouvez:
+            <ul>
+                <li>le <strong>restaurer</strong> dans son projet d’origine,</li>
+                <li>le <strong>supprimer définitivement</strong>.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>2.6 Import / Export</h4>
+    <p>Les échanges se font via l’application Fichiers (iOS) ou Finder (macOS).</p>
+    <ul>
+        <li><strong>Exporter</strong>:
+            <ul>
+                <li>depuis un <strong>projet</strong>: export en Markdown ou CSV d’un seul projet,</li>
+                <li>depuis la vue <strong>Projets</strong>: export de <strong>plusieurs projets</strong> en un seul fichier.</li>
+            </ul>
+        </li>
+        <li><strong>Importer</strong>:
+            <ul>
+                <li>sélectionnez un fichier <code>.md</code> ou <code>.csv</code>,</li>
+                <li>SkyNotes recrée les projets, checklists et items à partir du contenu.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>3. Spécificités iOS & macOS</h3>
+    <ul>
+        <li><strong>Interface SwiftUI adaptative</strong>: l’app s’adapte à l’écran de l’iPhone, de l’iPad et du Mac.</li>
+        <li><strong>macOS</strong>:
+            <ul>
+                <li>boutons sans ombre ni contour système superflus,</li>
+                <li>fonds blancs pour les vues principales pour un rendu plus « document »,</li>
+                <li>intégration aux fenêtres et menus natifs.</li>
+            </ul>
+        </li>
+        <li><strong>iOS / iPadOS</strong>:
+            <ul>
+                <li>navigation par piles (<code>NavigationStack</code>),</li>
+                <li>gestion des documents via l’app Fichiers.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>4. Confidentialité et données</h3>
+    <ul>
+        <li>Toutes les données sont <strong>stockées localement</strong> sur votre appareil via SwiftData.</li>
+        <li>SkyNotes <strong>ne crée aucun compte</strong> et <strong>n’envoie pas vos données sur un serveur</strong>.</li>
+        <li>L’accès aux fichiers pour import/export se fait <strong>uniquement à la demande</strong> (sandbox Apple).</li>
+        <li>Aucune mesure d’audience ni collecte de statistiques par défaut.</li>
+        <li>La politique de confidentialité détaillée est disponible dans <code>docs/SkyNotes/privacy_policy.html</code> et via l’écran <code>À propos</code> dans l’app.</li>
+    </ul>
+
+    <h3>5. Foire aux questions (FAQ)</h3>
+    <p><strong>Q. Puis‑je réutiliser mes checklists dans un autre projet ?</strong><br>
+    Oui. Dupliquez soit la <strong>checklist</strong> directement, soit le <strong>projet</strong> complet et adaptez‑le.</p>
+
+    <p><strong>Q. Comment sauvegarder mes données ?</strong><br>
+    Vous pouvez régulièrement <strong>exporter</strong> vos projets (Markdown ou CSV) et les stocker dans iCloud Drive, un NAS, etc.</p>
+
+    <p><strong>Q. Que se passe‑t‑il si je supprime un élément par erreur ?</strong><br>
+    Consultez l’onglet <code>Corbeille</code> pour le <strong>restaurer</strong> tant qu’il n’a pas été supprimé définitivement.</p>
+
+    <p><strong>Q. Puis‑je éditer mes fichiers exportés ailleurs ?</strong><br>
+    Oui, ils sont au format Markdown/CSV lisible par la plupart des éditeurs de texte et tableurs.</p>
+</div>
+
+<hr>
+
+<div id="en">
+    <h2>English</h2>
+    <p>SkyNotes is a structured note-taking application for projects, featuring colored checklists and task lists. It is designed to be simple, fast, and reliable, both in flight and on the ground.</p>
+
+    <p>This document serves as a <strong>functional presentation</strong> for users, with a <strong>technical appendix</strong> for developers at the end.</p>
+
+    <h3>1. Key Features</h3>
+    <ul>
+        <li><strong>Projects</strong>: Create one project per subject (briefing, mission, flight prep, training...).</li>
+        <li><strong>Colored Checklists</strong>: Attach multiple checklists to a project, with one color per list (post-it style).</li>
+        <li><strong>Templates</strong>: Create reusable templates for your frequent checklists.</li>
+        <li><strong>Reorderable Items</strong>: Move items via drag-and-drop to adapt the order to your usage.</li>
+        <li><strong>Two List Types</strong>:
+            <ul>
+                <li><strong>Checklist</strong>: To verify a set of actions to check off (pre-flight, briefing...).</li>
+                <li><strong>To-Do</strong>: To track tasks to be done over time (file follow-up, general TODOs).</li>
+            </ul>
+        </li>
+        <li><strong>Quick Search</strong>: Find a project, checklist, or item by typing a few letters.</li>
+        <li><strong>Local Sort</strong>: Sort projects and lists by title, date, or item count.</li>
+        <li><strong>Duplication</strong>: Duplicate a project or checklist to quickly create a new template.</li>
+        <li><strong>Trash</strong>: Recover an item deleted by mistake or empty the trash permanently.</li>
+        <li><strong>Import / Export</strong>: In Markdown (.md) or CSV (.csv), to archive or share your lists.</li>
+        <li><strong>Starter Content</strong>: A discovery project and interactive tutorial are included upon installation.</li>
+        <li><strong>Development Support</strong>: A "Tip Jar" to support the developer.</li>
+        <li><strong>About Screen</strong>: App version, FAQ, credits, and link to privacy policy.</li>
+    </ul>
+
+    <h3>2. Using SkyNotes Daily</h3>
+    <h4>2.1 Creating and Organizing Your Projects</h4>
+    <ul>
+        <li>Open the <code>Projects</code> tab.</li>
+        <li>Tap the <code>+</code> button to create a <strong>new project</strong> (title + optional description).</li>
+        <li>Projects are displayed in a list that you can <strong>search</strong> and <strong>sort</strong>.</li>
+        <li>From a project, you can:
+            <ul>
+                <li><strong>Rename</strong> it,</li>
+                <li><strong>Duplicate</strong> it as a template for a new situation,</li>
+                <li><strong>Export</strong> it (Markdown/CSV),</li>
+                <li><strong>Delete</strong> it (it will go to the Trash).</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>2.2 Creating and Customizing Your Checklists</h4>
+    <ul>
+        <li>Inside a project, use <code>+</code> to create a <strong>new checklist</strong>.</li>
+        <li>Choose:
+            <ul>
+                <li>A <strong>title</strong> (e.g., "DR400 Pre-flight", "Student Briefing"),</li>
+                <li>A <strong>type</strong>: <code>Checklist</code> or <code>To-Do</code>,</li>
+                <li>A <strong>color</strong> (via the <code>PostItColor</code> palette).</li>
+            </ul>
+        </li>
+        <li>Then add your <strong>items</strong> one by one.</li>
+        <li>You can:
+            <ul>
+                <li><strong>Reorder</strong> items by dragging them,</li>
+                <li>Mark an item as <strong>checked</strong> / <strong>unchecked</strong>,</li>
+                <li>Add a detailed <strong>note</strong> (e.g., values, memos, reminders).</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>2.3 Templates</h4>
+    <ul>
+        <li>Create checklists marked as <strong>Templates</strong> to reuse them often.</li>
+        <li>Ideal for standardized procedures (Aircraft Checklist, Travel List, etc.).</li>
+        <li>Templates appear distinctly and can be instantiated in any project.</li>
+    </ul>
+
+    <h4>2.4 Global Checklist View</h4>
+    <ul>
+        <li>The <code>Home</code> tab displays a <strong>global grid</strong> of all checklists.</li>
+        <li>You can:
+            <ul>
+                <li><strong>Search</strong> across all lists,</li>
+                <li><strong>Sort</strong> by different criteria,</li>
+                <li><strong>Filter</strong> by type (Checklist or To-Do).</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>2.5 Trash and Restoration</h4>
+    <ul>
+        <li>The <code>Trash</code> tab lists items marked as deleted.
+        <li>From this view, for each item you can:
+            <ul>
+                <li><strong>Restore</strong> it to its original project,</li>
+                <li><strong>Delete</strong> it permanently.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>2.6 Import / Export</h4>
+    <p>Exchanges are done via the Files app (iOS) or Finder (macOS).</p>
+    <ul>
+        <li><strong>Export</strong>:
+            <ul>
+                <li>From a <strong>project</strong>: Export a single project in Markdown or CSV.</li>
+                <li>From the <strong>Projects</strong> view: Export <strong>multiple projects</strong> into a single file.</li>
+            </ul>
+        </li>
+        <li><strong>Import</strong>:
+            <ul>
+                <li>Select a <code>.md</code> or <code>.csv</code> file.</li>
+                <li>SkyNotes recreates the projects, checklists, and items from the content.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>3. iOS & macOS Specifics</h3>
+    <ul>
+        <li><strong>Adaptive SwiftUI Interface</strong>: The app adapts to iPhone, iPad, and Mac screens.</li>
+        <li><strong>macOS</strong>:
+            <ul>
+                <li>Buttons without superfluous system shadows or outlines.</li>
+                <li>White backgrounds for main views for a more "document" look.
+                <li>Integration with native windows and menus.
+            </ul>
+        </li>
+        <li><strong>iOS / iPadOS</strong>:
+            <ul>
+                <li>Stack navigation (<code>NavigationStack</code>).</li>
+                <li>Document management via the Files app.
+            </ul>
+        </li>
+    </ul>
+
+    <h3>4. Privacy and Data</h3>
+    <ul>
+        <li>All data is <strong>stored locally</strong> on your device via SwiftData.
+        <li>SkyNotes <strong>creates no account</strong> and <strong>sends no data to a server</strong>.
+        <li>File access for import/export is done <strong>only on demand</strong> (Apple sandbox).
+        <li>No audience measurement or statistics collection by default.
+        <li>The detailed privacy policy is available in <code>docs/SkyNotes/privacy_policy.html</code> and via the <code>About</code> screen in the app.</li>
+    </ul>
+
+    <h3>5. Frequently Asked Questions (FAQ)</h3>
+    <p><strong>Q. Can I reuse my checklists in another project?</strong><br>
+    Yes. Duplicate either the <strong>checklist</strong> directly, or the entire <strong>project</strong> and adapt it.</p>
+
+    <p><strong>Q. How do I back up my data?</strong><br>
+    You can regularly <strong>export</strong> your projects (Markdown or CSV) and store them in iCloud Drive, a NAS, etc.</p>
+
+    <p><strong>Q. What happens if I delete an item by mistake?</strong><br>
+    Check the <code>Trash</code> tab to <strong>restore</strong> it as long as it hasn't been permanently deleted.</p>
+
+    <p><strong>Q. Can I edit my exported files elsewhere?</strong><br>
+    Yes, they are in Markdown/CSV format, readable by most text editors and spreadsheet software.</p>
+</div>
+
+<hr>
+
+<h2>6. Annexe technique / Technical Appendix</h2>
+
+<p>La section suivante reprend les éléments clés de la spécification technique. / The following section summarizes key elements of the technical specification.</p>
+
+<h3>6.1 Architecture et technologies / Architecture and Technologies</h3>
+
+<ul>
+    <li>Projets (titre, détail, dates) et checklists associées</li>
+    <li>Checklists colorées, items réordonnables, statut coché/non coché</li>
+    <li>Types de liste: Checklist vs To‑Do (icône, teinte, sémantique)</li>
+    <li>Recherche par mots‑clés sur titres et contenu (items et notes), insensible aux accents/majuscules</li>
+    <li>Tri local (titre, dates, position, nombre d’items)</li>
+    <li>Duplication de projets et de checklists</li>
+    <li>Corbeille (isDeleted) avec restauration/suppression définitive</li>
+    <li>Import/Export: Markdown (.md) et CSV (.csv)
+        <ul>
+            <li>Single project & multi-projets (séparateurs Markdown ou colonne ProjectTitle)</li>
+        </ul>
+    </li>
+    <li>Export multi-projets (sélection ou global)</li>
+    <li>À propos (métadonnées, crédits, politique de confidentialité)</li>
+</ul>
+
+<h4>Architecture (iOS & macOS)</h4>
+
+<ul>
+    <li>UI: SwiftUI (adaptatif iOS/macOS)</li>
+    <li>Persistance: SwiftData (<code>@Model</code>, <code>@Query</code>, <code>ModelContext</code>)</li>
+    <li>Navigation: <code>NavigationStack</code> + navigation par <code>UUID</code> (refetch sécurisé)</li>
+    <li>Fichiers: <code>FileDocument</code> / <code>UTType</code>; sandbox avec accès <em>security‑scoped</em>.</li>
+    <li>Design system: couleurs via enum <code>PostItColor</code>, icônes SF Symbols.</li>
+    <li>macOS spécifique:
+        <ul>
+            <li>suppression des ombres et contours système sur les boutons,</li>
+            <li>fonds blancs pour les vues principales,</li>
+            <li>gestion des fenêtres et menus natifs.</li>
+        </ul>
+    </li>
+</ul>
+
+<h3>6.2 Modèle de données (conceptuel et iOS) / Data Model</h3>
+
+<h4>Entités</h4>
+
+<ul>
+    <li>Project
+        <ul>
+            <li>id: UUID (unique)</li>
+            <li>title: String</li>
+            <li>detail: String</li>
+            <li>createdAt: Date</li>
+            <li>updatedAt: Date</li>
+            <li>checklists: [Checklist] (deleteRule: cascade)</li>
+        </ul>
+    </li>
+    <li>Checklist
+        <ul>
+            <li>id: UUID (unique)</li>
+            <li>title: String</li>
+            <li>color: PostItColor (String rawValue)</li>
+            <li>items: [ChecklistItem]</li>
+            <li>project: Project?</li>
+            <li>createdAt: Date</li>
+            <li>updatedAt: Date</li>
+            <li>isDeleted: Bool (corbeille)</li>
+            <li>position: Int? (ordre visuel)</li>
+            <li>typeRaw: String (Checklist | todo)</li>
+        </ul>
+    </li>
+    <li>ChecklistItem
+        <ul>
+            <li>id: UUID (unique)</li>
+            <li>text: String</li>
+            <li>note: String?</li>
+            <li>isChecked: Bool</li>
+            <li>order: Int</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>Règles et contraintes</h4>
+
+<ul>
+    <li>Cascade delete: suppression d’un Project supprime ses Checklists</li>
+    <li>position: compacte et réindexée lors des réordonnancements</li>
+    <li>typeRaw: expose <code>type: ChecklistType</code> (checklist|todo)</li>
+    <li>Sécurité: pas de navigation avec références invalides (refetch par id)</li>
+</ul>
+
+<h3>6.3 Formats d’échange / Exchange Formats</h3>
+
+<h4>Markdown (.md)</h4>
+
+<ul>
+    <li>Projet (single):
+        <ul>
+            <li>Titre: <code># &lt;Project Title&gt;</code></li>
+            <li>Détail (optionnel): <code>&gt; Detail: &lt;one-line&gt;</code></li>
+            <li>Checklist: <code>## &lt;Checklist Title&gt; [type=&lt;checklist|todo&gt;][color=&lt;postitcolor&gt;]</code></li>
+            <li>Item: <code>- [x] Text ::: Note</code> (or <code>[ ]</code>)</li>
+        </ul>
+    </li>
+    <li>Multi-projets:
+        <ul>
+            <li>Concaténation de blocs single séparés par <code>---</code> (lignes seules)</li>
+            <li>À l’import: split par <code>---</code> ou par titres <code>#</code> multiples</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>CSV (.csv)</h4>
+
+<ul>
+    <li>Projet (single):
+        <ul>
+            <li>En‑tête: <code>ChecklistTitle,Type,Color,ItemOrder,Checked,Text,Note</code></li>
+        </ul>
+    </li>
+    <li>Multi-projets:
+        <ul>
+            <li>En‑tête: <code>ProjectTitle,ChecklistTitle,Type,Color,ItemOrder,Checked,Text,Note</code></li>
+            <li>Groupement à l’import par <code>ProjectTitle</code> puis <code>ChecklistTitle</code></li>
+        </ul>
+    </li>
+</ul>
+
+<h4>Règles communes</h4>
+
+<ul>
+    <li>Échappement CSV: guillemets doublés, champs entre quotes si nécessaire</li>
+    <li>Markdown: <code>:::</code> dans les notes est échappé en <code>::‧</code> à l’export</li>
+    <li>Import diacritique‑robuste pour <code>type</code> et <code>color</code> (fallback par défaut)</li>
+    <li>Titre projet unique: suffixe <code>(n)</code> en cas de collision</li>
+</ul>
+
+<h3>6.4 Flux UI (référence iOS) / UI Flow</h3>
+
+<ul>
+    <li>ProjectsView
+        <ul>
+            <li>Liste triée/recherchable, création/renommage/duplication, import/export (mono, multi), About</li>
+            <li>Navigation vers ProjectDetail via UUID</li>
+        </ul>
+    </li>
+    <li>ProjectDetailView
+        <ul>
+            <li>Grille de checklists, ajout avec type, tri, recherche locale, export projet</li>
+            <li>Couleurs via menu, réordonnancement, corbeille</li>
+        </ul>
+    </li>
+    <li>HomeView
+        <ul>
+            <li>Grille globale des checklists, recherche/tri, filtrage par type</li>
+        </ul>
+    </li>
+    <li>TrashView
+        <ul>
+            <li>Restauration/suppression définitive</li>
+        </ul>
+    </li>
+</ul>
+
+<h3>6.5 Recherche et tri / Search and Sort</h3>
+
+<ul>
+    <li>Recherche par tokens (split espaces), pliage diacritique + case‑insensitive</li>
+    <li>AND logique: tous les tokens doivent correspondre dans (titres, items, notes, titre projet)</li>
+    <li>Tri: titre (A→Z/Z→A), dates (créé/MAJ), position, nombre d’items</li>
+</ul>
+
+<h3>6.6 Portage multi‑plateformes (résumé) / Multi-platform Porting</h3>
+
+<h4>Couches à isoler</h4>
+
+<ul>
+    <li>Domaine (entités, services import/export, règles métier)</li>
+    <li>Persistance (ORM/DB) : adapter selon plateforme</li>
+    <li>UI (composants, navigation)</li>
+</ul>
+
+<h4>Mapping par plateforme</h4>
+
+<ul>
+    <li>Android (Kotlin)
+        <ul>
+            <li>UI: Jetpack Compose</li>
+            <li>Persistance: Room/SQLDelight (entities: Project, Checklist, ChecklistItem)</li>
+            <li>Fichiers: SAF (Storage Access Framework) ; import/export en <code>text/markdown</code> et <code>text/csv</code></li>
+            <li>Sélection fichiers: ACTION_OPEN_DOCUMENT / CREATE_DOCUMENT</li>
+        </ul>
+    </li>
+    <li>Desktop macOS (Swift)
+        <ul>
+            <li>AppKit/SwiftUI + CoreData/SwiftData équivalent</li>
+        </ul>
+    </li>
+    <li>Windows (C#/.NET)
+        <ul>
+            <li>UI: WPF/WinUI/MAUI</li>
+            <li>Persistance: EF Core (SQLite), classes POCO mappées</li>
+            <li>Fichiers: FilePicker/SavePicker, encodage UTF‑8</li>
+        </ul>
+    </li>
+    <li>Web
+        <ul>
+            <li>UI: React/Vue/Svelte</li>
+            <li>Persistance: IndexedDB/SQLite WASM si offline</li>
+            <li>Import/Export via Blob (text/markdown; text/csv)</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>Modèle de données (agnostique)</h4>
+
+<ul>
+    <li>Project { id: UUID, title: string, detail: string, createdAt: date, updatedAt: date }</li>
+    <li>Checklist { id: UUID, projectId: UUID, title: string, color: string, createdAt: date, updatedAt: date, isDeleted: bool, position: int?, type: string }</li>
+    <li>ChecklistItem { id: UUID, checklistId: UUID, text: string, note?: string, isChecked: bool, order: int }</li>
+    <li>Contraintes: FK (on delete cascade), index: (projectId, position), (checklistId, order)</li>
+</ul>
+
+<h4>Services d’import/export (agnostiques)</h4>
+
+<ul>
+    <li>MarkdownService: <code>toMarkdown(project)</code>, <code>toMarkdownMany(projects)</code>; <code>fromMarkdown(string)</code> → [Project]</li>
+    <li>CsvService: <code>toCsv(project)</code>, <code>toCsvMany(projects)</code>; <code>fromCsv(string)</code> → [Project]</li>
+    <li>Invariants: id internes non exportés; titres servent de clé humaine</li>
+</ul>
+
+<h4>Migrations de données</h4>
+
+<ul>
+    <li>Ajout de <code>type</code> et <code>position</code>: valeurs par défaut si absentes</li>
+    <li>Conversion de couleurs: énumération stable en chaîne</li>
+    <li>Corbeille: transformer soft‑delete (booléen) en table/flag équivalent</li>
+</ul>
+
+<h3>6.7 Qualité, tests et outillage / Quality, Tests, and Tooling</h3>
+
+<ul>
+    <li>Unitaires: parse/serialize Markdown & CSV (happy path + champs manquants, couleurs/Type inconnus)</li>
+    <li>Intégration: export→import (round‑trip) multi‑projets</li>
+    <li>UI tests: création, recherche, tri, duplication, corbeille, export/import</li>
+    <li>Outils recommandés:
+        <ul>
+            <li>iOS: XCTest, XCUITest</li>
+            <li>Kotlin/Android: JUnit, Espresso</li>
+            <li>.NET: xUnit/NUnit, Playwright pour desktop/web</li>
+        </ul>
+    </li>
+</ul>
+
+<h3>6.8 Performance</h3>
+
+<ul>
+    <li>Recherches en mémoire (modèle local) ; pour gros volumes: predicate/SQL côté persistance</li>
+    <li>Export/Import en streaming pour fichiers volumineux (optionnel sur autres plateformes)</li>
+</ul>
+
+<h3>6.9 Accessibilité</h3>
+
+<ul>
+    <li>Labels et traits pour VoiceOver/TalkBack</li>
+    <li>Contrastes des couleurs (pastilles) ; tailles dynamiques</li>
+</ul>
+
+<h3>6.10 Internationale/Localisation</h3>
+
+<ul>
+    <li>Chaînes en français actuellement; prévoir fichiers de ressources pour i18n</li>
+</ul>
+
+<h3>6.11 Packaging et distribution</h3>
+
+<ul>
+    <li>iOS: App Store / TestFlight</li>
+    <li>macOS: App Store / Notarisation (Build natif arm64)</li>
+    <li>Android: APK/AAB (Play Store) - <em>Prévu</em></li>
+    <li>Desktop Windows: MSIX - <em>Prévu</em></li>
+</ul>
+
+<h3>6.12 Exemples de formats / Format Examples</h3>
+
+<h4>Exemple Markdown (multi‑projets)</h4>
+
+<pre><code># Projet Alpha
+&gt; Detail: Description courte
+
+## Prévol [type=checklist][color=yellow]
+- [x] Batterie ::: 12.6V
+- [ ] Essence
+
+---
+
+# Projet Bravo
+## Tâches [type=todo][color=blue]
+- [ ] Appeler tour
+</code></pre>
+
+<h4>Exemple CSV (multi‑projets)</h4>
+
+<pre><code>ProjectTitle,ChecklistTitle,Type,Color,ItemOrder,Checked,Text,Note
+Alpha,Prévol,checklist,yellow,0,1,Batterie,12.6V
+Alpha,Prévol,checklist,yellow,1,0,Essence,
+Bravo,Tâches,todo,blue,0,0,Appeler tour,
+</code></pre>
+
+<hr>
+
+<h2>7. Export en PDF/DOCX (optionnel)</h2>
+
+<ul>
+    <li>PDF avec macOS: Ouvrir le fichier Markdown dans TextEdit → Fichier &gt; Exporter en PDF</li>
+    <li>DOCX/PDF multi‑plateforme: utiliser Pandoc</li>
+</ul>
+
+<pre><code>pandoc README.md -o SkyNotes-Spec-v1.0.docx
+pandoc README.md -o SkyNotes-Spec-v1.0.pdf
+</code></pre>
+
+</body>
+</html>
