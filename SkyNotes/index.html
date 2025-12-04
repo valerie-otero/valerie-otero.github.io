@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyNotes - Notes projet & Checklists</title>
+    <style>
+        :root {
+            --primary-color: #007AFF;
+            --bg-color: #F5F5F7;
+            --text-color: #1D1D1F;
+            --card-bg: #FFFFFF;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--card-bg);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 22px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #89CFF0 0%, #007AFF 100%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,122,255,0.3);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .subtitle {
+            color: #86868B;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .download-badge {
+            display: inline-block;
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1.5rem;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #86868B;
+            font-size: 0.9rem;
+        }
+        a { color: var(--primary-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.png" alt="SkyNotes Logo" style="width: 100%; height: 100%; border-radius: 22px;">
+    </div>
+    <h1>SkyNotes</h1>
+    <p class="subtitle">Notes structurées & Checklists pour vos projets</p>
+    <a href="https://apps.apple.com/app/skynotes/id6755604004" class="download-badge">Télécharger sur l'App Store</a>
+</header>
+
+<main>
+    <section>
+        <h2>Simplicité et Efficacité</h2>
+        <p>SkyNotes est conçue pour être simple, rapide et fiable, en vol comme au sol. Organisez vos idées, préparez vos missions et ne manquez aucune étape grâce aux checklists colorées.</p>
+        
+        <div style="margin-top: 2rem; text-align: center;">
+            <video autoplay muted loop playsinline controls style="max-width: 300px; width: 100%; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                <source src="SkyNotes.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la balise vidéo.
+            </video>
+        </div>
+    </section>
+
+    <div class="feature-grid">
+        <div class="card">
+            <h3>📂 Projets</h3>
+            <p>Créez un projet par sujet (brief, mission, formation). Tout est rangé et accessible rapidement.</p>
+        </div>
+        <div class="card">
+            <h3>✅ Checklists Colorées</h3>
+            <p>Associez des couleurs à vos listes pour une identification visuelle immédiate. Type Checklist ou To-Do.</p>
+        </div>
+        <div class="card">
+            <h3>📝 Modèles</h3>
+            <p>Gagnez du temps en créant des modèles réutilisables pour vos procédures fréquentes.</p>
+        </div>
+        <div class="card">
+            <h3>🔄 Import / Export</h3>
+            <p>Vos données vous appartiennent. Exportez en Markdown ou CSV pour archiver ou partager.</p>
+        </div>
+        <div class="card">
+            <h3>🔍 Recherche Rapide</h3>
+            <p>Retrouvez instantanément un projet ou une note grâce au moteur de recherche intégré.</p>
+        </div>
+
+    </div>
+
+    <section style="margin-top: 3rem;">
+        <div class="card" style="background: linear-gradient(to bottom right, #ffffff, #f0f8ff); border: 1px solid #e1e4e8;">
+            <h2 style="margin-top: 0; color: #007AFF; text-align: center;">✨ Nouveautés v1.1</h2>
+            <ul style="list-style: none; padding: 0; margin: 1rem 0 0 0;">
+                <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0;">🚀</span>
+                    <strong>Contenu de démarrage :</strong> Un guide interactif pour prendre en main l'app immédiatement.
+                </li>
+                <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0;">☕️</span>
+                    <strong>Tip Jar :</strong> Soutenez le développement de l'application directement depuis les réglages.
+                </li>
+                <li style="padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0;">🌍</span>
+                    <strong>Langues :</strong> Support complet Anglais / Français.
+                </li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 Valérie Otero. Tous droits réservés.</p>
+    <p>
+        <a href="privacy_policy.html">Politique de confidentialité</a> | 
+        <a href="mailto:valerie.otero@free.fr">Support</a>
+    </p>
+</footer>
+
+</body>
+</html>
