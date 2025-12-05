@@ -9,8 +9,10 @@ Chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad. Conçu 
 
 - Multiples chronomètres + 1 totalisateur global
 - Dispositions adaptables: Triangle, Grille, ou Libre (drag & drop)
+- Gestion de profils: Sauvegardez et chargez instantanément vos configurations (noms, alarmes, positions)
 - Redimensionnement précis (pincement avec stabilisation, pas de 0,01/0,02)
-- Alarmes visuelles et sonores par piste, avec répétition jusqu’à arrêt
+- Alarmes visuelles (flash + jauge de progression) et sonores par piste
+- Retour haptique (vibrations) paramétrable
 - Choix de sons système intégrés avec pré-écoute (pas d’ID numériques visibles)
 - Styles personnalisables (forme, bordure, échelle des chiffres, couleur, nom)
 - Verrouillage de remise à zéro (sécurité anti-fausses manips)
@@ -47,9 +49,12 @@ Avertissement: AirMultiChrono est un outil d’assistance. Il ne remplace pas le
 - Mode Édition (Libre):
   - Déplacer un cadran: glisser-déposer.
   - Redimensionner un cadran: pincer; la taille est stabilisée (deadzone ~1,5%, lissage, pas 0,01). Relâchement = petit “snap” propre.
+- Profils:
+  - Via le menu, accédez à "Profils" pour sauvegarder la configuration actuelle ou en charger une existante.
 - Totalisateur global:
   - Pincer pour ajuster l’échelle (stabilisé, plage 0,5–3,0, pas 0,02).
   - Bouton “stylo” pour régler au pas fin si besoin.
+  - Remise à zéro spécifique via le menu Réglages > RAZ Chrono Global.
 - Styles (par piste): forme (rond/carré), bordure, échelle des chiffres, couleur, échelle du nom.
 - Verrou “reset”: empêche la remise à zéro accidentelle.
 
@@ -58,7 +63,7 @@ Tout est enregistré automatiquement (positions, tailles, styles, alarmes, sons,
 
 ## Alarmes (par piste)
 
-- Types: visuelle (flash) et sonore (sons système iOS)
+- Types: visuelle (flash + barre de progression), sonore (sons système iOS) et haptique (vibrations)
 - Pré-écoute: choisissez un son et testez-le immédiatement
 - Répétition: le son se répète tant que l’alarme est “latchée” (jusqu’à OFF ou changement de chrono)
 - Modes de déclenchement:
@@ -100,7 +105,7 @@ Tout est enregistré automatiquement (positions, tailles, styles, alarmes, sons,
 ## Dépannage rapide (FAQ)
 
 - Je ne vois plus la bascule FR/EN de la politique dans l’app: l’app ouvre désormais la page Web dans la langue de l’OS, et affiche le lien (avec bouton copier).
-- Les vibrations n’existent pas? Oui, le mode haptique a été retiré. Utilisez les sons système.
+- Les vibrations fonctionnent-elles ? Oui, le retour haptique est activé par défaut sur les iPhone. Vous pouvez le désactiver dans le menu Réglages. (Non disponible sur iPad).
 - Le son ne s’arrête pas: il se répète tant que l’alarme visuelle est active; passez OFF ou changez de chrono.
 - Le pincement “saute”: le lissage est actif; relâchez pour un snap propre au pas fin. Dites-nous si vous voulez une sensibilité différente.
 
@@ -136,8 +141,10 @@ Simple, powerful, and reliable multi-track stopwatch for iPhone and iPad. Design
 
 - Multiple timers + 1 global totalizer
 - Adaptable layouts: Triangle, Grid, or Free (drag & drop)
+- Profile Management: Save and load your configurations instantly (names, alarms, positions)
 - Precise resizing (pinch with stabilization, no 0.01/0.02 jitter)
-- Visual and sound alarms per track, repeating until stopped
+- Visual alarms (flash + progress gauge) and sound alarms per track
+- Haptic feedback (vibration) customizable
 - Choice of built-in system sounds with preview (no visible numeric IDs)
 - Customizable styles (shape, border, digit scale, color, name)
 - Reset lock (protection against accidental resets)
@@ -174,9 +181,12 @@ Warning: AirMultiChrono is an assistance tool. It does not replace official proc
 - Edit Mode (Free):
   - Move a dial: drag and drop.
   - Resize a dial: pinch; size is stabilized (deadzone ~1.5%, smoothing, no 0.01). Release = clean small "snap".
+- Profiles:
+  - Via the menu, access "Profiles" to save the current configuration or load an existing one.
 - Global Totalizer:
   - Pinch to adjust scale (stabilized, range 0.5–3.0, step 0.02).
   - "Pencil" button to adjust with fine steps if needed.
+  - Specific reset via Settings menu > Reset Global Timer.
 - Styles (per track): shape (round/square), border, digit scale, color, name scale.
 - "Reset" Lock: prevents accidental reset.
 
@@ -185,7 +195,7 @@ Everything is saved automatically (positions, sizes, styles, alarms, sounds, glo
 
 ## Alarms (per track)
 
-- Types: visual (flash) and sound (iOS system sounds)
+- Types: visual (flash + progress bar), sound (iOS system sounds), and haptic (vibration)
 - Preview: choose a sound and test it immediately
 - Repetition: sound repeats as long as the alarm is "latched" (until OFF or timer change)
 - Trigger Modes:
@@ -227,7 +237,7 @@ Everything is saved automatically (positions, sizes, styles, alarms, sounds, glo
 ## Quick Troubleshooting (FAQ)
 
 - I don't see the FR/EN toggle for the policy in the app anymore: the app now opens the Web page in the OS language, and displays the link (with copy button).
-- Do vibrations exist? Yes, but haptic mode has been removed in favor of system sounds.
+- Do vibrations work? Yes, haptic feedback is enabled by default on iPhones. You can disable it in the Settings menu. (Not available on iPad).
 - The sound doesn't stop: it repeats as long as the visual alarm is active; switch OFF or change timer.
 - The pinch "jumps": smoothing is active; release for a clean snap at the fine step. Let us know if you want different sensitivity.
 

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirMultiChrono - Le chronomètre multi-voies ultime</title>
+    <meta name="description" content="AirMultiChrono : Chronomètre multi-voies pour iPhone et iPad. Idéal pour l'aviation, le sport et la cuisine. Profils, alarmes visuelles, haptique.">
+    <style>
+        :root {
+            --primary: #007aff;
+            --bg: #ffffff;
+            --text: #1d1d1f;
+            --secondary-text: #86868b;
+            --section-bg: #f5f5f7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 44px;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .lang-switch {
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--primary);
+            background: none;
+            border: 1px solid var(--primary);
+            padding: 4px 10px;
+            border-radius: 15px;
+            transition: all 0.2s;
+        }
+
+        .lang-switch:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--secondary-text);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-weight: 400;
+        }
+
+        .app-store-badge {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .app-store-badge:hover {
+            transform: scale(1.05);
+        }
+
+        /* Features */
+        .features {
+            background: var(--section-bg);
+            padding: 80px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            margin: 0 0 10px;
+            font-size: 20px;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: var(--secondary-text);
+        }
+
+        /* Use Cases */
+        .use-cases {
+            padding: 80px 0;
+        }
+
+        .use-cases h2, .features h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        .use-case-item {
+            margin-bottom: 30px;
+        }
+
+        .use-case-item h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background: #f5f5f7;
+            padding: 40px 0;
+            font-size: 12px;
+            color: var(--secondary-text);
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .footer-links a {
+            color: var(--secondary-text);
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero p { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <img src="AirMultiChrono.png" alt="AirMultiChrono Logo" style="height: 32px; vertical-align: middle; margin-right: 8px;">
+                AirMultiChrono
+            </a>
+            <button class="lang-switch" onclick="toggleLanguage()">English</button>
+        </div>
+    </header>
+
+    <!-- FRENCH CONTENT -->
+    <div id="content-fr">
+        <section class="hero container">
+            <h1>Maîtrisez le temps.<br>En toute simplicité.</h1>
+            <p>Le chronomètre multi-voies conçu pour les pilotes, les pros et les passionnés. Profils, alarmes visuelles et précision absolue.</p>
+            
+            <div style="margin: 30px 0;">
+                <video width="100%" style="max-width: 300px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" controls poster="AirMultiChrono.png">
+                    <source src="AirMultiChrono (Nouvelle version pour iOS).mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+            </div>
+
+            <a href="https://apps.apple.com/app/airmultichrono/id6754513036" class="app-store-badge">Télécharger sur l'App Store</a>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Nouveautés Version 1.3</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📂</div>
+                        <h3>Profils de Configuration</h3>
+                        <p>Sauvegardez vos dispositions, noms et alarmes. Passez d'un avion à un autre ou d'une activité à une autre en un instant.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Jauge Visuelle</h3>
+                        <p>Une barre de progression fluide sous chaque chrono pour visualiser le temps restant avant l'alarme en un coup d'œil.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📳</div>
+                        <h3>Retour Haptique</h3>
+                        <p>Ressentez chaque action. Des vibrations subtiles confirment vos démarrages, arrêts et réinitialisations (iPhone).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="use-cases container">
+            <h2>Pourquoi AirMultiChrono ?</h2>
+            <div class="use-case-item">
+                <h3>✈️ Aviation & VFR</h3>
+                <p>Gérez vos réservoirs (G/D) et vos temps de navigation. Le totalisateur global suit votre temps de vol. Fonctionne 100% hors ligne.</p>
+            </div>
+            <div class="use-case-item">
+                <h3>🍳 Cuisine & Quotidien</h3>
+                <p>Lancez plusieurs cuissons en parallèle. Chaque feu a son chrono, avec des alarmes distinctes.</p>
+            </div>
+            <div class="use-case-item">
+                <h3>🔒 Vie Privée</h3>
+                <p>Aucune collecte de données. Aucun compte requis. Tout reste sur votre appareil.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- ENGLISH CONTENT -->
+    <div id="content-en" class="hidden">
+        <section class="hero container">
+            <h1>Master your time.<br>Simply powerful.</h1>
+            <p>The multi-track stopwatch designed for pilots, pros, and enthusiasts. Profiles, visual alarms, and absolute precision.</p>
+            
+            <div style="margin: 30px 0;">
+                <video width="100%" style="max-width: 300px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" controls poster="AirMultiChrono.png">
+                    <source src="AirMultiChrono (Nouvelle version pour iOS).mp4" type="video/mp4">
+                    Your browser does not support video playback.
+                </video>
+            </div>
+
+            <a href="https://apps.apple.com/app/airmultichrono/id6754513036" class="app-store-badge">Download on the App Store</a>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>New in Version 1.3</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📂</div>
+                        <h3>Configuration Profiles</h3>
+                        <p>Save your layouts, names, and alarms. Switch between aircraft or activities instantly.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Visual Gauge</h3>
+                        <p>A fluid progress bar under each timer lets you visualize time remaining before alarm at a glance.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📳</div>
+                        <h3>Haptic Feedback</h3>
+                        <p>Feel every action. Subtle vibrations confirm your starts, stops, and resets (iPhone).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="use-cases container">
+            <h2>Why AirMultiChrono?</h2>
+            <div class="use-case-item">
+                <h3>✈️ Aviation & VFR</h3>
+                <p>Manage your fuel tanks (L/R) and navigation legs. The global totalizer tracks your flight time. Works 100% offline.</p>
+            </div>
+            <div class="use-case-item">
+                <h3>🍳 Cooking & Daily Life</h3>
+                <p>Run multiple timers in parallel. Each burner gets its own chrono with distinct alarms.</p>
+            </div>
+            <div class="use-case-item">
+                <h3>🔒 Privacy First</h3>
+                <p>No data collection. No account required. Everything stays on your device.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="PrivacyPolicy.html" id="link-privacy">Politique de confidentialité</a>
+                <a href="mailto:valerie.otero@free.fr" id="link-contact">Contact / Support</a>
+            </div>
+            <p style="margin-top: 20px;">&copy; 2025 Valérie Otero. AirMultiChrono.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentLang = 'fr';
+
+        function toggleLanguage() {
+            const fr = document.getElementById('content-fr');
+            const en = document.getElementById('content-en');
+            const btn = document.querySelector('.lang-switch');
+            const linkPrivacy = document.getElementById('link-privacy');
+            
+            if (currentLang === 'fr') {
+                // Switch to EN
+                fr.classList.add('hidden');
+                en.classList.remove('hidden');
+                btn.textContent = 'Français';
+                document.documentElement.lang = 'en';
+                document.title = "AirMultiChrono - The ultimate multi-track stopwatch";
+                linkPrivacy.textContent = "Privacy Policy";
+                linkPrivacy.href = "PrivacyPolicy.html#en";
+                currentLang = 'en';
+            } else {
+                // Switch to FR
+                en.classList.add('hidden');
+                fr.classList.remove('hidden');
+                btn.textContent = 'English';
+                document.documentElement.lang = 'fr';
+                document.title = "AirMultiChrono - Le chronomètre multi-voies ultime";
+                linkPrivacy.textContent = "Politique de confidentialité";
+                linkPrivacy.href = "PrivacyPolicy.html#fr";
+                currentLang = 'fr';
+            }
+        }
+
+        // Auto-detect language
+        const userLang = navigator.language || navigator.userLanguage;
+        if (userLang.startsWith('en')) {
+            toggleLanguage();
+        }
+    </script>
+</body>
+</html>

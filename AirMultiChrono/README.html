@@ -80,8 +80,10 @@
         <ul>
             <li>Multiples chronomètres + 1 totalisateur global</li>
             <li>Dispositions adaptables: Triangle, Grille, ou Libre (drag & drop)</li>
+            <li>Gestion de profils: Sauvegardez et chargez instantanément vos configurations (noms, alarmes, positions)</li>
             <li>Redimensionnement précis (pincement avec stabilisation, pas de 0,01/0,02)</li>
-            <li>Alarmes visuelles et sonores par piste, avec répétition jusqu’à arrêt</li>
+            <li>Alarmes visuelles (flash + jauge de progression) et sonores par piste</li>
+            <li>Retour haptique (vibrations) paramétrable</li>
             <li>Choix de sons système intégrés avec pré-écoute (pas d’ID numériques visibles)</li>
             <li>Styles personnalisables (forme, bordure, échelle des chiffres, couleur, nom)</li>
             <li>Verrouillage de remise à zéro (sécurité anti-fausses manips)</li>
@@ -131,10 +133,16 @@
                     <li>Redimensionner un cadran: pincer; la taille est stabilisée (deadzone ~1,5%, lissage, pas 0,01). Relâchement = petit “snap” propre.</li>
                 </ul>
             </li>
+            <li><strong>Profils:</strong>
+                <ul>
+                    <li>Via le menu, accédez à "Profils" pour sauvegarder la configuration actuelle ou en charger une existante.</li>
+                </ul>
+            </li>
             <li><strong>Totalisateur global:</strong>
                 <ul>
                     <li>Pincer pour ajuster l’échelle (stabilisé, plage 0,5–3,0, pas 0,02).</li>
                     <li>Bouton “stylo” pour régler au pas fin si besoin.</li>
+                    <li>Remise à zéro spécifique via le menu Réglages > RAZ Chrono Global.</li>
                 </ul>
             </li>
             <li><strong>Styles (par piste):</strong> forme (rond/carré), bordure, échelle des chiffres, couleur, échelle du nom.</li>
@@ -144,7 +152,7 @@
 
         <h2>Alarmes (par piste)</h2>
         <ul>
-            <li><strong>Types:</strong> visuelle (flash) et sonore (sons système iOS)</li>
+            <li><strong>Types:</strong> visuelle (flash + barre de progression), sonore (sons système iOS) et haptique (vibrations)</li>
             <li><strong>Pré-écoute:</strong> choisissez un son et testez-le immédiatement</li>
             <li><strong>Répétition:</strong> le son se répète tant que l’alarme est “latchée” (jusqu’à OFF ou changement de chrono)</li>
             <li><strong>Modes de déclenchement:</strong>
@@ -195,7 +203,7 @@
         <h2>Dépannage rapide (FAQ)</h2>
         <ul>
             <li><strong>Je ne vois plus la bascule FR/EN de la politique dans l’app:</strong> l’app ouvre désormais la page Web dans la langue de l’OS, et affiche le lien (avec bouton copier).</li>
-            <li><strong>Les vibrations n’existent pas?</strong> Oui, le mode haptique a été retiré. Utilisez les sons système.</li>
+            <li><strong>Les vibrations fonctionnent-elles ?</strong> Oui, le retour haptique est activé par défaut sur les iPhone. Vous pouvez le désactiver dans le menu Réglages. (Non disponible sur iPad).</li>
             <li><strong>Le son ne s’arrête pas:</strong> il se répète tant que l’alarme visuelle est active; passez OFF ou changez de chrono.</li>
             <li><strong>Le pincement “saute”:</strong> le lissage est actif; relâchez pour un snap propre au pas fin. Dites-nous si vous voulez une sensibilité différente.</li>
         </ul>
@@ -238,8 +246,10 @@
         <ul>
             <li>Multiple timers + 1 global totalizer</li>
             <li>Adaptable layouts: Triangle, Grid, or Free (drag & drop)</li>
+            <li>Profile Management: Save and load your configurations instantly (names, alarms, positions)</li>
             <li>Precise resizing (pinch with stabilization, no 0.01/0.02 jitter)</li>
-            <li>Visual and sound alarms per track, repeating until stopped</li>
+            <li>Visual alarms (flash + progress gauge) and sound alarms per track</li>
+            <li>Haptic feedback (vibration) customizable</li>
             <li>Choice of built-in system sounds with preview (no visible numeric IDs)</li>
             <li>Customizable styles (shape, border, digit scale, color, name)</li>
             <li>Reset lock (protection against accidental resets)</li>
@@ -289,10 +299,16 @@
                     <li>Resize a dial: pinch; size is stabilized (deadzone ~1.5%, smoothing, no 0.01). Release = clean small "snap".</li>
                 </ul>
             </li>
+            <li><strong>Profiles:</strong>
+                <ul>
+                    <li>Via the menu, access "Profiles" to save the current configuration or load an existing one.</li>
+                </ul>
+            </li>
             <li><strong>Global Totalizer:</strong>
                 <ul>
                     <li>Pinch to adjust scale (stabilized, range 0.5–3.0, step 0.02).</li>
                     <li>"Pencil" button to adjust with fine steps if needed.</li>
+                    <li>Specific reset via Settings menu > Reset Global Timer.</li>
                 </ul>
             </li>
             <li><strong>Styles (per track):</strong> shape (round/square), border, digit scale, color, name scale.</li>
@@ -302,7 +318,7 @@
 
         <h2>Alarms (per track)</h2>
         <ul>
-            <li><strong>Types:</strong> visual (flash) and sound (iOS system sounds)</li>
+            <li><strong>Types:</strong> visual (flash + progress bar), sound (iOS system sounds), and haptic (vibration)</li>
             <li><strong>Preview:</strong> choose a sound and test it immediately</li>
             <li><strong>Repetition:</strong> sound repeats as long as the alarm is "latched" (until OFF or timer change)</li>
             <li><strong>Trigger Modes:</strong>
@@ -353,7 +369,7 @@
         <h2>Quick Troubleshooting (FAQ)</h2>
         <ul>
             <li><strong>I don't see the FR/EN toggle for the policy in the app anymore:</strong> the app now opens the Web page in the OS language, and displays the link (with copy button).</li>
-            <li><strong>Do vibrations exist?</strong> Yes, but haptic mode has been removed in favor of system sounds.</li>
+            <li><strong>Do vibrations work?</strong> Yes, haptic feedback is enabled by default on iPhones. You can disable it in the Settings menu. (Not available on iPad).</li>
             <li><strong>The sound doesn't stop:</strong> it repeats as long as the visual alarm is active; switch OFF or change timer.</li>
             <li><strong>The pinch "jumps":</strong> smoothing is active; release for a clean snap at the fine step. Let us know if you want different sensitivity.</li>
         </ul>

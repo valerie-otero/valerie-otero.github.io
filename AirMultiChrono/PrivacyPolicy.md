@@ -4,7 +4,7 @@ This document contains the full privacy policy in both French and English.
 
 ## Français (FR)
 
-**Date d’effet :** 5 novembre 2025  
+**Date d’effet :** 5 décembre 2025  
 **Version :** 1.2  
 **Développeuse :** Valérie Otero  
 **Contact :** [valerie.otero@free.fr](mailto:valerie.otero@free.fr)
@@ -31,7 +31,7 @@ AirMultiChrono fonctionne entièrement hors ligne et ne nécessite aucune inform
 
 ### FR — Comment vos données sont stockées
 
-Vos données de chronomètre et préférences sont stockées localement sur votre appareil. Ces données ne quittent jamais votre appareil, sauf si vous choisissez de les exporter ou partager via les fonctionnalités iOS.
+Vos données de chronomètre, profils sauvegardés et préférences sont stockées localement sur votre appareil. Ces données ne quittent jamais votre appareil, sauf si vous choisissez de les exporter ou partager via les fonctionnalités iOS.
 
 - **Emplacement :** Stockées en sécurité dans le stockage local de votre appareil.
 - **Accès :** Uniquement accessible par vous via l’app.
@@ -87,7 +87,7 @@ Des questions ? Envoyez-nous un email à [valerie.otero@free.fr](mailto:valerie.
 
 ## English (EN)
 
-**Effective Date:** November 5, 2025  
+**Effective Date:** December 5, 2025  
 **Version:** 1.2  
 **Developer:** Valérie Otero  
 **Contact:** [valerie.otero@free.fr](mailto:valerie.otero@free.fr)
@@ -101,22 +101,20 @@ Thank you for using AirMultiChrono! This app is designed to respect your privacy
 - **Tracking:** None
 - **Storage:** Local only
 - **Third-Party Services:** None
-- **Children's Privacy:** No data collected from children under 13
+- **Children:** No data collected from children under 13
 
 ### EN — Information We Collect
 
-AirMultiChrono operates entirely offline and requires no personal information. There is no account creation, login, or data transmission.
+AirMultiChrono works entirely offline and requires no personal information. There is no account creation, login, or data transmission.
 
-- **Personal Information:** We do not request your name, email, phone number, or any identifiers.
+- **Personal Information:** We do not ask for your name, email, phone number, or identifiers.
 - **Device Data:** No access to location, contacts, photos, or other sensitive permissions.
 - **Usage Data:** No tracking of app usage, crash reports, or performance metrics.
 - **Purchases:** No in-app purchases or payment information.
 
 ### EN — How Your Data Is Stored
 
-Your chronometer data and preferences are stored locally on your device. This data never leaves your device unless you choose to export or share it through iOS features.
-
-- **Location:** Stored securely in your device's local storage.
+Your stopwatch data, saved profiles, and preferences are stored locally on your device. This data never leaves your device unless you choose to export or share it via iOS features.- **Location:** Stored securely in your device's local storage.
 - **Access:** Only accessible by you through the app.
 - **Retention:** Kept until you delete it or uninstall the app.
 - **Security:** Protected by your device's built-in security.

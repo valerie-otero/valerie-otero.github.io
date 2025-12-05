@@ -1,0 +1,77 @@
+# INFORMATIONS APP STORE CONNECT - VERSION 1.3
+
+## VERSION
+1.3
+
+---
+
+## FRANÇAIS (FR)
+
+### Nouveautés (What's New)
+- **Profils de configuration** : Sauvegardez et chargez instantanément vos configurations de chronomètres (disposition, noms, alarmes). Idéal pour passer d'un avion à un autre ou d'une activité à une autre.
+- **Jauge visuelle** : Une nouvelle barre de progression fluide s'affiche sous le temps pour visualiser l'avancement vers l'alarme (compatible modes absolu et répétition).
+- **Retour haptique** : Ressentez les actions avec des vibrations subtiles (iPhone uniquement, désactivable).
+- **RAZ Global** : Nouvelle option dans le menu pour remettre à zéro uniquement le totalisateur global sans toucher aux chronos individuels.
+- Améliorations de performance et animations plus fluides.
+
+### Mots-clés (Keywords)
+chronomètre, aviation, vol, réservoir, navigation, minuteur, multi, alarme, profil, haptique, jauge, vfr, pilote, cuisine, sport
+
+### Texte promotionnel (Promotional Text)
+Gérez vos temps de vol et vos réservoirs avec encore plus de précision grâce aux nouveaux Profils et à la Jauge Visuelle.
+
+### Description (Mise à jour suggérée)
+AirMultiChrono est le chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad.
+
+NOUVEAU DANS LA VERSION 1.3 :
+• GESTION DE PROFILS : Enregistrez vos configurations complètes (disposition, noms, réglages d'alarmes) et chargez-les en un instant. Parfait pour gérer différents avions ou types de missions.
+• JAUGE VISUELLE : Visualisez le temps restant avant l'alarme grâce à une barre de progression fluide intégrée à chaque cadran.
+• RETOUR HAPTIQUE : Confirmation tactile des actions (iPhone).
+• RAZ GLOBAL : Remettez à zéro le totalisateur indépendamment des autres chronos.
+
+FONCTIONNALITÉS CLÉS :
+• Multiples chronomètres indépendants + 1 totalisateur global.
+• Dispositions adaptables : Triangle, Grille ou Libre (glisser-déposer).
+• Redimensionnement précis par pincement stabilisé.
+• Alarmes visuelles (flash + jauge) et sonores (sons système).
+• Fonctionne hors ligne, aucune collecte de données.
+
+---
+
+## ENGLISH (EN)
+
+### What's New
+- **Configuration Profiles**: Instantly save and load your stopwatch setups (layout, names, alarms). Perfect for switching between aircraft or activities.
+- **Visual Gauge**: A new fluid progress bar appears below the time to visualize progress towards the alarm (supports absolute and repeat modes).
+- **Haptic Feedback**: Feel your actions with subtle vibrations (iPhone only, toggleable).
+- **Global Reset**: New menu option to reset only the global totalizer without affecting individual timers.
+- Performance improvements and smoother animations.
+
+### Keywords
+stopwatch, aviation, flight, tank, navigation, timer, multi, alarm, profile, haptic, gauge, vfr, pilot, cooking, sport
+
+### Promotional Text
+Manage your flight times and tanks with even more precision using the new Profiles and Visual Gauge.
+
+### Description (Suggested Update)
+AirMultiChrono is the simple, powerful, and reliable multi-track stopwatch for iPhone and iPad.
+
+NEW IN VERSION 1.3:
+• PROFILE MANAGEMENT: Save your complete configurations (layout, names, alarm settings) and load them instantly. Perfect for managing different aircraft or mission types.
+• VISUAL GAUGE: Visualize time remaining before alarm with a fluid progress bar integrated into each dial.
+• HAPTIC FEEDBACK: Tactile confirmation of actions (iPhone).
+• GLOBAL RESET: Reset the totalizer independently of other timers.
+
+KEY FEATURES:
+• Multiple independent timers + 1 global totalizer.
+• Adaptable layouts: Triangle, Grid, or Free (drag & drop).
+• Precise resizing with stabilized pinch.
+• Visual (flash + gauge) and sound alarms (system sounds).
+• Works offline, no data collection.
+
+---
+
+## URLS
+Support URL: https://github.com/valerie-otero/AirMultiChrono/issues
+Privacy Policy URL: https://valerie-otero.github.io/AirMultiChrono/PrivacyPolicy.html
+Marketing URL: https://valerie-otero.github.io/AirMultiChrono/
