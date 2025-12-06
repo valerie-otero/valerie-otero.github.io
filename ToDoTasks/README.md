@@ -2,7 +2,7 @@
 
 **ToDoTasks** est une application de gestion de tâches simple, élégante et efficace pour macOS. Conçue pour vous aider à organiser votre quotidien, elle permet de gérer plusieurs listes de tâches (Travail, Personnel, Courses, etc.) dans une interface claire et intuitive.
 
-![App Icon](../TodoList/Assets.xcassets/AppIcon.appiconset/Icon-1024.png)
+![App Icon](Logo.png)
 
 ## Fonctionnalités Principales
 
