@@ -21,6 +21,7 @@ QuantumPass n'est pas seulement un outil pour sécuriser vos comptes, c'est auss
     *   **Pseudo-Aléatoire :** Comprendre les limites des algorithmes classiques.
     *   **Quantique (QRNG) :** Simuler l'aléatoire véritable basé sur des phénomènes quantiques.
     *   **Blockchain :** Explorer l'aléatoire décentralisé.
+*   **Expérience Utilisateur :** Interface soignée avec retours tactiles améliorés pour une navigation fluide.
 *   **Confidentialité Totale :** Aucune donnée n'est collectée. Tout reste sur votre appareil.
 *   **Tip Jar :** Soutenez le développement de l'application via des achats in-app sécurisés.
 
@@ -49,8 +50,7 @@ QuantumPass is an innovative iOS application that combines a secure password gen
 *   **Random Number Generators (RNG):**
     *   **Pseudo-Random:** Understand the limits of classical algorithms.
     *   **Quantum (QRNG):** Simulate true randomness based on quantum phenomena.
-    *   **Blockchain:** Explore decentralized randomness.
-*   **Total Privacy:** No data is collected. Everything stays on your device.
+    *   **Blockchain:** Explore decentralized randomness.*   **User Experience:** Polished interface with improved touch feedback for smooth navigation.*   **Total Privacy:** No data is collected. Everything stays on your device.
 *   **Tip Jar:** Support the app development via secure in-app purchases.
 
 ### Privacy
