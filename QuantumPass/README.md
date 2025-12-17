@@ -4,6 +4,10 @@
 
 # QuantumPass
 
+<p align="center">
+  <a href="#français-fr">Français</a> | <a href="#english-en">English</a>
+</p>
+
 **QuantumPass** est une application iOS innovante qui combine un générateur de mots de passe sécurisé avec une suite éducative sur la physique quantique et l'aléatoire.
 
 ---
