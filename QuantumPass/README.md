@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" alt="QuantumPass Logo" width="120">
+</p>
+
 # QuantumPass
 
 **QuantumPass** est une application iOS innovante qui combine un générateur de mots de passe sécurisé avec une suite éducative sur la physique quantique et l'aléatoire.
@@ -40,7 +44,8 @@ Une suite complète pour sécuriser vos accès :
 
 ### Compatibilité
 *   iOS 16 ou supérieur
-*   iPhone et iPad
+*   macOS 13 ou supérieur
+*   iPhone, iPad et Mac
 
 ### Contact
 Pour toute question ou suggestion, contactez Valérie Otero à [valerie.otero@free.fr](mailto:valerie.otero@free.fr).
@@ -83,7 +88,8 @@ A complete suite to secure your access:
 
 ### Compatibility
 *   iOS 16 or higher
-*   iPhone and iPad
+*   macOS 13 or higher
+*   iPhone, iPad and Mac
 
 ### Contact
 For any questions or suggestions, please contact Valérie Otero at [valerie.otero@free.fr](mailto:valerie.otero@free.fr).
