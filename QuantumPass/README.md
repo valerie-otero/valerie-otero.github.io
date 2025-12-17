@@ -40,6 +40,14 @@ Une suite complète pour sécuriser vos accès :
 *   **Éducation Aléatoire :** Panneaux interactifs comparant le Pseudo-Aléatoire (PRNG) et l'Aléatoire Véritable (TRNG) pour comprendre les enjeux de la cryptographie.
 *   **Quiz :** Testez vos connaissances avec un quiz interactif de 10 questions sur la sécurité et les concepts quantiques.
 
+### Captures d'écran
+<p align="center">
+  <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.19.png" width="180" />
+  <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.31.png" width="180" />
+  <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.47.png" width="180" />
+  <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.27.06.png" width="180" />
+</p>
+
 ### Confidentialité et données
 *   Aucune collecte de données personnelles.
 *   Aucun suivi. L'application fonctionne entièrement hors ligne pour ses fonctions principales.
@@ -83,7 +91,13 @@ A complete suite to secure your access:
 *   **Qubit Lab:** Manipulate a Qubit on the Bloch sphere. Apply quantum gates (Hadamard, Pauli-X, etc.) and observe state changes.
 *   **Randomness Education:** Interactive panels comparing Pseudo-Random (PRNG) and True Random (TRNG) to understand cryptography challenges.
 *   **Quiz:** Test your knowledge with a 10-question interactive quiz on security and quantum concepts.
-
+### Screenshots
+<p align="center">
+  <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.19.png" width="180" />
+  <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.31.png" width="180" />
+  <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.47.png" width="180" />
+  <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.27.06.png" width="180" />
+</p>
 ### Privacy and Data
 *   No personal data collection.
 *   No tracking. The application operates entirely offline for its main functions.

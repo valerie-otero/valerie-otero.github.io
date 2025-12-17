@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumPass - Sécurité Quantique pour iOS</title>
+    <meta name="description" content="Générateur de mots de passe sécurisé et éducation à la physique quantique. Confidentialité totale, sans collecte de données.">
+    <style>
+        :root {
+            --primary: #007aff;
+            --secondary: #5ac8fa;
+            --dark: #1c1c1e;
+            --light: #f2f2f7;
+            --text: #333;
+            --bg: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 40px 0;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(242,242,247,0.5) 0%, rgba(255,255,255,0) 100%);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0.5em 0;
+            background: -webkit-linear-gradient(45deg, #007aff, #5ac8fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        /* Language Switcher */
+        .lang-switch {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .lang-switch a {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 5px;
+            text-decoration: none;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .lang-switch a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        /* Privacy Badge */
+        .privacy-badge {
+            background-color: #e5fbf0;
+            color: #00a651;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 40px 0;
+            border: 1px solid #bbf7d6;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        /* Utility */
+        .hidden {
+            display: none;
+        }
+
+        .btn-download {
+            display: inline-block;
+            background-color: var(--dark);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: opacity 0.3s;
+        }
+        .btn-download:hover {
+            opacity: 0.9;
+        }
+    </style>
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.lang-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('content-' + lang).classList.remove('hidden');
+            
+            document.querySelectorAll('.lang-switch a').forEach(el => el.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <img src="logo.png" alt="QuantumPass Logo" class="logo">
+            <h1>QuantumPass</h1>
+            
+            <div class="lang-switch">
+                <a href="#" onclick="switchLang('fr'); return false;" id="btn-fr" class="active">Français</a>
+                <a href="#" onclick="switchLang('en'); return false;" id="btn-en">English</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- FRANÇAIS -->
+        <div id="content-fr" class="lang-content">
+            <div style="text-align: center;">
+                <p class="tagline">Sécurisez votre vie numérique avec la puissance de la physique quantique.</p>
+                <p>Une application iOS innovante combinant un générateur de mots de passe robuste et une suite éducative interactive.</p>
+                <!-- Placeholder for App Store Link -->
+                <!-- <a href="#" class="btn-download">Télécharger sur l'App Store</a> -->
+            </div>
+
+            <section>
+                <h2>Fonctionnalités Clés</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🔐</span>
+                        <div class="feature-title">Générateur Sécurisé</div>
+                        <p>Créez des mots de passe forts et des passphrases Diceware. Visualisez l'entropie en temps réel pour garantir une sécurité maximale.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚛️</span>
+                        <div class="feature-title">Éducation Quantique</div>
+                        <p>Découvrez le protocole BB84 et manipulez des Qubits sur la sphère de Bloch grâce à notre laboratoire interactif.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🎲</span>
+                        <div class="feature-title">Aléatoire Véritable</div>
+                        <p>Comprenez la différence entre PRNG et TRNG. Générez des clés Blockchain et des nombres aléatoires quantiques.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Captures d'écran</h2>
+                <div style="display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; scrollbar-width: none;">
+                    <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.19.png" height="400" style="border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.31.png" height="400" style="border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.47.png" height="400" style="border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.27.06.png" height="400" style="border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                </div>
+            </section>
+
+            <section>
+                <div class="privacy-badge">
+                    <h3>🛡️ Confidentialité Totale</h3>
+                    <p>Aucune collecte de données. Aucun suivi. Fonctionne 100% hors ligne.</p>
+                    <p><small>Vos secrets restent sur votre appareil.</small></p>
+                    <p><a href="PrivacyPolicy.html" style="color: inherit; text-decoration: underline;">Voir la politique de confidentialité</a></p>
+                </div>
+            </section>
+        </div>
+
+        <!-- ENGLISH -->
+        <div id="content-en" class="lang-content hidden">
+            <div style="text-align: center;">
+                <p class="tagline">Secure your digital life with the power of quantum physics.</p>
+                <p>An innovative iOS app combining a robust password generator with an interactive educational suite.</p>
+                <!-- Placeholder for App Store Link -->
+                <!-- <a href="#" class="btn-download">Download on the App Store</a> -->
+            </div>
+
+            <section>
+                <h2>Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🔐</span>
+                        <div class="feature-title">Secure Generator</div>
+                        <p>Create strong passwords and Diceware passphrases. Visualize entropy in real-time to ensure maximum security.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚛️</span>
+                        <div class="feature-title">Quantum Education</div>
+                        <p>Discover the BB84 protocol and manipulate Qubits on the Bloch sphere with our interactive laboratory.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🎲</span>
+                        <div class="feature-title">True Randomness</div>
+                        <p>Understand the difference between PRNG and TRNG. Generate Blockchain keys and quantum random numbers.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Screenshots</h2>
+                <div style="display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; scrollbar-width: none;">
+                    <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.19.png" height="400" style="border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.31.png" height="400" style="border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.26.47.png" height="400" style="border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img src="screen/iphone6,5/Simulator Screenshot - iPhone 17 Pro Max - 2025-12-17 at 10.27.06.png" height="400" style="border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                </div>
+            </section>
+
+            <section>
+                <div class="privacy-badge">
+                    <h3>🛡️ Total Privacy</h3>
+                    <p>No data collection. No tracking. Works 100% offline.</p>
+                    <p><small>Your secrets stay on your device.</small></p>
+                    <p><a href="PrivacyPolicy.html" style="color: inherit; text-decoration: underline;">View Privacy Policy</a></p>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 QuantumPass — Valérie Otero</p>
+            <p>
+                <a href="mailto:valerie.otero@free.fr">Contact</a> | 
+                <a href="PrivacyPolicy.html">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
