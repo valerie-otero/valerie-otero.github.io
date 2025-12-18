@@ -1,65 +1,111 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Présentation</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f9fafb;
-      color: #222;
-      margin: 0;
-      padding: 2em;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    main {
-      max-width: 700px;
-      background: white;
-      padding: 2em 3em;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-    h1 {
-      margin-top: 0;
-      font-size: 2.2em;
-    }
-    p {
-      line-height: 1.6;
-      font-size: 1.1em;
-    }
-    a {
-      color: #0070c9;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      margin-top: 2em;
-      font-size: 0.9em;
-      color: #888;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Applications - Portfolio</title>
+    <link rel="stylesheet" href="Assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-  <main>
-    <h1>Bienvenue</h1>
-    <p>Page personnelle de présentation.</p>
-    <p>
-      Je suis <strong>musicienne professionnelle</strong> et <strong>pilote d’avion</strong> à mes heures libres.<br>
-      Passionnée de technologies, d’aéronautique et de design minimaliste.
-    </p>
-    <p>
-      🔗 <a href="mailto:valerie.otero@free.fr">Contact</a><br>
-      🌐 <a href="https://valerieotero.com">Site web</a>
-    </p>
-  </main>
 
-  <footer>© 2025 – Page personnelle</footer>
+    <header>
+        <div class="container">
+            <h1><span class="material-icons" style="vertical-align: middle; margin-right: 8px;">flight_takeoff</span> Valérie Otero</h1>
+            
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <img src="Assets/TrpCasq.jpg" alt="Musicienne et Pilote" class="hero-image">
+            <p>Je suis musicienne professionnelle et pilote d’avion à mes heures libres. Découvrez mes applications.</p>
+        </div>
+    </section>
+
+    <main class="container" id="apps">
+        <div class="apps-grid">
+            
+            <!-- QuantumPass -->
+            <article id="quantumpass" class="app-card">
+                <div class="app-image-container">
+                    <img src="Assets/logoQuantumpass.png" alt="Logo QuantumPass">
+                </div>
+                <div class="app-content">
+                    <h3>QuantumPass</h3>
+                    <p>Découvrez la sécurité quantique ! Générez des mots de passe inviolables, explorez le protocole BB84 et manipulez des Qubits. Pédagogique, sécurisé et 100% hors ligne.</p>
+                    <a href="https://apps.apple.com/us/app/quantumpass/id6755789663" class="app-store-link" target="_blank">
+                        <img src="Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
+                    </a>
+                </div>
+            </article>
+
+            <!-- SkyNotes -->
+            <article id="skynotes" class="app-card">
+                <div class="app-image-container">
+                    <img src="Assets/logoSkyNotes.png" alt="Logo SkyNotes">
+                </div>
+                <div class="app-content">
+                    <h3>SkyNotes</h3>
+                    <p>L'application idéale pour organiser vos projets et vos checklists ou ToDoList de vol. Conçue initialement pour les pilotes, elle offre une structure robuste pour gérer n'importe quel type de projet nécessitant rigueur et organisation.</p>
+                    <a href="https://apps.apple.com/us/app/skynotes/id6755604004" class="app-store-link" target="_blank">
+                        <img src="Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
+                    </a>
+                </div>
+            </article>
+
+            <!-- AirMultiChrono -->
+            <article id="airmultichrono" class="app-card">
+                <div class="app-image-container">
+                    <img src="Assets/AirMultiChrono.png" alt="Logo AirMultiChrono">
+                </div>
+                <div class="app-content">
+                    <h3>AirMultiChrono</h3>
+                    <p>Le chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad. Idéal pour l'aviation, la cuisine, le sport, ou toute activité nécessitant un suivi de temps multiple et précis.</p>
+                    <ul class="features-list">
+                        <li><strong>Multi-Chronos :</strong> Lancez plusieurs chronomètres simultanément.</li>
+                        <li><strong>Mode Édition Flexible :</strong> Redimensionnez et déplacez chaque chrono selon vos besoins.</li>
+                        <li><strong>Alarmes Visuelles et Sonores :</strong> Configurez des alertes précises.</li>
+                        <li><strong>Profils :</strong> Enregistrez vos configurations préférées.</li>
+                    </ul>
+                    <a href="https://apps.apple.com/us/app/airmultichrono/id6754513036" class="app-store-link" target="_blank">
+                        <img src="Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
+                    </a>
+                </div>
+            </article>
+
+            <!-- ToDoTasks -->
+            <article id="todotasks" class="app-card">
+                <div class="app-image-container">
+                    <img src="Assets/LogoToDoTasks.png" alt="Logo ToDoTasks">
+                </div>
+                <div class="app-content">
+                    <h3>ToDoTasks</h3>
+                    <p>Une application de gestion de tâches simple, élégante et efficace pour macOS. Conçue pour vous aider à organiser votre quotidien, elle permet de gérer plusieurs listes de tâches (Travail, Personnel, Courses, etc.) dans une interface claire et intuitive.</p>
+                    <a href="https://apps.apple.com/us/app/todotasks/id6756194433" class="app-store-link" target="_blank">
+                        <img src="Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
+                    </a>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <span class="material-icons footer-icon">flight_takeoff</span>
+                    <p>&copy; 2025 Valérie Otero. Musicienne & Pilote.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="mailto:contact@valerieotero.com"><span class="material-icons">mail</span> Contact</a>
+                    <a href="https://valerieotero.com" target="_blank"><span class="material-icons">language</span> Site Web</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="Assets/js/script.js"></script>
 </body>
 </html>
