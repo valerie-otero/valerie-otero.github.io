@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy - METAR•TAF Flow</title>
+<style>
+    body { 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+        line-height: 1.6; 
+        color: #333; 
+        max-width: 800px; 
+        margin: 0 auto; 
+        padding: 20px; 
+        background-color: #f5f5f7; 
+    }
+    .container { 
+        background: white; 
+        padding: 40px; 
+        border-radius: 18px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+    }
+    h1 { 
+        color: #1d1d1f; 
+        text-align: center; 
+        margin-bottom: 10px; 
+        font-weight: 700;
+    }
+    .subtitle {
+        text-align: center;
+        color: #86868b;
+        margin-bottom: 40px;
+        font-size: 1.1em;
+    }
+    h2 { 
+        border-bottom: 1px solid #e5e5e5; 
+        padding-bottom: 10px; 
+        margin-top: 40px; 
+        color: #1d1d1f; 
+        font-size: 1.5em;
+    }
+    h3 {
+        color: #1d1d1f;
+        margin-top: 25px;
+        font-size: 1.1em;
+    }
+    p, li { 
+        color: #515154;
+        margin-bottom: 15px; 
+    }
+    ul {
+        padding-left: 20px;
+    }
+    strong {
+        color: #1d1d1f;
+    }
+    .lang-switch { 
+        text-align: center; 
+        margin-bottom: 40px; 
+        background: #e8e8ed;
+        display: inline-block;
+        padding: 4px;
+        border-radius: 25px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .lang-switch a { 
+        display: inline-block; 
+        padding: 8px 24px; 
+        text-decoration: none; 
+        color: #515154; 
+        border-radius: 20px; 
+        font-weight: 500;
+        font-size: 0.9em;
+        transition: all 0.2s ease; 
+    }
+    .lang-switch a.active { 
+        background: white; 
+        color: #000; 
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .section { display: none; animation: fadeIn 0.3s ease-in-out; }
+    .section.active { display: block; }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer { 
+        text-align: center; 
+        margin-top: 60px; 
+        font-size: 0.8em; 
+        color: #86868b; 
+        border-top: 1px solid #e5e5e5;
+        padding-top: 20px;
+    }
+</style>
+<script>
+    function showLang(lang) {
+        document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+        document.getElementById(lang).classList.add('active');
+        document.querySelectorAll('.lang-switch a').forEach(el => el.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+    }
+</script>
+</head>
+<body onload="showLang('fr')">
+
+<div class="container">
+    <h1>METAR•TAF Flow</h1>
+    <div class="subtitle">Politique de Confidentialité / Privacy Policy</div>
+    
+    <div class="lang-switch">
+        <a href="#" id="btn-fr" onclick="showLang('fr'); return false;">Français</a>
+        <a href="#" id="btn-en" onclick="showLang('en'); return false;">English</a>
+    </div>
+
+    <!-- FRANÇAIS -->
+    <div id="fr" class="section active">
+        <h2>Politique de Confidentialité</h2>
+        <p><em>Dernière mise à jour : 1 janvier 2026</em></p>
+
+        <h3>1. Introduction</h3>
+        <p>La confidentialité de vos données est une priorité absolue pour <strong>METAR•TAF Flow</strong>. Cette politique explique de manière transparente comment nous traitons vos informations lorsque vous utilisez notre application.</p>
+        <p>En résumé : <strong>Nous ne collectons, ne stockons et ne partageons aucune donnée personnelle.</strong></p>
+
+        <h3>2. Données de Localisation</h3>
+        <p>L'application demande l'accès à votre position géographique (GPS) uniquement lorsque l'application est active.</p>
+        <ul>
+            <li><strong>Usage :</strong> Cette donnée est utilisée exclusivement <strong>en local sur votre appareil</strong> pour calculer des informations astronomiques précises (heures de lever/coucher du soleil, crépuscule civil) relatives à votre position actuelle.</li>
+            <li><strong>Confidentialité :</strong> Votre position n'est jamais envoyée à nos serveurs, ni partagée avec des tiers, ni utilisée à des fins publicitaires. Elle n'est pas stockée de manière permanente.</li>
+        </ul>
+
+        <h3>3. Données Météorologiques</h3>
+        <p>Pour afficher les informations METAR et TAF, l'application effectue des requêtes directes vers les serveurs publics de la <strong>NOAA (Aviation Weather Center)</strong>.</p>
+        <ul>
+            <li>Ces requêtes contiennent uniquement les codes OACI des aéroports demandés.</li>
+            <li>Elles ne contiennent aucune information personnelle permettant de vous identifier.</li>
+        </ul>
+
+        <h3>4. Achats Intégrés (Tip Jar)</h3>
+        <p>Si vous choisissez de soutenir le développement via la fonctionnalité "Tip Jar" (pourboire), la transaction est entièrement sécurisée et gérée par <strong>Apple (StoreKit)</strong>.</p>
+        <ul>
+            <li>Nous n'avons jamais accès à vos informations bancaires, votre nom ou votre adresse.</li>
+            <li>Nous recevons uniquement une confirmation technique anonyme indiquant que l'achat a été effectué.</li>
+        </ul>
+
+        <h3>5. Stockage Local</h3>
+        <p>L'application stocke vos préférences (comme la liste de vos aéroports favoris, vos groupes de vol ou vos réglages de langue) localement sur votre appareil via les mécanismes standards d'Apple (UserDefaults).</p>
+
+        <h3>6. Contact</h3>
+        <p>Pour toute question concernant cette politique de confidentialité, n'hésitez pas à nous contacter via le support de l'App Store.</p>
+    </div>
+
+    <!-- ENGLISH -->
+    <div id="en" class="section">
+        <h2>Privacy Policy</h2>
+        <p><em>Last updated: January 1, 2026</em></p>
+
+        <h3>1. Introduction</h3>
+        <p>Your privacy is a top priority for <strong>METAR•TAF Flow</strong>. This policy transparently explains how we handle your information when you use our application.</p>
+        <p>In short: <strong>We do not collect, store, or share any personal data.</strong></p>
+
+        <h3>2. Location Data</h3>
+        <p>The application requests access to your geographic location (GPS) only when the app is in use.</p>
+        <ul>
+            <li><strong>Usage:</strong> This data is used exclusively <strong>locally on your device</strong> to calculate accurate astronomical information (sunrise/sunset times, civil twilight) relative to your current position.</li>
+            <li><strong>Privacy:</strong> Your location is never sent to our servers, shared with third parties, or used for advertising purposes. It is not stored permanently.</li>
+        </ul>
+
+        <h3>3. Weather Data</h3>
+        <p>To display METAR and TAF information, the application makes direct requests to public servers provided by the <strong>NOAA (Aviation Weather Center)</strong>.</p>
+        <ul>
+            <li>These requests contain only the ICAO codes of the requested airports.</li>
+            <li>They do not contain any personal information identifying you.</li>
+        </ul>
+
+        <h3>4. In-App Purchases (Tip Jar)</h3>
+        <p>If you choose to support development via the "Tip Jar" feature, the transaction is securely handled entirely by <strong>Apple (StoreKit)</strong>.</p>
+        <ul>
+            <li>We never have access to your banking information, name, or address.</li>
+            <li>We only receive an anonymous technical confirmation that the purchase was completed.</li>
+        </ul>
+
+        <h3>5. Local Storage</h3>
+        <p>The application stores your preferences (such as your favorite airports list, flight groups, or language settings) locally on your device using standard Apple mechanisms (UserDefaults).</p>
+
+        <h3>6. Contact</h3>
+        <p>For any questions regarding this privacy policy, please feel free to contact us via App Store support.</p>
+    </div>
+
+    <footer>
+        <p>© Valérie Otero - 2026 - METAR•TAF Flow</p>
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>README - METAR•TAF Flow</title>
+<style>
+    body { 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+        line-height: 1.6; 
+        color: #333; 
+        max-width: 800px; 
+        margin: 0 auto; 
+        padding: 20px; 
+        background-color: #f5f5f7; 
+    }
+    .container { 
+        background: white; 
+        padding: 40px; 
+        border-radius: 18px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+    }
+    h1 { 
+        color: #1d1d1f; 
+        text-align: center; 
+        margin-bottom: 10px; 
+        font-weight: 700;
+    }
+    .subtitle {
+        text-align: center;
+        color: #86868b;
+        margin-bottom: 40px;
+        font-size: 1.1em;
+    }
+    h2 { 
+        border-bottom: 1px solid #e5e5e5; 
+        padding-bottom: 10px; 
+        margin-top: 40px; 
+        color: #1d1d1f; 
+        font-size: 1.5em;
+    }
+    h3 {
+        color: #1d1d1f;
+        margin-top: 25px;
+        font-size: 1.1em;
+    }
+    p, li { 
+        color: #515154;
+        margin-bottom: 15px; 
+    }
+    ul {
+        padding-left: 20px;
+    }
+    strong {
+        color: #1d1d1f;
+    }
+    .lang-switch { 
+        text-align: center; 
+        margin-bottom: 40px; 
+        background: #e8e8ed;
+        display: inline-block;
+        padding: 4px;
+        border-radius: 25px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .lang-switch a { 
+        display: inline-block; 
+        padding: 8px 24px; 
+        text-decoration: none; 
+        color: #515154; 
+        border-radius: 20px; 
+        font-weight: 500;
+        font-size: 0.9em;
+        transition: all 0.2s ease; 
+    }
+    .lang-switch a.active { 
+        background: white; 
+        color: #000; 
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .section { display: none; animation: fadeIn 0.3s ease-in-out; }
+    .section.active { display: block; }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer { 
+        text-align: center; 
+        margin-top: 60px; 
+        font-size: 0.8em; 
+        color: #86868b; 
+        border-top: 1px solid #e5e5e5;
+        padding-top: 20px;
+    }
+</style>
+<script>
+    function showLang(lang) {
+        document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+        document.getElementById(lang).classList.add('active');
+        document.querySelectorAll('.lang-switch a').forEach(el => el.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+    }
+</script>
+</head>
+<body onload="showLang('fr')">
+
+<div class="container">
+    <h1>METAR•TAF Flow</h1>
+    <div class="subtitle">Documentation & Readme</div>
+    
+    <div class="lang-switch">
+        <a href="#" id="btn-fr" onclick="showLang('fr'); return false;">Français</a>
+        <a href="#" id="btn-en" onclick="showLang('en'); return false;">English</a>
+    </div>
+
+    <!-- FRANÇAIS -->
+    <div id="fr" class="section active">
+        <h2>Présentation</h2>
+        <p><strong>METAR•TAF Flow</strong> est une application iOS conçue pour les pilotes et passionnés d'aviation, offrant un accès rapide et clair aux données météorologiques aéronautiques.</p>
+        <p>L'application permet de consulter les rapports METAR (conditions actuelles) et les prévisions TAF pour n'importe quel aéroport dans le monde, directement depuis les serveurs de la NOAA.</p>
+
+        <h3>Fonctionnalités Clés</h3>
+        <ul>
+            <li><strong>Données en Temps Réel :</strong> Récupération instantanée des METARs et TAFs via AviationWeather.gov.</li>
+            <li><strong>Décodage Intelligent :</strong> Affichage clair des conditions de vol (VFR, MVFR, IFR, LIFR) avec codes couleurs intuitifs.</li>
+            <li><strong>Gestion de Groupes :</strong> Créez et sauvegardez des dossiers de vol (ex: "Paris-New York", "Training", "Favoris") pour organiser vos aéroports.</li>
+            <li><strong>Éphéméride Aéronautique :</strong> Calcul précis des heures de lever/coucher du soleil et du crépuscule civil (règlementation EASA/SERA) pour déterminer la nuit aéronautique.</li>
+            <li><strong>Lexique Intégré :</strong> Un lexique bilingue complet pour décoder rapidement les codes METAR et TAF (nuages, phénomènes, etc.).</li>
+            <li><strong>Mode Flow :</strong> Visualisez rapidement la météo sur l'ensemble de votre route ou sélection d'aéroports en un coup d'œil.</li>
+            <li><strong>Recherche Avancée :</strong> Recherchez des aéroports par nom ou ville et ajoutez-les facilement à votre route grâce à la sélection multiple.</li>
+        </ul>
+
+        <h3>Utilisation</h3>
+        <p>1. <strong>Route (OACI) :</strong> Saisissez directement vos codes OACI (ex: LFPG KJFK) dans le champ dédié à gauche.</p>
+        <p>2. <strong>Recherche :</strong> Utilisez la loupe à droite pour chercher un terrain par son nom ou sa ville. Sélectionnez plusieurs terrains et ajoutez-les en une fois à votre route.</p>
+        <p>3. <strong>Sauvegarde :</strong> Appuyez sur l'icône de dossier pour enregistrer votre sélection actuelle dans un groupe nommé.</p>
+        <p>4. <strong>Lexique :</strong> Accédez au lexique via l'icône de livre en haut de l'écran ou dans les préférences pour une aide au décodage.</p>
+        <p>5. <strong>Détails :</strong> Les cartes affichent le vent, la visibilité, les nuages et la température. Les données brutes sont toujours accessibles.</p>
+
+        <h3>Support</h3>
+        <p>Pour toute demande d'assistance ou suggestion, veuillez nous contacter via la page de support de l'App Store.</p>
+    </div>
+
+    <!-- ENGLISH -->
+    <div id="en" class="section">
+        <h2>Overview</h2>
+        <p><strong>METAR•TAF Flow</strong> is an iOS application designed for pilots and aviation enthusiasts, providing fast and clear access to aeronautical weather data.</p>
+        <p>The app allows you to consult METAR reports (current conditions) and TAF forecasts for any airport worldwide, sourced directly from NOAA servers.</p>
+
+        <h3>Key Features</h3>
+        <ul>
+            <li><strong>Real-Time Data:</strong> Instant retrieval of METARs and TAFs via AviationWeather.gov.</li>
+            <li><strong>Smart Decoding:</strong> Clear display of flight categories (VFR, MVFR, IFR, LIFR) with intuitive color coding.</li>
+            <li><strong>Group Management:</strong> Create and save flight folders (e.g., "Paris-New York", "Training", "Favorites") to organize your airports.</li>
+            <li><strong>Integrated Lexicon:</strong> A complete bilingual lexicon to quickly decode METAR and TAF codes (clouds, phenomena, etc.).</li>
+            <li><strong>Aeronautical Ephemeris:</strong> Accurate calculation of sunrise/sunset times and civil twilight (EASA/SERA regulations) to determine aeronautical night.</li>
+            <li><strong>Flow Mode:</strong> Quickly visualize weather across your entire route or airport selection at a glance.</li>
+            <li><strong>Advanced Search:</strong> Search airports by name or city and easily add them to your route using multi-selection.</li>
+        </ul>
+
+        <h3>Usage</h3>
+        <p>1. <strong>Route (ICAO):</strong> Enter ICAO codes (e.g., LFPG KJFK) directly in the dedicated field on the left.</p>
+        <p>2. <strong>Search:</strong> Use the magnifying glass on the right to search for an airport by name or city. Select multiple airports and add them all at once to your route.</p>
+        <p>3. <strong>Lexicon:</strong> Access the lexicon via the book icon at the top of the screen or in preferences for decoding assistance.</p>
+        <p>5. <strong>Save:</strong> Tap the folder icon to save your current selection into a named group.</p>
+        <p>4. <strong>Details:</strong> Cards display wind, visibility, clouds, and temperature. Raw data is always accessible.</p>
+
+        <h3>Support</h3>
+        <p>For any support requests or suggestions, please contact us via the App Store support page.</p>
+    </div>
+
+    <footer>
+        <p>© Valérie Otero - 2026 - METAR•TAF Flow</p>
+    </footer>
+</div>
+
+</body>
+</html>
