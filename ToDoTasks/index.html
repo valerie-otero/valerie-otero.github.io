@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoTasks</title>
+    <style>
+        :root {
+            --primary-color: #007AFF;
+            --bg-color: #F5F5F7;
+            --text-color: #1D1D1F;
+            --secondary-text: #86868B;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--secondary-text);
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            color: var(--primary-color);
+            background-color: rgba(0,122,255,0.1);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .app-icon {
+            width: 128px;
+            height: 128px;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15)); 
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.003em;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--secondary-text);
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .screenshot-container {
+            margin: 60px auto;
+            max-width: 1000px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .app-screenshot {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: opacity 0.3s ease;
+        }
+
+        .features {
+            padding: 60px 20px;
+            background: white;
+        }
+
+        .features-grid {
+            max-width: 980px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--secondary-text);
+        }
+
+        footer {
+            background-color: #F5F5F7;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--secondary-text);
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 734px) {
+            h1 { font-size: 36px; }
+            .subtitle { font-size: 20px; }
+        }
+
+        /* Utility classes for language toggling */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Fade animation for smoother transitions */
+        .lang-content {
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">ToDoTasks</a>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span style="font-size: 12px; color: var(--primary-color);">Version 1.1</span>
+                <div class="lang-switch">
+                    <button class="lang-btn active" onclick="setLanguage('fr')" id="btn-fr">FR</button>
+                    <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <!-- Logo is language independent -->
+        <img src="Logo.png" alt="ToDoTasks Icon" class="app-icon">
+        
+        <!-- French Text -->
+        <div class="lang-content fr">
+            <h1>Organisez votre journée.<br>Simplement.</h1>
+            <p class="subtitle">La To-Do List native pour macOS avec horloge et calendrier intégrés.</p>
+        </div>
+
+        <!-- English Text -->
+        <div class="lang-content en hidden">
+            <h1>Organize your day.<br>Simply.</h1>
+            <p class="subtitle">The native macOS To-Do List with integrated clock and calendar.</p>
+        </div>
+    </section>
+
+    <section class="screenshot-container">
+        <!-- Dynamic Image Source -->
+        <img id="app-screenshot" src="Screen/ScreenFR.png" alt="App Screenshot" class="app-screenshot">
+    </section>
+
+    <section class="features">
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="lang-content fr">
+                    <h3>Gestion intuitive</h3>
+                    <p>Ajoutez, cochez et supprimez vos tâches en un clin d'œil. Ne perdez plus le fil de vos priorités.</p>
+                </div>
+                <div class="lang-content en hidden">
+                    <h3>Intuitive Management</h3>
+                    <p>Add, check, and delete tasks in a blink of an eye. Never lose track of your priorities.</p>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="lang-content fr">
+                    <h3>Horloge & Calendrier</h3>
+                    <p>Gardez un œil sur le temps et la date sans quitter votre liste. Tout est réuni dans une seule fenêtre.</p>
+                </div>
+                <div class="lang-content en hidden">
+                    <h3>Clock & Calendar</h3>
+                    <p>Keep an eye on the time and date without leaving your list. Everything in one window.</p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="lang-content fr">
+                    <h3>100% Privé</h3>
+                    <p>Vos données restent sur votre Mac. Pas de cloud, pas de compte à créer. Juste vous et vos tâches.</p>
+                </div>
+                <div class="lang-content en hidden">
+                    <h3>100% Private</h3>
+                    <p>Your data stays on your Mac. No cloud, no account needed. Just you and your tasks.</p>
+                </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-card">
+                <div class="lang-content fr">
+                    <h3>Import & Export</h3>
+                    <p>Compatible avec vos anciens fichiers. Importez du CSV ou du TXT et exportez vos données à tout moment.</p>
+                </div>
+                <div class="lang-content en hidden">
+                    <h3>Import & Export</h3>
+                    <p>Compatible with your old files. Import from CSV or TXT and export your data at any time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="lang-content fr">
+            <p>&copy; 2026 Valerie Otero. Tous droits réservés.</p>
+            <p><a href="https://valerie-otero.github.io/ToDoTasks/PrivacyPolicy.html">Politique de confidentialité</a></p>
+        </div>
+        <div class="lang-content en hidden">
+            <p>&copy; 2026 Valerie Otero. All rights reserved.</p>
+            <p><a href="https://valerie-otero.github.io/ToDoTasks/PrivacyPolicy.html">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <script>
+        function setLanguage(lang) {
+            // Update Text Content
+            const frElements = document.querySelectorAll('.lang-content.fr');
+            const enElements = document.querySelectorAll('.lang-content.en');
+            
+            if (lang === 'fr') {
+                frElements.forEach(el => el.classList.remove('hidden'));
+                enElements.forEach(el => el.classList.add('hidden'));
+                document.documentElement.lang = 'fr';
+            } else {
+                frElements.forEach(el => el.classList.add('hidden'));
+                enElements.forEach(el => el.classList.remove('hidden'));
+                document.documentElement.lang = 'en';
+            }
+
+            // Update Image
+            const screenshot = document.getElementById('app-screenshot');
+            if (lang === 'fr') {
+                screenshot.src = "Screen/ScreenFR.png";
+            } else {
+                screenshot.src = "Screen/ScreenEN.png";
+            }
+
+            // Update Buttons
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        }
+    </script>
+</body>
+</html>
