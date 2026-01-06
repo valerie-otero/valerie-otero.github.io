@@ -2,7 +2,7 @@
 
 ## English
 
-**Last updated: December 5, 2025**
+**Last updated: January 6, 2026**
 
 **ToDoTasks** ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how your information is handled when you use our macOS application.
 
@@ -28,7 +28,7 @@ If you have any questions about this Privacy Policy, please contact us at:
 
 ## Français
 
-**Dernière mise à jour : 5 décembre 2025**
+**Dernière mise à jour : 6 janvier 2026**
 
 **ToDoTasks** ("nous", "notre" ou "nos") s'engage à protéger votre vie privée. Cette Politique de Confidentialité explique comment vos informations sont traitées lorsque vous utilisez notre application macOS.
 

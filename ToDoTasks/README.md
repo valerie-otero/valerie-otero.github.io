@@ -53,4 +53,4 @@ Développé avec ❤️ par **Valérie Otero**.
 *   **Confidentialité** : [Politique de Confidentialité](https://valerie-otero.github.io/ToDoTasks/PrivacyPolicy.html)
 
 ---
-*Copyright © 2025 Valérie Otero. Tous droits réservés.*
+*Copyright © 2026 Valérie Otero. Tous droits réservés.*
