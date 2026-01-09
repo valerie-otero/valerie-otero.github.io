@@ -111,7 +111,7 @@
 <div class="container">
     <img src="LogoMTF.png" alt="Logo METAR-TAF Flow" style="width: 120px; height: 120px; display: block; margin: 0 auto 20px auto; border-radius: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
     <h1>METAR•TAF Flow</h1>
-    <div class="subtitle">Documentation & Readme v1.0</div>
+    <div class="subtitle">Documentation & Readme v1.2</div>
     
     <div class="lang-switch">
         <a href="#" id="btn-fr" onclick="showLang('fr'); return false;">Français</a>
@@ -128,6 +128,7 @@
         <ul>
             <li><strong>Données en Temps Réel :</strong> Récupération instantanée des METARs et TAFs via AviationWeather.gov.</li>
             <li><strong>Décodage Intelligent :</strong> Affichage clair des conditions de vol (VFR, MVFR, IFR, LIFR) avec codes couleurs intuitifs.</li>
+            <li><strong>Alternats Intelligents :</strong> Proposition automatique du TAF le plus proche en cas d'indisponibilité, avec choix manuel possible via le menu.</li>
             <li><strong>Gestion de Groupes :</strong> Créez et sauvegardez des dossiers de vol (ex: "Paris-New York", "Training", "Favoris") pour organiser vos aéroports.</li>
             <li><strong>Éphéméride Aéronautique :</strong> Calcul précis des heures de lever/coucher du soleil et du crépuscule civil (règlementation EASA/SERA) pour déterminer la nuit aéronautique.</li>
             <li><strong>Lexique Intégré :</strong> Un lexique bilingue complet pour décoder rapidement les codes METAR et TAF (nuages, phénomènes, etc.).</li>
@@ -135,12 +136,13 @@
             <li><strong>Recherche Avancée :</strong> Recherchez des aéroports par nom ou ville et ajoutez-les facilement à votre route grâce à la sélection multiple.</li>
         </ul>
 
-        <h3>Utilisation</h3>
+        <h3>Guide d'Utilisation & FAQ</h3>
         <p>1. <strong>Route (OACI) :</strong> Saisissez directement vos codes OACI (ex: LFPG KJFK) dans le champ dédié à gauche.</p>
         <p>2. <strong>Recherche :</strong> Utilisez la loupe à droite pour chercher un terrain par son nom ou sa ville. Sélectionnez plusieurs terrains et ajoutez-les en une fois à votre route.</p>
         <p>3. <strong>Sauvegarde :</strong> Appuyez sur l'icône de dossier pour enregistrer votre sélection actuelle dans un groupe nommé.</p>
-        <p>4. <strong>Lexique :</strong> Accédez au lexique via l'icône de livre en haut de l'écran ou dans les préférences pour une aide au décodage.</p>
-        <p>5. <strong>Détails :</strong> Les cartes affichent le vent, la visibilité, les nuages et la température. Les données brutes sont toujours accessibles.</p>
+        <p>4. <strong>Alternats (TAF manquant) :</strong> Si un bandeau orange apparaît (pas de TAF), l'app suggère un aéroport voisin. Touchez le bandeau pour choisir manuellement une autre source.</p>
+        <p>5. <strong>Nuit Aéronautique :</strong> Le calcul est basé sur la réglementation EASA/SERA (Crépuscule Civil), ce qui est plus précis que la règle des 30 minutes (notamment en Outre-Mer).</p>
+        <p>6. <strong>Lexique :</strong> Accédez au lexique via l'icône de livre en haut de l'écran ou dans les préférences.</p>
 
         <h3>Sécurité & Responsabilité</h3>
         <p>L'utilisation de cette application relève de la seule responsabilité du Commandant de Bord. Elle ne se substitue pas aux documents officiels ni à l'analyse des cartes météorologiques réglementaires. Le développeur décline toute responsabilité quant à l'utilisation des données.</p>
@@ -159,6 +161,7 @@
         <ul>
             <li><strong>Real-Time Data:</strong> Instant retrieval of METARs and TAFs via AviationWeather.gov.</li>
             <li><strong>Smart Decoding:</strong> Clear display of flight categories (VFR, MVFR, IFR, LIFR) with intuitive color coding.</li>
+            <li><strong>Smart Alternates:</strong> Automatic suggestion of the nearest TAF if unavailable, with manual selection possible via the menu.</li>
             <li><strong>Group Management:</strong> Create and save flight folders (e.g., "Paris-New York", "Training", "Favorites") to organize your airports.</li>
             <li><strong>Integrated Lexicon:</strong> A complete bilingual lexicon to quickly decode METAR and TAF codes (clouds, phenomena, etc.).</li>
             <li><strong>Aeronautical Ephemeris:</strong> Accurate calculation of sunrise/sunset times and civil twilight (EASA/SERA regulations) to determine aeronautical night.</li>
@@ -166,12 +169,13 @@
             <li><strong>Advanced Search:</strong> Search airports by name or city and easily add them to your route using multi-selection.</li>
         </ul>
 
-        <h3>Usage</h3>
+        <h3>Usage Guide & FAQ</h3>
         <p>1. <strong>Route (ICAO):</strong> Enter ICAO codes (e.g., LFPG KJFK) directly in the dedicated field on the left.</p>
         <p>2. <strong>Search:</strong> Use the magnifying glass on the right to search for an airport by name or city. Select multiple airports and add them all at once to your route.</p>
-        <p>3. <strong>Lexicon:</strong> Access the lexicon via the book icon at the top of the screen or in preferences for decoding assistance.</p>
-        <p>5. <strong>Save:</strong> Tap the folder icon to save your current selection into a named group.</p>
-        <p>4. <strong>Details:</strong> Cards display wind, visibility, clouds, and temperature. Raw data is always accessible.</p>
+        <p>3. <strong>Save:</strong> Tap the folder icon to save your current selection into a named group.</p>
+        <p>4. <strong>Alternates (Missing TAF):</strong> If an orange banner appears (no TAF), the app suggests a nearby airport. Tap the banner to manually choose another source.</p>
+        <p>5. <strong>Aeronautical Night:</strong> Calculation is based on EASA/SERA regulations (Civil Twilight), more accurate than the 30-minute rule.</p>
+        <p>6. <strong>Lexicon:</strong> Access the lexicon via the book icon at the top of the screen or in preferences.</p>
 
         <h3>Safety & Liability</h3>
         <p>Use of this app is the sole responsibility of the Pilot in Command. It does not replace official documents or the analysis of regulatory weather charts. The developer declines all liability regarding the use of the data.</p>
