@@ -6,19 +6,45 @@
     <title>Mes Applications - Portfolio</title>
     <link rel="stylesheet" href="Assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .lang-en { display: none; }
+        body.en .lang-fr { display: none !important; }
+        body.en .lang-en { display: inline-block !important; } /* inline-block is safer than block for spans */
+        /* Fix for block elements */
+        body.en div.lang-en, body.en p.lang-en, body.en h3.lang-en, body.en li.lang-en { display: block !important; }
+        
+        #lang-switch {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #333;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            z-index: 1000;
+        }
+        #lang-switch:hover {
+            background: #555;
+        }
+    </style>
 </head>
 <body>
 
     <header>
-        <div class="container">
+        <div class="container" style="position: relative;">
             <h1><span class="material-icons" style="vertical-align: middle; margin-right: 8px;">flight_takeoff</span> Valérie Otero</h1>
-            
+            <button id="lang-switch" onclick="toggleLanguage()">English</button>
         </div>
     </header>
 
     <section class="hero">
         <div class="container">
-            <p>Découvrez mes applications pour iPad, iPhone et MacOS.</p>
+            <p class="lang-fr">Découvrez mes applications pour iPad, iPhone et macOS.</p>
+            <p class="lang-en">Discover my applications for iPad, iPhone, and macOS.</p>
         </div>
     </section>
 
@@ -32,7 +58,8 @@
                 </div>
                 <div class="app-content">
                     <h3>METAR•TAF Flow</h3>
-                    <p>L'outil indispensable pour les pilotes et passionnés d'aviation. Accédez instantanément aux conditions météorologiques et prévisions pour tous les aéroports du monde, avec une interface claire, moderne et intuitive.</p>
+                    <p class="lang-fr">L'outil indispensable pour les pilotes et passionnés d'aviation. Accédez instantanément aux conditions météorologiques et prévisions pour tous les aéroports du monde, avec une interface claire, moderne et intuitive.</p>
+                    <p class="lang-en">The essential tool for pilots and aviation enthusiasts. Instantly access weather conditions and forecasts for airports worldwide, with a clear, modern, and intuitive interface.</p>
                     <a href="https://apps.apple.com/fr/app/metar-taf-flow/id6757341500" class="app-store-link" target="_blank">
                         <img src="Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
                     </a>
@@ -46,8 +73,9 @@
                 </div>
                 <div class="app-content">
                     <h3>QuantumPass</h3>
-                    <p>Découvrez la sécurité quantique ! Générez des mots de passe inviolables, explorez le protocole BB84 et manipulez des Qubits. Pédagogique, sécurisé et 100% hors ligne.</p>
-                    <a href="https://apps.apple.com/fr/app/quantumpass/id6755789663" class="app-store-link" target="_blank">
+                    <p class="lang-fr">Découvrez la sécurité quantique ! Générez des mots de passe inviolables, explorez le protocole BB84 et manipulez des Qubits. Pédagogique, sécurisé et 100% hors ligne.</p>
+                    <p class="lang-en">Discover quantum security! Generate unbreakable passwords, explore the BB84 protocol, and manipulate Qubits. Educational, secure, and 100% offline.</p>
+                    <a href="https://apps.apple.com/us/app/quantumpass/id6755789663" class="app-store-link" target="_blank">
                         <img src="Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
                     </a>
                 </div>
@@ -60,8 +88,9 @@
                 </div>
                 <div class="app-content">
                     <h3>SkyNotes</h3>
-                    <p>L'application idéale pour organiser vos projets et vos checklists ou ToDoList de vol. Conçue initialement pour les pilotes, elle offre une structure robuste pour gérer n'importe quel type de projet nécessitant rigueur et organisation.</p>
-                    <a href="https://apps.apple.com/fr/app/skynotes/id6755604004" class="app-store-link" target="_blank">
+                    <p class="lang-fr">L'application idéale pour organiser vos projets et vos checklists ou ToDoList de vol. Conçue initialement pour les pilotes, elle offre une structure robuste pour gérer n'importe quel type de projet nécessitant rigueur et organisation.</p>
+                    <p class="lang-en">The ideal app to organize your projects and flight checklists or ToDoLists. Initially designed for pilots, it offers a robust structure to manage any type of project requiring rigor and organization.</p>
+                    <a href="https://apps.apple.com/us/app/skynotes/id6755604004" class="app-store-link" target="_blank">
                         <img src="Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
                     </a>
                 </div>
@@ -74,12 +103,19 @@
                 </div>
                 <div class="app-content">
                     <h3>AirMultiChrono</h3>
-                    <p>Le chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad. Idéal pour l'aviation, la cuisine, le sport, ou toute activité nécessitant un suivi de temps multiple et précis.</p>
-                    <ul class="features-list">
+                    <p class="lang-fr">Le chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad. Idéal pour l'aviation, la cuisine, le sport, ou toute activité nécessitant un suivi de temps multiple et précis.</p>
+                    <p class="lang-en">The simple, powerful, and reliable multi-channel stopwatch for iPhone and iPad. Ideal for aviation, cooking, sports, or any activity requiring precise multiple time tracking.</p>
+                    <ul class="features-list lang-fr">
                         <li><strong>Multi-Chronos :</strong> Lancez plusieurs chronomètres simultanément.</li>
                         <li><strong>Mode Édition Flexible :</strong> Redimensionnez et déplacez chaque chrono selon vos besoins.</li>
                         <li><strong>Alarmes Visuelles et Sonores :</strong> Configurez des alertes précises.</li>
                         <li><strong>Profils :</strong> Enregistrez vos configurations préférées.</li>
+                    </ul>
+                    <ul class="features-list lang-en">
+                        <li><strong>Multi-Timers:</strong> Start multiple stopwatches simultaneously.</li>
+                        <li><strong>Flexible Edit Mode:</strong> Resize and move each timer according to your needs.</li>
+                        <li><strong>Visual and Sound Alarms:</strong> Configure precise alerts.</li>
+                        <li><strong>Profiles:</strong> Save your favorite configurations.</li>
                     </ul>
                     <a href="https://apps.apple.com/us/app/airmultichrono/id6754513036" class="app-store-link" target="_blank">
                         <img src="Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
@@ -94,8 +130,9 @@
                 </div>
                 <div class="app-content">
                     <h3>ToDoTasks</h3>
-                    <p>Une application de gestion de tâches simple, élégante et efficace pour macOS. Conçue pour vous aider à organiser votre quotidien, elle permet de gérer plusieurs listes de tâches (Travail, Personnel, Courses, etc.) dans une interface claire et intuitive.</p>
-                    <a href="https://apps.apple.com/fr/app/todotasks/id6756194433" class="app-store-link" target="_blank">
+                    <p class="lang-fr">Une application de gestion de tâches simple, élégante et efficace pour macOS. Conçue pour vous aider à organiser votre quotidien, elle permet de gérer plusieurs listes de tâches (Travail, Personnel, Courses, etc.) dans une interface claire et intuitive.</p>
+                    <p class="lang-en">A simple, elegant, and efficient task management app for macOS. Designed to help you organize your daily life, it allows managing multiple task lists (Work, Personal, Shopping, etc.) in a clear and intuitive interface.</p>
+                    <a href="https://apps.apple.com/us/app/todotasks/id6756194433" class="app-store-link" target="_blank">
                         <img src="Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
                     </a>
                 </div>
@@ -113,12 +150,32 @@
                 </div>
                 <div class="footer-links">
                     <a href="mailto:valerie.otero@free.fr"><span class="material-icons">mail</span> Contact</a>
-                    <a href="https://valerieotero.com" target="_blank"><span class="material-icons">language</span> Site Web de Valérie Otero</a>
+                    <a href="https://valerieotero.com" target="_blank">
+                        <span class="material-icons">language</span>
+                         <span class="lang-fr">Site Web de Valérie Otero</span>
+                         <span class="lang-en">Valérie Otero's Website</span>
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script src="Assets/js/script.js"></script>
+    <script>
+        function toggleLanguage() {
+            const body = document.body;
+            const btn = document.getElementById('lang-switch');
+            
+            if (body.classList.contains('en')) {
+                body.classList.remove('en');
+                btn.textContent = 'English';
+                document.title = "Mes Applications - Portfolio";
+            } else {
+                body.classList.add('en');
+                btn.textContent = 'Français';
+                document.title = "My Apps - Portfolio";
+            }
+        }
+    </script>
 </body>
 </html>
