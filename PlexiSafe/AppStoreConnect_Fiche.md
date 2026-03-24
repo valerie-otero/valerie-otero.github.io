@@ -276,10 +276,10 @@ Cocher **"No, we do not collect data from this app"** — c'est correct pour Ple
 
 ## 11. URL politique de confidentialité
 
-Hébergez `PlexiSafe_privacy.html` (déjà dans DOCS/) sur une URL publique.
+Hébergez `PlexiSafe_privacy.html` (déjà dans PlexiSafe/) sur une URL publique.
 
 Options simples et gratuites :
-- **GitHub Pages** : activer Pages sur votre repo → `https://VOTRE_USERNAME.github.io/PlexiSafe/DOCS/PlexiSafe_privacy.html`
+- **GitHub Pages** : activer Pages sur votre repo → `https://VOTRE_USERNAME.github.io/PlexiSafe/PlexiSafe_privacy.html`
 - **Notion public** : coller le contenu dans une page Notion publique
 
 L'URL est **obligatoire** pour soumettre — Apple la valide.
