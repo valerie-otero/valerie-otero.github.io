@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlexiSafe — Politique de confidentialité / Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #0d1117;
+      --surface:     #161b22;
+      --surface2:    #1c2230;
+      --border:      #2a3347;
+      --border-soft: #1e2a3a;
+      --text:        #e2e8f0;
+      --muted:       #64748b;
+      --accent:      #38bdf8;
+      --accent-dim:  rgba(56,189,248,0.12);
+      --accent-glow: rgba(56,189,248,0.25);
+      --ok:          #4ade80;
+      --mono:        'IBM Plex Mono', monospace;
+      --sans:        'IBM Plex Sans', sans-serif;
+      --radius:      8px;
+      --radius-lg:   12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      padding: 0 40px;
+      display: flex; align-items: center; gap: 16px;
+      height: 62px;
+    }
+    .nav-logo { width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0; }
+    .nav-wordmark { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; }
+    .nav-wordmark span { color: var(--accent); }
+    .nav-back {
+      margin-left: auto;
+      font-size: 0.82rem; color: var(--muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-back:hover { color: var(--text); text-decoration: none; }
+
+    /* LANG TOGGLE */
+    .lang-bar {
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 40px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .lang-btn {
+      font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
+      padding: 5px 16px; border-radius: 999px; cursor: pointer;
+      border: 1px solid var(--border); background: none;
+      color: var(--muted); transition: all .15s;
+    }
+    .lang-btn.active {
+      background: var(--accent); color: #0d1117;
+      border-color: var(--accent);
+    }
+
+    /* MAIN */
+    main {
+      max-width: 680px; margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* HEADER CARD */
+    .policy-header {
+      display: flex; align-items: center; gap: 18px;
+      margin-bottom: 36px;
+    }
+    .policy-icon-wrap {
+      width: 56px; height: 56px; flex-shrink: 0;
+      background: rgba(74,222,128,0.15);
+      border: 1px solid rgba(74,222,128,0.3);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+    }
+    .policy-header h1 {
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+    }
+    .policy-header p {
+      font-size: 0.8rem; color: var(--muted); margin-top: 3px;
+    }
+
+    /* SECTION CARDS */
+    .policy-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      margin-bottom: 12px;
+    }
+    .policy-section h2 {
+      font-size: 0.92rem; font-weight: 700;
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .policy-section h2 .sec-icon {
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .policy-section p {
+      font-size: 0.86rem; color: var(--muted); line-height: 1.7;
+    }
+    .policy-section a { font-size: 0.86rem; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 28px 40px;
+      text-align: center;
+    }
+    .footer-logo { width: 26px; height: 26px; border-radius: 7px; vertical-align: middle; margin-right: 8px; }
+    .footer-copy { font-size: 0.75rem; color: var(--muted); margin-top: 10px; }
+
+    /* HIDDEN LANG */
+    [data-lang] { display: none; }
+    [data-lang].visible { display: block; }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .lang-bar { padding: 10px 20px; }
+      footer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <img src="AppIcon.png" alt="PlexiSafe logo" class="nav-logo" />
+    <span class="nav-wordmark">Plexi<span>Safe</span></span>
+    <a href="PlexiSafe_marketing.html" class="nav-back">← Retour / Back</a>
+  </nav>
+
+  <!-- LANG TOGGLE -->
+  <div class="lang-bar">
+    <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- FRENCH -->
+    <div data-lang="fr" class="visible">
+
+      <div class="policy-header">
+        <div class="policy-icon-wrap">🔒</div>
+        <div>
+          <h1>Politique de confidentialité</h1>
+          <p>Mise à jour : mars 2026</p>
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">💾</span>Stockage des données</h2>
+        <p>PlexiSafe stocke tous vos calculs et votre historique exclusivement sur votre appareil. Aucune donnée n'est transmise à des serveurs externes.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">📡</span>Aucune connexion réseau</h2>
+        <p>L'application fonctionne entièrement hors ligne. PlexiSafe n'effectue aucune requête réseau et ne nécessite pas de connexion internet pour fonctionner.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">👤</span>Aucune donnée personnelle collectée</h2>
+        <p>PlexiSafe ne collecte, ne traite ni ne partage aucune information personnelle. Pas d'analytique, pas d'identifiants publicitaires, aucun rapport de crash envoyé à l'extérieur.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">🗑</span>Suppression de vos données</h2>
+        <p>Toutes les données sont supprimées à la désinstallation de l'application. Vous pouvez également effacer votre historique à tout moment depuis l'onglet Archivés.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">✉️</span>Contact</h2>
+        <p>Pour toute question relative à la confidentialité, contactez-nous à : <a href="mailto:valerie.otero@free.fr">valerie.otero@free.fr</a></p>
+      </div>
+
+    </div><!-- /fr -->
+
+    <!-- ENGLISH -->
+    <div data-lang="en">
+
+      <div class="policy-header">
+        <div class="policy-icon-wrap">🔒</div>
+        <div>
+          <h1>Privacy Policy</h1>
+          <p>Last updated: March 2026</p>
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">💾</span>Data storage</h2>
+        <p>PlexiSafe stores all your calculations and history exclusively on your device. No data is ever transmitted to external servers.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">📡</span>No network connection</h2>
+        <p>The app works entirely offline. PlexiSafe never makes network requests and does not require an internet connection to function.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">👤</span>No personal data collected</h2>
+        <p>PlexiSafe does not collect, process or share any personal information. No analytics, no advertising identifiers, no crash reporting sent externally.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">🗑</span>Deleting your data</h2>
+        <p>All data is deleted when you uninstall the app. You can also clear your history at any time from the Archives tab.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2><span class="sec-icon">✉️</span>Contact</h2>
+        <p>For any privacy-related question, contact us at: <a href="mailto:valerie.otero@free.fr">valerie.otero@free.fr</a></p>
+      </div>
+
+    </div><!-- /en -->
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <img src="AppIcon.png" alt="" class="footer-logo" />
+      <span style="font-weight:700;">Plexi<span style="color:var(--accent)">Safe</span></span>
+    </div>
+    <p class="footer-copy">© 2026 PlexiSafe · v1.0 · Tous droits réservés / All rights reserved.</p>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.toggle('visible', el.dataset.lang === lang);
+      });
+      document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.documentElement.lang = lang;
+    }
+  </script>
+
+</body>
+</html>
