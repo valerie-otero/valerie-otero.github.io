@@ -120,7 +120,7 @@ xcodebuild \
 
 ---
 
-## Fichiers DOCS
+## Fichiers PlexiSafe
 
 | Fichier | Description |
 |---|---|
