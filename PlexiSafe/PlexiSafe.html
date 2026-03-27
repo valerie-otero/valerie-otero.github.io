@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PlexiSafe — Calcul de fissure sur plexiglas</title>
+  <meta name="description" content="PlexiSafe — Calcul de trou d'arrêt de fissure sur plexiglas via la mécanique de la rupture linéaire élastique (MFLE/LEFM). Disponible sur iPhone et iPad." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
   <style>
@@ -57,8 +58,8 @@
       height: 62px;
     }
     .nav-logo {
-      width: 32px; height: 32px; flex-shrink: 0;
-      border-radius: 9px;
+      width: 48px; height: 48px; flex-shrink: 0;
+      border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
     .nav-wordmark {
@@ -91,12 +92,13 @@
       padding: 90px 24px 72px;
     }
     .hero-icon {
-      width: 100px; height: 100px;
-      border-radius: 22px;
+      display: block;
+      width: 140px; height: 140px;
+      border-radius: 30px;
       box-shadow: 0 0 0 1px var(--border),
                   0 8px 32px rgba(0,0,0,0.5),
                   0 0 48px var(--accent-glow);
-      margin-bottom: 28px;
+      margin: 0 auto 28px;
     }
     .hero-tag {
       display: inline-block;
@@ -334,8 +336,8 @@
       display: flex; align-items: center; gap: 12px;
     }
     .footer-logo {
-      width: 28px; height: 28px;
-      border-radius: 7px;
+      width: 40px; height: 40px;
+      border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.4);
     }
     .footer-wordmark {
@@ -417,6 +419,7 @@
     }
     [data-lang] { display: none; }
     [data-lang].visible { display: block; }
+    span[data-lang].visible { display: inline; }
 
     /* ===================================================
        RESPONSIVE
@@ -437,24 +440,36 @@
     <img src="AppIcon.png" alt="PlexiSafe logo" class="nav-logo" />
     <span class="nav-wordmark">Plexi<span>Safe</span></span>
     <div class="nav-links">
-      <a href="#features" class="nav-link-hide">Fonctionnalités</a>
-      <a href="#how-it-works" class="nav-link-hide">Mode d'emploi</a>
-      <a href="#privacy" class="nav-link-hide">Confidentialité</a>
-      <a href="#" class="nav-cta">⬇ App Store</a>
+      <a href="#features" class="nav-link-hide" data-lang="fr">Fonctionnalités</a>
+      <a href="#features" class="nav-link-hide" data-lang="en">Features</a>
+      <a href="#how-it-works" class="nav-link-hide" data-lang="fr">Mode d'emploi</a>
+      <a href="#how-it-works" class="nav-link-hide" data-lang="en">How it works</a>
+      <a href="#privacy" class="nav-link-hide" data-lang="fr">Confidentialité</a>
+      <a href="#privacy" class="nav-link-hide" data-lang="en">Privacy</a>
+      <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <a href="https://apps.apple.com/fr/app/plexisafe/id6761058642" class="nav-cta">⬇ App Store</a>
     </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
     <img src="AppIcon.png" alt="PlexiSafe" class="hero-icon" />
-    <div class="hero-tag">iOS · Swift · Mécanique de la rupture</div>
-    <h1>Le calcul de fissure sur<br><span>plexiglas</span>, simplifié.</h1>
-    <p class="hero-sub">
+    <div class="hero-tag">iOS · Swift · <span data-lang="fr">Mécanique de la rupture</span><span data-lang="en">Fracture Mechanics</span></div>
+    <h1 data-lang="fr">Le calcul de fissure sur<br><span>plexiglas</span>, simplifié.</h1>
+    <h1 data-lang="en">Crack analysis on<br><span>plexiglass</span>, simplified.</h1>
+    <p class="hero-sub" data-lang="fr">
       Prédisez la propagation de fissure via la mécanique de la rupture linéaire élastique — directement depuis votre iPhone ou iPad.
     </p>
+    <p class="hero-sub" data-lang="en">
+      Predict crack propagation using Linear Elastic Fracture Mechanics — directly from your iPhone or iPad.
+    </p>
     <div class="hero-btns">
-      <a href="#" class="btn-primary">
+      <a href="https://apps.apple.com/fr/app/plexisafe/id6761058642" class="btn-primary" data-lang="fr">
         ⬇ Télécharger sur l'App Store
+      </a>
+      <a href="https://apps.apple.com/fr/app/plexisafe/id6761058642" class="btn-primary" data-lang="en">
+        ⬇ Download on the App Store
       </a>
     </div>
   </section>
@@ -463,55 +478,64 @@
   <div class="metrics">
     <div class="metric-cell">
       <div class="metric-value">9</div>
-      <div class="metric-label">paramètres d'entrée</div>
+      <div class="metric-label" data-lang="fr">paramètres d'entrée</div>
+      <div class="metric-label" data-lang="en">input parameters</div>
     </div>
     <div class="metric-cell">
       <div class="metric-value">3</div>
-      <div class="metric-label">préréglages matériaux</div>
+      <div class="metric-label" data-lang="fr">préréglages matériaux</div>
+      <div class="metric-label" data-lang="en">material presets</div>
     </div>
     <div class="metric-cell">
       <div class="metric-value">3</div>
-      <div class="metric-label">systèmes d'unités</div>
+      <div class="metric-label" data-lang="fr">systèmes d'unités</div>
+      <div class="metric-label" data-lang="en">unit selectors</div>
     </div>
     <div class="metric-cell">
       <div class="metric-value">∞</div>
-      <div class="metric-label">calculs archivés</div>
+      <div class="metric-label" data-lang="fr">calculs archivés</div>
+      <div class="metric-label" data-lang="en">archived calculations</div>
     </div>
   </div>
 
   <!-- FEATURES -->
   <section class="section" id="features">
-    <div class="section-tag">Fonctionnalités</div>
-    <h2 class="section-title">Deux modes, une <span>précision</span> sans compromis.</h2>
-    <p class="section-sub">
-      Du contrôle qualité terrain à la recherche de laboratoire — PlexiSafe s'adapte à votre niveau d'expertise.
+    <div class="section-tag" data-lang="fr">Fonctionnalités</div>
+    <div class="section-tag" data-lang="en">Features</div>
+    <h2 class="section-title" data-lang="fr">Une interface, une <span>précision</span> sans compromis.</h2>
+    <h2 class="section-title" data-lang="en">One interface, <span>uncompromising</span> precision.</h2>
+    <p class="section-sub" data-lang="fr">
+      Saisie guidée, résultats détaillés, historique illimité — PlexiSafe couvre tout le cycle d'analyse MFLE.
+    </p>
+    <p class="section-sub" data-lang="en">
+      Guided input, detailed results, unlimited history — PlexiSafe covers the full LEFM analysis cycle.
     </p>
 
     <div class="cards-grid">
       <div class="card">
-        <div class="card-icon">🎓</div>
-        <h3>Mode Débutant</h3>
-        <p>Saisissez les dimensions de votre plaque (largeur, épaisseur, portée, position de fissure, flèche) et obtenez un verdict clair : fissure sûre ou critique.</p>
+        <div class="card-icon">�</div>
+        <h3>Saisie guidée</h3>
+        <p>6 paramètres de terrain (largeur, épaisseur, longueur de fissure, avance du trou, incertitude de localisation, effort appliqué) saisis via curseurs ou champs numériques.</p>
       </div>
       <div class="card">
-        <div class="card-icon">⚙️</div>
-        <h3>Mode Expert</h3>
-        <p>Accédez à tous les paramètres de la mécanique de la rupture : K_I, σ, Y, d_min, K_IC. Comparez ténacité et contrainte avec précision maximale.</p>
+        <div class="card-icon">📊</div>
+        <h3>Résultats approfondis</h3>
+        <p>Verdict immédiat, marges de sécurité avec code couleur, recommandation d'inspection contextuelle et détail des formules MFLE dépliables.</p>
       </div>
       <div class="card">
         <div class="card-icon">📐</div>
         <h3>Préréglages matériaux</h3>
-        <p>PMMA standard, PMMA haute résistance, Polycarbonate — sélectionnez et affinez les contraintes admissibles et ténacités de vos matériaux.</p>
+        <p>PMMA Standard, PMMA Renforcé ou Personnalisé — sélectionnez un préréglage ou saisissez librement σ_adm, K_IC et Y pour votre matériau.</p>
       </div>
       <div class="card">
         <div class="card-icon">📏</div>
         <h3>Systèmes d'unités</h3>
-        <p>Basculez entre mm/MPa/MPa√m, m/MPa/MPa√m et m/kPa/MPa√mm — PlexiSafe convertit automatiquement sans recalcul.</p>
+        <p>Trois sélecteurs indépendants : longueur (mm / m), contrainte (MPa / kPa) et ténacité (MPa√m / MPa√mm) — PlexiSafe convertit automatiquement sans recalcul.</p>
       </div>
       <div class="card">
         <div class="card-icon">🗂</div>
         <h3>Historique illimité</h3>
-        <p>Nommez, annotez et archivez chaque calcul. Retrouvez et comparez vos résultats en quelques secondes.</p>
+        <p>Nommez, annotez et archivez chaque calcul. Recherchez par nom ou notes, triez par date, nom ou verdict en quelques secondes.</p>
       </div>
       <div class="card">
         <div class="card-icon">📤</div>
@@ -524,12 +548,19 @@
     <div class="formula-callout">
       <div class="formula-eq">K_I = Y · σ · √(π · a)</div>
       <div class="formula-legend">
-        <p>
+        <p data-lang="fr">
           <code>K_I</code> : facteur d'intensité des contraintes (MPa√m)<br>
           <code>Y</code> : facteur géométrique (sans dimension)<br>
           <code>σ</code> : contrainte appliquée (MPa)<br>
           <code>a</code> : demi-longueur de fissure (m)<br>
           Rupture si <code>K_I ≥ K_IC</code>
+        </p>
+        <p data-lang="en">
+          <code>K_I</code> : stress intensity factor (MPa√m)<br>
+          <code>Y</code> : geometry factor (dimensionless)<br>
+          <code>σ</code> : applied stress (MPa)<br>
+          <code>a</code> : crack half-length (m)<br>
+          Fracture if <code>K_I ≥ K_IC</code>
         </p>
       </div>
     </div>
@@ -538,39 +569,52 @@
   <!-- HOW IT WORKS -->
   <section class="section" id="how-it-works" style="background: var(--surface); max-width: 100%; padding-top: 64px; padding-bottom: 64px;">
     <div style="max-width: 1060px; margin: 0 auto; padding: 0 24px;">
-      <div class="section-tag">Mode d'emploi</div>
-      <h2 class="section-title">Résultat en <span>4 étapes</span>.</h2>
-      <p class="section-sub">
+      <div class="section-tag" data-lang="fr">Mode d'emploi</div>
+      <div class="section-tag" data-lang="en">How it works</div>
+      <h2 class="section-title" data-lang="fr">Résultat en <span>4 étapes</span>.</h2>
+      <h2 class="section-title" data-lang="en">Result in <span>4 steps</span>.</h2>
+      <p class="section-sub" data-lang="fr">
         Pas de courbe d'apprentissage. Mesurez, saisissez, analysez, décidez.
+      </p>
+      <p class="section-sub" data-lang="en">
+        No learning curve. Measure, enter, analyse, decide.
       </p>
 
       <div class="steps">
         <div class="step">
           <div class="step-num">01</div>
           <div class="step-body">
-            <h4>Choisissez votre mode &amp; matériau</h4>
-            <p>Sélectionnez Débutant ou Expert, puis un préréglage matériau (PMMA, Polycarbonate) ou entrez des valeurs personnalisées.</p>
+            <h4 data-lang="fr">Choisissez votre matériau</h4>
+            <h4 data-lang="en">Choose your material</h4>
+            <p data-lang="fr">Sélectionnez un préréglage (PMMA Standard, PMMA Renforcé) ou choisissez Personnalisé pour saisir vos propres valeurs de σ_adm, K_IC et Y.</p>
+            <p data-lang="en">Select a preset (Standard PMMA, Reinforced PMMA) or choose Custom to enter your own values for σ_adm, K_IC and Y.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">02</div>
           <div class="step-body">
-            <h4>Saisissez les dimensions</h4>
-            <p>Utilisez les curseurs ou les champs numériques pour renseigner largeur, épaisseur, portée, position de fissure et flèche observée.</p>
+            <h4 data-lang="fr">Saisissez les dimensions</h4>
+            <h4 data-lang="en">Enter the dimensions</h4>
+            <p data-lang="fr">Utilisez les curseurs ou les champs numériques pour renseigner largeur, épaisseur, longueur de fissure visible, avance du trou, incertitude de localisation et effort appliqué.</p>
+            <p data-lang="en">Use sliders or numeric fields to enter width, thickness, visible crack length, hole advance, location uncertainty and applied force.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">03</div>
           <div class="step-body">
-            <h4>Analysez le verdict</h4>
-            <p>PlexiSafe calcule K_I, σ_max, d_min et la marge de sécurité — avec code couleur vert / orange / rouge.</p>
+            <h4 data-lang="fr">Analysez le verdict</h4>
+            <h4 data-lang="en">Analyse the verdict</h4>
+            <p data-lang="fr">PlexiSafe calcule K_I, σ_max, d_min et la marge de sécurité — avec code couleur vert / orange / rouge.</p>
+            <p data-lang="en">PlexiSafe computes K_I, σ_max, d_min and the safety margin — with green / orange / red colour coding.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">04</div>
           <div class="step-body">
-            <h4>Archivez ou exportez</h4>
-            <p>Sauvegardez le calcul nommé dans l'historique ou partagez un rapport PDF par e-mail, AirDrop ou Messages.</p>
+            <h4 data-lang="fr">Archivez ou exportez</h4>
+            <h4 data-lang="en">Archive or export</h4>
+            <p data-lang="fr">Sauvegardez le calcul nommé dans l'historique ou partagez le rapport par e-mail, AirDrop ou Messages.</p>
+            <p data-lang="en">Save the named calculation to history or share the report by e-mail, AirDrop or Messages.</p>
           </div>
         </div>
       </div>
@@ -578,8 +622,10 @@
       <div class="safety-banner">
         <div class="safety-icon">⚠️</div>
         <div class="safety-text">
-          <h5>Avertissement de sécurité</h5>
-          <p>PlexiSafe est un outil d'aide à la décision basé sur la mécanique de la rupture linéaire élastique (MFLE). Les résultats sont indicatifs. Toute décision structurelle doit être validée par un ingénieur qualifié. Ne pas utiliser pour des applications à risque vital.</p>
+          <h5 data-lang="fr">Avertissement de sécurité</h5>
+          <h5 data-lang="en">Safety warning</h5>
+          <p data-lang="fr">PlexiSafe est un outil d'aide à la décision basé sur la mécanique de la rupture linéaire élastique (MFLE). Les résultats sont indicatifs. Toute décision structurelle doit être validée par un ingénieur qualifié. Ne pas utiliser pour des applications à risque vital.</p>
+          <p data-lang="en">PlexiSafe is a decision-support tool based on Linear Elastic Fracture Mechanics (LEFM). Results are indicative only. Any structural decision must be validated by a qualified engineer. Do not use for life-critical applications.</p>
         </div>
       </div>
     </div>
@@ -589,15 +635,11 @@
   <section class="privacy-section" id="privacy">
     <div class="privacy-inner">
 
-      <div class="section-tag">Confidentialité / Privacy</div>
-
-      <div class="lang-bar">
-        <button class="lang-btn active" id="btn-fr" onclick="setPrivacyLang('fr')">FR</button>
-        <button class="lang-btn" id="btn-en" onclick="setPrivacyLang('en')">EN</button>
-      </div>
+      <div class="section-tag" data-lang="fr">Confidentialité</div>
+      <div class="section-tag" data-lang="en">Privacy</div>
 
       <!-- FRENCH -->
-      <div data-lang="fr" class="visible">
+      <div data-lang="fr">
         <div class="policy-header">
           <div class="policy-icon-wrap">🔒</div>
           <div>
@@ -620,10 +662,6 @@
         <div class="policy-card">
           <h3>🗑 Suppression de vos données</h3>
           <p>Toutes les données sont supprimées à la désinstallation de l'application. Vous pouvez également effacer votre historique à tout moment depuis l'onglet Archivés.</p>
-        </div>
-        <div class="policy-card">
-          <h3>✉️ Contact</h3>
-          <p>Pour toute question relative à la confidentialité : <a href="mailto:valerie.otero@free.fr">valerie.otero@free.fr</a></p>
         </div>
       </div>
 
@@ -652,10 +690,6 @@
           <h3>🗑 Deleting your data</h3>
           <p>All data is deleted when you uninstall the app. You can also clear your history at any time from the Archives tab.</p>
         </div>
-        <div class="policy-card">
-          <h3>✉️ Contact</h3>
-          <p>For any privacy-related question: <a href="mailto:valerie.otero@free.fr">valerie.otero@free.fr</a></p>
-        </div>
       </div>
 
     </div>
@@ -669,28 +703,38 @@
         <span class="footer-wordmark">Plexi<span>Safe</span></span>
       </div>
       <div class="footer-links">
-        <a href="#">App Store</a>
-        <a href="#privacy">Confidentialité</a>
-        <a href="mailto:valerie.otero@free.fr">Contact</a>
+        <a href="https://apps.apple.com/fr/app/plexisafe/id6761058642">App Store</a>
+        <a href="#privacy" data-lang="fr">Confidentialité</a>
+        <a href="#privacy" data-lang="en">Privacy</a>
       </div>
-      <p class="footer-copy">
-        © 2026 PlexiSafe · v1.0 · Tous droits réservés.<br>
+      <p class="footer-copy" data-lang="fr">
+        © 2026 Valérie Otero · v1.0 · Tous droits réservés.<br>
         PlexiSafe est un outil d'aide au calcul basé sur la mécanique de la rupture linéaire élastique (MFLE / LEFM).
         Les résultats produits par cette application sont fournis à titre indicatif et ne constituent pas un avis d'ingénierie certifié.
         Toute décision structurelle ou de sécurité doit être validée par un professionnel qualifié.
         L'auteur décline toute responsabilité pour tout dommage résultant d'une utilisation inappropriée de l'application.
       </p>
+      <p class="footer-copy" data-lang="en">
+        © 2026 Valérie Otero · v1.0 · All rights reserved.<br>
+        PlexiSafe is a calculation aid based on Linear Elastic Fracture Mechanics (LEFM / MFLE).
+        Results are provided for informational purposes only and do not constitute certified engineering advice.
+        Any structural or safety decision must be validated by a qualified professional.
+        The author accepts no liability for any damage resulting from inappropriate use of the application.
+      </p>
     </div>
   </footer>
 
   <script>
-    function setPrivacyLang(lang) {
+    function setLang(lang) {
       document.querySelectorAll('[data-lang]').forEach(el => {
         el.classList.toggle('visible', el.dataset.lang === lang);
       });
       document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
       document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.documentElement.lang = lang;
     }
+    // Init FR
+    setLang('fr');
   </script>
 
 </body>
