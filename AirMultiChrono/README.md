@@ -1,8 +1,18 @@
 # AirMultiChrono
 
-**Version 1.2**
+**Version 1.5**
 
 Chronomètre multi-voies simple, puissant et fiable pour iPhone et iPad. Conçu pour les usages où plusieurs chronos indépendants et un cumulatif global sont utiles — notamment en aviation de loisir (gestion des réservoirs, branches de navigation, points d’origine/DCT, attentes), mais aussi pour le sport, la cuisine, les ateliers, ou toute activité nécessitant plusieurs temporisations parallèles.
+
+
+## Nouveautés Version 1.4
+
+- **Persistance de l'agencement** : Vos dispositions personnalisées (tailles et positions) sont désormais sauvegardées automatiquement et conservées même en quittant le mode édition.
+- **Sécurité renforcée** : Le cadenas rouge verrouille désormais strictement l'arrêt et la remise à zéro des chronomètres, ainsi que les options de réinitialisation globale dans le menu.
+- **Interface adaptative** : Les titres et menus s'adaptent automatiquement aux écrans partagés (Split View) et aux petits écrans.
+- **Profils de configuration** : Sauvegardez et chargez instantanément vos configurations de chronomètres.
+- **Jauge visuelle** : Barre de progression fluide sous le temps pour visualiser l'alarme.
+- **Retour haptique** : Ressentez les actions avec des vibrations subtiles (iPhone).
 
 
 ## Points forts

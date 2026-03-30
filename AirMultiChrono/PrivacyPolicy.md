@@ -4,8 +4,8 @@ This document contains the full privacy policy in both French and English.
 
 ## Français (FR)
 
-**Date d’effet :** 5 décembre 2025  
-**Version :** 1.2  
+**Date d'effet :** 30 mars 2026  
+**Version :** 1.5  
 **Développeuse :** Valérie Otero  
 **Contact :** [valerie.otero@free.fr](mailto:valerie.otero@free.fr)
 
@@ -87,8 +87,8 @@ Des questions ? Envoyez-nous un email à [valerie.otero@free.fr](mailto:valerie.
 
 ## English (EN)
 
-**Effective Date:** December 5, 2025  
-**Version:** 1.2  
+**Effective Date:** March 30, 2026  
+**Version:** 1.5  
 **Developer:** Valérie Otero  
 **Contact:** [valerie.otero@free.fr](mailto:valerie.otero@free.fr)
 
