@@ -1,0 +1,3696 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛰️ ISS en direct — Étoile Filante</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0d1137 0%, #1a1a5e 50%, #0d1137 100%);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #2a2a8a;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(100, 149, 237, 0.6);
+        }
+
+        header h1 span {
+            font-size: 2rem;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 100, 0.1);
+            border: 1px solid rgba(0, 255, 100, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #00ff64;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 5px #00ff64; }
+            50% { opacity: 0.5; box-shadow: 0 0 15px #00ff64; }
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 12px;
+            border: 2px solid #2a2a8a;
+            z-index: 1;
+        }
+
+        /* ── APOD (Photo of the Day) ── */
+        .apod-content { position: relative; }
+        .apod-loading {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 40px 0; color: #556; font-size: 0.8rem;
+        }
+        .apod-spinner {
+            width: 20px; height: 20px; border: 2px solid rgba(123,140,255,0.2);
+            border-top-color: #7b8cff; border-radius: 50%;
+            animation: apod-spin 0.8s linear infinite;
+        }
+        @keyframes apod-spin { to { transform: rotate(360deg); } }
+        .apod-img-wrap {
+            position: relative; border-radius: 10px; overflow: hidden;
+            margin-bottom: 12px; cursor: pointer;
+        }
+        .apod-img-wrap img {
+            width: 100%; display: block; border-radius: 10px;
+            transition: transform 0.5s;
+        }
+        .apod-img-wrap:hover img { transform: scale(1.03); }
+        .apod-img-wrap iframe {
+            width: 100%; aspect-ratio: 16/9; border: none; border-radius: 10px;
+        }
+        .apod-badge {
+            position: absolute; top: 10px; left: 10px;
+            background: rgba(10,14,39,0.85); backdrop-filter: blur(8px);
+            padding: 4px 10px; border-radius: 20px; font-size: 0.65rem;
+            color: #7b8cff; border: 1px solid rgba(123,140,255,0.3);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .apod-title {
+            font-size: 0.95rem; font-weight: 600; color: #c8d0ff;
+            margin-bottom: 6px;
+        }
+        .apod-desc {
+            font-size: 0.78rem; color: #889; line-height: 1.6;
+            max-height: 100px; overflow-y: auto;
+        }
+        .apod-desc::-webkit-scrollbar { width: 3px; }
+        .apod-desc::-webkit-scrollbar-thumb { background: rgba(123,140,255,0.2); border-radius: 3px; }
+        .apod-copyright {
+            font-size: 0.65rem; color: #445; margin-top: 6px; font-style: italic;
+        }
+
+        /* ── Space Weather (compact) ── */
+        .sw-content { min-height: 60px; }
+        .sw-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+        }
+        .sw-item {
+            background: rgba(255,255,255,0.03); border-radius: 8px;
+            padding: 8px 6px; border: 1px solid rgba(255,255,255,0.05);
+            text-align: center; transition: border-color 0.3s;
+        }
+        .sw-item:hover { border-color: rgba(123,140,255,0.2); }
+        .sw-item .sw-label {
+            font-size: 0.58rem; color: #667; text-transform: uppercase;
+            letter-spacing: 0.5px; margin-bottom: 3px;
+        }
+        .sw-item .sw-value {
+            font-size: 1rem; font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+        .sw-item .sw-sub {
+            font-size: 0.58rem; color: #556; margin-top: 2px;
+        }
+        .sw-kp-low { color: #4ade80; }
+        .sw-kp-mod { color: #facc15; }
+        .sw-kp-high { color: #fb923c; }
+        .sw-kp-storm { color: #ef4444; }
+        .sw-kp-extreme { color: #dc2626; text-shadow: 0 0 10px rgba(220,38,38,0.5); }
+        .sw-bar {
+            display: flex; gap: 2px; margin-top: 8px; height: 18px;
+            align-items: flex-end; padding: 0 2px;
+        }
+        .sw-bar-segment {
+            flex: 1; border-radius: 2px 2px 0 0; min-height: 3px;
+            transition: height 0.5s; position: relative;
+        }
+        .sw-bar-segment.active { opacity: 1; }
+        .sw-bar-segment:not(.active) { opacity: 0.2; }
+        .sw-bar-legend {
+            display: flex; justify-content: center; gap: 8px; margin-top: 6px;
+            font-size: 0.55rem; color: #667; flex-wrap: wrap;
+        }
+        .sw-bar-legend span {
+            display: flex; align-items: center; gap: 3px;
+        }
+        .sw-bar-legend i {
+            display: inline-block; width: 8px; height: 8px; border-radius: 2px;
+        }
+        .sw-note {
+            font-size: 0.65rem; color: #667; margin-top: 8px; line-height: 1.4;
+            padding: 6px 8px; background: rgba(255,255,255,0.02); border-radius: 6px;
+        }
+        .sw-note strong { color: #7b8cff; }
+
+        /* ── ISS Course ── */
+        .course-tabs {
+            display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 16px;
+        }
+        .course-tab {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            color: #889; border-radius: 20px; padding: 6px 14px;
+            font-size: 0.75rem; cursor: pointer; transition: all 0.25s;
+            font-family: inherit;
+        }
+        .course-tab:hover { background: rgba(123,140,255,0.1); color: #aab; }
+        .course-tab.active {
+            background: rgba(123,140,255,0.15); color: #7b8cff;
+            border-color: rgba(123,140,255,0.4);
+        }
+        .course-panel { display: none; animation: fadeIn 0.3s ease; }
+        .course-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Timeline */
+        .course-timeline { position: relative; padding-left: 20px; }
+        .course-timeline::before {
+            content: ''; position: absolute; left: 6px; top: 0; bottom: 0;
+            width: 2px; background: linear-gradient(to bottom, #7b8cff, rgba(123,140,255,0.1));
+        }
+        .tl-item {
+            position: relative; padding: 8px 0 8px 16px;
+            font-size: 0.8rem; color: #99a; line-height: 1.5;
+        }
+        .tl-item::before {
+            content: ''; position: absolute; left: -17px; top: 13px;
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #7b8cff; border: 2px solid #0d1137;
+            box-shadow: 0 0 8px rgba(123,140,255,0.4);
+        }
+        .tl-year {
+            font-weight: 700; color: #7b8cff; font-family: 'Courier New', monospace;
+            font-size: 0.75rem; margin-right: 8px;
+        }
+
+        /* Stats grid */
+        .course-stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;
+        }
+        .course-stat {
+            background: rgba(255,255,255,0.03); border-radius: 10px;
+            padding: 14px 10px; text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .course-stat:hover { border-color: rgba(123,140,255,0.2); transform: translateY(-2px); }
+        .course-stat.record { border-left: 2px solid #7b8cff; }
+        .course-stat-val {
+            font-size: 1.3rem; font-weight: 700; color: #7b8cff;
+            font-family: 'Courier New', monospace;
+        }
+        .course-stat-lbl {
+            font-size: 0.7rem; color: #778; margin-top: 4px; line-height: 1.3;
+        }
+        .course-note {
+            font-size: 0.75rem; color: #667; margin-top: 14px; padding: 8px 10px;
+            background: rgba(255,255,255,0.02); border-radius: 8px; line-height: 1.5;
+        }
+
+        /* Facts list */
+        .course-facts { display: flex; flex-direction: column; gap: 12px; }
+        .course-fact {
+            display: flex; gap: 12px; align-items: flex-start;
+            background: rgba(255,255,255,0.02); border-radius: 10px;
+            padding: 12px; border: 1px solid rgba(255,255,255,0.04);
+            transition: border-color 0.3s;
+        }
+        .course-fact:hover { border-color: rgba(123,140,255,0.15); }
+        .course-fact-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+        .course-fact strong { color: #c8d0ff; font-size: 0.85rem; }
+        .course-fact p { color: #889; font-size: 0.78rem; line-height: 1.5; margin-top: 3px; }
+
+        /* ── Gallery ── */
+        .gallery-card h2 { flex-wrap: wrap; }
+        .gallery-nav { display: flex; gap: 4px; margin-left: auto; }
+        .gallery-nav-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+            color: #aab; border-radius: 6px; width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 0.7rem; transition: all 0.2s;
+        }
+        .gallery-nav-btn:hover { background: rgba(123,140,255,0.2); color: #fff; }
+        .gallery-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px; min-height: 100px;
+        }
+        .gallery-item {
+            position: relative; border-radius: 10px; overflow: hidden;
+            cursor: pointer; aspect-ratio: 4/3;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .gallery-item:hover { border-color: rgba(123,140,255,0.3); transform: scale(1.02); }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            transition: transform 0.5s;
+        }
+        .gallery-item:hover img { transform: scale(1.08); }
+        .gallery-item-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(10,14,39,0.9));
+            padding: 20px 8px 8px; font-size: 0.65rem; color: #aab;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+        .gallery-caption {
+            font-size: 0.72rem; color: #556; margin-top: 10px; text-align: center;
+            min-height: 20px;
+        }
+        .gallery-lightbox {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.92); z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; animation: fadeIn 0.2s;
+        }
+        .gallery-lightbox img {
+            max-width: 90vw; max-height: 90vh; border-radius: 8px;
+            box-shadow: 0 0 40px rgba(123,140,255,0.2);
+        }
+        .gallery-lightbox-title {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            color: #c8d0ff; font-size: 0.9rem; padding: 8px 20px;
+            background: rgba(10,14,39,0.8); border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card {
+            background: linear-gradient(145deg, #111640, #0d1137);
+            border: 1px solid #2a2a8a;
+            border-radius: 12px;
+            padding: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .card:hover {
+            border-color: #4a4adf;
+        }
+
+        .card h2 {
+            font-size: 1.1rem;
+            color: #7b8cff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(122, 140, 255, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .card h2 .icon {
+            font-size: 1.3rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-item .label {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .info-item .value {
+            font-size: 1.15rem;
+            color: #fff;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .info-item .unit {
+            font-size: 0.8rem;
+            color: #666;
+            margin-left: 4px;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Radio section */
+        .radio-freq {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .freq-item {
+            background: rgba(255, 165, 0, 0.05);
+            border: 1px solid rgba(255, 165, 0, 0.15);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .freq-item .freq-label {
+            font-size: 0.85rem;
+            color: #bbb;
+        }
+
+        .freq-item .freq-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffa500;
+            font-family: 'Courier New', monospace;
+        }
+
+        .freq-item .freq-mode {
+            font-size: 0.7rem;
+            color: #888;
+            background: rgba(255,255,255,0.05);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 3px;
+        }
+
+        .radio-note {
+            font-size: 0.8rem;
+            color: #777;
+            line-height: 1.5;
+            margin-top: 5px;
+            padding: 10px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            border-left: 3px solid #ffa500;
+        }
+
+        /* Crew section */
+        .crew-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .crew-member {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+        }
+
+        .crew-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #4a4adf, #7b8cff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .crew-name {
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        .crew-craft {
+            font-size: 0.7rem;
+            color: #777;
+        }
+
+        /* Pass prediction */
+        .pass-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .pass-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            padding: 10px;
+            background: rgba(0, 200, 100, 0.05);
+            border: 1px solid rgba(0, 200, 100, 0.1);
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .pass-item .pass-label {
+            color: #777;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .pass-item .pass-value {
+            color: #00c864;
+            font-weight: 600;
+        }
+
+        /* Orbit path trail */
+        .ground-track-info {
+            font-size: 0.8rem;
+            color: #777;
+            margin-top: 8px;
+        }
+
+        /* Bottom bar */
+        .bottom-section {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            align-items: start;
+        }
+
+
+
+        .next-pass-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .next-pass-input input {
+            flex: 1;
+            min-width: 120px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #2a2a8a;
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .next-pass-input input::placeholder {
+            color: #555;
+        }
+
+        .next-pass-input button {
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #4a4adf, #7b8cff);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+        }
+
+        .next-pass-input button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(75, 75, 223, 0.4);
+        }
+
+        .loader {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-top-color: #7b8cff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #444;
+            font-size: 0.8rem;
+            border-top: 1px solid #1a1a3a;
+        }
+
+        footer a {
+            color: #7b8cff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 1000px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                grid-column: 1 !important;
+                grid-row: auto !important;
+            }
+            #map {
+                height: 350px;
+            }
+            header h1 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Leaflet dark tiles override */
+        .leaflet-container {
+            background: #0a0e27;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background: #111640;
+            color: #e0e0e0;
+            border-radius: 10px;
+            border: 1px solid #2a2a8a;
+        }
+
+        .leaflet-popup-tip {
+            background: #111640;
+        }
+
+        /* Audio controls */
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .audio-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #2a2a8a;
+            background: rgba(255,255,255,0.05);
+            color: #aaa;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .audio-btn:hover {
+            border-color: #7b8cff;
+            color: #ddd;
+        }
+
+        .audio-btn.active {
+            background: rgba(123, 140, 255, 0.15);
+            border-color: #7b8cff;
+            color: #fff;
+            box-shadow: 0 0 12px rgba(123, 140, 255, 0.3);
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 80px;
+            height: 4px;
+            border-radius: 2px;
+            background: #2a2a8a;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #7b8cff;
+            cursor: pointer;
+            box-shadow: 0 0 6px rgba(123, 140, 255, 0.5);
+        }
+
+        /* Radio tuner panel (inline in sidebar) */
+        .radio-tuner-panel {
+            margin-top: 12px;
+            border-top: 1px solid rgba(122, 140, 255, 0.15);
+            padding-top: 14px;
+        }
+
+        .tuner-display {
+            background: #050810;
+            border: 1px solid #1a1a5e;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .tuner-freq-display {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #00ff88;
+            text-shadow: 0 0 12px rgba(0, 255, 136, 0.5);
+            text-align: center;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .tuner-freq-display.scanning {
+            color: #ffa500;
+            text-shadow: 0 0 12px rgba(255, 165, 0, 0.5);
+        }
+
+        .tuner-channel {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 2px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .tuner-spectrum {
+            margin-top: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .tuner-spectrum canvas {
+            display: block;
+            width: 100%;
+            height: 35px;
+        }
+
+        .tuner-signal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 8px;
+        }
+
+        .signal-label {
+            font-size: 0.7rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .signal-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 14px;
+        }
+
+        .sbar {
+            width: 4px;
+            background: #333;
+            border-radius: 1px;
+            transition: background 0.3s, height 0.3s;
+        }
+
+        .sbar:nth-child(1) { height: 4px; }
+        .sbar:nth-child(2) { height: 6px; }
+        .sbar:nth-child(3) { height: 8px; }
+        .sbar:nth-child(4) { height: 11px; }
+        .sbar:nth-child(5) { height: 14px; }
+
+        .sbar.lit { background: #00ff88; box-shadow: 0 0 4px rgba(0,255,136,0.4); }
+        .sbar.lit-warn { background: #ffa500; }
+        .sbar.lit-low { background: #ff4444; }
+
+        .tuner-channels {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .ch-btn {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #2a2a8a;
+            background: rgba(255,255,255,0.03);
+            color: #999;
+            font-size: 0.8rem;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .ch-btn .ch-freq {
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .ch-btn .ch-name {
+            font-size: 0.65rem;
+            color: #666;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .ch-btn:hover {
+            border-color: #00ff88;
+            color: #ddd;
+        }
+
+        .ch-btn:hover .ch-name { color: #aaa; }
+
+        .ch-btn.active {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: #00ff88;
+            color: #00ff88;
+            box-shadow: 0 0 8px rgba(0,255,136,0.2);
+        }
+
+        .ch-btn.active .ch-name { color: #00cc66; }
+
+        .ch-btn-duplex {
+            border-color: #8a6b2a !important;
+            background: linear-gradient(135deg, rgba(0,255,136,0.05), rgba(74,158,255,0.05)) !important;
+        }
+
+        .ch-btn-duplex:hover {
+            border-color: #ffd700 !important;
+        }
+
+        .ch-btn-duplex.active {
+            background: linear-gradient(135deg, rgba(0,255,136,0.15), rgba(74,158,255,0.15)) !important;
+            border-color: #ffd700 !important;
+            color: #ffd700 !important;
+            box-shadow: 0 0 8px rgba(255,215,0,0.3) !important;
+        }
+
+        .ch-btn-duplex.active .ch-name { color: #ccaa00 !important; }
+
+        /* ARISS link buttons */
+        .ariss-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #1a1a4a, #2a2a6a);
+            border: 1px solid #3a3a8a;
+            border-radius: 8px;
+            color: #7b8cff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .ariss-link-btn:hover {
+            background: linear-gradient(135deg, #2a2a6a, #3a3a9a);
+            border-color: #7b8cff;
+            color: #fff;
+            box-shadow: 0 0 12px rgba(123,140,255,0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Custom Frequency Input */
+        .custom-freq-row {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 6px;
+            align-items: stretch;
+        }
+
+        .custom-freq-row input {
+            flex: 1;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #2a2a8a;
+            background: rgba(255,255,255,0.03);
+            color: #e0e0ff;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .custom-freq-row input::placeholder {
+            color: #555;
+            font-weight: 400;
+        }
+
+        .custom-freq-row input:focus {
+            border-color: #bf6bff;
+            box-shadow: 0 0 8px rgba(191,107,255,0.2);
+        }
+
+        .custom-freq-row button {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid #6b2abf;
+            background: rgba(191,107,255,0.1);
+            color: #bf6bff;
+            font-size: 0.75rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .custom-freq-row button:hover {
+            background: rgba(191,107,255,0.2);
+            border-color: #bf6bff;
+            color: #d9a6ff;
+        }
+
+        /* Doppler Shift Display */
+        .doppler-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 10px;
+            margin-top: 4px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-family: 'Courier New', monospace;
+            font-size: 0.72rem;
+        }
+
+        .doppler-label {
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.6rem;
+        }
+
+        .doppler-shift {
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: color 0.4s;
+        }
+
+        .doppler-shift.approaching { color: #00ccff; text-shadow: 0 0 8px rgba(0,204,255,0.4); }
+        .doppler-shift.receding { color: #ff6b6b; text-shadow: 0 0 8px rgba(255,107,107,0.4); }
+        .doppler-shift.neutral { color: #888; }
+
+        .doppler-corrected {
+            font-size: 0.72rem;
+            color: #aaa;
+        }
+
+        .doppler-arrow {
+            font-size: 1rem;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .doppler-arrow.up { color: #00ccff; transform: rotate(-90deg); }
+        .doppler-arrow.down { color: #ff6b6b; transform: rotate(90deg); }
+        .doppler-arrow.flat { color: #555; transform: rotate(0deg); }
+
+        .doppler-bar {
+            width: 100%;
+            height: 3px;
+            background: #1a1a2e;
+            border-radius: 2px;
+            margin-top: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .doppler-bar-fill {
+            height: 100%;
+            width: 50%;
+            border-radius: 2px;
+            transition: all 0.5s ease;
+            position: absolute;
+            left: 50%;
+        }
+
+        .audio-visualizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 20px;
+            margin-left: 5px;
+        }
+
+        .audio-visualizer .bar {
+            width: 3px;
+            background: #7b8cff;
+            border-radius: 1px;
+            transition: height 0.1s;
+            animation: audioBar 0.8s ease-in-out infinite alternate;
+        }
+
+        .audio-visualizer .bar:nth-child(1) { animation-delay: 0s; }
+        .audio-visualizer .bar:nth-child(2) { animation-delay: 0.15s; }
+        .audio-visualizer .bar:nth-child(3) { animation-delay: 0.3s; }
+        .audio-visualizer .bar:nth-child(4) { animation-delay: 0.45s; }
+        .audio-visualizer .bar:nth-child(5) { animation-delay: 0.6s; }
+
+        @keyframes audioBar {
+            0% { height: 3px; }
+            100% { height: 18px; }
+        }
+
+        .visibility-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .vis-day {
+            background: rgba(255, 200, 0, 0.15);
+            color: #ffc800;
+        }
+
+        .vis-night {
+            background: rgba(100, 149, 237, 0.15);
+            color: #6495ed;
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            display: flex;
+            gap: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #2a2a8a;
+            margin-left: 10px;
+        }
+
+        .lang-btn {
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+            color: #888;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .lang-btn.active {
+            background: rgba(123, 140, 255, 0.2);
+            color: #7b8cff;
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: #ccc;
+        }
+
+        /* ── Fun Stats Strip ── */
+        .fun-stat-strip {
+            display: flex; justify-content: space-around; gap: 4px;
+            margin-top: 12px; padding: 10px 8px;
+            background: rgba(123,140,255,0.05); border-radius: 10px;
+            border: 1px solid rgba(123,140,255,0.1);
+        }
+        .fun-stat-item { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .fun-stat-val { font-size: 1.05rem; font-weight: 700; color: #7b8cff; font-family: 'Courier New', monospace; }
+        .fun-stat-lbl { font-size: 0.55rem; color: #556; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+        /* ── Fun Facts Card ── */
+        .fun-fact-body { min-height: 64px; display: flex; flex-direction: column; justify-content: center; padding: 6px 0; }
+        .fun-fact-text { font-size: 0.88rem; line-height: 1.6; color: #ccc; text-align: center; padding: 0 8px; transition: opacity 0.3s ease; }
+        .fun-fact-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px; }
+        .fun-fact-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(123,140,255,0.2); transition: background 0.3s; }
+        .fun-fact-dot.active { background: #7b8cff; }
+        .fun-fact-next-btn {
+            width: 100%; margin-top: 10px; padding: 7px;
+            background: rgba(123,140,255,0.1); border: 1px solid rgba(123,140,255,0.2);
+            color: #7b8cff; border-radius: 8px; font-size: 0.78rem;
+            cursor: pointer; font-family: inherit; transition: all 0.2s;
+        }
+        .fun-fact-next-btn:hover { background: rgba(123,140,255,0.2); }
+
+        /* ── Radio card active glow ── */
+        .radio-active-card {
+            border-color: rgba(0,255,136,0.4) !important;
+            box-shadow: 0 0 24px rgba(0,255,136,0.07);
+        }
+
+        /* ── Channel button tip line ── */
+        .ch-btn .ch-tip { font-size: 0.58rem; color: #556; margin-top: 2px; font-style: italic; display: block; }
+        .ch-btn.active .ch-tip { color: #3a7a4a; }
+
+        /* ── Doppler help ── */
+        .doppler-help-btn {
+            background: none; border: 1px solid #445; color: #667;
+            border-radius: 50%; width: 16px; height: 16px;
+            font-size: 0.6rem; cursor: pointer; margin-left: 4px;
+            line-height: 14px; padding: 0; vertical-align: middle; transition: all 0.2s;
+        }
+        .doppler-help-btn:hover { border-color: #7b8cff; color: #7b8cff; }
+        .doppler-help-panel {
+            font-size: 0.7rem; color: #889; line-height: 1.5;
+            background: rgba(123,140,255,0.05); border-radius: 8px;
+            padding: 8px 10px; margin-top: 6px;
+            border-left: 2px solid rgba(123,140,255,0.3);
+        }
+
+        /* ── Radio sound row (beacon + alert inside card) ── */
+        .radio-sound-row { display: flex; gap: 8px; margin-top: 10px; justify-content: center; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><span>🛰️</span> <span data-i18n="siteTitle">ISS en direct</span> <small style="font-size:0.5em; color:#7b8cff; font-weight:400; letter-spacing:2px;">— <span data-i18n="siteSub">Étoile Filante</span></small></h1>
+    <div style="display:flex; align-items:center; gap: 15px; flex-wrap: wrap;">
+        <div class="lang-toggle">
+            <button class="lang-btn active" id="lang-fr" onclick="switchLang('fr')">🇫🇷 FR</button>
+            <button class="lang-btn" id="lang-en" onclick="switchLang('en')">🇬🇧 EN</button>
+        </div>
+        <div class="audio-controls">
+            <input type="range" id="master-volume" min="0" max="100" value="40" class="volume-slider" oninput="setMasterVolume(this.value)" title="Volume">
+        </div>
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            <span data-i18n="liveTracking">Suivi en direct</span>
+        </div>
+    </div>
+</header>
+
+<!-- Artemis II News Banner -->
+<div style="background:linear-gradient(90deg,rgba(255,120,0,0.12),rgba(123,140,255,0.12));border-bottom:1px solid rgba(255,140,0,0.25);padding:10px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+    <span style="font-size:1.3rem;">🚀</span>
+    <span style="color:#ffa500;font-weight:600;font-size:0.88rem;" data-i18n="artemisLabel">À VENIR — Artemis II</span>
+    <span style="color:#aaa;font-size:0.82rem;" data-i18n="artemisDesc">Premier vol habité autour de la Lune depuis Apollo 17. Diffusion officielle NASA en direct.</span>
+    <a href="https://plus.nasa.gov/scheduled-video/nasas-artemis-ii-crew-launches-to-the-moon-official-broadcast/" target="_blank" rel="noopener" style="margin-left:auto;background:rgba(255,140,0,0.15);color:#ffa500;border:1px solid rgba(255,140,0,0.35);border-radius:6px;padding:5px 14px;font-size:0.78rem;text-decoration:none;white-space:nowrap;" data-i18n="artemisBtn">📺 Voir la diffusion →</a>
+</div>
+
+<div class="main-container">
+    <!-- Map + Crew row -->
+    <div style="grid-column: 1; display: flex; flex-direction: column; gap: 20px;">
+        <div>
+            <div style="position:relative;">
+                <div id="map"></div>
+                <button id="map-style-toggle" onclick="toggleMapStyle()" title="Changer le style de carte" style="position:absolute;top:10px;right:10px;z-index:1000;background:rgba(15,15,40,0.85);color:#c0c8ff;border:1px solid #2a2a8a;border-radius:8px;padding:6px 12px;font-size:0.78rem;cursor:pointer;backdrop-filter:blur(4px);transition:background 0.2s;">🎨 <span data-i18n="mapToggleColor">Carte colorée</span></button>
+            </div>
+            <p class="ground-track-info" data-i18n="groundTrackInfo">🌍 La trace au sol montre l'orbite de l'ISS. Mise à jour toutes les 5 secondes.</p>
+        </div>
+        <!-- Crew card (under the map) -->
+        <div class="card">
+            <h2><span class="icon">👨‍🚀</span> <span data-i18n="crewTitle">Équipage à bord</span></h2>
+            <div class="crew-list" id="crew-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <div style="color: #666;">Chargement...</div>
+            </div>
+        </div>
+
+        <!-- Frequencies reference card (under crew) -->
+        <div class="card">
+            <h2><span class="icon">📻</span> <span data-i18n="freqTitle">Les fréquences de l'ISS</span></h2>
+            <p style="font-size:0.78rem; color:#888; margin:0 0 10px;" data-i18n="freqIntro">L'ISS communique par radio VHF/UHF. Voici à quoi sert chaque fréquence — et si vous pouvez l'écouter.</p>
+            <div class="radio-freq">
+                <div class="freq-item">
+                    <div>
+                        <div class="freq-label">📥 ISS → Terre</div>
+                        <div class="freq-mode">FM · <span style="color:#4caf50;font-size:0.72rem;">🎧 écoute libre</span></div>
+                        <div style="font-size:0.7rem;color:#777;margin-top:2px;" data-i18n="freqDescDown">Voix des astronautes · Contacts scolaires ARISS</div>
+                    </div>
+                    <div class="freq-value">145.800</div>
+                </div>
+                <div class="freq-item">
+                    <div>
+                        <div class="freq-label">📤 Terre → ISS</div>
+                        <div class="freq-mode">FM · <span style="color:#ff9800;font-size:0.72rem;">📜 licence requise</span></div>
+                        <div style="font-size:0.7rem;color:#777;margin-top:2px;" data-i18n="freqDescUp">Pour parler à l'ISS, il faut un indicatif radioamateur</div>
+                    </div>
+                    <div class="freq-value">145.200</div>
+                </div>
+                <div class="freq-item">
+                    <div>
+                        <div class="freq-label">💬 Messages numériques (APRS)</div>
+                        <div class="freq-mode">AFSK · <span style="color:#4caf50;font-size:0.72rem;">🎧 écoute libre</span></div>
+                        <div style="font-size:0.7rem;color:#777;margin-top:2px;" data-i18n="freqDescAprs">Mini-messages automatiques échangés via l'ISS</div>
+                    </div>
+                    <div class="freq-value">145.825</div>
+                </div>
+                <div class="freq-item">
+                    <div>
+                        <div class="freq-label">🖼️ Photos radio (SSTV)</div>
+                        <div class="freq-mode">PD120/180 · <span style="color:#4caf50;font-size:0.72rem;">🎧 écoute libre</span></div>
+                        <div style="font-size:0.7rem;color:#777;margin-top:2px;" data-i18n="freqDescSstv">Lors d'événements spéciaux, l'ISS transmet des photos en audio !</div>
+                    </div>
+                    <div class="freq-value">145.800</div>
+                </div>
+                <div class="freq-item">
+                    <div>
+                        <div class="freq-label">🔁 Répéteur vocal V/U</div>
+                        <div class="freq-mode">FM · <span style="color:#ff9800;font-size:0.72rem;">📜 licence requise</span></div>
+                        <div style="font-size:0.7rem;color:#777;margin-top:2px;" data-i18n="freqDescRelay">L'ISS relaie les voix entre radioamateurs au sol</div>
+                    </div>
+                    <div class="freq-value" style="font-size:0.8rem;">↑437.800<br>↓145.800</div>
+                </div>
+            </div>
+            <div class="radio-note">
+                <span data-i18n="callsignNote"><strong>Indicatifs :</strong> NA1SS (US) · RS0ISS (RU) · DP0ISS (EU) · OR4ISS (BE)<br>Portée ~<strong>10 min</strong>/passage · Antenne Yagi VHF/UHF recommandée</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Sidebar: Position + Radio Tuner -->
+    <div class="sidebar" style="grid-column: 2;">
+        <!-- Position card -->
+        <div class="card">
+            <h2><span class="icon">📍</span> <span data-i18n="positionTitle">Position actuelle</span></h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label" data-i18n="latitude">Latitude</div>
+                    <div class="value" id="lat">--</div>
+                </div>
+                <div class="info-item">
+                    <div class="label" data-i18n="longitude">Longitude</div>
+                    <div class="value" id="lon">--</div>
+                </div>
+                <div class="info-item">
+                    <div class="label" data-i18n="altitude">Altitude</div>
+                    <div class="value" id="alt">~408<span class="unit">km</span></div>
+                </div>
+                <div class="info-item">
+                    <div class="label" data-i18n="speed">Vitesse</div>
+                    <div class="value" id="speed">~27 600<span class="unit">km/h</span></div>
+                </div>
+                <div class="info-item" id="user-dist-item" style="display:none;">
+                    <div class="label" data-i18n="userDist">Distance depuis vous</div>
+                    <div class="value" id="user-dist" style="font-size:0.85rem;">--</div>
+                </div>
+            </div>
+            <div id="vis-from-user" style="display:none; margin:10px 0 0; padding:8px 12px; border-radius:8px; font-size:0.82rem; text-align:center; font-weight:600;"></div>
+            <div style="margin-top: 12px;">
+                <div class="info-item">
+                    <div class="label" data-i18n="lastUpdate">Dernière mise à jour</div>
+                    <div class="value" id="timestamp" style="font-size: 0.9rem;">--</div>
+                </div>
+            </div>
+            <div class="fun-stat-strip">
+                <div class="fun-stat-item">
+                    <span class="fun-stat-val" id="orbit-count">—</span>
+                    <span class="fun-stat-lbl" data-i18n="orbitCountLabel">Orbites depuis 1998</span>
+                </div>
+                <div class="fun-stat-item">
+                    <span class="fun-stat-val" id="orbits-today">—</span>
+                    <span class="fun-stat-lbl" data-i18n="orbitsTodayLabel">Orbites aujourd'hui</span>
+                </div>
+                <div class="fun-stat-item">
+                    <span class="fun-stat-val">7,66 <span style="font-size:0.6rem">km/s</span></span>
+                    <span class="fun-stat-lbl" data-i18n="orbitSpeedLabel">Vitesse</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Space Weather (compact, in sidebar) -->
+        <div class="card space-weather-card" id="space-weather-card">
+            <h2><span class="icon">☀️</span> <span data-i18n="swTitle">Météo spatiale</span></h2>
+            <div id="sw-content" class="sw-content">
+                <div class="apod-loading" id="sw-loading">
+                    <div class="apod-spinner"></div>
+                    <span data-i18n="swLoading">Chargement des données solaires…</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Radio Tuner Card -->
+        <div class="card" id="radio-card">
+            <h2><span class="icon">📻</span> <span data-i18n="radioTitle">Radio ISS</span>
+                <button class="audio-btn" id="btn-radio" onclick="toggleRadioStatic()" title="ON/OFF" style="margin-left: auto; font-size: 0.75rem; padding: 4px 12px;">
+                    ⏻ <span id="btn-radio-label">OFF</span>
+                </button>
+            </h2>
+            <div class="radio-tuner-panel" id="radio-tuner-panel">
+                <div class="tuner-display" id="tuner-display">
+                    <div class="tuner-freq-display" id="tuner-freq">---.- MHz</div>
+                    <div class="tuner-channel" id="tuner-channel" data-i18n="selectFreq">Sélectionnez une fréquence</div>
+                    <div class="tuner-spectrum" id="tuner-spectrum">
+                        <canvas id="spectrum-canvas" width="360" height="35"></canvas>
+                    </div>
+                    <div class="tuner-signal">
+                        <span class="signal-label">Signal</span>
+                        <div class="signal-bars" id="signal-bars">
+                            <div class="sbar"></div><div class="sbar"></div><div class="sbar"></div><div class="sbar"></div><div class="sbar"></div>
+                        </div>
+                    </div>
+                    <div class="doppler-row" id="doppler-row">
+                        <div>
+                            <span class="doppler-label">Doppler</span>
+                            <button class="doppler-help-btn" onclick="toggleDopplerHelp()" title="C'est quoi le Doppler ?">?</button>
+                        </div>
+                        <div style="text-align:center; flex:1;">
+                            <span class="doppler-shift neutral" id="doppler-shift">— Hz</span>
+                            <div class="doppler-bar">
+                                <div class="doppler-bar-fill" id="doppler-bar-fill" style="background:#555; width:2px; left:calc(50% - 1px);"></div>
+                            </div>
+                        </div>
+                        <div style="text-align:right;">
+                            <span class="doppler-arrow flat" id="doppler-arrow">➤</span>
+                            <div class="doppler-corrected" id="doppler-corrected">---.- MHz</div>
+                        </div>
+                    </div>
+                    <div id="doppler-help-panel" class="doppler-help-panel" style="display:none;">
+                        🚑 Comme une ambulance : sa sirène semble plus aiguë quand elle approche, plus grave quand elle s'éloigne. L'ISS file à <strong>28 000 km/h</strong> — ça décale la fréquence radio de quelques kHz !
+                    </div>
+                </div>
+                <div class="tuner-channels">
+                    <button class="ch-btn" data-freq="145.800" data-name="Voix ↓" data-tone="800" onclick="setRadioChannel(this)" title="Voix descendante : l'ISS vous parle !">
+                        <span class="ch-freq">145.800</span>
+                        <span class="ch-name">Voix ↓</span>
+                        <span class="ch-tip">📥 ISS → Vous</span>
+                    </button>
+                    <button class="ch-btn" data-freq="145.200" data-name="Voix ↑" data-tone="600" onclick="setRadioChannel(this)" title="Voix montante : vous parlez à l'ISS !">
+                        <span class="ch-freq">145.200</span>
+                        <span class="ch-name">Voix ↑</span>
+                        <span class="ch-tip">📤 Vous → ISS</span>
+                    </button>
+                    <button class="ch-btn" data-freq="145.825" data-name="APRS" data-tone="1200" onclick="setRadioChannel(this)" title="APRS : messages numériques automatiques envoyés par l'ISS">
+                        <span class="ch-freq">145.825</span>
+                        <span class="ch-name">APRS</span>
+                        <span class="ch-tip">💬 Messages num.</span>
+                    </button>
+                    <button class="ch-btn" data-freq="437.800" data-name="Repeater ↑" data-tone="1800" onclick="setRadioChannel(this)" title="Répéteur : relaie les voix entre radioamateurs">
+                        <span class="ch-freq">437.800</span>
+                        <span class="ch-name">Repeater ↑</span>
+                        <span class="ch-tip">🔁 Relais voix</span>
+                    </button>
+                    <button class="ch-btn ch-btn-duplex" id="btn-duplex" onclick="setDuplexMode()">
+                        <span class="ch-freq" data-i18n="duplexLabel">↑↓ Duplex</span>
+                        <span class="ch-name">145.800 + 145.200</span>
+                    </button>
+                    <div class="custom-freq-row">
+                        <input type="text" id="custom-freq-input" placeholder="Ex: 145.645" maxlength="10" inputmode="decimal">
+                        <button onclick="setCustomFrequency()" data-i18n="listenBtn">📡 Écouter</button>
+                    </div>
+                    <div class="radio-sound-row">
+                        <button class="audio-btn" id="btn-beep" onclick="toggleBeaconBeep()" title="Bip-bip comme un vrai satellite !">
+                            📡 <span id="btn-beep-label" data-i18n="beep">Balise</span>
+                        </button>
+                        <button class="audio-btn" id="btn-alert" onclick="togglePassAlert()" title="Alerte quand l'ISS entre dans ta zone !">
+                            🔔 <span id="btn-alert-label" data-i18n="alert">Alerte</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prochains passages (compact in sidebar) -->
+        <div class="card">
+            <h2><span class="icon">🔭</span> <span data-i18n="passesTitle">Prochains passages</span></h2>
+            <div class="next-pass-input">
+                <input type="number" id="input-lat" placeholder="Latitude" step="any">
+                <input type="number" id="input-lon" placeholder="Longitude" step="any">
+                <button onclick="getPasses()">OK</button>
+                <button onclick="useMyLocation()" style="background: linear-gradient(135deg, #2a8a4a, #00c864);">📍 GPS</button>
+            </div>
+            <button id="btn-notify" onclick="togglePassNotifications()" style="width:100%;margin-top:8px;background:rgba(123,140,255,0.08);color:#7b8cff;border:1px solid rgba(123,140,255,0.25);border-radius:8px;padding:7px 12px;font-size:0.78rem;cursor:pointer;transition:all 0.2s;">
+                🔔 <span data-i18n="notifyBtn">M'alerter avant le prochain passage</span>
+            </button>
+            <div id="notify-status" style="font-size:0.72rem;margin-top:4px;text-align:center;display:none;"></div>
+            <div class="pass-list" id="pass-list">
+                <div style="color: #666; font-size: 0.8rem;" data-i18n="enterCoords">Entrez vos coordonnées ou utilisez le GPS.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ NEW: Enrichment sections ═══════════ -->
+
+    <!-- 1. Tout savoir sur l'ISS -->
+    <div class="bottom-section" style="margin-top: 20px;">
+        <div class="card iss-course-card" style="grid-column: 1 / -1;">
+            <h2><span class="icon">🚀</span> <span data-i18n="courseTitle">Tout savoir sur l'ISS</span></h2>
+            <div class="course-tabs" id="course-tabs">
+                <button class="course-tab active" onclick="showCourseTab(0)" data-i18n="courseTab0">Histoire</button>
+                <button class="course-tab" onclick="showCourseTab(1)" data-i18n="courseTab1">Dimensions</button>
+                <button class="course-tab" onclick="showCourseTab(2)" data-i18n="courseTab2">Vie à bord</button>
+                <button class="course-tab" onclick="showCourseTab(3)" data-i18n="courseTab3">Science</button>
+                <button class="course-tab" onclick="showCourseTab(4)" data-i18n="courseTab4">Records</button>
+            </div>
+            <div class="course-panels" id="course-panels">
+                <!-- Tab 0: History -->
+                <div class="course-panel active" id="course-panel-0">
+                    <div class="course-timeline">
+                        <div class="tl-item"><span class="tl-year">1998</span><span class="tl-text" data-i18n="courseHist1">Lancement du module Zarya (Russie), premier élément de l'ISS mis en orbite le 20 novembre.</span></div>
+                        <div class="tl-item"><span class="tl-year">1998</span><span class="tl-text" data-i18n="courseHist2">Amarrage du nœud Unity (NASA) — la station prend forme.</span></div>
+                        <div class="tl-item"><span class="tl-year">2000</span><span class="tl-text" data-i18n="courseHist3">Premier équipage permanent (Expedition 1 : Shepherd, Gidzenko, Krikalev) arrive le 2 novembre.</span></div>
+                        <div class="tl-item"><span class="tl-year">2001</span><span class="tl-text" data-i18n="courseHist4">Installation du bras robotique Canadarm2 (17,6 m) et du laboratoire Destiny.</span></div>
+                        <div class="tl-item"><span class="tl-year">2008</span><span class="tl-text" data-i18n="courseHist5">Le laboratoire européen Columbus (ESA) et le module japonais Kibō sont ajoutés.</span></div>
+                        <div class="tl-item"><span class="tl-year">2011</span><span class="tl-text" data-i18n="courseHist6">Fin du programme navette spatiale. Assemblage de l'ISS quasi terminé.</span></div>
+                        <div class="tl-item"><span class="tl-year">2020</span><span class="tl-text" data-i18n="courseHist7">SpaceX Crew Dragon — premier vol habité commercial vers l'ISS (Demo-2).</span></div>
+                        <div class="tl-item"><span class="tl-year">2024</span><span class="tl-text" data-i18n="courseHist8">L'ISS fête 24 ans d'occupation humaine continue — record absolu.</span></div>
+                        <div class="tl-item"><span class="tl-year">~2030</span><span class="tl-text" data-i18n="courseHist9">Désorbitation prévue. La NASA prépare des stations commerciales successeurs.</span></div>
+                    </div>
+                </div>
+                <!-- Tab 1: Dimensions -->
+                <div class="course-panel" id="course-panel-1">
+                    <div class="course-stats-grid">
+                        <div class="course-stat"><div class="course-stat-val">109 m</div><div class="course-stat-lbl" data-i18n="courseDim1">Envergure (panneaux solaires)</div></div>
+                        <div class="course-stat"><div class="course-stat-val">73 m</div><div class="course-stat-lbl" data-i18n="courseDim2">Longueur totale</div></div>
+                        <div class="course-stat"><div class="course-stat-val">420 t</div><div class="course-stat-lbl" data-i18n="courseDim3">Masse totale</div></div>
+                        <div class="course-stat"><div class="course-stat-val">916 m³</div><div class="course-stat-lbl" data-i18n="courseDim4">Volume pressurisé</div></div>
+                        <div class="course-stat"><div class="course-stat-val">408 km</div><div class="course-stat-lbl" data-i18n="courseDim5">Altitude moyenne</div></div>
+                        <div class="course-stat"><div class="course-stat-val">27 600 km/h</div><div class="course-stat-lbl" data-i18n="courseDim6">Vitesse orbitale</div></div>
+                        <div class="course-stat"><div class="course-stat-val">92 min</div><div class="course-stat-lbl" data-i18n="courseDim7">Durée d'une orbite</div></div>
+                        <div class="course-stat"><div class="course-stat-val">15,5</div><div class="course-stat-lbl" data-i18n="courseDim8">Orbites par jour</div></div>
+                        <div class="course-stat"><div class="course-stat-val">⚽ × 1,5</div><div class="course-stat-lbl" data-i18n="courseDim9">Taille ≈ terrain de foot</div></div>
+                    </div>
+                    <p class="course-note" data-i18n="courseDimNote">🏗️ L'ISS est le plus grand objet jamais construit dans l'espace. Elle a nécessité plus de 40 missions d'assemblage.</p>
+                </div>
+                <!-- Tab 2: Life aboard -->
+                <div class="course-panel" id="course-panel-2">
+                    <div class="course-facts">
+                        <div class="course-fact">
+                            <span class="course-fact-icon">🌅</span>
+                            <div><strong data-i18n="courseLife1t">16 levers de soleil par jour</strong><p data-i18n="courseLife1d">L'ISS fait le tour de la Terre en 92 minutes. L'équipage voit 16 aubes et 16 crépuscules chaque jour.</p></div>
+                        </div>
+                        <div class="course-fact">
+                            <span class="course-fact-icon">😴</span>
+                            <div><strong data-i18n="courseLife2t">Dormir en apesanteur</strong><p data-i18n="courseLife2d">Les astronautes dorment dans des sacs de couchage attachés au mur, dans de petites cabines de la taille d'une cabine téléphonique.</p></div>
+                        </div>
+                        <div class="course-fact">
+                            <span class="course-fact-icon">🍽️</span>
+                            <div><strong data-i18n="courseLife3t">La nourriture spatiale</strong><p data-i18n="courseLife3d">Repas lyophilisés ou en conserve, réhydratés avec de l'eau. Les miettes sont interdites — elles flotteraient partout ! Les tortillas remplacent le pain.</p></div>
+                        </div>
+                        <div class="course-fact">
+                            <span class="course-fact-icon">🏋️</span>
+                            <div><strong data-i18n="courseLife4t">2h de sport obligatoire</strong><p data-i18n="courseLife4d">Sans gravité, les muscles et os s'atrophient. Chaque astronaute fait 2h d'exercice quotidien sur tapis roulant, vélo et appareil de musculation.</p></div>
+                        </div>
+                        <div class="course-fact">
+                            <span class="course-fact-icon">🚿</span>
+                            <div><strong data-i18n="courseLife5t">Pas de douche</strong><p data-i18n="courseLife5d">L'eau flotte en microgravité ! Les astronautes se lavent avec des lingettes humides et du shampoing sans rinçage.</p></div>
+                        </div>
+                        <div class="course-fact">
+                            <span class="course-fact-icon">♻️</span>
+                            <div><strong data-i18n="courseLife6t">Recycler l'eau</strong><p data-i18n="courseLife6d">93% de l'eau est recyclée, y compris la sueur et l'urine. Le système de récupération produit de l'eau plus pure que celle du robinet !</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tab 3: Science -->
+                <div class="course-panel" id="course-panel-3">
+                    <div class="course-facts">
+                        <div class="course-fact">
+                            <span class="course-fact-icon">🧬</span>
+                            <div><strong data-i18n="courseSci1t">Biologie & Médecine</strong><p data-i18n="courseSci1d">Études sur le vieillissement accéléré, la croissance de cristaux de protéines, la culture de tissus humains, et les effets des radiations sur l'ADN.</p></div>
+                        </div>
+                        <div class="course-fact">
+                            <span class="course-fact-icon">🔥</span>
+                            <div><strong data-i18n="courseSci2t">Physique des flammes</strong><p data-i18n="courseSci2d">En microgravité, les flammes sont sphériques et bleues au lieu de pointues et jaunes. Ces études améliorent les moteurs sur Terre.</p></div>
+                        </div>
+                        <div class="course-fact">
+                            <span class="course-fact-icon">🌱</span>
+                            <div><strong data-i18n="courseSci3t">Agriculture spatiale</strong><p data-i18n="courseSci3d">Laitues, radis, piments : l'ISS fait pousser des plantes pour préparer les futures missions vers Mars. Le projet Veggie est un potager orbital.</p></div>
+                        </div>
+                        <div class="course-fact">
+                            <span class="course-fact-icon">🌍</span>
+                            <div><strong data-i18n="courseSci4t">Observation de la Terre</strong><p data-i18n="courseSci4d">Suivi des ouragans, fonte des glaciers, déforestation, pollution lumineuse. L'ISS a pris des millions de photos de notre planète.</p></div>
+                        </div>
+                        <div class="course-fact">
+                            <span class="course-fact-icon">⚛️</span>
+                            <div><strong data-i18n="courseSci5t">Physique fondamentale</strong><p data-i18n="courseSci5d">Le Cold Atom Lab refroidit des atomes à presque le zéro absolu pour étudier la mécanique quantique dans des conditions impossibles sur Terre.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tab 4: Records -->
+                <div class="course-panel" id="course-panel-4">
+                    <div class="course-stats-grid">
+                        <div class="course-stat record"><div class="course-stat-val">🏆 371 j</div><div class="course-stat-lbl" data-i18n="courseRec1">Plus long séjour — Mark Vande Hei (2021-22)</div></div>
+                        <div class="course-stat record"><div class="course-stat-val">🚶 265</div><div class="course-stat-lbl" data-i18n="courseRec2">Sorties extravéhiculaires (EVA) réalisées</div></div>
+                        <div class="course-stat record"><div class="course-stat-val">🌍 16</div><div class="course-stat-lbl" data-i18n="courseRec3">Nations partenaires du programme</div></div>
+                        <div class="course-stat record"><div class="course-stat-val">👨‍🚀 280+</div><div class="course-stat-lbl" data-i18n="courseRec4">Personnes ayant visité l'ISS</div></div>
+                        <div class="course-stat record"><div class="course-stat-val">🔬 3 000+</div><div class="course-stat-lbl" data-i18n="courseRec5">Expériences scientifiques réalisées</div></div>
+                        <div class="course-stat record"><div class="course-stat-val">🚀 $150 Mds</div><div class="course-stat-lbl" data-i18n="courseRec6">Coût total du programme (estimation)</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Galerie photos -->
+    <div class="bottom-section" style="margin-top: 20px;">
+        <div class="card gallery-card" style="grid-column: 1 / -1;">
+            <h2>
+                <span class="icon">📸</span> <span data-i18n="galleryTitle">Galerie photos ISS — NASA</span>
+                <div class="gallery-nav">
+                    <button class="gallery-nav-btn" onclick="galleryPrev()" title="Previous">◀</button>
+                    <button class="gallery-nav-btn" onclick="galleryNext()" title="Next">▶</button>
+                    <button class="gallery-nav-btn" onclick="loadGallery()" title="Reload">🔄</button>
+                </div>
+            </h2>
+            <div class="gallery-container" id="gallery-container">
+                <div class="apod-loading" id="gallery-loading">
+                    <div class="apod-spinner"></div>
+                    <span data-i18n="galleryLoading">Chargement de la galerie…</span>
+                </div>
+            </div>
+            <div class="gallery-caption" id="gallery-caption"></div>
+        </div>
+    </div>
+
+    <!-- Fun Facts · ARISS -->
+    <div class="bottom-section" style="margin-top: 20px;">
+
+        <!-- Fun Facts (enfants & ados) -->
+        <div class="card fun-facts-card">
+            <h2><span class="icon">🤩</span> <span data-i18n="funFactsTitle">Le savais-tu ?</span></h2>
+            <div class="fun-fact-body">
+                <div class="fun-fact-text" id="fun-fact-text">…</div>
+                <div class="fun-fact-dots" id="fun-fact-dots"></div>
+            </div>
+            <button class="fun-fact-next-btn" onclick="rotateFunFact(true)" data-i18n="funFactNext">→ Suivant</button>
+        </div>
+
+        <!-- ARISS Contacts -->
+        <div class="card">
+            <h2><span class="icon">🎓</span> <span data-i18n="arissTitle">Contacts scolaires ARISS</span></h2>
+            <div style="font-size: 0.85rem; line-height: 1.8; color: #aaa;">
+                <div id="ariss-content">
+                <p data-i18n="arissExplain"><strong style="color:#7b8cff;">Qu'est-ce qu'un contact ARISS ?</strong> — C'est un moment magique où des élèves d'une école parlent en direct avec un astronaute à bord de l'ISS, par radio. L'échange dure environ <strong>10 minutes</strong> (le temps d'un passage au-dessus de l'établissement). Les enfants posent leurs questions une par une, et l'astronaute répond depuis l'espace ! Tout le monde peut écouter sur <strong>145.800 MHz</strong> si l'ISS passe aussi dans votre zone.</p>
+                </div>
+                <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px;">
+                    <a href="https://ariss-usa.org/upcoming-educational-contacts/" target="_blank" class="ariss-link-btn" data-i18n-title="arissWorldBtn">
+                        🌍 <span data-i18n="arissWorldBtn">Planning mondial</span>
+                    </a>
+                    <a href="https://www.ariss-eu.org/" target="_blank" class="ariss-link-btn" data-i18n-title="arissEuBtn">
+                        🇪🇺 <span data-i18n="arissEuBtn">Contacts Europe</span>
+                    </a>
+                    <a href="https://site.amsat-f.org/category/ariss/" target="_blank" class="ariss-link-btn" data-i18n-title="arissFrBtn">
+                        🇫🇷 <span data-i18n="arissFrBtn">AMSAT Francophone</span>
+                    </a>
+                </div>
+                <p style="margin-top: 12px; font-size: 0.8rem; color: #666;" data-i18n="arissNote">📅 Les horaires exacts sont publiés quelques jours avant chaque contact sur ces sites.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mode d'emploi — pleine largeur -->
+    <div class="bottom-section" style="margin-top: 20px;">
+        <div class="card" style="grid-column: 1 / -1;">
+            <h2><span class="icon">📖</span> <span data-i18n="tipsTitle">Mode d'emploi</span></h2>
+            <div style="font-size: 0.85rem; line-height: 1.8; color: #aaa; columns: 2; column-gap: 32px;">
+                <div id="tips-content">
+                <p><strong style="color:#ffa500;">🗺️ La carte</strong> — Le point lumineux qui bouge, c'est l'ISS en temps réel. Elle fait le tour de la Terre en ~90 minutes à 28 000 km/h. Le cercle bleu autour montre la zone depuis laquelle on pourrait la voir ou la capter par radio (~2 200 km).</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">📻 Les fréquences</strong> — L'ISS communique comme une talkie-walkie géante. Chaque fréquence a un rôle précis (voir la carte ci-dessus). La <strong>145.800 MHz</strong> est la plus importante : c'est là qu'on entend les astronautes.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🎛️ Le tuner radio</strong> — Cliquez <strong>Radio ON</strong> pour activer la simulation sonore. Choisissez un canal parmi les 4 boutons pour entendre le son simulé de cette fréquence. Le bouton <strong>↑↓ Duplex</strong> joue les deux canaux voix en stéréo (descente à gauche, montée à droite). Vous pouvez aussi taper une fréquence libre entre 30 et 3 000 MHz.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">📊 Effet Doppler</strong> — L'ISS se déplace si vite que la fréquence reçue change légèrement : plus aiguë quand elle s'approche, plus grave quand elle s'éloigne. C'est comme le son d'une ambulance qui passe. Cette page calcule et affiche ce décalage en temps réel.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🕐 Prochains passages</strong> — Autorisez la géolocalisation pour voir quand l'ISS passera au-dessus de chez vous. Les heures sont en heure locale.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🔔 Les boutons son</strong> — <strong>Balise</strong> : bip-bip régulier comme un vrai satellite. <strong>Alerte passage</strong> : vous prévient quand l'ISS entre dans votre zone de visibilité.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🌐 Langue</strong> — Basculez entre FR et EN avec le bouton en haut à droite.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- APOD — Photo astronomique pleine largeur -->
+    <div class="bottom-section" style="margin-top: 20px;">
+        <div class="card apod-card" id="apod-card" style="grid-column: 1 / -1;">
+            <h2><span class="icon">🔭</span> <span data-i18n="apodTitle">Photo astronomique du jour — NASA</span></h2>
+            <div id="apod-content" class="apod-content">
+                <div class="apod-loading" id="apod-loading">
+                    <div class="apod-spinner"></div>
+                    <span data-i18n="apodLoading">Chargement de l'image du jour…</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <span data-i18n="footerText">Étoile Filante &mdash; Données fournies par</span> <a href="http://open-notify.org/" target="_blank">Open Notify API</a> &amp; <a href="https://wheretheiss.at/" target="_blank">Where The ISS At</a> &mdash; <span data-i18n="footerMap">Carte</span> &copy; <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>
+    <br><span style="opacity:0.5; font-size:0.78rem;" data-i18n="footerCredit">Réalisation Valérie Otero &mdash; &copy; 2026 &mdash; Licence libre</span>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/@joergdietrich/leaflet.terminator@1.0.0/L.Terminator.js"></script>
+<script>
+    // ===================================
+    // === INTERNATIONALIZATION (i18n) ===
+    // ===================================
+    let currentLang = 'fr';
+
+    const i18n = {
+        fr: {
+            // Header
+            siteTitle: 'ISS en direct', siteSub: 'Étoile Filante',
+            beep: 'Balise', alert: 'Alerte',
+            beepTitle: 'Bip de balise ISS', alertTitle: 'Alerte passage ISS',
+            liveTracking: 'Suivi en direct',
+            // Ground track
+            groundTrackInfo: '🌍 La trace au sol montre l\'orbite de l\'ISS. Mise à jour toutes les 5 secondes.',
+            mapToggleColor: 'Carte colorée', mapToggleDark: 'Carte sombre',
+            // Crew
+            crewTitle: 'Équipage à bord',
+            crewRole_commander: 'Commandante', crewRole_pilot: 'Pilote', crewRole_specialist: 'Spécialiste de mission',
+            crewMembers: 'membres', crewExpedition: 'Expédition', crewUpdated: 'Mis à jour le',
+            crewVerify: 'Vérifier sur nasa.gov ↗',
+            // Position
+            positionTitle: 'Position actuelle',
+            latitude: 'Latitude', longitude: 'Longitude', altitude: 'Altitude', speed: 'Vitesse',
+            lastUpdate: 'Dernière mise à jour',
+            // Radio
+            radioTitle: 'Radio ISS',
+            selectFreq: 'Sélectionnez une fréquence',
+            listenBtn: '📡 Écouter',
+            duplexLabel: '↑↓ Duplex',
+            scanning: '⏳ Balayage...',
+            // Passes
+            passesTitle: 'Prochains passages',
+            enterCoords: 'Entrez vos coordonnées ou utilisez le GPS.',
+            computingPasses: 'Calcul en cours...',
+            noPassesFound: 'Aucun passage trouvé dans les prochaines 24h.',
+            passDateTime: 'Date & Heure (locale)', passDuration: 'Durée', passElevation: 'Élévation max',
+            passSimplified: 'Estimation simplifiée des passages :',
+            passOrbit: 'L\'ISS orbite la Terre toutes les <strong>~92 minutes</strong>.',
+            passExpect: 'attendez-vous à <strong>4 à 6 passages visibles</strong> par jour, principalement à l\'aube et au crépuscule.',
+            passConsult: 'Consultez',
+            passPrecise: 'pour des prédictions précises.',
+            yourPosition: 'Votre position',
+            geolocationNotSupported: 'La géolocalisation n\'est pas supportée par votre navigateur.',
+            geolocationError: 'Impossible d\'obtenir votre position: ',
+            invalidCoords: 'Veuillez entrer des coordonnées valides.',
+            // Frequencies
+            freqTitle: 'Les fréquences de l\'ISS',
+            freqIntro: 'L\'ISS communique par radio VHF/UHF. Voici à quoi sert chaque fréquence — et si vous pouvez l\'écouter.',
+            freqDescDown: 'Voix des astronautes · Contacts scolaires ARISS',
+            freqDescUp: 'Pour parler à l\'ISS, il faut un indicatif radioamateur',
+            freqDescAprs: 'Mini-messages automatiques échangés via l\'ISS',
+            freqDescSstv: 'Lors d\'événements spéciaux, l\'ISS transmet des photos en audio !',
+            freqDescRelay: 'L\'ISS relaie les voix entre radioamateurs au sol',
+            voiceDown: 'Voix (Descente)', voiceUp: 'Voix (Montée)',
+            sstvEvents: 'SSTV (événements)',
+            callsignNote: '<strong>Indicatifs :</strong> NA1SS (US) · RS0ISS (RU) · DP0ISS (EU) · OR4ISS (BE)<br>Portée ~<strong>10 min</strong>/passage · Antenne Yagi VHF/UHF recommandée',
+            // Tips
+            tipsTitle: 'Mode d\'emploi',
+            tipsContent: `
+                <p><strong style="color:#ffa500;">🗺️ La carte</strong> — Le point lumineux qui bouge, c'est l'ISS en temps réel. Elle fait le tour de la Terre en ~90 minutes à 28 000 km/h. Le cercle bleu autour montre la zone depuis laquelle on pourrait la voir ou la capter par radio (~2 200 km).</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">📻 Comprendre les fréquences</strong> — L'ISS utilise des fréquences radio comme une talkie-walkie géante :<br>
+                • <strong>145.800 MHz</strong> = la <em>descente</em> (↓) : ce que l'ISS envoie vers nous<br>
+                • <strong>145.200 MHz</strong> = la <em>montée</em> (↑) : ce qu'on envoie vers l'ISS<br>
+                • <strong>145.825 MHz</strong> = APRS : des petits messages numériques automatiques<br>
+                • <strong>437.800 MHz</strong> = le répéteur : il relaie les voix entre radioamateurs</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🎛️ Le tuner radio</strong> — Cliquez <strong>Radio ON</strong> pour activer la simulation sonore. Choisissez un canal parmi les 4 boutons pour entendre le son simulé de cette fréquence. Le bouton <strong>↑↓ Duplex</strong> joue les deux canaux voix en stéréo (descente à gauche, montée à droite). Vous pouvez aussi taper une fréquence libre entre 30 et 3 000 MHz.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">📊 Effet Doppler</strong> — L'ISS se déplace si vite que la fréquence reçue change légèrement : plus aiguë quand elle s'approche, plus grave quand elle s'éloigne. C'est comme le son d'une ambulance qui passe. Cette page calcule et affiche ce décalage en temps réel.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🕐 Prochains passages</strong> — Autorisez la géolocalisation pour voir quand l'ISS passera au-dessus de chez vous. Les heures sont en heure locale.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🔔 Les boutons son</strong> — <strong>Balise</strong> : bip-bip régulier comme un vrai satellite. <strong>Alerte passage</strong> : vous prévient quand l'ISS entre dans votre zone de visibilité.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🌐 Langue</strong> — Basculez entre FR et EN avec le bouton en haut à droite.</p>
+            `,
+            // ARISS
+            arissTitle: 'Contacts scolaires ARISS',
+            arissExplain: '<strong style="color:#7b8cff;">Qu\'est-ce qu\'un contact ARISS ?</strong> \u2014 C\'est un moment magique o\u00f9 des \u00e9l\u00e8ves d\'une \u00e9cole parlent en direct avec un astronaute \u00e0 bord de l\'ISS, par radio. L\'\u00e9change dure environ <strong>10 minutes</strong> (le temps d\'un passage au-dessus de l\'\u00e9tablissement). Les enfants posent leurs questions une par une, et l\'astronaute r\u00e9pond depuis l\'espace ! Tout le monde peut \u00e9couter sur <strong>145.800 MHz</strong> si l\'ISS passe aussi dans votre zone.',
+            arissWorldBtn: 'Planning mondial',
+            arissEuBtn: 'Contacts Europe',
+            arissFrBtn: 'AMSAT Francophone',
+            arissNote: '\ud83d\udcc5 Les horaires exacts sont publi\u00e9s quelques jours avant chaque contact sur ces sites.',
+
+            // Footer
+            footerText: '\u00c9toile Filante \u2014 Donn\u00e9es fournies par',
+            footerMap: 'Carte',
+            // Map popup
+            issPopupName: 'Station Spatiale Internationale',
+            issPopupOrbit: 'Orbite basse terrestre',
+            visDaylight: '☀️ Jour', visNight: '🌙 Nuit',
+            // APOD
+            apodTitle: 'Photo astronomique du jour — NASA',
+            apodLoading: 'Chargement de l\'image du jour…',
+            apodBadge: 'NASA APOD',
+            // Space Weather
+            swTitle: 'Météo spatiale',
+            swLoading: 'Chargement des données solaires…',
+            swKpLabel: 'Index Kp',
+            swBzLabel: 'Bz (IMF)',
+            swSpeedLabel: 'Vent solaire',
+            swDensityLabel: 'Densité',
+            swKpQuiet: 'Calme', swKpActive: 'Actif', swKpStorm: 'Orage', swKpSevere: 'Sévère', swKpExtreme: 'Extrême',
+            swLegendQuiet: 'Calme (0–3)', swLegendActive: 'Actif (4)', swLegendStorm: 'Orage (5–6)', swLegendSevere: 'Sévère (7+)',
+            swNote: '<strong>Impact ISS :</strong> Un Kp élevé peut perturber les communications radio et augmenter le rayonnement. Les astronautes peuvent devoir se réfugier dans des modules mieux protégés.',
+            swAurora: 'Aurores boréales possibles !',
+            swError: 'Données solaires indisponibles.',
+            // Course
+            courseTitle: 'Tout savoir sur l\'ISS',
+            courseTab0: 'Histoire', courseTab1: 'Dimensions', courseTab2: 'Vie à bord', courseTab3: 'Science', courseTab4: 'Records',
+            // Course — History
+            courseHist1: 'Lancement du module Zarya (Russie), premier élément de l\'ISS mis en orbite le 20 novembre.',
+            courseHist2: 'Amarrage du nœud Unity (NASA) — la station prend forme.',
+            courseHist3: 'Premier équipage permanent (Expedition 1 : Shepherd, Gidzenko, Krikalev) arrive le 2 novembre.',
+            courseHist4: 'Installation du bras robotique Canadarm2 (17,6 m) et du laboratoire Destiny.',
+            courseHist5: 'Le laboratoire européen Columbus (ESA) et le module japonais Kibō sont ajoutés.',
+            courseHist6: 'Fin du programme navette spatiale. Assemblage de l\'ISS quasi terminé.',
+            courseHist7: 'SpaceX Crew Dragon — premier vol habité commercial vers l\'ISS (Demo-2).',
+            courseHist8: 'L\'ISS fête 24 ans d\'occupation humaine continue — record absolu.',
+            courseHist9: 'Désorbitation prévue. La NASA prépare des stations commerciales successeurs.',
+            // Course — Dimensions
+            courseDim1: 'Envergure (panneaux solaires)', courseDim2: 'Longueur totale', courseDim3: 'Masse totale',
+            courseDim4: 'Volume pressurisé', courseDim5: 'Altitude moyenne', courseDim6: 'Vitesse orbitale',
+            courseDim7: 'Durée d\'une orbite', courseDim8: 'Orbites par jour', courseDim9: 'Taille ≈ terrain de foot',
+            courseDimNote: '🏗️ L\'ISS est le plus grand objet jamais construit dans l\'espace. Elle a nécessité plus de 40 missions d\'assemblage.',
+            // Course — Life aboard
+            courseLife1t: '16 levers de soleil par jour',
+            courseLife1d: 'L\'ISS fait le tour de la Terre en 92 minutes. L\'équipage voit 16 aubes et 16 crépuscules chaque jour.',
+            courseLife2t: 'Dormir en apesanteur',
+            courseLife2d: 'Les astronautes dorment dans des sacs de couchage attachés au mur, dans de petites cabines de la taille d\'une cabine téléphonique.',
+            courseLife3t: 'La nourriture spatiale',
+            courseLife3d: 'Repas lyophilisés ou en conserve, réhydratés avec de l\'eau. Les miettes sont interdites — elles flotteraient partout ! Les tortillas remplacent le pain.',
+            courseLife4t: '2h de sport obligatoire',
+            courseLife4d: 'Sans gravité, les muscles et os s\'atrophient. Chaque astronaute fait 2h d\'exercice quotidien sur tapis roulant, vélo et appareil de musculation.',
+            courseLife5t: 'Pas de douche',
+            courseLife5d: 'L\'eau flotte en microgravité ! Les astronautes se lavent avec des lingettes humides et du shampoing sans rinçage.',
+            courseLife6t: 'Recycler l\'eau',
+            courseLife6d: '93% de l\'eau est recyclée, y compris la sueur et l\'urine. Le système de récupération produit de l\'eau plus pure que celle du robinet !',
+            // Course — Science
+            courseSci1t: 'Biologie & Médecine',
+            courseSci1d: 'Études sur le vieillissement accéléré, la croissance de cristaux de protéines, la culture de tissus humains, et les effets des radiations sur l\'ADN.',
+            courseSci2t: 'Physique des flammes',
+            courseSci2d: 'En microgravité, les flammes sont sphériques et bleues au lieu de pointues et jaunes. Ces études améliorent les moteurs sur Terre.',
+            courseSci3t: 'Agriculture spatiale',
+            courseSci3d: 'Laitues, radis, piments : l\'ISS fait pousser des plantes pour préparer les futures missions vers Mars. Le projet Veggie est un potager orbital.',
+            courseSci4t: 'Observation de la Terre',
+            courseSci4d: 'Suivi des ouragans, fonte des glaciers, déforestation, pollution lumineuse. L\'ISS a pris des millions de photos de notre planète.',
+            courseSci5t: 'Physique fondamentale',
+            courseSci5d: 'Le Cold Atom Lab refroidit des atomes à presque le zéro absolu pour étudier la mécanique quantique dans des conditions impossibles sur Terre.',
+            // Course — Records
+            courseRec1: 'Plus long séjour — Mark Vande Hei (2021-22)',
+            courseRec2: 'Sorties extravéhiculaires (EVA) réalisées',
+            courseRec3: 'Nations partenaires du programme',
+            courseRec4: 'Personnes ayant visité l\'ISS',
+            courseRec5: 'Expériences scientifiques réalisées',
+            courseRec6: 'Coût total du programme (estimation)',
+            // Gallery
+            galleryTitle: 'Galerie photos ISS — NASA',
+            galleryLoading: 'Chargement de la galerie…',
+            galleryError: 'Impossible de charger la galerie.',
+            galleryCount: 'photos',
+            // Fun facts & orbit counter
+            funFactsTitle: 'Le savais-tu ?',
+            funFactNext: '→ Suivant',
+            orbitCountLabel: 'Orbites depuis 1998',
+            orbitsTodayLabel: 'Orbites aujourd’hui',
+            orbitSpeedLabel: 'Vitesse',
+            // Errors
+            positionError: 'Erreur position ISS:',
+            fallbackError: 'Fallback API aussi en erreur:',
+            // New features
+            userDist: 'Distance depuis vous',
+            notifyBtn: "M'alerter avant le prochain passage",
+            liveVideoTitle: 'Flux vidéo ISS — NASA en direct',
+            liveVideoSubtitle: "Vue de la Terre depuis l'ISS, en direct. Peut être hors ligne lors des passages en zone sans réseau ou la nuit.",
+            liveVideoPlay: '▶ Regarder le flux en direct',
+            liveVideoNote: 'Cliquez pour charger · Flux NASA / YouTube',
+            // Artemis banner
+            artemisLabel: 'À VENIR — Artemis II',
+            artemisDesc: 'Premier vol habité autour de la Lune depuis Apollo 17. Diffusion officielle NASA en direct.',
+            artemisBtn: '📺 Voir la diffusion →',
+            // Footer
+            footerCredit: 'Réalisation Valérie Otero — © 2026 — Licence libre',
+        },
+        en: {
+            // Header
+            siteTitle: 'ISS Live', siteSub: 'Shooting Star',
+            beep: 'Beacon', alert: 'Alert',
+            beepTitle: 'ISS beacon beep', alertTitle: 'ISS pass alert',
+            liveTracking: 'Live tracking',
+            // Ground track
+            groundTrackInfo: '🌍 The ground track shows the ISS orbit. Updated every 5 seconds.',
+            mapToggleColor: 'Color map', mapToggleDark: 'Dark map',
+            // Crew
+            crewTitle: 'Crew on board',
+            crewRole_commander: 'Commander', crewRole_pilot: 'Pilot', crewRole_specialist: 'Mission Specialist',
+            crewMembers: 'members', crewExpedition: 'Expedition', crewUpdated: 'Updated on',
+            crewVerify: 'Verify on nasa.gov ↗',
+            // Position
+            positionTitle: 'Current position',
+            latitude: 'Latitude', longitude: 'Longitude', altitude: 'Altitude', speed: 'Speed',
+            lastUpdate: 'Last update',
+            // Radio
+            radioTitle: 'ISS Radio',
+            selectFreq: 'Select a frequency',
+            listenBtn: '📡 Listen',
+            duplexLabel: '↑↓ Duplex',
+            scanning: '⏳ Scanning...',
+            // Passes
+            passesTitle: 'Upcoming passes',
+            enterCoords: 'Enter your coordinates or use GPS.',
+            computingPasses: 'Computing...',
+            noPassesFound: 'No passes found in the next 24 hours.',
+            passDateTime: 'Date & Time (local)', passDuration: 'Duration', passElevation: 'Max elevation',
+            passSimplified: 'Simplified pass estimate:',
+            passOrbit: 'The ISS orbits Earth every <strong>~92 minutes</strong>.',
+            passExpect: 'expect <strong>4 to 6 visible passes</strong> per day, mainly at dawn and dusk.',
+            passConsult: 'Visit',
+            passPrecise: 'for accurate predictions.',
+            yourPosition: 'Your position',
+            geolocationNotSupported: 'Geolocation is not supported by your browser.',
+            geolocationError: 'Unable to get your position: ',
+            invalidCoords: 'Please enter valid coordinates.',
+            // Frequencies
+            freqTitle: 'ISS Radio Frequencies',
+            freqIntro: 'The ISS communicates via VHF/UHF radio. Here\'s what each frequency carries — and whether you can listen freely.',
+            freqDescDown: 'Astronaut voice downlink · ARISS school contacts',
+            freqDescUp: 'Talking to the ISS requires an amateur radio licence',
+            freqDescAprs: 'Automatic short digital messages relayed via the ISS',
+            freqDescSstv: 'During special events, the ISS transmits photos as audio!',
+            freqDescRelay: 'The ISS relays voices between amateur radio operators on the ground',
+            voiceDown: 'Voice (Downlink)', voiceUp: 'Voice (Uplink)',
+            sstvEvents: 'SSTV (events)',
+            callsignNote: '<strong>Callsigns:</strong> NA1SS (US) · RS0ISS (RU) · DP0ISS (EU) · OR4ISS (BE)<br>Range ~<strong>10 min</strong>/pass · Yagi VHF/UHF antenna recommended',
+            // Tips
+            tipsTitle: 'User guide',
+            tipsContent: `
+                <p><strong style="color:#ffa500;">🗺️ The map</strong> — The glowing dot is the ISS in real time. It orbits Earth every ~90 minutes at 28,000 km/h. The blue circle shows the area from which you could see it or pick up its radio signal (~2,200 km radius).</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">📻 Understanding frequencies</strong> — The ISS uses radio frequencies like a giant walkie-talkie:<br>
+                • <strong>145.800 MHz</strong> = <em>downlink</em> (↓): what the ISS sends to us<br>
+                • <strong>145.200 MHz</strong> = <em>uplink</em> (↑): what we send to the ISS<br>
+                • <strong>145.825 MHz</strong> = APRS: automatic short digital messages<br>
+                • <strong>437.800 MHz</strong> = repeater: relays voices between amateur radio operators</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🎛️ The radio tuner</strong> — Click <strong>Radio ON</strong> to start the sound simulation. Pick one of the 4 channel buttons to hear a simulated version of that frequency. The <strong>↑↓ Duplex</strong> button plays both voice channels in stereo (downlink on the left, uplink on the right). You can also type any frequency between 30 and 3,000 MHz.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">📊 Doppler effect</strong> — The ISS moves so fast that the received frequency shifts slightly: higher pitch when approaching, lower when moving away. Just like an ambulance siren passing by. This page calculates and displays the shift in real time.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🕐 Upcoming passes</strong> — Allow geolocation to see when the ISS will fly over your location. Times are shown in your local timezone.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🔔 Sound buttons</strong> — <strong>Beacon</strong>: regular beep-beep like a real satellite. <strong>Pass alert</strong>: warns you when the ISS enters your visibility zone.</p>
+                <p style="margin-top:8px;"><strong style="color:#ffa500;">🌐 Language</strong> — Switch between FR and EN with the button in the top right corner.</p>
+            `,
+            // ARISS
+            arissTitle: 'ARISS School Contacts',
+            arissExplain: '<strong style="color:#7b8cff;">What is an ARISS contact?</strong> \u2014 It\'s a magical moment where students from a school talk live with an astronaut aboard the ISS, via radio. The exchange lasts about <strong>10 minutes</strong> (the duration of a pass over the school). Children ask their questions one by one, and the astronaut answers from space! Anyone can listen on <strong>145.800 MHz</strong> if the ISS is also passing over your area.',
+            arissWorldBtn: 'World schedule',
+            arissEuBtn: 'European contacts',
+            arissFrBtn: 'AMSAT Francophone',
+            arissNote: '\ud83d\udcc5 Exact times are published a few days before each contact on these websites.',
+
+            // Footer
+            footerText: 'Shooting Star \u2014 Data provided by',
+            footerMap: 'Map',
+            // Map popup
+            issPopupName: 'International Space Station',
+            issPopupOrbit: 'Low Earth orbit',
+            visDaylight: '☀️ Daylight', visNight: '🌙 Night',
+            // APOD
+            apodTitle: 'Astronomy Picture of the Day — NASA',
+            apodLoading: 'Loading picture of the day…',
+            apodBadge: 'NASA APOD',
+            // Space Weather
+            swTitle: 'Space Weather',
+            swLoading: 'Loading solar data…',
+            swKpLabel: 'Kp Index',
+            swBzLabel: 'Bz (IMF)',
+            swSpeedLabel: 'Solar Wind',
+            swDensityLabel: 'Density',
+            swKpQuiet: 'Quiet', swKpActive: 'Active', swKpStorm: 'Storm', swKpSevere: 'Severe', swKpExtreme: 'Extreme',
+            swLegendQuiet: 'Quiet (0–3)', swLegendActive: 'Active (4)', swLegendStorm: 'Storm (5–6)', swLegendSevere: 'Severe (7+)',
+            swNote: '<strong>ISS Impact:</strong> High Kp can disrupt radio communications and increase radiation. Astronauts may need to shelter in better-protected modules.',
+            swAurora: 'Auroras possible!',
+            swError: 'Solar data unavailable.',
+            // Course
+            courseTitle: 'All about the ISS',
+            courseTab0: 'History', courseTab1: 'Dimensions', courseTab2: 'Life aboard', courseTab3: 'Science', courseTab4: 'Records',
+            // Course — History
+            courseHist1: 'Launch of the Zarya module (Russia), the first ISS element placed in orbit on November 20.',
+            courseHist2: 'Docking of the Unity node (NASA) — the station takes shape.',
+            courseHist3: 'First permanent crew (Expedition 1: Shepherd, Gidzenko, Krikalev) arrives November 2.',
+            courseHist4: 'Installation of the Canadarm2 robotic arm (17.6 m) and the Destiny laboratory.',
+            courseHist5: 'The European Columbus laboratory (ESA) and the Japanese Kibō module are added.',
+            courseHist6: 'End of the Space Shuttle program. ISS assembly nearly complete.',
+            courseHist7: 'SpaceX Crew Dragon — first commercial crewed flight to the ISS (Demo-2).',
+            courseHist8: 'The ISS celebrates 24 years of continuous human habitation — an absolute record.',
+            courseHist9: 'Planned deorbit. NASA is preparing commercial successor stations.',
+            // Course — Dimensions
+            courseDim1: 'Wingspan (solar panels)', courseDim2: 'Total length', courseDim3: 'Total mass',
+            courseDim4: 'Pressurized volume', courseDim5: 'Average altitude', courseDim6: 'Orbital speed',
+            courseDim7: 'Orbit duration', courseDim8: 'Orbits per day', courseDim9: 'Size ≈ football field',
+            courseDimNote: '🏗️ The ISS is the largest object ever built in space. It required over 40 assembly missions.',
+            // Course — Life aboard
+            courseLife1t: '16 sunrises per day',
+            courseLife1d: 'The ISS orbits Earth in 92 minutes. The crew sees 16 dawns and 16 sunsets every day.',
+            courseLife2t: 'Sleeping in zero gravity',
+            courseLife2d: 'Astronauts sleep in sleeping bags strapped to the wall, in tiny cabins the size of a phone booth.',
+            courseLife3t: 'Space food',
+            courseLife3d: 'Freeze-dried or canned meals, rehydrated with water. Crumbs are forbidden — they would float everywhere! Tortillas replace bread.',
+            courseLife4t: '2 hours of mandatory exercise',
+            courseLife4d: 'Without gravity, muscles and bones atrophy. Each astronaut exercises 2 hours daily on a treadmill, bike, and resistance machine.',
+            courseLife5t: 'No shower',
+            courseLife5d: 'Water floats in microgravity! Astronauts wash with wet wipes and no-rinse shampoo.',
+            courseLife6t: 'Water recycling',
+            courseLife6d: '93% of water is recycled, including sweat and urine. The recovery system produces water purer than tap water!',
+            // Course — Science
+            courseSci1t: 'Biology & Medicine',
+            courseSci1d: 'Studies on accelerated aging, protein crystal growth, human tissue culture, and the effects of radiation on DNA.',
+            courseSci2t: 'Flame physics',
+            courseSci2d: 'In microgravity, flames are spherical and blue instead of pointy and yellow. These studies improve engines on Earth.',
+            courseSci3t: 'Space agriculture',
+            courseSci3d: 'Lettuce, radishes, peppers: the ISS grows plants to prepare for future Mars missions. The Veggie project is an orbital garden.',
+            courseSci4t: 'Earth observation',
+            courseSci4d: 'Tracking hurricanes, glacier melting, deforestation, light pollution. The ISS has taken millions of photos of our planet.',
+            courseSci5t: 'Fundamental physics',
+            courseSci5d: 'The Cold Atom Lab cools atoms to near absolute zero to study quantum mechanics under conditions impossible on Earth.',
+            // Course — Records
+            courseRec1: 'Longest stay — Mark Vande Hei (2021-22)',
+            courseRec2: 'Extravehicular activities (EVA) completed',
+            courseRec3: 'Partner nations in the program',
+            courseRec4: 'People who have visited the ISS',
+            courseRec5: 'Scientific experiments conducted',
+            courseRec6: 'Total program cost (estimate)',
+            // Gallery
+            galleryTitle: 'ISS Photo Gallery — NASA',
+            galleryLoading: 'Loading gallery…',
+            galleryError: 'Unable to load gallery.',
+            galleryCount: 'photos',
+            // Fun facts & orbit counter
+            funFactsTitle: 'Did you know?',
+            funFactNext: '→ Next',
+            orbitCountLabel: 'Orbits since 1998',
+            orbitsTodayLabel: 'Orbits today',
+            orbitSpeedLabel: 'Speed',
+            // Errors
+            positionError: 'ISS position error:',
+            fallbackError: 'Fallback API also failed:',
+            // New features
+            userDist: 'Distance from you',
+            notifyBtn: 'Alert me before the next pass',
+            liveVideoTitle: 'ISS Live Video — NASA',
+            liveVideoSubtitle: 'Live Earth view from the ISS. May be offline during nightside orbits or maintenance.',
+            liveVideoPlay: '▶ Watch live stream',
+            liveVideoNote: 'Click to load · NASA / YouTube stream',
+            // Artemis banner
+            artemisLabel: 'UPCOMING — Artemis II',
+            artemisDesc: 'First crewed lunar flyby since Apollo 17. Official NASA live broadcast.',
+            artemisBtn: '📺 Watch the broadcast →',
+            // Footer
+            footerCredit: 'Created by Valérie Otero — © 2026 — Open licence',
+        }
+    };
+
+    function t(key) {
+        return i18n[currentLang][key] || i18n['fr'][key] || key;
+    }
+
+
+
+    function switchLang(lang) {
+        currentLang = lang;
+        document.getElementById('lang-fr').classList.toggle('active', lang === 'fr');
+        document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+        document.documentElement.lang = lang;
+
+        // Update all data-i18n elements (textContent)
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const val = t(key);
+            if (key === 'callsignNote' || key === 'tipsContent' || key === 'groundTrackInfo' || key === 'arissExplain') {
+                el.innerHTML = val;
+            } else {
+                el.textContent = val;
+            }
+        });
+
+        // Update data-i18n-title elements
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            el.title = t(el.getAttribute('data-i18n-title'));
+        });
+
+        // Update tips content block
+        const tipsEl = document.getElementById('tips-content');
+        if (tipsEl) tipsEl.innerHTML = t('tipsContent');
+
+        // Re-render dynamic content
+        updateCrew();
+        refreshPassList();
+        // Refresh fun facts language
+        rotateFunFact();
+
+        // Update title
+        document.title = lang === 'fr' ? '🛰️ ISS en direct — Étoile Filante' : '🛰️ ISS Live — Shooting Star';
+    }
+
+    // Keep track of last computed passes for re-render on lang switch
+    let lastPasses = null;
+    let lastPassLat = null;
+    let lastPassLon = null;
+
+    function refreshPassList() {
+        // If passes were previously computed, re-render them
+        if (lastPasses && lastPasses.length > 0) {
+            renderPassResults(lastPasses);
+        }
+    }
+
+    function renderPassResults(passes) {
+        const passDiv = document.getElementById('pass-list');
+        if (!passDiv) return;
+        passDiv.innerHTML = passes.map((pass, i) => `
+            <div class="pass-item" style="${pass.elevation >= 40 ? 'border-color: rgba(0,200,100,0.35); background: rgba(0,200,100,0.1);' : ''}">
+                <div>
+                    <div class="pass-label">${t('passDateTime')}</div>
+                    <div class="pass-value" style="font-size: 0.82rem;">${pass.datetime}</div>
+                </div>
+                <div>
+                    <div class="pass-label">${t('passDuration')}</div>
+                    <div class="pass-value">${pass.duration} min</div>
+                </div>
+                <div>
+                    <div class="pass-label">${t('passElevation')}</div>
+                    <div class="pass-value">${pass.elevation}° ${pass.quality || ''}</div>
+                </div>
+            </div>
+        `).join('') + `
+            <div style="font-size: 0.7rem; color: #555; margin-top: 8px; line-height: 1.5;">
+                ${currentLang === 'fr'
+                    ? '🌟 = faible · 🌟🌟 = bon · 🌟🌟🌟 = excellent — Les passages à élévation élevée sont les plus lumineux.<br>⏱️ Horaires en heure locale. Vérifiez sur <a href="https://spotthestation.nasa.gov/" target="_blank" style="color:#ffa500;">Spot The Station</a>.'
+                    : '🌟 = low · 🌟🌟 = good · 🌟🌟🌟 = excellent — Higher elevation passes are brightest.<br>⏱️ Times in local timezone. Cross-check on <a href="https://spotthestation.nasa.gov/" target="_blank" style="color:#ffa500;">Spot The Station</a>.'}
+            </div>
+        `;
+    }
+    // === MAP SETUP ===
+    const map = L.map('map', {
+        center: [0, 0],
+        zoom: 2,
+        minZoom: 2,
+        maxZoom: 8,
+        worldCopyJump: true
+    });
+
+    const tileLayers = {
+        dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }),
+        color: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            subdomains: 'abcd',
+            maxZoom: 19
+        })
+    };
+
+    function isDaytime() {
+        const h = new Date().getHours();
+        return h >= 7 && h < 21;
+    }
+
+    let currentTileStyle = isDaytime() ? 'color' : 'dark';
+    tileLayers[currentTileStyle].addTo(map);
+
+    // Sync button label with auto-detected initial state
+    (function() {
+        const btn = document.getElementById('map-style-toggle');
+        if (btn && currentTileStyle === 'color') {
+            btn.innerHTML = '🌑 <span data-i18n="mapToggleDark">' + t('mapToggleDark') + '</span>';
+        }
+    })();
+
+    window.toggleMapStyle = function() {
+        const btn = document.getElementById('map-style-toggle');
+        if (currentTileStyle === 'dark') {
+            map.removeLayer(tileLayers.dark);
+            tileLayers.color.addTo(map);
+            currentTileStyle = 'color';
+            btn.innerHTML = '🌑 <span data-i18n="mapToggleDark">' + t('mapToggleDark') + '</span>';
+        } else {
+            map.removeLayer(tileLayers.color);
+            tileLayers.dark.addTo(map);
+            currentTileStyle = 'dark';
+            btn.innerHTML = '🎨 <span data-i18n="mapToggleColor">' + t('mapToggleColor') + '</span>';
+        }
+    };
+
+    // === DAY/NIGHT TERMINATOR ===
+    if (typeof L.terminator === 'function') {
+        const termLayer = L.terminator({
+            fillOpacity: 0.2,
+            color: 'rgba(5,8,40,0.4)',
+            fillColor: '#00001e',
+            weight: 0.8,
+            interactive: false
+        });
+        termLayer.addTo(map);
+        setInterval(() => termLayer.setTime(new Date()), 60000);
+    }
+
+    // ISS Icon
+    const issIcon = L.divIcon({
+        html: `<div style="font-size: 32px; filter: drop-shadow(0 0 8px rgba(100,149,237,0.8));">🛰️</div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        className: ''
+    });
+
+    const issMarker = L.marker([0, 0], { icon: issIcon }).addTo(map);
+    issMarker.bindPopup(`<b>${t('issPopupName')}</b><br>${t('issPopupOrbit')}`);
+
+    // Ground track (orbit path)
+    const trailCoords = [];
+    const trailLine = L.polyline([], {
+        color: '#4a4adf',
+        weight: 2,
+        opacity: 0.6,
+        dashArray: '8, 6'
+    }).addTo(map);
+
+    // Visibility circle
+    const visCircle = L.circle([0, 0], {
+        radius: 2200000, // ~2200km visibility radius
+        color: '#7b8cff',
+        fillColor: '#7b8cff',
+        fillOpacity: 0.05,
+        weight: 1,
+        dashArray: '4, 4'
+    }).addTo(map);
+
+    // === FETCH ISS POSITION ===
+    let lastLon = null;
+
+    async function updatePosition() {
+        try {
+            // Use wheretheiss.at API for more data
+            const res = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
+            const data = await res.json();
+
+            const lat = data.latitude;
+            const lon = data.longitude;
+            const alt = data.altitude;
+            const vel = data.velocity;
+            const vis = data.visibility;
+
+            // Update marker
+            issMarker.setLatLng([lat, lon]);
+            visCircle.setLatLng([lat, lon]);
+
+            // Update info panel
+            document.getElementById('lat').textContent = lat.toFixed(4) + '°';
+            document.getElementById('lon').textContent = lon.toFixed(4) + '°';
+            document.getElementById('alt').innerHTML = alt.toFixed(1) + '<span class="unit">km</span>';
+            document.getElementById('speed').innerHTML = vel.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + '<span class="unit">km/h</span>';
+
+            const now = new Date();
+            document.getElementById('timestamp').textContent = now.toLocaleString(currentLang === 'fr' ? 'fr-FR' : 'en-GB');
+
+            // Check proximity for pass alert
+            checkProximityAlert(lat, lon);
+
+            // Update Doppler shift
+            if (radioActive && currentRadioFreq) {
+                const dopplerData = calculateDoppler(lat, lon, alt);
+                updateDopplerDisplay(dopplerData);
+            }
+
+            // Trail
+            if (lastLon !== null && Math.abs(lon - lastLon) > 100) {
+                // Crossed the date line – start a new segment
+                trailCoords.push([lat, lon]);
+                trailLine.setLatLngs([]);
+                trailCoords.length = 0;
+            }
+            trailCoords.push([lat, lon]);
+            if (trailCoords.length > 200) trailCoords.shift();
+            trailLine.setLatLngs(trailCoords);
+
+            lastLon = lon;
+
+            // === VISIBILITY & DISTANCE FROM USER ===
+            (function() {
+                const uLat = parseFloat(document.getElementById('input-lat').value);
+                const uLon = parseFloat(document.getElementById('input-lon').value);
+                if (isNaN(uLat) || isNaN(uLon)) return;
+                const elev = computeElevation(uLat, uLon, lat, lon, alt);
+                const R = 6371, d2r = Math.PI / 180;
+                const dLt = (lat - uLat) * d2r, dLn = (lon - uLon) * d2r;
+                const aa = Math.sin(dLt/2)**2 + Math.cos(uLat*d2r)*Math.cos(lat*d2r)*Math.sin(dLn/2)**2;
+                const gam = 2 * Math.asin(Math.sqrt(Math.min(1, aa)));
+                const distKm = Math.round(Math.sqrt(R*R + (R+alt)*(R+alt) - 2*R*(R+alt)*Math.cos(gam)));
+                const distEl = document.getElementById('user-dist');
+                const distItem = document.getElementById('user-dist-item');
+                const visEl = document.getElementById('vis-from-user');
+                if (distItem) distItem.style.display = '';
+                if (distEl) distEl.innerHTML = distKm.toLocaleString() + '<span class="unit"> km</span>';
+                if (visEl) {
+                    if (elev > 10) {
+                        visEl.style.cssText = 'display:block;margin:10px 0 0;padding:8px 12px;border-radius:8px;font-size:0.82rem;text-align:center;font-weight:600;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.3);';
+                        visEl.innerHTML = currentLang === 'fr' ? `🌟 ISS visible depuis votre position ! Élévation : <strong>${elev.toFixed(1)}°</strong>` : `🌟 ISS visible from your location! Elevation: <strong>${elev.toFixed(1)}°</strong>`;
+                    } else if (elev > 0) {
+                        visEl.style.cssText = 'display:block;margin:10px 0 0;padding:8px 12px;border-radius:8px;font-size:0.82rem;text-align:center;font-weight:600;background:rgba(255,165,0,0.1);color:#ffa500;border:1px solid rgba(255,165,0,0.25);';
+                        visEl.innerHTML = currentLang === 'fr' ? `👁️ ISS à l'horizon — Élévation : <strong>${elev.toFixed(1)}°</strong>` : `👁️ ISS near the horizon — Elevation: <strong>${elev.toFixed(1)}°</strong>`;
+                    } else {
+                        visEl.style.cssText = 'display:block;margin:10px 0 0;padding:8px 12px;border-radius:8px;font-size:0.82rem;text-align:center;background:rgba(255,255,255,0.03);color:#555;border:1px solid rgba(255,255,255,0.06);';
+                        visEl.innerHTML = currentLang === 'fr' ? `🙈 ISS non visible — <strong>${Math.abs(elev).toFixed(1)}°</strong> sous l'horizon` : `🙈 ISS not visible — <strong>${Math.abs(elev).toFixed(1)}°</strong> below horizon`;
+                    }
+                }
+            })();
+
+            // Update popup
+            const visText = vis === 'daylight'
+                ? `<span class="visibility-indicator vis-day">${t('visDaylight')}</span>`
+                : `<span class="visibility-indicator vis-night">${t('visNight')}</span>`;
+            const velLabel = currentLang === 'fr' ? 'Vit' : 'Spd';
+            issMarker.setPopupContent(
+                `<b>${t('issPopupName')}</b><br>
+                 Alt: ${alt.toFixed(1)} km | ${velLabel}: ${vel.toFixed(0)} km/h<br>
+                 ${visText}`
+            );
+
+        } catch (err) {
+            console.error(t('positionError'), err);
+            // Fallback API
+            try {
+                const res = await fetch('https://api.open-notify.org/iss-now.json');
+                const data = await res.json();
+                const lat = parseFloat(data.iss_position.latitude);
+                const lon = parseFloat(data.iss_position.longitude);
+                issMarker.setLatLng([lat, lon]);
+                visCircle.setLatLng([lat, lon]);
+                document.getElementById('lat').textContent = lat.toFixed(4) + '°';
+                document.getElementById('lon').textContent = lon.toFixed(4) + '°';
+                document.getElementById('timestamp').textContent = new Date().toLocaleString(currentLang === 'fr' ? 'fr-FR' : 'en-GB');
+            } catch (e2) {
+                console.error(t('fallbackError'), e2);
+            }
+        }
+    }
+
+    // === FETCH CREW ===
+    // Open Notify API is unreliable / outdated.
+    // We use a curated crew list based on NASA official data.
+    // Update this list when crew rotations happen.
+    // Source: https://www.nasa.gov/international-space-station/space-station-crew/
+
+    const ISS_CREW = [
+        { name: 'Jessica Meir',   role_fr: 'Commandante',            role_en: 'Commander',          agency: 'NASA',      flag: '🇺🇸', mission: 'Crew-12', launched: '2025-10-14',
+          fact_fr: 'Biologiste marine — elle a étudié comment les animaux survivent dans des conditions extrêmes avant de partir dans l’espace !',
+          fact_en: 'Marine biologist — she studied how animals survive in extreme conditions before heading to space!' },
+        { name: 'Jack Hathaway',  role_fr: 'Pilote',                 role_en: 'Pilot',              agency: 'NASA',      flag: '🇺🇸', mission: 'Crew-12', launched: '2025-10-14',
+          fact_fr: 'Pilote de chasse militaire avant de devenir astronaute — il a volé plus de 3 000 heures !',
+          fact_en: 'Military fighter pilot before becoming an astronaut — with over 3,000 hours of flight time!' },
+        { name: 'Sophie Adenot',  role_fr: 'Spécialiste de mission', role_en: 'Mission Specialist', agency: 'ESA',       flag: '🇫🇷', mission: 'Crew-12', launched: '2025-10-14',
+          fact_fr: 'Première Française à l’ISS depuis Thomas Pesquet ! Médecin et pilote d’hélicoptère de l’armée.',
+          fact_en: 'First French woman at the ISS since Thomas Pesquet! Army helicopter pilot and doctor.' },
+        { name: 'Andrey Fedyaev', role_fr: 'Spécialiste de mission', role_en: 'Mission Specialist', agency: 'Roscosmos', flag: '🇷🇺', mission: 'Crew-12', launched: '2025-10-14',
+          fact_fr: 'Son 2ᵉ séjour à l’ISS — ingénieur de vol chevronné de l’agence spatiale russe.',
+          fact_en: 'His 2nd stay at the ISS — seasoned flight engineer of the Russian space agency.' },
+    ];
+    const CREW_LAST_UPDATED = '2026-02-24';
+
+    async function updateCrew() {
+        const crewDiv = document.getElementById('crew-list');
+
+        // Group by mission
+        const missions = {};
+        ISS_CREW.forEach(member => {
+            if (!missions[member.mission]) missions[member.mission] = [];
+            missions[member.mission].push(member);
+        });
+
+        let html = '';
+        for (const [mission, members] of Object.entries(missions)) {
+            html += `<div style="font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; margin-bottom: 4px;">${mission}</div>`;
+            html += members.map(person => {
+                const initials = person.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+                const role = currentLang === 'en' ? person.role_en : person.role_fr;
+                const factText = currentLang === 'en' ? person.fact_en : person.fact_fr;
+                const daysSince = person.launched
+                    ? Math.floor((new Date() - new Date(person.launched)) / (1000 * 60 * 60 * 24))
+                    : null;
+                const daysHtml = daysSince !== null
+                    ? `<span style="font-size:0.68rem; color:#7b8cff; display:block; margin-top:1px;">⏱ ${daysSince} ${currentLang === 'fr' ? 'jours en orbite' : 'days in orbit'}</span>`
+                    : '';
+                const factHtml = factText
+                    ? `<div style="font-size:0.67rem; color:#555; margin-top:3px; line-height:1.35; font-style:italic;">${factText}</div>`
+                    : '';
+                return `
+                    <div class="crew-member">
+                        <div class="crew-avatar">${initials}</div>
+                        <div style="flex:1;">
+                            <div class="crew-name">${person.flag} ${person.name}</div>
+                            <div class="crew-craft">${role} · ${person.agency}</div>
+                            ${daysHtml}
+                            ${factHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        html += `
+            <div style="margin-top: 12px; font-size: 0.75rem; color: #444; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                ${ISS_CREW.length} ${t('crewMembers')} · ${t('crewExpedition')} 72/73 · ${t('crewUpdated')} ${new Date(CREW_LAST_UPDATED).toLocaleDateString(currentLang === 'fr' ? 'fr-FR' : 'en-GB')}<br>
+                <a href="https://www.nasa.gov/international-space-station/space-station-crew/" target="_blank" style="color: #7b8cff; text-decoration: none;">${t('crewVerify')}</a>
+            </div>
+        `;
+
+        crewDiv.innerHTML = html;
+    }
+
+    // === PASS PREDICTIONS ===
+    function useMyLocation() {
+        if (!navigator.geolocation) {
+            alert(t('geolocationNotSupported'));
+            return;
+        }
+        const passDiv = document.getElementById('pass-list');
+        passDiv.innerHTML = `<div style="color: #666;">📡 ${currentLang === 'fr' ? 'Localisation GPS en cours…' : 'Getting GPS location…'} <span class="loader"></span></div>`;
+
+        navigator.geolocation.getCurrentPosition(pos => {
+            document.getElementById('input-lat').value = pos.coords.latitude.toFixed(4);
+            document.getElementById('input-lon').value = pos.coords.longitude.toFixed(4);
+            getPasses();
+        }, err => {
+            alert(t('geolocationError') + err.message);
+            passDiv.innerHTML = `<div style="color: #666; font-size: 0.8rem;" data-i18n="enterCoords">${t('enterCoords')}</div>`;
+        }, { enableHighAccuracy: true, timeout: 10000 });
+    }
+
+    async function getPasses() {
+        const lat = parseFloat(document.getElementById('input-lat').value);
+        const lon = parseFloat(document.getElementById('input-lon').value);
+
+        if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+            alert(t('invalidCoords'));
+            return;
+        }
+
+        const passDiv = document.getElementById('pass-list');
+        passDiv.innerHTML = `<div style="color: #666;">${t('computingPasses')} <span class="loader"></span></div>`;
+
+        // Add user marker on map
+        if (window.userMarker) map.removeLayer(window.userMarker);
+        window.userMarker = L.marker([lat, lon], {
+            icon: L.divIcon({
+                html: '<div style="font-size: 24px;">📍</div>',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+                className: ''
+            })
+        }).addTo(map).bindPopup(`${t('yourPosition')}: ${lat.toFixed(4)}°, ${lon.toFixed(4)}°`);
+
+        try {
+            const passes = await computeRealPasses(lat, lon, 10);
+
+            if (passes.length === 0) {
+                passDiv.innerHTML = `<div style="color: #666;">${t('noPassesFound')}</div>`;
+                return;
+            }
+
+            lastPasses = passes;
+            lastPassLat = lat;
+            lastPassLon = lon;
+            renderPassResults(passes);
+            schedulePassNotifications();
+        } catch (err) {
+            console.error('Pass error:', err);
+            passDiv.innerHTML = `
+                <div style="color: #888; font-size: 0.85rem;">
+                    ⚠️ ${currentLang === 'fr' ? 'Erreur de calcul. Essayez ces sites :' : 'Computation error. Try these sites:'}<br><br>
+                    🌐 <a href="https://spotthestation.nasa.gov/" target="_blank" style="color: #ffa500;">Spot The Station (NASA)</a><br>
+                    🌐 <a href="https://www.heavens-above.com/" target="_blank" style="color: #ffa500;">Heavens-Above</a>
+                </div>
+            `;
+        }
+    }
+
+    // Client-side ISS pass prediction using Keplerian ground track propagation
+    // No extra API calls — uses current ISS position already fetched by updatePosition()
+    async function computeRealPasses(userLat, userLon, maxPasses) {
+
+        // Fetch two ISS positions 30s apart (single batch API call)
+        // This lets us determine ascending vs descending orbital phase
+        const nowTs = Math.floor(Date.now() / 1000);
+        const t1 = nowTs, t2 = nowTs + 30;
+        const res = await fetch(
+            `https://api.wheretheiss.at/v1/satellites/25544/positions?timestamps=${t1},${t2}&units=kilometers`
+        );
+        if (!res.ok) throw new Error('API error');
+        const dataArr = await res.json();
+        const issData = dataArr[0];
+        const issData2 = dataArr[1];
+
+        // ISS orbital parameters
+        const T = 92.68 * 60;          // Orbital period in seconds (~92.68 min)
+        const incDeg = 51.6;           // Inclination in degrees
+        const inc = incDeg * Math.PI / 180;
+        const alt = issData.altitude || 420; // km
+        const R = 6371;                // Earth radius km
+        const wE = 2 * Math.PI / 86400; // Earth rotation rate rad/s
+
+        // Determine current orbital phase from ISS latitude
+        // lat = asin(sin(inc) * sin(phase))  =>  phase = asin(sin(lat) / sin(inc))
+        const issLatRad = issData.latitude * Math.PI / 180;
+        const issLonRad = issData.longitude * Math.PI / 180;
+
+        // Resolve ascending/descending ambiguity using two positions
+        let phase0 = Math.asin(Math.sin(issLatRad) / Math.sin(inc));
+        // If latitude is decreasing (descending pass), phase is in [π/2, π]
+        if (issData2.latitude < issData.latitude) {
+            phase0 = Math.PI - phase0;
+        }
+
+        // Propagate ground track: compute ISS sub-satellite point at time t
+        function issPosition(tSec) {
+            const dt = tSec - nowTs;
+            const phase = phase0 + (2 * Math.PI / T) * dt;
+
+            // Sub-satellite latitude
+            const lat = Math.asin(Math.sin(inc) * Math.sin(phase));
+
+            // Sub-satellite longitude
+            // RAAN drifts, but over 24h it's small. Main effect is Earth rotation.
+            const lonOrbit = Math.atan2(Math.cos(inc) * Math.sin(phase), Math.cos(phase));
+            const lon0Orbit = Math.atan2(Math.cos(inc) * Math.sin(phase0), Math.cos(phase0));
+            const lon = issLonRad + (lonOrbit - lon0Orbit) - wE * dt;
+
+            // Normalize longitude to [-π, π]
+            let lonNorm = lon % (2 * Math.PI);
+            if (lonNorm > Math.PI) lonNorm -= 2 * Math.PI;
+            if (lonNorm < -Math.PI) lonNorm += 2 * Math.PI;
+
+            return {
+                lat: lat * 180 / Math.PI,
+                lon: lonNorm * 180 / Math.PI,
+                alt: alt
+            };
+        }
+
+        // Scan the next 24 hours at 30-second resolution (2880 samples — instant client-side)
+        const step = 30; // seconds
+        const duration = 24 * 3600;
+        const passes = [];
+        let inPass = false;
+        let passStartTs = 0;
+        let passMaxElev = 0;
+
+        for (let dt = 0; dt <= duration; dt += step) {
+            const t = nowTs + dt;
+            const pos = issPosition(t);
+            const elev = computeElevation(userLat, userLon, pos.lat, pos.lon, pos.alt);
+
+            if (elev > 0 && !inPass) {
+                inPass = true;
+                passStartTs = t;
+                passMaxElev = elev;
+            } else if (elev > 0 && inPass) {
+                passMaxElev = Math.max(passMaxElev, elev);
+            } else if (elev <= 0 && inPass) {
+                inPass = false;
+                if (passMaxElev >= 5) {
+                    const durationMin = ((t - passStartTs) / 60).toFixed(1);
+                    const passDate = new Date(passStartTs * 1000);
+
+                    let quality = '';
+                    if (passMaxElev >= 60) quality = '🌟🌟🌟';
+                    else if (passMaxElev >= 30) quality = '🌟🌟';
+                    else if (passMaxElev >= 10) quality = '🌟';
+                    else quality = '👁️';
+
+                    passes.push({
+                        ts: passStartTs,
+                        datetime: passDate.toLocaleString(currentLang === 'fr' ? 'fr-FR' : 'en-GB', {
+                            weekday: 'short',
+                            day: '2-digit', month: '2-digit',
+                            hour: '2-digit', minute: '2-digit',
+                            timeZoneName: 'short'
+                        }),
+                        duration: parseFloat(durationMin),
+                        elevation: Math.round(passMaxElev),
+                        quality: quality
+                    });
+                }
+                if (passes.length >= maxPasses) break;
+            }
+        }
+
+        return passes;
+    }
+
+    // Compute elevation angle of ISS from observer's position
+    function computeElevation(obsLat, obsLon, satLat, satLon, satAlt) {
+        const R = 6371; // Earth radius km
+        const deg2rad = Math.PI / 180;
+
+        const lat1 = obsLat * deg2rad;
+        const lon1 = obsLon * deg2rad;
+        const lat2 = satLat * deg2rad;
+        const lon2 = satLon * deg2rad;
+
+        // Angular distance between observer and sub-satellite point (Haversine)
+        const dLat = lat2 - lat1;
+        const dLon = lon2 - lon1;
+        const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+        const gamma = 2 * Math.asin(Math.sqrt(a)); // central angle
+
+        // Elevation angle: atan2(cos(γ) - R/(R+h), sin(γ))
+        const h = satAlt;
+        const elevation = Math.atan2(Math.cos(gamma) - R / (R + h), Math.sin(gamma));
+
+        return elevation * (180 / Math.PI); // degrees
+    }
+
+    // === GENERATE PREDICTED ORBIT PATH ===
+    async function drawOrbitPath() {
+        try {
+            const timestamps = [];
+            const now = Math.floor(Date.now() / 1000);
+            // Get positions for next 90 minutes (1 orbit)
+            for (let i = 0; i < 90; i += 2) {
+                timestamps.push(now + i * 60);
+            }
+
+            const url = `https://api.wheretheiss.at/v1/satellites/25544/positions?timestamps=${timestamps.join(',')}&units=kilometers`;
+            const res = await fetch(url);
+            const positions = await res.json();
+
+            if (Array.isArray(positions)) {
+                const segments = [[]];
+                let prevLon = null;
+
+                positions.forEach(pos => {
+                    if (prevLon !== null && Math.abs(pos.longitude - prevLon) > 100) {
+                        segments.push([]);
+                    }
+                    segments[segments.length - 1].push([pos.latitude, pos.longitude]);
+                    prevLon = pos.longitude;
+                });
+
+                // Draw predicted path
+                segments.forEach(seg => {
+                    L.polyline(seg, {
+                        color: '#ffa500',
+                        weight: 1.5,
+                        opacity: 0.3,
+                        dashArray: '4, 8'
+                    }).addTo(map);
+                });
+            }
+        } catch (err) {
+            console.error('Erreur tracé orbital:', err);
+        }
+    }
+
+    // ===================================================
+    // === AUDIO ENGINE (Web Audio API) ================
+    // ===================================================
+    let audioCtx = null;
+    let masterGain = null;
+    let masterVolume = 0.4;
+
+    // === AudioWorklet noise source (replaces deprecated createScriptProcessor) ===
+    const NOISE_WORKLET_CODE = `
+class NoiseGen extends AudioWorkletProcessor {
+    constructor(opts) {
+        super();
+        this._t = 0;
+        const p = (opts && opts.processorOptions) || {};
+        this._cBase  = p.crackleBase  || 8000;
+        this._cRange = p.crackleRange || 15000;
+        this._cAmp   = p.crackleAmp  || 3.5;
+        this._mBase  = p.modBase     || 0.6;
+        this._mAmp   = p.modAmp      || 0.4;
+        this._mFreq  = p.modFreq     || 0.0001;
+    }
+    process(inputs, outputs) {
+        const out = outputs[0][0];
+        if (!out) return true;
+        for (let i = 0; i < out.length; i++) {
+            let s = Math.random() * 2 - 1;
+            this._t++;
+            if (this._t > this._cBase + Math.random() * this._cRange) { s *= this._cAmp; this._t = 0; }
+            s *= this._mBase + this._mAmp * Math.sin(this._t * this._mFreq);
+            out[i] = s;
+        }
+        return true;
+    }
+}
+registerProcessor('noise-gen', NoiseGen);
+`;
+    let noiseWorkletReady = false;
+
+    async function ensureNoiseWorklet() {
+        if (noiseWorkletReady || !audioCtx || !audioCtx.audioWorklet) return;
+        try {
+            const blob = new Blob([NOISE_WORKLET_CODE], { type: 'application/javascript' });
+            const url = URL.createObjectURL(blob);
+            await audioCtx.audioWorklet.addModule(url);
+            URL.revokeObjectURL(url);
+            noiseWorkletReady = true;
+        } catch (e) { /* fallback to ScriptProcessor */ }
+    }
+
+    function createNoiseSource(opts) {
+        if (noiseWorkletReady) {
+            return new AudioWorkletNode(audioCtx, 'noise-gen', { processorOptions: opts });
+        }
+        // Fallback: createScriptProcessor
+        const { crackleBase = 8000, crackleRange = 15000, crackleAmp = 3.5, modBase = 0.6, modAmp = 0.4, modFreq = 0.0001 } = opts || {};
+        const node = audioCtx.createScriptProcessor(4096, 1, 1);
+        let t = 0;
+        node.onaudioprocess = (e) => {
+            const out = e.outputBuffer.getChannelData(0);
+            for (let i = 0; i < out.length; i++) {
+                let s = Math.random() * 2 - 1;
+                t++;
+                if (t > crackleBase + Math.random() * crackleRange) { s *= crackleAmp; t = 0; }
+                s *= modBase + modAmp * Math.sin(t * modFreq);
+                out[i] = s;
+            }
+        };
+        return node;
+    }
+
+    function initAudio() {
+        if (audioCtx) return;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.value = masterVolume;
+        masterGain.connect(audioCtx.destination);
+        // Pre-load AudioWorklet (fire-and-forget; falls back to ScriptProcessor if unavailable)
+        ensureNoiseWorklet().catch(() => {});
+    }
+
+    function setMasterVolume(val) {
+        masterVolume = val / 100;
+        if (masterGain) masterGain.gain.value = masterVolume;
+    }
+
+    // --- 1. Radio Static Simulation ---
+    let radioStaticNode = null;
+    let radioStaticGain = null;
+    let radioFilterNode = null;
+    let radioActive = false;
+    let radioAnalyser = null;
+    let spectrumAnimFrame = null;
+    let currentRadioFreq = null;
+    let currentRadioChannel = null;
+    let radioToneOsc = null;
+    let radioToneGain = null;
+    let duplexMode = false;
+    let duplexNodes = []; // extra audio nodes for second channel in duplex
+
+    // ISS frequencies database
+    const issFrequencies = {
+        '145.800': { name: 'Voix (Descente)', tone: 800, mode: 'FM NFM', color: '#00ff88' },
+        '145.200': { name: 'Voix (Montée)', tone: 600, mode: 'FM NFM', color: '#4a9eff' },
+        '145.825': { name: 'APRS Packet', tone: 1200, mode: 'AFSK 1200', color: '#ffa500' },
+        '437.800': { name: 'Repeater (Montée)', tone: 1800, mode: 'FM UHF', color: '#ff6b9d' }
+    };
+
+    function toggleRadioStatic() {
+        initAudio();
+        const btn = document.getElementById('btn-radio');
+        const label = document.getElementById('btn-radio-label');
+
+        if (radioActive) {
+            // Turn OFF
+            stopRadioStatic();
+            btn.classList.remove('active');
+            label.textContent = 'OFF';
+            document.getElementById('radio-card')?.classList.remove('radio-active-card');
+            updateTunerDisplay(null);
+            document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-duplex').classList.remove('active');
+            duplexMode = false;
+            stopDuplexSecondChannel();
+            radioActive = false;
+        } else {
+            // Turn ON
+            btn.classList.add('active');
+            label.textContent = 'ON';
+            document.getElementById('radio-card')?.classList.add('radio-active-card');
+            radioActive = true;
+            // Default to 145.800 MHz
+            const defaultBtn = document.querySelector('.ch-btn[data-freq="145.800"]');
+            if (defaultBtn) setRadioChannel(defaultBtn);
+        }
+    }
+
+    function setRadioChannel(btnEl) {
+        if (!audioCtx) initAudio();
+
+        // If radio is off, turn it on
+        if (!radioActive) {
+            const btn = document.getElementById('btn-radio');
+            btn.classList.add('active');
+            document.getElementById('btn-radio-label').textContent = 'ON';
+            radioActive = true;
+        }
+
+        // Exit duplex mode
+        duplexMode = false;
+        stopDuplexSecondChannel();
+        document.getElementById('btn-duplex').classList.remove('active');
+
+        // Deselect all
+        document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+        // Clear custom input highlight
+        const customInput = document.getElementById('custom-freq-input');
+        if (customInput) customInput.style.borderColor = '#2a2a8a';
+
+        const freq = btnEl.dataset.freq;
+        const info = issFrequencies[freq];
+        currentRadioFreq = freq;
+        currentRadioChannel = info;
+
+        // Stop existing radio
+        stopRadioStatic();
+
+        // Start new radio on this channel
+        startRadioStatic(info.tone, info.color);
+        updateTunerDisplay(freq);
+    }
+
+    function setCustomFrequency() {
+        const input = document.getElementById('custom-freq-input');
+        let raw = input.value.trim().replace(',', '.');
+        const freqNum = parseFloat(raw);
+
+        if (isNaN(freqNum) || freqNum < 30 || freqNum > 3000) {
+            input.style.borderColor = '#ff4444';
+            input.style.animation = 'none';
+            input.offsetHeight; // reflow
+            input.style.animation = '';
+            return;
+        }
+
+        const freqStr = freqNum.toFixed(3);
+        input.value = freqStr;
+        input.style.borderColor = '#bf6bff';
+
+        if (!audioCtx) initAudio();
+
+        // Turn radio on if off
+        if (!radioActive) {
+            const btn = document.getElementById('btn-radio');
+            btn.classList.add('active');
+            document.getElementById('btn-radio-label').textContent = 'ON';
+            radioActive = true;
+        }
+
+        // Deselect preset buttons
+        document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+
+        // Determine band and generate a tone based on frequency
+        const isUHF = freqNum > 300;
+        const tone = 400 + ((freqNum % 10) * 140); // Derive tone from freq
+        const color = '#bf6bff';
+        const mode = isUHF ? 'FM UHF' : 'FM VHF';
+        const name = 'Custom';
+
+        // Register in frequencies db temporarily
+        issFrequencies[freqStr] = { name: name, tone: tone, mode: mode, color: color };
+
+        currentRadioFreq = freqStr;
+        currentRadioChannel = issFrequencies[freqStr];
+
+        // Stop existing and start new
+        stopRadioStatic();
+        startRadioStatic(tone, color);
+        updateTunerDisplay(freqStr);
+    }
+
+    // Allow Enter key to validate custom frequency
+    document.addEventListener('DOMContentLoaded', () => {
+        const ci = document.getElementById('custom-freq-input');
+        if (ci) ci.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') setCustomFrequency();
+        });
+    });
+
+    function updateTunerDisplay(freq) {
+        const freqEl = document.getElementById('tuner-freq');
+        const chanEl = document.getElementById('tuner-channel');
+
+        if (!freq) {
+            freqEl.textContent = '---.- MHz';
+            freqEl.classList.remove('scanning');
+            chanEl.textContent = 'OFF';
+            setSignalBars(0);
+            return;
+        }
+
+        const info = issFrequencies[freq];
+
+        // Scanning animation: sweep through frequencies before landing
+        freqEl.classList.add('scanning');
+        chanEl.textContent = t('scanning');
+
+        let scanStep = 0;
+        const scanInterval = setInterval(() => {
+            const fakeFreq = (140 + Math.random() * 8).toFixed(3);
+            freqEl.textContent = fakeFreq + ' MHz';
+            scanStep++;
+            if (scanStep > 8) {
+                clearInterval(scanInterval);
+                freqEl.textContent = freq + ' MHz';
+                freqEl.classList.remove('scanning');
+                freqEl.style.color = info.color;
+                freqEl.style.textShadow = `0 0 12px ${info.color}80`;
+                chanEl.textContent = info.name + ' [' + info.mode + ']';
+                // Simulate signal strength (random but stable)
+                const sig = 2 + Math.floor(Math.random() * 4);
+                setSignalBars(sig);
+            }
+        }, 120);
+    }
+
+    function setSignalBars(level) {
+        const bars = document.querySelectorAll('#signal-bars .sbar');
+        bars.forEach((bar, i) => {
+            bar.className = 'sbar';
+            if (i < level) {
+                if (level <= 2) bar.classList.add('lit-low');
+                else if (level <= 3) bar.classList.add('lit-warn');
+                else bar.classList.add('lit');
+            }
+        });
+    }
+
+    // --- Doppler Shift Calculation ---
+    let prevISSPos = null;
+    let prevISSTime = null;
+    let currentDopplerShift = 0; // Hz
+
+    function calculateDoppler(issLat, issLon, issAlt) {
+        const userLat = parseFloat(document.getElementById('input-lat').value);
+        const userLon = parseFloat(document.getElementById('input-lon').value);
+        if (isNaN(userLat) || isNaN(userLon) || !currentRadioFreq) return null;
+
+        const now = Date.now();
+
+        // Convert to radians
+        const toRad = (d) => d * Math.PI / 180;
+        const earthR = 6371; // km
+
+        // Compute distance from user to ISS (slant range)
+        function slantRange(lat1, lon1, lat2, lon2, alt) {
+            const dLat = toRad(lat2 - lat1);
+            const dLon = toRad(lon2 - lon1);
+            const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            const groundDist = earthR * c;
+            return Math.sqrt(groundDist**2 + alt**2);
+        }
+
+        const currentRange = slantRange(userLat, userLon, issLat, issLon, issAlt || 420);
+
+        if (prevISSPos && prevISSTime) {
+            const dt = (now - prevISSTime) / 1000; // seconds
+            if (dt > 0 && dt < 30) {
+                const prevRange = slantRange(userLat, userLon, prevISSPos.lat, prevISSPos.lon, prevISSPos.alt || 420);
+                const radialVelocity = (currentRange - prevRange) / dt; // km/s (positive = receding)
+
+                const c = 299792.458; // speed of light km/s
+                const f0 = parseFloat(currentRadioFreq) * 1e6; // Hz
+                const dopplerHz = -f0 * (radialVelocity / c); // negative when receding
+
+                currentDopplerShift = dopplerHz;
+
+                prevISSPos = { lat: issLat, lon: issLon, alt: issAlt };
+                prevISSTime = now;
+
+                return {
+                    shiftHz: dopplerHz,
+                    correctedMHz: (f0 + dopplerHz) / 1e6,
+                    radialVel: radialVelocity,
+                    range: currentRange
+                };
+            }
+        }
+
+        prevISSPos = { lat: issLat, lon: issLon, alt: issAlt };
+        prevISSTime = now;
+        return null; // Need two data points
+    }
+
+    function updateDopplerDisplay(dopplerData) {
+        const shiftEl = document.getElementById('doppler-shift');
+        const corrEl = document.getElementById('doppler-corrected');
+        const arrowEl = document.getElementById('doppler-arrow');
+        const barFill = document.getElementById('doppler-bar-fill');
+
+        if (!dopplerData || !shiftEl) {
+            if (shiftEl) {
+                shiftEl.textContent = '— Hz';
+                shiftEl.className = 'doppler-shift neutral';
+            }
+            return;
+        }
+
+        const hz = dopplerData.shiftHz;
+        const absHz = Math.abs(hz);
+        const isApproaching = hz > 0;
+
+        // Format shift display
+        let shiftText;
+        if (absHz >= 1000) {
+            shiftText = (hz > 0 ? '+' : '') + (hz / 1000).toFixed(2) + ' kHz';
+        } else {
+            shiftText = (hz > 0 ? '+' : '') + hz.toFixed(0) + ' Hz';
+        }
+        shiftEl.textContent = shiftText;
+        shiftEl.className = 'doppler-shift ' + (absHz < 50 ? 'neutral' : (isApproaching ? 'approaching' : 'receding'));
+
+        // Corrected frequency
+        corrEl.textContent = dopplerData.correctedMHz.toFixed(4) + ' MHz';
+
+        // Arrow direction
+        if (absHz < 50) {
+            arrowEl.className = 'doppler-arrow flat';
+        } else if (isApproaching) {
+            arrowEl.className = 'doppler-arrow up';
+        } else {
+            arrowEl.className = 'doppler-arrow down';
+        }
+
+        // Bar visualization: center = 0, left = receding, right = approaching
+        // Max expected shift ~±10 kHz for UHF
+        const maxShift = 12000; // Hz
+        const normalizedShift = Math.max(-1, Math.min(1, hz / maxShift));
+        const barWidth = Math.abs(normalizedShift) * 50; // % of half width
+        const barColor = isApproaching ? '#00ccff' : '#ff6b6b';
+
+        if (normalizedShift >= 0) {
+            barFill.style.left = '50%';
+            barFill.style.width = barWidth + '%';
+        } else {
+            barFill.style.left = (50 - barWidth) + '%';
+            barFill.style.width = barWidth + '%';
+        }
+        barFill.style.background = barColor;
+
+        // Adjust audio tone frequency for Doppler effect
+        if (radioToneOsc && radioActive && currentRadioChannel) {
+            const baseTone = currentRadioChannel.tone;
+            // Scale the Doppler effect for audibility: real shift is tiny vs audio tone
+            // Map ±10kHz radio shift to ±30Hz tone shift for perceptibility
+            const toneShift = (hz / maxShift) * 30;
+            radioToneOsc.frequency.setTargetAtTime(baseTone + toneShift, audioCtx.currentTime, 0.5);
+        }
+    }
+
+    function startRadioStatic(toneFreq = 800, color = '#00ff88') {
+        radioStaticNode = createNoiseSource({ crackleBase: 8000, crackleRange: 15000, crackleAmp: 3.5, modBase: 0.6, modAmp: 0.4, modFreq: 0.0001 });
+        radioStaticGain = audioCtx.createGain();
+        radioStaticGain.gain.value = 0.10;
+
+        // Bandpass filter to simulate VHF radio
+        radioFilterNode = audioCtx.createBiquadFilter();
+        radioFilterNode.type = 'bandpass';
+        radioFilterNode.frequency.value = 2500;
+        radioFilterNode.Q.value = 0.8;
+
+        // Analyser for spectrum display
+        radioAnalyser = audioCtx.createAnalyser();
+        radioAnalyser.fftSize = 64;
+        radioAnalyser.smoothingTimeConstant = 0.7;
+
+        radioStaticNode.connect(radioFilterNode);
+        radioFilterNode.connect(radioAnalyser);
+        radioAnalyser.connect(radioStaticGain);
+        radioStaticGain.connect(masterGain);
+
+        // Tuning sweep
+        const t = audioCtx.currentTime;
+        radioFilterNode.frequency.setValueAtTime(1800, t);
+        radioFilterNode.frequency.linearRampToValueAtTime(3200, t + 1.2);
+        radioFilterNode.frequency.linearRampToValueAtTime(2500, t + 2.0);
+
+        // Add a subtle carrier tone for the selected frequency
+        radioToneOsc = audioCtx.createOscillator();
+        radioToneGain = audioCtx.createGain();
+        radioToneOsc.type = 'sine';
+        radioToneOsc.frequency.value = toneFreq;
+        radioToneGain.gain.value = 0;
+        // Fade tone in after "tuning" completes
+        radioToneGain.gain.setValueAtTime(0, t);
+        radioToneGain.gain.linearRampToValueAtTime(0.04, t + 2.5);
+        // Add slow warble for realism
+        const warble = audioCtx.createOscillator();
+        warble.type = 'sine';
+        warble.frequency.value = 0.3;
+        const warbleGain = audioCtx.createGain();
+        warbleGain.gain.value = toneFreq * 0.003;
+        warble.connect(warbleGain);
+        warbleGain.connect(radioToneOsc.frequency);
+        warble.start(t);
+
+        radioToneOsc.connect(radioToneGain);
+        radioToneGain.connect(masterGain);
+        radioToneOsc.start(t);
+
+        // Start spectrum visualization
+        drawSpectrum(color);
+    }
+
+    function drawSpectrum(color) {
+        const canvas = document.getElementById('spectrum-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const W = canvas.width;
+        const H = canvas.height;
+
+        function animate() {
+            if (!radioAnalyser) return;
+            spectrumAnimFrame = requestAnimationFrame(animate);
+
+            const dataArray = new Uint8Array(radioAnalyser.frequencyBinCount);
+            radioAnalyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = 'rgba(5, 8, 16, 0.85)';
+            ctx.fillRect(0, 0, W, H);
+
+            const barCount = dataArray.length;
+            const barWidth = W / barCount;
+
+            for (let i = 0; i < barCount; i++) {
+                const val = dataArray[i] / 255;
+                const barH = val * H;
+
+                // Gradient color based on frequency
+                const hue = (i / barCount) * 60;
+                ctx.fillStyle = val > 0.5 ? color : `hsla(${220 + hue}, 70%, 50%, ${0.3 + val * 0.7})`;
+                ctx.fillRect(i * barWidth, H - barH, barWidth - 1, barH);
+
+                // Peak dot
+                if (val > 0.6) {
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(i * barWidth, H - barH - 2, barWidth - 1, 1);
+                }
+            }
+
+            // Scan line effect
+            const scanPos = (Date.now() % 2000) / 2000 * W;
+            ctx.fillStyle = `rgba(255,255,255,0.06)`;
+            ctx.fillRect(scanPos, 0, 2, H);
+        }
+        animate();
+    }
+
+    function stopRadioStatic() {
+        if (radioStaticNode) {
+            radioStaticNode.disconnect();
+            radioFilterNode.disconnect();
+            radioStaticGain.disconnect();
+            if (radioAnalyser) { radioAnalyser.disconnect(); radioAnalyser = null; }
+            radioStaticNode = null;
+        }
+        if (radioToneOsc) {
+            try { radioToneOsc.stop(); } catch(e) {}
+            radioToneOsc.disconnect();
+            radioToneGain.disconnect();
+            radioToneOsc = null;
+        }
+        if (spectrumAnimFrame) {
+            cancelAnimationFrame(spectrumAnimFrame);
+            spectrumAnimFrame = null;
+            // Clear canvas
+            const canvas = document.getElementById('spectrum-canvas');
+            if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        }
+        stopDuplexSecondChannel();
+    }
+
+    // --- Duplex Mode: listen to both 145.800 + 145.200 simultaneously ---
+    function setDuplexMode() {
+        if (!audioCtx) initAudio();
+
+        // If already in duplex, toggle off
+        if (duplexMode) {
+            stopRadioStatic();
+            duplexMode = false;
+            radioActive = false;
+            document.getElementById('btn-duplex').classList.remove('active');
+            document.getElementById('btn-radio').classList.remove('active');
+            document.getElementById('btn-radio-label').textContent = 'OFF';
+            updateTunerDisplay(null);
+            document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+            return;
+        }
+
+        // Turn radio on
+        if (!radioActive) {
+            document.getElementById('btn-radio').classList.add('active');
+            document.getElementById('btn-radio-label').textContent = 'ON';
+            radioActive = true;
+        }
+
+        // Deselect single-channel buttons
+        document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-duplex').classList.add('active');
+        const customInput = document.getElementById('custom-freq-input');
+        if (customInput) customInput.style.borderColor = '#2a2a8a';
+
+        duplexMode = true;
+
+        // Set primary channel to 145.800 (downlink)
+        const info800 = issFrequencies['145.800'];
+        currentRadioFreq = '145.800';
+        currentRadioChannel = info800;
+
+        stopRadioStatic();
+        duplexMode = true; // re-set after stopRadioStatic clears it via stopDuplexSecondChannel
+
+        // Start primary channel (145.800 downlink) — panned slightly left
+        startRadioStatic(info800.tone, info800.color);
+
+        // Start second channel (145.200 uplink) — separate tone panned right
+        const info200 = issFrequencies['145.200'];
+        const tDup = audioCtx.currentTime;
+
+        // Second noise source (lighter)
+        const static2 = createNoiseSource({ crackleBase: 10000, crackleRange: 12000, crackleAmp: 3, modBase: 0.5, modAmp: 0.5, modFreq: 0.00008 });
+        const gain2 = audioCtx.createGain();
+        gain2.gain.value = 0.06;
+
+        const filter2 = audioCtx.createBiquadFilter();
+        filter2.type = 'bandpass';
+        filter2.frequency.value = 2800;
+        filter2.Q.value = 0.9;
+
+        static2.connect(filter2);
+        filter2.connect(gain2);
+
+        // Second carrier tone
+        const tone2 = audioCtx.createOscillator();
+        const toneGain2 = audioCtx.createGain();
+        tone2.type = 'sine';
+        tone2.frequency.value = info200.tone;
+        toneGain2.gain.value = 0;
+        toneGain2.gain.setValueAtTime(0, tDup);
+        toneGain2.gain.linearRampToValueAtTime(0.035, tDup + 2.5);
+
+        // Warble for second tone
+        const warble2 = audioCtx.createOscillator();
+        warble2.type = 'sine';
+        warble2.frequency.value = 0.25;
+        const warbleGain2 = audioCtx.createGain();
+        warbleGain2.gain.value = info200.tone * 0.004;
+        warble2.connect(warbleGain2);
+        warbleGain2.connect(tone2.frequency);
+        warble2.start(tDup);
+
+        tone2.connect(toneGain2);
+
+        // Stereo panning: primary (145.800) left, secondary (145.200) right
+        const panLeft = audioCtx.createStereoPanner();
+        panLeft.pan.value = -0.4;
+        const panRight = audioCtx.createStereoPanner();
+        panRight.pan.value = 0.4;
+
+        // Pan the primary channel left
+        if (radioStaticGain) {
+            radioStaticGain.disconnect();
+            radioStaticGain.connect(panLeft);
+            panLeft.connect(masterGain);
+        }
+        if (radioToneGain) {
+            radioToneGain.disconnect();
+            radioToneGain.connect(panLeft);
+        }
+
+        // Pan the second channel right
+        gain2.connect(panRight);
+        toneGain2.connect(panRight);
+        panRight.connect(masterGain);
+
+        tone2.start(tDup);
+
+        duplexNodes = [static2, filter2, gain2, tone2, toneGain2, warble2, warbleGain2, panLeft, panRight];
+
+        // Update display to show duplex
+        const freqEl = document.getElementById('tuner-freq');
+        const chanEl = document.getElementById('tuner-channel');
+        freqEl.classList.add('scanning');
+        chanEl.textContent = t('scanning');
+
+        let scanStep = 0;
+        const scanInterval = setInterval(() => {
+            freqEl.textContent = (140 + Math.random() * 8).toFixed(3) + ' MHz';
+            scanStep++;
+            if (scanStep > 8) {
+                clearInterval(scanInterval);
+                freqEl.textContent = '145.800 + 145.200 MHz';
+                freqEl.classList.remove('scanning');
+                freqEl.style.color = '#ffd700';
+                freqEl.style.textShadow = '0 0 12px rgba(255,215,0,0.5)';
+                chanEl.textContent = currentLang === 'fr'
+                    ? 'Duplex — ↓Descente (G) + ↑Montée (D)'
+                    : 'Duplex — ↓Downlink (L) + ↑Uplink (R)';
+                setSignalBars(3 + Math.floor(Math.random() * 2));
+            }
+        }, 120);
+    }
+
+    function stopDuplexSecondChannel() {
+        duplexNodes.forEach(node => {
+            try { if (node.stop) node.stop(); } catch(e) {}
+            try { node.disconnect(); } catch(e) {}
+        });
+        duplexNodes = [];
+    }
+
+    // --- 2. Beacon Beep (ISS telemetry style) ---
+    let beaconInterval = null;
+    let beaconActive = false;
+
+    function toggleBeaconBeep() {
+        initAudio();
+        const btn = document.getElementById('btn-beep');
+        if (beaconActive) {
+            clearInterval(beaconInterval);
+            beaconInterval = null;
+            btn.classList.remove('active');
+        } else {
+            playBeaconBeep(); // play immediately
+            beaconInterval = setInterval(playBeaconBeep, 3000);
+            btn.classList.add('active');
+        }
+        beaconActive = !beaconActive;
+    }
+
+    function playBeaconBeep() {
+        if (!audioCtx) return;
+        const t = audioCtx.currentTime;
+
+        // Double-beep pattern like satellite telemetry
+        for (let b = 0; b < 2; b++) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.value = 1200 + b * 400; // 1200Hz then 1600Hz
+
+            gain.gain.setValueAtTime(0, t + b * 0.18);
+            gain.gain.linearRampToValueAtTime(0.15, t + b * 0.18 + 0.02);
+            gain.gain.setValueAtTime(0.15, t + b * 0.18 + 0.08);
+            gain.gain.linearRampToValueAtTime(0, t + b * 0.18 + 0.12);
+
+            osc.connect(gain);
+            gain.connect(masterGain);
+            osc.start(t + b * 0.18);
+            osc.stop(t + b * 0.18 + 0.15);
+        }
+    }
+
+    // ═══════════════════════════════════
+    // === 3b. NASA APOD ===
+    // ═══════════════════════════════════
+    async function loadAPOD() {
+        try {
+            const res = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY');
+            if (!res.ok) throw new Error('APOD fetch failed');
+            const data = await res.json();
+            const container = document.getElementById('apod-content');
+            const isVideo = data.media_type === 'video';
+
+            container.innerHTML = `
+                <div class="apod-img-wrap" ${!isVideo ? 'onclick="openLightbox(this.querySelector(\'img\').src, \'' + data.title.replace(/'/g, "\\'") + '\')"' : ''}>
+                    ${isVideo
+                        ? `<iframe src="${data.url}" allowfullscreen></iframe>`
+                        : `<img src="${data.url}" alt="${data.title}" loading="lazy">`
+                    }
+                    <span class="apod-badge">${t('apodBadge')} — ${data.date}</span>
+                </div>
+                <div class="apod-title">${data.title}</div>
+                <div class="apod-desc">${data.explanation}</div>
+                ${data.copyright ? `<div class="apod-copyright">© ${data.copyright}</div>` : ''}
+            `;
+        } catch (e) {
+            console.error('APOD error:', e);
+            document.getElementById('apod-loading').innerHTML = '<span style="color:#667;">⚠️ Unable to load APOD</span>';
+        }
+    }
+
+    function openLightbox(src, title) {
+        const lb = document.createElement('div');
+        lb.className = 'gallery-lightbox';
+        lb.onclick = () => lb.remove();
+        lb.innerHTML = `<img src="${src}" alt="${title}"><div class="gallery-lightbox-title">${title}</div>`;
+        document.body.appendChild(lb);
+    }
+
+    // ═══════════════════════════════════
+    // === 3c. Space Weather ===
+    // ═══════════════════════════════════
+    async function loadSpaceWeather() {
+        try {
+            // Fetch planetary K-index (3-hour)
+            const [kpRes, swRes] = await Promise.all([
+                fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json'),
+                fetch('https://services.swpc.noaa.gov/products/summary/solar-wind-mag-field.json')
+            ]);
+
+            let kpData = [], swData = {};
+            if (kpRes.ok) {
+                const raw = await kpRes.json();
+                kpData = raw.slice(1).slice(-8); // last 8 entries (skip header)
+            }
+            if (swRes.ok) {
+                swData = await swRes.json();
+            }
+
+            const latestKp = kpData.length > 0 ? parseFloat(kpData[kpData.length - 1][1]) : 0;
+            const kpClass = latestKp < 4 ? 'sw-kp-low' : latestKp < 5 ? 'sw-kp-mod' : latestKp < 7 ? 'sw-kp-high' : latestKp < 9 ? 'sw-kp-storm' : 'sw-kp-extreme';
+            const kpLabel = latestKp < 4 ? t('swKpQuiet') : latestKp < 5 ? t('swKpActive') : latestKp < 7 ? t('swKpStorm') : latestKp < 9 ? t('swKpSevere') : t('swKpExtreme');
+
+            const bz = swData.Bz || '—';
+            const speed = swData.WindSpeed || '—';
+            const density = swData.Density || '—';
+
+            // Build Kp bar chart
+            const barColors = ['#4ade80', '#4ade80', '#4ade80', '#4ade80', '#facc15', '#fb923c', '#fb923c', '#ef4444', '#dc2626'];
+            const barHTML = kpData.map((entry, i) => {
+                const kp = parseFloat(entry[1]);
+                const h = Math.max(3, (kp / 9) * 100);
+                const ci = Math.min(8, Math.floor(kp));
+                return `<div class="sw-bar-segment active" style="height:${h}%; background:${barColors[ci]};" title="Kp ${kp} — ${entry[0]}"></div>`;
+            }).join('');
+
+            const container = document.getElementById('sw-content');
+            container.innerHTML = `
+                <div class="sw-grid">
+                    <div class="sw-item">
+                        <div class="sw-label">${t('swKpLabel')}</div>
+                        <div class="sw-value ${kpClass}">${latestKp.toFixed(1)}</div>
+                        <div class="sw-sub">${kpLabel}</div>
+                    </div>
+                    <div class="sw-item">
+                        <div class="sw-label">${t('swBzLabel')}</div>
+                        <div class="sw-value" style="color:${parseFloat(bz) < 0 ? '#fb923c' : '#4ade80'}">${bz} <span style="font-size:0.6rem;">nT</span></div>
+                        <div class="sw-sub">${parseFloat(bz) < 0 ? '↓ Southward' : '↑ Northward'}</div>
+                    </div>
+                    <div class="sw-item">
+                        <div class="sw-label">${t('swSpeedLabel')}</div>
+                        <div class="sw-value" style="color:#7b8cff">${speed} <span style="font-size:0.6rem;">km/s</span></div>
+                        <div class="sw-sub">${parseFloat(speed) > 500 ? '⚡ Fast' : 'Normal'}</div>
+                    </div>
+                    <div class="sw-item">
+                        <div class="sw-label">${t('swDensityLabel')}</div>
+                        <div class="sw-value" style="color:#a78bfa">${density} <span style="font-size:0.6rem;">p/cm³</span></div>
+                        <div class="sw-sub">Proton</div>
+                    </div>
+                </div>
+                <div class="sw-bar" title="Kp 3-hour history">${barHTML}</div>
+                <div class="sw-bar-legend">
+                    <span><i style="background:#4ade80"></i>${t('swLegendQuiet')}</span>
+                    <span><i style="background:#facc15"></i>${t('swLegendActive')}</span>
+                    <span><i style="background:#fb923c"></i>${t('swLegendStorm')}</span>
+                    <span><i style="background:#ef4444"></i>${t('swLegendSevere')}</span>
+                </div>
+                ${latestKp >= 5 ? `<div style="text-align:center; margin-top:6px; font-size:0.75rem; color:#facc15;">✨ ${t('swAurora')}</div>` : ''}
+                <div class="sw-note">${t('swNote')}</div>
+            `;
+        } catch (e) {
+            console.error('Space weather error:', e);
+            const container = document.getElementById('sw-content');
+            container.innerHTML = `<div style="color:#667; font-size:0.8rem; padding:20px; text-align:center;">⚠️ ${t('swError')}</div>`;
+        }
+    }
+
+    // ═══════════════════════════════════
+    // === 3d. ISS Course (tabs) ===
+    // ═══════════════════════════════════
+    function showCourseTab(index) {
+        const tabs = document.querySelectorAll('.course-tab');
+        const panels = document.querySelectorAll('.course-panel');
+        tabs.forEach((tab, i) => tab.classList.toggle('active', i === index));
+        panels.forEach((panel, i) => panel.classList.toggle('active', i === index));
+    }
+
+    // ═══════════════════════════════════
+    // === 3e. NASA ISS Photo Gallery ===
+    // ═══════════════════════════════════
+    let galleryPhotos = [];
+    let galleryPage = 0;
+    const galleryPageSize = 8;
+
+    async function loadGallery() {
+        const container = document.getElementById('gallery-container');
+        const caption = document.getElementById('gallery-caption');
+        container.innerHTML = `<div class="apod-loading" style="grid-column:1/-1;"><div class="apod-spinner"></div><span>${t('galleryLoading')}</span></div>`;
+
+        try {
+            const queries = [
+                'ISS earth view', 'ISS astronaut', 'ISS cupola', 'space station orbit',
+                'ISS crew 12', 'SpaceX Crew-12 ISS',
+                'Thomas Pesquet ISS', 'Pesquet Alpha mission',
+                'Sophie Adenot ISS', 'Sophie Adenot astronaut ESA',
+                'ISS Expedition 72', 'ISS current crew 2025'
+            ];
+            const fetches = queries.map(q =>
+                fetch(`https://images-api.nasa.gov/search?q=${encodeURIComponent(q)}&media_type=image&page_size=15`)
+                    .then(r => r.ok ? r.json() : { collection: { items: [] } })
+                    .catch(() => ({ collection: { items: [] } }))
+            );
+            const results = await Promise.all(fetches);
+            const seen = new Set();
+            galleryPhotos = [];
+            results.forEach(data => {
+                (data.collection.items || []).forEach(item => {
+                    if (item.links && item.links[0] && item.data && item.data[0]) {
+                        const id = item.data[0].nasa_id || item.links[0].href;
+                        if (!seen.has(id)) {
+                            seen.add(id);
+                            galleryPhotos.push(item);
+                        }
+                    }
+                });
+            });
+            // Shuffle all photos together
+            for (let i = galleryPhotos.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [galleryPhotos[i], galleryPhotos[j]] = [galleryPhotos[j], galleryPhotos[i]];
+            }
+            galleryPage = 0;
+            renderGallery();
+            if (caption) caption.textContent = `${galleryPhotos.length} ${t('galleryCount')} — ISS, Crew 12, Thomas Pesquet, équipage actuel…`;
+        } catch (e) {
+            console.error('Gallery error:', e);
+            container.innerHTML = `<div style="color:#667; font-size:0.8rem; padding:20px; text-align:center; grid-column:1/-1;">⚠️ ${t('galleryError')}</div>`;
+        }
+    }
+
+    function renderGallery() {
+        const container = document.getElementById('gallery-container');
+        if (!container || galleryPhotos.length === 0) return;
+
+        const start = galleryPage * galleryPageSize;
+        const page = galleryPhotos.slice(start, start + galleryPageSize);
+
+        container.innerHTML = page.map(item => {
+            const img = item.links[0].href;
+            const title = (item.data[0].title || '').substring(0, 80);
+            const desc = (item.data[0].description || '').substring(0, 120);
+            return `
+                <div class="gallery-item" onclick="openLightbox('${img.replace(/'/g, "\\'")}', '${title.replace(/'/g, "\\'")}')">
+                    <img src="${img}" alt="${title}" loading="lazy">
+                    <div class="gallery-item-overlay">${title}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function galleryNext() {
+        if (galleryPhotos.length === 0) return;
+        galleryPage = (galleryPage + 1) % Math.ceil(galleryPhotos.length / galleryPageSize);
+        renderGallery();
+    }
+
+    function galleryPrev() {
+        if (galleryPhotos.length === 0) return;
+        const total = Math.ceil(galleryPhotos.length / galleryPageSize);
+        galleryPage = (galleryPage - 1 + total) % total;
+        renderGallery();
+    }
+
+    // Load all enrichment sections on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        loadAPOD();
+        loadSpaceWeather();
+        loadGallery();
+        // Refresh space weather every 15 minutes
+        setInterval(loadSpaceWeather, 15 * 60 * 1000);
+        // Fun facts carousel
+        rotateFunFact();
+        setInterval(() => rotateFunFact(true), 8000);
+        // Orbit counter
+        updateOrbitCounter();
+        setInterval(updateOrbitCounter, 60000);
+    });
+
+    // --- 4. Pass Alert (proximity notification) ---
+    let passAlertEnabled = false;
+    let lastAlertTime = 0;
+
+    function togglePassAlert() {
+        initAudio();
+        const btn = document.getElementById('btn-alert');
+        passAlertEnabled = !passAlertEnabled;
+        btn.classList.toggle('active', passAlertEnabled);
+
+        if (passAlertEnabled) {
+            // Short confirmation sound
+            playAlertConfirmation();
+        }
+    }
+
+    function playAlertConfirmation() {
+        const t = audioCtx.currentTime;
+        // Rising 3-note chime
+        [523.25, 659.25, 783.99].forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0, t + i * 0.15);
+            gain.gain.linearRampToValueAtTime(0.2, t + i * 0.15 + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.15 + 0.35);
+            osc.connect(gain);
+            gain.connect(masterGain);
+            osc.start(t + i * 0.15);
+            osc.stop(t + i * 0.15 + 0.4);
+        });
+    }
+
+    function playPassAlarm() {
+        if (!audioCtx || !passAlertEnabled) return;
+        const now = Date.now();
+        if (now - lastAlertTime < 60000) return; // Max 1 alert per minute
+        lastAlertTime = now;
+
+        const t = audioCtx.currentTime;
+
+        // Attention-getting alarm: alternating tones
+        for (let i = 0; i < 6; i++) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+            osc.frequency.value = i % 2 === 0 ? 880 : 1100;
+            gain.gain.setValueAtTime(0, t + i * 0.25);
+            gain.gain.linearRampToValueAtTime(0.25, t + i * 0.25 + 0.05);
+            gain.gain.setValueAtTime(0.25, t + i * 0.25 + 0.15);
+            gain.gain.linearRampToValueAtTime(0, t + i * 0.25 + 0.22);
+            osc.connect(gain);
+            gain.connect(masterGain);
+            osc.start(t + i * 0.25);
+            osc.stop(t + i * 0.25 + 0.25);
+        }
+    }
+
+    // --- 5. UI Feedback Sound ---
+    function playClickSound() {
+        if (!audioCtx) return;
+        const t = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = 600;
+        gain.gain.setValueAtTime(0.08, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+        osc.connect(gain);
+        gain.connect(masterGain);
+        osc.start(t);
+        osc.stop(t + 0.1);
+    }
+
+    // --- Check proximity for pass alert ---
+    function checkProximityAlert(issLat, issLon) {
+        if (!passAlertEnabled) return;
+        const userLatInput = document.getElementById('input-lat').value;
+        const userLonInput = document.getElementById('input-lon').value;
+        if (!userLatInput || !userLonInput) return;
+
+        const userLat = parseFloat(userLatInput);
+        const userLon = parseFloat(userLonInput);
+        if (isNaN(userLat) || isNaN(userLon)) return;
+
+        // Calculate approximate distance (Haversine simplified)
+        const R = 6371;
+        const dLat = (issLat - userLat) * Math.PI / 180;
+        const dLon = (issLon - userLon) * Math.PI / 180;
+        const a = Math.sin(dLat/2)**2 +
+                  Math.cos(userLat * Math.PI/180) * Math.cos(issLat * Math.PI/180) *
+                  Math.sin(dLon/2)**2;
+        const dist = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        // ISS is visible within ~2200km radius
+        if (dist < 2200) {
+            playPassAlarm();
+        }
+    }
+
+    // === Fun Facts ===
+    const FUN_FACTS = {
+        fr: [
+            "🚀 L'ISS file à <strong>28&nbsp;000&nbsp;km/h</strong> — plus vite qu'une balle de fusil !",
+            "🌍 En une journée, l'ISS fait <strong>16 fois le tour</strong> de la Terre.",
+            "☀️ L'ISS voit un coucher de soleil <strong>toutes les 45 minutes</strong>.",
+            "🏠 L'ISS est aussi grande qu'un <strong>terrain de football</strong>, mais en orbite !",
+            "💧 Chaque goutte d'eau est <strong>recyclée</strong> à bord — même la sueur et l'urine !",
+            "🌡️ À l'extérieur de l'ISS il fait entre <strong>−157 °C</strong> et <strong>+121 °C</strong>.",
+            "🔭 Depuis l'ISS, les astronautes voient la Terre à <strong>400 km</strong> en dessous.",
+            "🧪 Plus de <strong>3 000 expériences scientifiques</strong> ont été conduites à bord.",
+            "🛸 L'ISS a été habitée sans interruption depuis <strong>novembre 2000</strong>.",
+            "⚡ L'ISS tire son énergie de <strong>8 panneaux solaires</strong> grands comme un terrain de basket !"
+        ],
+        en: [
+            "🚀 The ISS travels at <strong>28,000 km/h</strong> — faster than a speeding bullet!",
+            "🌍 In one day, the ISS orbits Earth <strong>16 times</strong>.",
+            "☀️ Astronauts on the ISS see a sunset <strong>every 45 minutes</strong>.",
+            "🏠 The ISS is as big as a <strong>football field</strong> — floating in orbit!",
+            "💧 Every drop of water is <strong>recycled</strong> onboard — even sweat and urine!",
+            "🌡️ Outside the ISS, temperatures range from <strong>−157 °C</strong> to <strong>+121 °C</strong>.",
+            "🔭 From the ISS, astronauts see Earth from <strong>400 km</strong> below.",
+            "🧪 Over <strong>3,000 scientific experiments</strong> have been conducted aboard.",
+            "🛸 The ISS has been continuously occupied since <strong>November 2000</strong>.",
+            "⚡ The ISS is powered by <strong>8 solar arrays</strong> as wide as a basketball court!"
+        ]
+    };
+    let funFactIndex = 0;
+
+    function rotateFunFact(manual = false) {
+        const el = document.getElementById('fun-fact-text');
+        if (!el) return;
+        const facts = FUN_FACTS[currentLang] || FUN_FACTS.fr;
+        if (manual) funFactIndex = (funFactIndex + 1) % facts.length;
+        el.style.opacity = '0';
+        setTimeout(() => {
+            el.innerHTML = facts[funFactIndex];
+            el.style.opacity = '1';
+            const dotsEl = document.getElementById('fun-fact-dots');
+            if (dotsEl) {
+                dotsEl.innerHTML = facts.map((_, i) =>
+                    `<span class="fun-fact-dot${i === funFactIndex ? ' active' : ''}"></span>`
+                ).join('');
+            }
+        }, 300);
+    }
+
+    function updateOrbitCounter() {
+        const epoch = new Date('1998-11-20T06:40:00Z');
+        const now = new Date();
+        const totalOrbits = Math.floor((now - epoch) / 86400000 * 15.54);
+        const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const minutesToday = (now - startOfDay) / 60000;
+        const orbitsTodayVal = (minutesToday / 92).toFixed(1);
+        const el = document.getElementById('orbit-count');
+        const el2 = document.getElementById('orbits-today');
+        if (el) el.textContent = totalOrbits.toLocaleString('fr-FR');
+        if (el2) el2.textContent = orbitsTodayVal;
+    }
+
+    function toggleDopplerHelp() {
+        const p = document.getElementById('doppler-help-panel');
+        if (p) p.style.display = (p.style.display === 'none' || p.style.display === '') ? 'block' : 'none';
+    }
+
+    // === PASS NOTIFICATIONS ===
+    let notifyEnabled = false;
+    const scheduledNotifications = [];
+
+    window.togglePassNotifications = async function() {
+        const btn = document.getElementById('btn-notify');
+        const status = document.getElementById('notify-status');
+        if (!('Notification' in window)) {
+            if (status) { status.style.display = 'block'; status.style.color = '#ff6666'; status.textContent = currentLang === 'fr' ? '⚠️ Votre navigateur ne supporte pas les notifications.' : '⚠️ Notifications not supported in this browser.'; }
+            return;
+        }
+        if (!notifyEnabled) {
+            const perm = await Notification.requestPermission();
+            if (perm === 'granted') {
+                notifyEnabled = true;
+                if (btn) { btn.style.background = 'rgba(0,200,100,0.12)'; btn.style.borderColor = 'rgba(0,200,100,0.35)'; btn.style.color = '#00c864'; }
+                if (status) { status.style.display = 'block'; status.style.color = '#00c864'; status.textContent = currentLang === 'fr' ? '✅ Activé — vous serez alerté 5 min avant chaque passage.' : '✅ Enabled — you will be alerted 5 min before each pass.'; }
+                schedulePassNotifications();
+            } else {
+                if (status) { status.style.display = 'block'; status.style.color = '#ff6666'; status.textContent = currentLang === 'fr' ? '❌ Permission refusée — autorisez les notifications dans votre navigateur.' : '❌ Permission denied — allow notifications in your browser settings.'; }
+            }
+        } else {
+            notifyEnabled = false;
+            cancelScheduledNotifications();
+            if (btn) { btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }
+            if (status) { status.style.display = 'none'; }
+        }
+    };
+
+    function schedulePassNotifications() {
+        cancelScheduledNotifications();
+        if (!notifyEnabled || !lastPasses || lastPasses.length === 0) return;
+        const now = Date.now();
+        lastPasses.forEach(pass => {
+            if (!pass.ts) return;
+            const delay = pass.ts * 1000 - 5 * 60 * 1000 - now;
+            if (delay < 0) return;
+            const tid = setTimeout(() => {
+                if (!notifyEnabled || Notification.permission !== 'granted') return;
+                new Notification(currentLang === 'fr' ? '🛰️ ISS dans 5 minutes !' : '🛰️ ISS in 5 minutes!', {
+                    body: currentLang === 'fr'
+                        ? `Passage imminent — élévation max : ${pass.elevation}° ${pass.quality || ''}`
+                        : `Upcoming pass — max elevation: ${pass.elevation}° ${pass.quality || ''}`,
+                    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🛰️</text></svg>'
+                });
+            }, delay);
+            scheduledNotifications.push(tid);
+        });
+    }
+
+    function cancelScheduledNotifications() {
+        scheduledNotifications.forEach(t => clearTimeout(t));
+        scheduledNotifications.length = 0;
+    }
+
+    // === INIT ===
+    updatePosition();
+    updateCrew();
+    drawOrbitPath();
+
+    // Auto-refresh position every 5 seconds
+    setInterval(updatePosition, 5000);
+
+    // Refresh crew every 5 minutes
+    setInterval(updateCrew, 300000);
+
+    // Center map on ISS on first load
+    setTimeout(() => {
+        const pos = issMarker.getLatLng();
+        if (pos.lat !== 0 || pos.lng !== 0) {
+            map.setView(pos, 3);
+        }
+    }, 2000);
+</script>
+
+</body>
+</html>
