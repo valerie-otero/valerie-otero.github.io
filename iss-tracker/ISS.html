@@ -1116,11 +1116,11 @@
 </header>
 
 <!-- Artemis II News Banner -->
-<div style="background:linear-gradient(90deg,rgba(255,120,0,0.12),rgba(123,140,255,0.12));border-bottom:1px solid rgba(255,140,0,0.25);padding:10px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-    <span style="font-size:1.3rem;">🚀</span>
-    <span style="color:#ffa500;font-weight:600;font-size:0.88rem;" data-i18n="artemisLabel">À VENIR — Artemis II</span>
-    <span style="color:#aaa;font-size:0.82rem;" data-i18n="artemisDesc">Premier vol habité autour de la Lune depuis Apollo 17. Diffusion officielle NASA en direct.</span>
-    <a href="https://plus.nasa.gov/scheduled-video/nasas-artemis-ii-crew-launches-to-the-moon-official-broadcast/" target="_blank" rel="noopener" style="margin-left:auto;background:rgba(255,140,0,0.15);color:#ffa500;border:1px solid rgba(255,140,0,0.35);border-radius:6px;padding:5px 14px;font-size:0.78rem;text-decoration:none;white-space:nowrap;" data-i18n="artemisBtn">📺 Voir la diffusion →</a>
+<div style="background:linear-gradient(90deg,rgba(30,100,255,0.1),rgba(0,180,200,0.1));border-bottom:1px solid rgba(30,140,255,0.25);padding:10px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+    <span style="font-size:1.3rem;">🌕</span>
+    <span style="color:#4fc3f7;font-weight:600;font-size:0.88rem;" data-i18n="artemisLabel">EN VOL — Artemis II</span>
+    <span style="color:#aaa;font-size:0.82rem;" data-i18n="artemisDesc">4 astronautes à bord d'Orion Integrity en route vers la Lune. Lancée le 1ᵉʳ avril 2026 — retour prévu le 11 avril.</span>
+    <a href="https://www.nasa.gov/missions/artemis-ii/arow/" target="_blank" rel="noopener" style="margin-left:auto;background:rgba(30,140,255,0.15);color:#4fc3f7;border:1px solid rgba(30,140,255,0.35);border-radius:6px;padding:5px 14px;font-size:0.78rem;text-decoration:none;white-space:nowrap;" data-i18n="artemisBtn">📡 Suivre en direct →</a>
 </div>
 
 <div class="main-container">
@@ -1558,7 +1558,7 @@
 
 <footer>
     <span data-i18n="footerText">Étoile Filante &mdash; Données fournies par</span> <a href="http://open-notify.org/" target="_blank">Open Notify API</a> &amp; <a href="https://wheretheiss.at/" target="_blank">Where The ISS At</a> &mdash; <span data-i18n="footerMap">Carte</span> &copy; <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>
-    <br><span style="opacity:0.5; font-size:0.78rem;" data-i18n="footerCredit">Réalisation Valérie Otero &mdash; &copy; 2026 &mdash; Licence libre</span>
+    <br><br><span style="opacity:0.92; font-size:0.92rem; letter-spacing:0.03em; color:#e0e0e0;" data-i18n="footerCredit">Réalisation Valérie Otero &mdash; &copy; 2026 &mdash; Licence libre</span>
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1737,9 +1737,9 @@
             liveVideoPlay: '▶ Regarder le flux en direct',
             liveVideoNote: 'Cliquez pour charger · Flux NASA / YouTube',
             // Artemis banner
-            artemisLabel: 'À VENIR — Artemis II',
-            artemisDesc: 'Premier vol habité autour de la Lune depuis Apollo 17. Diffusion officielle NASA en direct.',
-            artemisBtn: '📺 Voir la diffusion →',
+            artemisLabel: 'EN VOL — Artemis II',
+            artemisDesc: '4 astronautes à bord d\'Orion Integrity en route vers la Lune. Lancée le 1ᵉʳ avril 2026 — retour prévu le 11 avril.',
+            artemisBtn: '📡 Suivre en direct →',
             // Footer
             footerCredit: 'Réalisation Valérie Otero — © 2026 — Licence libre',
         },
@@ -1910,9 +1910,9 @@
             liveVideoPlay: '▶ Watch live stream',
             liveVideoNote: 'Click to load · NASA / YouTube stream',
             // Artemis banner
-            artemisLabel: 'UPCOMING — Artemis II',
-            artemisDesc: 'First crewed lunar flyby since Apollo 17. Official NASA live broadcast.',
-            artemisBtn: '📺 Watch the broadcast →',
+            artemisLabel: 'IN FLIGHT — Artemis II',
+            artemisDesc: '4 astronauts aboard Orion Integrity en route to the Moon. Launched April 1, 2026 — return expected April 11.',
+            artemisBtn: '📡 Track live →',
             // Footer
             footerCredit: 'Created by Valérie Otero — © 2026 — Open licence',
         }
@@ -3267,36 +3267,50 @@ registerProcessor('noise-gen', NoiseGen);
     // ═══════════════════════════════════
     async function loadSpaceWeather() {
         try {
-            // Fetch planetary K-index (3-hour)
-            const [kpRes, swRes] = await Promise.all([
+            // Fetch Kp index + magnetic field + plasma (speed/density)
+            const [kpRes, magRes, plasmaRes] = await Promise.all([
                 fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json'),
-                fetch('https://services.swpc.noaa.gov/products/summary/solar-wind-mag-field.json')
+                fetch('https://services.swpc.noaa.gov/products/solar-wind/mag-5-minute.json'),
+                fetch('https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json')
             ]);
 
-            let kpData = [], swData = {};
+            // Kp — format: [{time_tag, Kp, ...}, ...]
+            let kpData = [];
             if (kpRes.ok) {
                 const raw = await kpRes.json();
-                kpData = raw.slice(1).slice(-8); // last 8 entries (skip header)
-            }
-            if (swRes.ok) {
-                swData = await swRes.json();
+                kpData = raw.slice(-8); // last 8 entries (no header row in this endpoint)
             }
 
-            const latestKp = kpData.length > 0 ? parseFloat(kpData[kpData.length - 1][1]) : 0;
+            // Magnetic field — format: [["time_tag","bx_gsm","by_gsm","bz_gsm",...], [...values...], ...]
+            let bz = '—';
+            if (magRes.ok) {
+                const magRaw = await magRes.json();
+                const magLatest = magRaw[magRaw.length - 1];
+                if (magLatest && magLatest[3] !== undefined) bz = parseFloat(magLatest[3]).toFixed(1);
+            }
+
+            // Plasma — format: [["time_tag","density","speed","temperature"], [...values...], ...]
+            let speed = '—', density = '—';
+            if (plasmaRes.ok) {
+                const plasmaRaw = await plasmaRes.json();
+                const plasmaLatest = plasmaRaw[plasmaRaw.length - 1];
+                if (plasmaLatest) {
+                    density = parseFloat(plasmaLatest[1]).toFixed(1);
+                    speed   = parseFloat(plasmaLatest[2]).toFixed(0);
+                }
+            }
+
+            const latestKp = kpData.length > 0 ? parseFloat(kpData[kpData.length - 1].Kp) : 0;
             const kpClass = latestKp < 4 ? 'sw-kp-low' : latestKp < 5 ? 'sw-kp-mod' : latestKp < 7 ? 'sw-kp-high' : latestKp < 9 ? 'sw-kp-storm' : 'sw-kp-extreme';
             const kpLabel = latestKp < 4 ? t('swKpQuiet') : latestKp < 5 ? t('swKpActive') : latestKp < 7 ? t('swKpStorm') : latestKp < 9 ? t('swKpSevere') : t('swKpExtreme');
 
-            const bz = swData.Bz || '—';
-            const speed = swData.WindSpeed || '—';
-            const density = swData.Density || '—';
-
             // Build Kp bar chart
             const barColors = ['#4ade80', '#4ade80', '#4ade80', '#4ade80', '#facc15', '#fb923c', '#fb923c', '#ef4444', '#dc2626'];
-            const barHTML = kpData.map((entry, i) => {
-                const kp = parseFloat(entry[1]);
+            const barHTML = kpData.map((entry) => {
+                const kp = parseFloat(entry.Kp);
                 const h = Math.max(3, (kp / 9) * 100);
                 const ci = Math.min(8, Math.floor(kp));
-                return `<div class="sw-bar-segment active" style="height:${h}%; background:${barColors[ci]};" title="Kp ${kp} — ${entry[0]}"></div>`;
+                return `<div class="sw-bar-segment active" style="height:${h}%; background:${barColors[ci]};" title="Kp ${kp} — ${entry.time_tag}"></div>`;
             }).join('');
 
             const container = document.getElementById('sw-content');
