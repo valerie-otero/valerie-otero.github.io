@@ -1093,7 +1093,7 @@
         }
 
         /* ── Radio sound row (beacon + alert inside card) ── */
-        .radio-sound-row { display: flex; gap: 8px; margin-top: 10px; justify-content: center; }
+        .radio-sound-row { display: flex; gap: 6px; margin-top: 10px; justify-content: center; flex-wrap: wrap; grid-column: 1 / -1; }
     </style>
 </head>
 <body>
@@ -1330,6 +1330,9 @@
                         </button>
                         <button class="audio-btn" id="btn-alert" onclick="togglePassAlert()" title="Alerte quand l'ISS entre dans ta zone !">
                             🔔 <span id="btn-alert-label" data-i18n="alert">Alerte</span>
+                        </button>
+                        <button class="audio-btn active" id="btn-squelch" onclick="toggleSquelch()" title="Squelch actif = bruit coupé · Cliquer pour ouvrir">
+                            📻 <span id="btn-squelch-label">SQL: ON</span>
                         </button>
                     </div>
                 </div>
@@ -1573,7 +1576,7 @@
         fr: {
             // Header
             siteTitle: 'ISS en direct', siteSub: 'Étoile Filante',
-            beep: 'Balise', alert: 'Alerte',
+            beep: 'Balise', alert: 'Alerte', squelch: 'Squelch',
             beepTitle: 'Bip de balise ISS', alertTitle: 'Alerte passage ISS',
             liveTracking: 'Suivi en direct',
             // Ground track
@@ -1746,7 +1749,7 @@
         en: {
             // Header
             siteTitle: 'ISS Live', siteSub: 'Shooting Star',
-            beep: 'Beacon', alert: 'Alert',
+            beep: 'Beacon', alert: 'Alert', squelch: 'Squelch',
             beepTitle: 'ISS beacon beep', alertTitle: 'ISS pass alert',
             liveTracking: 'Live tracking',
             // Ground track
@@ -2610,6 +2613,7 @@ registerProcessor('noise-gen', NoiseGen);
     let radioStaticGain = null;
     let radioFilterNode = null;
     let radioActive = false;
+    let squelchEnabled = true; // true = squelch actif (bruit coupé), false = squelch supprimé (fond de bruit audible)
     let radioAnalyser = null;
     let spectrumAnimFrame = null;
     let currentRadioFreq = null;
@@ -2639,6 +2643,8 @@ registerProcessor('noise-gen', NoiseGen);
             label.textContent = 'OFF';
             document.getElementById('radio-card')?.classList.remove('radio-active-card');
             updateTunerDisplay(null);
+            updateDopplerDisplay(null);
+            prevISSPos = null; prevISSTime = null;
             document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('btn-duplex').classList.remove('active');
             duplexMode = false;
@@ -2806,7 +2812,16 @@ registerProcessor('noise-gen', NoiseGen);
     function calculateDoppler(issLat, issLon, issAlt) {
         const userLat = parseFloat(document.getElementById('input-lat').value);
         const userLon = parseFloat(document.getElementById('input-lon').value);
-        if (isNaN(userLat) || isNaN(userLon) || !currentRadioFreq) return null;
+        if (isNaN(userLat) || isNaN(userLon) || !currentRadioFreq) {
+            // Show a hint in the display that coordinates are needed
+            const shiftEl = document.getElementById('doppler-shift');
+            if (shiftEl && shiftEl.textContent === '— Hz') {
+                shiftEl.textContent = '📍 coords?';
+                shiftEl.className = 'doppler-shift neutral';
+                shiftEl.style.fontSize = '0.68rem';
+            }
+            return null;
+        }
 
         const now = Date.now();
 
@@ -2865,13 +2880,20 @@ registerProcessor('noise-gen', NoiseGen);
             if (shiftEl) {
                 shiftEl.textContent = '— Hz';
                 shiftEl.className = 'doppler-shift neutral';
+                shiftEl.style.fontSize = '';
             }
+            if (corrEl) corrEl.textContent = '---.-- MHz';
+            if (arrowEl) arrowEl.className = 'doppler-arrow flat';
+            if (barFill) { barFill.style.width = '2px'; barFill.style.left = 'calc(50% - 1px)'; barFill.style.background = '#555'; }
             return;
         }
 
         const hz = dopplerData.shiftHz;
         const absHz = Math.abs(hz);
         const isApproaching = hz > 0;
+
+        // Reset font-size override set by coords-hint
+        shiftEl.style.fontSize = '';
 
         // Format shift display
         let shiftText;
@@ -2924,7 +2946,7 @@ registerProcessor('noise-gen', NoiseGen);
     function startRadioStatic(toneFreq = 800, color = '#00ff88') {
         radioStaticNode = createNoiseSource({ crackleBase: 8000, crackleRange: 15000, crackleAmp: 3.5, modBase: 0.6, modAmp: 0.4, modFreq: 0.0001 });
         radioStaticGain = audioCtx.createGain();
-        radioStaticGain.gain.value = 0.10;
+        radioStaticGain.gain.value = squelchEnabled ? 0.10 : 0.28;
 
         // Bandpass filter to simulate VHF radio
         radioFilterNode = audioCtx.createBiquadFilter();
@@ -3019,6 +3041,23 @@ registerProcessor('noise-gen', NoiseGen);
         animate();
     }
 
+    function toggleSquelch() {
+        squelchEnabled = !squelchEnabled;
+        const btn = document.getElementById('btn-squelch');
+        const label = document.getElementById('btn-squelch-label');
+        if (squelchEnabled) {
+            // Squelch ON : bruit coupé (état normal)
+            btn.classList.add('active');
+            label.textContent = 'SQL: ON';
+            if (radioStaticGain && audioCtx) radioStaticGain.gain.setTargetAtTime(0.10, audioCtx.currentTime, 0.2);
+        } else {
+            // Squelch OFF : fond de bruit ouvert
+            btn.classList.remove('active');
+            label.textContent = 'SQL: OFF';
+            if (radioStaticGain && audioCtx) radioStaticGain.gain.setTargetAtTime(0.28, audioCtx.currentTime, 0.2);
+        }
+    }
+
     function stopRadioStatic() {
         if (radioStaticNode) {
             radioStaticNode.disconnect();
@@ -3056,6 +3095,8 @@ registerProcessor('noise-gen', NoiseGen);
             document.getElementById('btn-radio').classList.remove('active');
             document.getElementById('btn-radio-label').textContent = 'OFF';
             updateTunerDisplay(null);
+            updateDopplerDisplay(null);
+            prevISSPos = null; prevISSTime = null;
             document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
             return;
         }
