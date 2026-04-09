@@ -188,6 +188,39 @@
             margin-top: 1.5rem;
         }
 
+        /* ── SCREENSHOTS ── */
+        .screenshots-grid {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2.5rem;
+        }
+        .phone-shot {
+            flex: 0 0 auto;
+            width: clamp(200px, 28vw, 270px);
+        }
+        .phone-shot img {
+            width: 100%;
+            border-radius: 36px;
+            display: block;
+            box-shadow: 0 12px 60px rgba(108, 92, 231, 0.4), 0 0 0 1px rgba(108, 92, 231, 0.18);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .phone-shot img:hover { transform: translateY(-6px); box-shadow: 0 20px 80px rgba(108, 92, 231, 0.55), 0 0 0 1px rgba(108, 92, 231, 0.3); }
+        .phone-shot figcaption {
+            margin-top: 1rem;
+            font-size: 0.78rem;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        @media (max-width: 600px) {
+            .screenshots-grid { gap: 2rem; }
+            .phone-shot { width: clamp(160px, 70vw, 260px); }
+        }
+
         /* ── FOOTER ── */
         footer {
             text-align: center; padding: 3rem 2rem;
@@ -262,6 +295,24 @@
         <span data-i18n="hero.cta">Télécharger sur l’App Store</span>
     </a>
     <p class="platforms">iPhone · iPad · Apple Vision Pro</p>
+</section>
+
+<!-- SCREENSHOTS -->
+<section id="screenshots" style="text-align:center;">
+    <h2 data-i18n="screens.title" data-i18n-html="true">Aperçu de <span>l'app</span></h2>
+    <p class="subtitle" data-i18n="screens.subtitle">Interface intuitive · Visualisations immersives</p>
+    <div class="screenshots-grid">
+        <figure class="phone-shot">
+            <img src="Simulator%20Screenshot%20-%20iPhone%2011%20Pro%20Max%20-%202026-04-09%20at%2017.09.58.png"
+                 alt="Interface principale Bentov Θ" loading="lazy">
+            <figcaption data-i18n="screens.cap1">Interface principale</figcaption>
+        </figure>
+        <figure class="phone-shot">
+            <img src="Simulator%20Screenshot%20-%20iPhone%2011%20Pro%20Max%20-%202026-04-09%20at%2017.10.32.png"
+                 alt="Visualisation Galaxie — Bentov Θ" loading="lazy">
+            <figcaption data-i18n="screens.cap2">Visualisation 3D stéréo — Galaxie</figcaption>
+        </figure>
+    </div>
 </section>
 
 <!-- FEATURES -->
@@ -451,6 +502,10 @@ var i18n = {
         'about.p3': 'The app offers four complementary approaches: binaural beats, aorta vibration, isochronic tones and gamma 40 Hz stimulation, allowing everyone to find the method that resonates with their practice.',
         'footer.tagline': 'Theta Resonance · Vibratory Meditation',
         'footer.privacy': 'Privacy Policy',
+        'screens.title': 'App <span>screenshots</span>',
+        'screens.subtitle': 'Intuitive interface · Immersive visualizations',
+        'screens.cap1': 'Main interface',
+        'screens.cap2': '3D stereo visualization — Galaxy',
         'footer.rights': 'All rights reserved.'
     },
     fr: {
@@ -517,6 +572,10 @@ var i18n = {
         'about.p3': 'L’application propose quatre approches complémentaires : battements binauraux, vibration aorte, tons isochroniques et stimulation gamma 40 Hz, permettant à chacun de trouver la méthode qui résonne avec sa pratique.',
         'footer.tagline': 'Résonance Theta · Méditation Vibratoire',
         'footer.privacy': 'Politique de Confidentialité',
+        'screens.title': 'Aperçu de <span>l\'app</span>',
+        'screens.subtitle': 'Interface intuitive · Visualisations immersives',
+        'screens.cap1': 'Interface principale',
+        'screens.cap2': 'Visualisation 3D stéréo — Galaxie',
         'footer.rights': 'Tous droits réservés.'
     }
 };
