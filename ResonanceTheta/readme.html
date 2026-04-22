@@ -60,12 +60,45 @@
         a { color: var(--accent2); text-decoration: none; }
         a:hover { text-decoration: underline; }
         .tree { color: var(--muted); font-size: 0.85rem; }
+
+        /* Language switcher */
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .lang-btn {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid rgba(108,92,231,0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { color: var(--accent2); border-color: var(--accent); }
+        .lang-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+        .lang-en { display: none; }
+        body.en .lang-fr { display: none; }
+        body.en .lang-en { display: block; }
+        body.en span.lang-en, body.en code.lang-en { display: inline; }
+        body.en li.lang-en { display: list-item; }
     </style>
 </head>
 <body>
 
+<div class="lang-bar">
+    <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
 <h1>Theta <span>Θ</span></h1>
-<p style="color: var(--muted); font-size: 0.95rem;">Résonance Theta · Méditation Vibratoire</p>
+<p class="lang-fr" style="color: var(--muted); font-size: 0.95rem;">Résonance Theta · Méditation Vibratoire</p>
+<p class="lang-en" style="color: var(--muted); font-size: 0.95rem;">Theta Resonance · Vibratory Meditation</p>
 
 <div class="badges">
     <span class="badge badge-ios">iOS 26+</span>
@@ -74,11 +107,12 @@
     <span class="badge badge-swift" style="background:rgba(20,126,235,0.15);color:#60a5fa;">Xcode 16+</span>
 </div>
 
-<p>Expérience méditative immersive inspirée de la théorie vibratoire de la conscience. L'app génère des signaux audio en temps réel (battements binauraux, vibration aorte, tons isochroniques, stimulation gamma 40 Hz) et les accompagne de plus de 50 visualisations animées.</p>
+<p class="lang-fr">Expérience méditative immersive inspirée de la théorie vibratoire de la conscience. L'app génère des signaux audio en temps réel (battements binauraux, vibration aorte, tons isochroniques, stimulation gamma 40 Hz) et les accompagne de plus de 50 visualisations animées.</p>
+<p class="lang-en">Immersive meditative experience inspired by the vibratory theory of consciousness. The app generates real-time audio signals (binaural beats, aortic vibration, isochronic tones, gamma 40 Hz stimulation) accompanied by more than 50 animated visualizations.</p>
 
-<h2>Architecture</h2>
+<h2><span class="lang-fr">Architecture</span><span class="lang-en">Architecture</span></h2>
 
-<table>
+<table class="lang-fr">
     <tr><th>Composant</th><th>Technologie</th></tr>
     <tr><td>Audio en temps réel</td><td><code>AVAudioEngine</code> — buffers PCM, continuité de phase, 4 modes</td></tr>
     <tr><td>État réactif</td><td><code>@Observable</code> (Swift 6 strict concurrency)</td></tr>
@@ -88,10 +122,20 @@
     <tr><td>Haptique</td><td><code>CoreHaptics</code></td></tr>
     <tr><td>Localisation</td><td>Dictionnaire intégré FR/EN (pas de .lproj)</td></tr>
 </table>
+<table class="lang-en">
+    <tr><th>Component</th><th>Technology</th></tr>
+    <tr><td>Real-time audio</td><td><code>AVAudioEngine</code> — PCM buffers, phase continuity, 4 modes</td></tr>
+    <tr><td>Reactive state</td><td><code>@Observable</code> (Swift 6 strict concurrency)</td></tr>
+    <tr><td>Visualizations</td><td><code>Canvas</code> + <code>TimelineView(.animation)</code></td></tr>
+    <tr><td>visionOS immersive</td><td><code>RealityKit</code> — procedural torus, <code>ParticleEmitterComponent</code></td></tr>
+    <tr><td>Spatial audio</td><td><code>SpatialAudioComponent</code></td></tr>
+    <tr><td>Haptics</td><td><code>CoreHaptics</code></td></tr>
+    <tr><td>Localization</td><td>Built-in FR/EN dictionary (no .lproj)</td></tr>
+</table>
 
-<h2>Structure du projet</h2>
+<h2><span class="lang-fr">Structure du projet</span><span class="lang-en">Project structure</span></h2>
 
-<pre><code class="tree">Theta Resonance/
+<pre class="lang-fr"><code class="tree">Theta Resonance/
 ├── ThetaResonanceApp.swift      → Point d'entrée, injection @Environment
 ├── ContentView.swift          → Interface principale (slider, picker, play/pause)
 ├── AudioManager.swift         → Moteur AVAudioEngine (binaural, AM, isochronique, gamma 40 Hz)
@@ -100,50 +144,83 @@
 ├── HapticManager.swift        → Retour haptique CoreHaptics
 ├── LanguageManager.swift      → Gestion FR/EN in-app
 └── Assets.xcassets/           → Icône d'app, couleur d'accentuation</code></pre>
+<pre class="lang-en"><code class="tree">Theta Resonance/
+├── ThetaResonanceApp.swift      → Entry point, @Environment injection
+├── ContentView.swift          → Main interface (slider, picker, play/pause)
+├── AudioManager.swift         → AVAudioEngine core (binaural, AM, isochronic, gamma 40 Hz)
+├── EnergyScreenSaverView.swift→ 50+ visual modes (Canvas)
+├── ToreImmersiveView.swift    → visionOS immersive space (RealityKit 3D)
+├── HapticManager.swift        → CoreHaptics feedback
+├── LanguageManager.swift      → In-app FR/EN handling
+└── Assets.xcassets/           → App icon, accent color</code></pre>
 
-<h2>Modes audio</h2>
+<h2><span class="lang-fr">Modes audio</span><span class="lang-en">Audio modes</span></h2>
 
-<h3>Battements Binauraux</h3>
-<p>Porteuse à 150 Hz oreille gauche, 150 + Δf Hz oreille droite. Le cerveau perçoit un battement à Δf = fréquence theta. Nécessite un casque stéréo.</p>
+<h3><span class="lang-fr">Battements Binauraux</span><span class="lang-en">Binaural Beats</span></h3>
+<p class="lang-fr">Porteuse à 150 Hz oreille gauche, 150 + Δf Hz oreille droite. Le cerveau perçoit un battement à Δf = fréquence theta. Nécessite un casque stéréo.</p>
+<p class="lang-en">Carrier at 150 Hz in the left ear, 150 + Δf Hz in the right. The brain perceives a beat at Δf = theta frequency. Requires stereo headphones.</p>
 
-<h3>Vibration Aorte</h3>
-<p>Porteuse à 55 Hz (sous-basse) modulée en amplitude à la fréquence theta. Évoque la micro-vibration aortique décrite dans la théorie vibratoire de la conscience.</p>
+<h3><span class="lang-fr">Vibration Aorte</span><span class="lang-en">Aorta Vibration</span></h3>
+<p class="lang-fr">Porteuse à 55 Hz (sous-basse) modulée en amplitude à la fréquence theta. Évoque la micro-vibration aortique décrite dans la théorie vibratoire de la conscience.</p>
+<p class="lang-en">55 Hz sub-bass carrier, amplitude-modulated at theta frequency. Evokes the aortic micro-vibration described in the vibratory theory of consciousness.</p>
 
-<h3>Tons Isochroniques</h3>
-<p>Porteuse à 200 Hz pulsée à θ Hz avec enveloppe lissée. Fonctionne sans casque.</p>
+<h3><span class="lang-fr">Tons Isochroniques</span><span class="lang-en">Isochronic Tones</span></h3>
+<p class="lang-fr">Porteuse à 200 Hz pulsée à θ Hz avec enveloppe lissée. Fonctionne sans casque.</p>
+<p class="lang-en">200 Hz carrier pulsed at θ Hz with smoothed envelope. Works without headphones.</p>
 
-<h3>Stimulation Gamma 40 Hz</h3>
-<p>Porteuse à 400 Hz pulsée à 40 Hz avec enveloppe lissée. Associée à la concentration, la clarté mentale et la mémoire de travail. Trois niveaux d'intensité (Douce / Moyenne / Forte). Mode 100 % audio — casque recommandé.</p>
+<h3><span class="lang-fr">Stimulation Gamma 40 Hz</span><span class="lang-en">Gamma 40 Hz Stimulation</span></h3>
+<p class="lang-fr">Porteuse à 400 Hz pulsée à 40 Hz avec enveloppe lissée. Associée à la concentration, la clarté mentale et la mémoire de travail. Trois niveaux d'intensité (Douce / Moyenne / Forte). Mode 100 % audio — casque recommandé.</p>
+<p class="lang-en">400 Hz carrier pulsed at 40 Hz with smoothed envelope. Associated with focus, mental clarity and working memory. Three intensity levels (Low / Medium / High). 100% audio mode — headphones recommended.</p>
 
-<h2>Rampe Alpha → Θ</h2>
-<p>Descente progressive de la fréquence alpha (10 Hz) vers la fréquence theta cible sur 5, 10, 20 ou 30 minutes. Guide naturellement les ondes cérébrales.</p>
+<h2>Rampe Alpha → Θ <span class="lang-en">/ Alpha → Θ Ramp</span></h2>
+<p class="lang-fr">Descente progressive de la fréquence alpha (10 Hz) vers la fréquence theta cible sur 5, 10, 20 ou 30 minutes. Guide naturellement les ondes cérébrales.</p>
+<p class="lang-en">Gradual descent from alpha (10 Hz) to the target theta frequency over 5, 10, 20 or 30 minutes. Naturally guides brainwaves into the deep meditative state.</p>
 
-<h2>Visualisations (50+ modes)</h2>
-<ul>
+<h2><span class="lang-fr">Visualisations (50+ modes)</span><span class="lang-en">Visualizations (50+ modes)</span></h2>
+<ul class="lang-fr">
     <li><strong>Classiques (20)</strong> : Tore d'Énergie, Respiration Cosmique, Géométrie Sacrée, Champ Neural, Interférence d'Ondes, Vortex Spiral, Champ d'Étoiles, Onde Pendulaire, Aurore, Champ Quantique, Réseau Cristallin, Mandala Cosmique, Océan Profond, Hélice ADN, Lignes Magnétiques, Lissajous, Toile Cosmique, Encre Fluide, Tesseract, Rosetta Bloom</li>
     <li><strong>Stéréo 3D (11)</strong> : Champ, Nébula, Tunnel, Orbes, Vagues, Spirale, Matrice, Réseau, Lucioles, Ondulations, Prisme</li>
     <li><strong>Pendulaires (11)</strong> : Balancier, Double Pendule, Réseau d'ondes, Foucault, Ressort, Couplés, Conique, Horloge, Magnétique, Galaxie, Harmonique</li>
     <li><strong>Organiques (10)</strong> : Marée Lunaire, Lotus Respirant, Arc Solaire, Ondulation Horizon, Trace Infini, Méduse Cosmique, Résonance de Cordes, Spirale Dorée, Dérive Nébuleuse, Pulsation Cardiaque</li>
 </ul>
+<ul class="lang-en">
+    <li><strong>Classic (20)</strong>: Torus Energy, Cosmic Breath, Sacred Geometry, Neural Field, Wave Interference, Spiral Vortex, Starfield, Pendulum Wave, Aurora, Quantum Field, Crystal Lattice, Cosmic Mandala, Deep Ocean, DNA Helix, Magnetic Lines, Lissajous, Cosmic Web, Fluid Ink, Tesseract, Rosetta Bloom</li>
+    <li><strong>Stereo 3D (11)</strong>: Field, Nebula, Tunnel, Orbs, Waves, Spiral, Matrix, Lattice, Fireflies, Ripples, Prism</li>
+    <li><strong>Pendulum (11)</strong>: Swing, Double Pendulum, Wave Array, Foucault, Spring, Coupled, Conical, Clock, Magnetic, Galaxy, Harmonic</li>
+    <li><strong>Organic (10)</strong>: Moon Tide, Breathing Lotus, Solar Arch, Horizon Ripple, Infinity Trace, Cosmic Jellyfish, String Resonance, Golden Unfurl, Nebula Drift, Heart Pulse</li>
+</ul>
 
-<h2>Sécurité</h2>
-<ul>
+<h2><span class="lang-fr">Sécurité</span><span class="lang-en">Safety</span></h2>
+<ul class="lang-fr">
     <li>Animations visuelles : toutes les oscillations &lt; 0,1 Hz (seuil épilepsie : 3 Hz)</li>
     <li>Volume plafonné à 0,85 (−3 dBFS) pour protéger l'audition</li>
     <li>Aucune donnée collectée — pas de réseau, pas de tracking</li>
 </ul>
+<ul class="lang-en">
+    <li>Visual animations: all oscillations &lt; 0.1 Hz (epilepsy threshold: 3 Hz)</li>
+    <li>Volume capped at 0.85 (−3 dBFS) to protect hearing</li>
+    <li>No data collected — no network, no tracking</li>
+</ul>
 
-<h2>visionOS — Espace Immersif</h2>
-<p>Tore cosmique 3D procédural avec :</p>
-<ul>
+<h2>visionOS — <span class="lang-fr">Espace Immersif</span><span class="lang-en">Immersive Space</span></h2>
+<p class="lang-fr">Tore cosmique 3D procédural avec :</p>
+<p class="lang-en">Procedural 3D cosmic torus with:</p>
+<ul class="lang-fr">
     <li>Effet stéréo cross-eye (deux groupes d'entités avec décalage de phase)</li>
     <li>Animation pendulaire physique (modèle θ(t) = θmax·sin(2π·t/T))</li>
     <li>Système de particules (étoiles scintillantes + glow orbital)</li>
     <li>Audio spatial attaché au tore</li>
     <li>Éclairage réactif via <code>PointLightComponent</code></li>
 </ul>
+<ul class="lang-en">
+    <li>Cross-eye stereo effect (two entity groups with phase offset)</li>
+    <li>Physical pendulum animation (model θ(t) = θmax·sin(2π·t/T))</li>
+    <li>Particle system (twinkling stars + orbital glow)</li>
+    <li>Spatial audio attached to the torus</li>
+    <li>Reactive lighting via <code>PointLightComponent</code></li>
+</ul>
 
-<h2>Prérequis</h2>
+<h2><span class="lang-fr">Prérequis</span><span class="lang-en">Requirements</span></h2>
 <ul>
     <li>Xcode 16+</li>
     <li>iOS 26+ / visionOS 26+</li>
@@ -151,19 +228,44 @@
 </ul>
 
 <h2>Build</h2>
-<pre><code>git clone &lt;repo-url&gt;
+<pre class="lang-fr"><code>git clone &lt;repo-url&gt;
 cd "Theta Resonance"
 open "Theta Resonance.xcodeproj"
 # Sélectionner le scheme "Theta Resonance" → Run (⌘R)</code></pre>
+<pre class="lang-en"><code>git clone &lt;repo-url&gt;
+cd "Theta Resonance"
+open "Theta Resonance.xcodeproj"
+# Select the "Theta Resonance" scheme → Run (⌘R)</code></pre>
 
-<h2>Licence</h2>
-<p>© 2026 Valérie Otero. Tous droits réservés.</p>
+<h2><span class="lang-fr">Licence</span><span class="lang-en">License</span></h2>
+<p class="lang-fr">© 2026 Valérie Otero. Tous droits réservés.</p>
+<p class="lang-en">© 2026 Valérie Otero. All rights reserved.</p>
 
-<h2>Liens</h2>
-<ul>
+<h2><span class="lang-fr">Liens</span><span class="lang-en">Links</span></h2>
+<ul class="lang-fr">
     <li><a href="index.html">Page marketing</a></li>
     <li><a href="PrivacyPolicy.html">Politique de confidentialité</a></li>
 </ul>
+<ul class="lang-en">
+    <li><a href="index.html">Marketing page</a></li>
+    <li><a href="PrivacyPolicy.html">Privacy policy</a></li>
+</ul>
+
+<script>
+function setLang(lang) {
+    document.body.classList.toggle('en', lang === 'en');
+    document.documentElement.lang = lang;
+    document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    try { localStorage.setItem('readme.lang', lang); } catch (e) {}
+}
+(function() {
+    try {
+        var saved = localStorage.getItem('readme.lang');
+        if (saved === 'en') setLang('en');
+    } catch (e) {}
+})();
+</script>
 
 </body>
 </html>
