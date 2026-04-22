@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theta Resonance — README</title>
+    <style>
+        :root {
+            --bg: #0a0714;
+            --card: #110d20;
+            --accent: #6c5ce7;
+            --accent2: #a78bfa;
+            --text: #e0dce8;
+            --muted: #9b95aa;
+            --code-bg: #16112a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2.5rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 2.2rem; font-weight: 200; margin-bottom: 0.3rem; }
+        h1 span { color: var(--accent); }
+        .badge { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 12px; font-size: 0.72rem; font-weight: 600; margin-right: 0.4rem; }
+        .badge-ios { background: rgba(108,92,231,0.2); color: var(--accent2); }
+        .badge-vision { background: rgba(167,139,250,0.2); color: #c4b5fd; }
+        .badge-swift { background: rgba(249,115,22,0.15); color: #fb923c; }
+        .badges { margin: 0.8rem 0 2rem; }
+
+        h2 { font-size: 1.3rem; font-weight: 600; color: var(--accent); margin-top: 2.5rem; margin-bottom: 0.6rem; border-bottom: 1px solid rgba(108,92,231,0.15); padding-bottom: 0.3rem; }
+        h3 { font-size: 1.05rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.4rem; }
+        p, li { margin-bottom: 0.6rem; }
+        ul, ol { padding-left: 1.5rem; }
+        code {
+            background: var(--code-bg);
+            padding: 0.15rem 0.45rem;
+            border-radius: 5px;
+            font-size: 0.88em;
+            font-family: "SF Mono", "Fira Code", monospace;
+        }
+        pre {
+            background: var(--code-bg);
+            border: 1px solid rgba(108,92,231,0.12);
+            border-radius: 10px;
+            padding: 1.2rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        pre code { background: none; padding: 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(108,92,231,0.1); font-size: 0.9rem; }
+        th { color: var(--accent); font-weight: 600; }
+        a { color: var(--accent2); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .tree { color: var(--muted); font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<h1>Theta <span>Θ</span></h1>
+<p style="color: var(--muted); font-size: 0.95rem;">Résonance Theta · Méditation Vibratoire</p>
+
+<div class="badges">
+    <span class="badge badge-ios">iOS 26+</span>
+    <span class="badge badge-vision">visionOS 26+</span>
+    <span class="badge badge-swift">Swift 5.9+</span>
+    <span class="badge badge-swift" style="background:rgba(20,126,235,0.15);color:#60a5fa;">Xcode 16+</span>
+</div>
+
+<p>Expérience méditative immersive inspirée de la théorie vibratoire de la conscience. L'app génère des signaux audio en temps réel (battements binauraux, vibration aorte, tons isochroniques, stimulation gamma 40 Hz) et les accompagne de plus de 50 visualisations animées.</p>
+
+<h2>Architecture</h2>
+
+<table>
+    <tr><th>Composant</th><th>Technologie</th></tr>
+    <tr><td>Audio en temps réel</td><td><code>AVAudioEngine</code> — buffers PCM, continuité de phase, 4 modes</td></tr>
+    <tr><td>État réactif</td><td><code>@Observable</code> (Swift 6 strict concurrency)</td></tr>
+    <tr><td>Visualisations</td><td><code>Canvas</code> + <code>TimelineView(.animation)</code></td></tr>
+    <tr><td>Immersif visionOS</td><td><code>RealityKit</code> — tore procédural, <code>ParticleEmitterComponent</code></td></tr>
+    <tr><td>Audio spatial</td><td><code>SpatialAudioComponent</code></td></tr>
+    <tr><td>Haptique</td><td><code>CoreHaptics</code></td></tr>
+    <tr><td>Localisation</td><td>Dictionnaire intégré FR/EN (pas de .lproj)</td></tr>
+</table>
+
+<h2>Structure du projet</h2>
+
+<pre><code class="tree">Theta Resonance/
+├── ThetaResonanceApp.swift      → Point d'entrée, injection @Environment
+├── ContentView.swift          → Interface principale (slider, picker, play/pause)
+├── AudioManager.swift         → Moteur AVAudioEngine (binaural, AM, isochronique, gamma 40 Hz)
+├── EnergyScreenSaverView.swift→ 50+ modes visuels (Canvas)
+├── ToreImmersiveView.swift    → Espace immersif visionOS (RealityKit 3D)
+├── HapticManager.swift        → Retour haptique CoreHaptics
+├── LanguageManager.swift      → Gestion FR/EN in-app
+└── Assets.xcassets/           → Icône d'app, couleur d'accentuation</code></pre>
+
+<h2>Modes audio</h2>
+
+<h3>Battements Binauraux</h3>
+<p>Porteuse à 150 Hz oreille gauche, 150 + Δf Hz oreille droite. Le cerveau perçoit un battement à Δf = fréquence theta. Nécessite un casque stéréo.</p>
+
+<h3>Vibration Aorte</h3>
+<p>Porteuse à 55 Hz (sous-basse) modulée en amplitude à la fréquence theta. Évoque la micro-vibration aortique décrite dans la théorie vibratoire de la conscience.</p>
+
+<h3>Tons Isochroniques</h3>
+<p>Porteuse à 200 Hz pulsée à θ Hz avec enveloppe lissée. Fonctionne sans casque.</p>
+
+<h3>Stimulation Gamma 40 Hz</h3>
+<p>Porteuse à 400 Hz pulsée à 40 Hz avec enveloppe lissée. Associée à la concentration, la clarté mentale et la mémoire de travail. Trois niveaux d'intensité (Douce / Moyenne / Forte). Mode 100 % audio — casque recommandé.</p>
+
+<h2>Rampe Alpha → Θ</h2>
+<p>Descente progressive de la fréquence alpha (10 Hz) vers la fréquence theta cible sur 5, 10, 20 ou 30 minutes. Guide naturellement les ondes cérébrales.</p>
+
+<h2>Visualisations (50+ modes)</h2>
+<ul>
+    <li><strong>Classiques (20)</strong> : Tore d'Énergie, Respiration Cosmique, Géométrie Sacrée, Champ Neural, Interférence d'Ondes, Vortex Spiral, Champ d'Étoiles, Onde Pendulaire, Aurore, Champ Quantique, Réseau Cristallin, Mandala Cosmique, Océan Profond, Hélice ADN, Lignes Magnétiques, Lissajous, Toile Cosmique, Encre Fluide, Tesseract, Rosetta Bloom</li>
+    <li><strong>Stéréo 3D (11)</strong> : Champ, Nébula, Tunnel, Orbes, Vagues, Spirale, Matrice, Réseau, Lucioles, Ondulations, Prisme</li>
+    <li><strong>Pendulaires (11)</strong> : Balancier, Double Pendule, Réseau d'ondes, Foucault, Ressort, Couplés, Conique, Horloge, Magnétique, Galaxie, Harmonique</li>
+    <li><strong>Organiques (10)</strong> : Marée Lunaire, Lotus Respirant, Arc Solaire, Ondulation Horizon, Trace Infini, Méduse Cosmique, Résonance de Cordes, Spirale Dorée, Dérive Nébuleuse, Pulsation Cardiaque</li>
+</ul>
+
+<h2>Sécurité</h2>
+<ul>
+    <li>Animations visuelles : toutes les oscillations &lt; 0,1 Hz (seuil épilepsie : 3 Hz)</li>
+    <li>Volume plafonné à 0,85 (−3 dBFS) pour protéger l'audition</li>
+    <li>Aucune donnée collectée — pas de réseau, pas de tracking</li>
+</ul>
+
+<h2>visionOS — Espace Immersif</h2>
+<p>Tore cosmique 3D procédural avec :</p>
+<ul>
+    <li>Effet stéréo cross-eye (deux groupes d'entités avec décalage de phase)</li>
+    <li>Animation pendulaire physique (modèle θ(t) = θmax·sin(2π·t/T))</li>
+    <li>Système de particules (étoiles scintillantes + glow orbital)</li>
+    <li>Audio spatial attaché au tore</li>
+    <li>Éclairage réactif via <code>PointLightComponent</code></li>
+</ul>
+
+<h2>Prérequis</h2>
+<ul>
+    <li>Xcode 16+</li>
+    <li>iOS 26+ / visionOS 26+</li>
+    <li>Swift 5.9+</li>
+</ul>
+
+<h2>Build</h2>
+<pre><code>git clone &lt;repo-url&gt;
+cd "Theta Resonance"
+open "Theta Resonance.xcodeproj"
+# Sélectionner le scheme "Theta Resonance" → Run (⌘R)</code></pre>
+
+<h2>Licence</h2>
+<p>© 2026 Valérie Otero. Tous droits réservés.</p>
+
+<h2>Liens</h2>
+<ul>
+    <li><a href="index.html">Page marketing</a></li>
+    <li><a href="PrivacyPolicy.html">Politique de confidentialité</a></li>
+</ul>
+
+</body>
+</html>
