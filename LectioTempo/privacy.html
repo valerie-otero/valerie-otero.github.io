@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LectioTempo — Privacy policy</title>
+<meta name="description" content="LectioTempo privacy policy. No data collected, no network calls, local storage only.">
+<link rel="icon" type="image/png" href="Assets/AppIcon-Dark.png">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --bg:#0e1018; --surface:#181c28; --border:#2c3248;
+  --accent:#c8f53a; --accent-dim:rgba(200,245,58,.13); --accent-glow:rgba(200,245,58,.30);
+  --text:#eceef8; --text-mid:#a8aec8; --text-dim:#5c6280;
+  --green:#3affc0;
+  color-scheme:dark;
+}
+html[lang="fr"] [data-i18n="en"] { display:none !important; }
+html[lang="en"] [data-i18n="fr"] { display:none !important; }
+
+body {
+  font-family:'Plus Jakarta Sans', sans-serif;
+  background:var(--bg); color:var(--text);
+  min-height:100vh; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container { max-width:760px; margin:0 auto; padding:0 24px; }
+
+nav {
+  position:sticky; top:0; z-index:50;
+  background:rgba(14,16,24,.85); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner {
+  max-width:1100px; margin:0 auto; padding:14px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.nav-brand { display:flex; align-items:center; gap:10px; }
+.nav-brand img { width:34px; height:34px; border-radius:8px; }
+.nav-brand span {
+  font-family:'Space Grotesk', sans-serif; font-weight:700;
+  font-size:18px; color:var(--text);
+}
+.nav-tag {
+  background:var(--accent-dim); color:var(--accent);
+  font-size:10px; font-weight:600; letter-spacing:2px;
+  padding:2px 8px; border-radius:3px;
+  border:1px solid var(--accent-glow);
+}
+.nav-right { display:flex; gap:20px; align-items:center; }
+.nav-links a { color:var(--text-mid); font-size:14px; font-weight:500; margin-left:20px; }
+.nav-links a:hover { color:var(--text); text-decoration:none; }
+
+.lang-switch {
+  display:flex; align-items:center;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; overflow:hidden;
+  font-family:'Space Mono', monospace;
+}
+.lang-switch button {
+  appearance:none; background:none; border:none;
+  color:var(--text-mid); cursor:pointer;
+  padding:6px 11px; font-size:11px; font-weight:700; letter-spacing:1.5px;
+  font-family:'Space Mono', monospace;
+}
+.lang-switch button:hover { color:var(--text); }
+.lang-switch button.active { background:var(--accent-dim); color:var(--accent); }
+
+@media (max-width:640px) { .nav-links { display:none; } }
+
+header.page-hero { padding:60px 0 30px; text-align:center; }
+header.page-hero img.logo {
+  width:90px; height:90px; border-radius:20px;
+  filter:drop-shadow(0 10px 40px rgba(200,245,58,.30));
+  margin-bottom:20px;
+}
+header.page-hero .eyebrow {
+  display:inline-block;
+  font-family:'Space Mono', monospace;
+  font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--accent);
+  padding:5px 10px;
+  background:var(--accent-dim);
+  border:1px solid var(--accent-glow);
+  border-radius:4px;
+  margin-bottom:18px;
+}
+header.page-hero h1 {
+  font-family:'Space Grotesk', sans-serif; font-weight:700;
+  font-size:clamp(32px, 5vw, 48px); letter-spacing:-.03em;
+  color:var(--text);
+}
+header.page-hero .meta {
+  margin-top:10px; color:var(--text-dim);
+  font-family:'Space Mono', monospace; font-size:12px;
+}
+
+article {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:40px;
+  margin:30px 0 60px;
+}
+article h2 {
+  font-family:'Space Grotesk', sans-serif; font-weight:700;
+  font-size:22px; margin:30px 0 12px; color:var(--text);
+}
+article h2:first-child { margin-top:0; }
+article p { color:var(--text-mid); margin-bottom:14px; }
+article ul { list-style:none; margin:14px 0; }
+article ul li {
+  position:relative;
+  padding:14px 16px 14px 44px;
+  background:rgba(255,255,255,.02);
+  border-left:3px solid var(--accent);
+  border-radius:8px;
+  margin-bottom:10px;
+  color:var(--text-mid);
+}
+article ul li::before {
+  content:'✓'; position:absolute; left:16px; top:14px;
+  color:var(--accent); font-weight:700;
+  font-family:'Space Grotesk', sans-serif;
+}
+article ul li strong {
+  color:var(--text); display:block; margin-bottom:4px; font-weight:600;
+}
+article code {
+  font-family:'Space Mono', monospace;
+  background:rgba(200,245,58,.08);
+  color:var(--accent);
+  padding:2px 6px;
+  border-radius:4px;
+  font-size:.9em;
+}
+.contact-card {
+  margin-top:30px;
+  background:linear-gradient(135deg, var(--accent-dim), rgba(58,255,192,.10));
+  border:1px solid var(--accent-glow);
+  border-radius:12px;
+  padding:24px; text-align:center;
+}
+.contact-card strong { color:var(--text); display:block; margin-bottom:6px; }
+.contact-card a { font-weight:600; }
+
+footer {
+  padding:30px 0 50px; text-align:center;
+  border-top:1px solid var(--border);
+}
+footer .links { display:flex; justify-content:center; gap:24px; margin-bottom:12px; flex-wrap:wrap; }
+footer .links a { color:var(--text-mid); font-size:14px; }
+footer .copy { color:var(--text-dim); font-size:13px; font-family:'Space Mono', monospace; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="Assets/AppIcon-Dark.png" alt="LectioTempo">
+      <span>LectioTempo</span>
+      <span class="nav-tag">V 1</span>
+    </a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="index.html" data-i18n="fr">Accueil</a><a href="index.html" data-i18n="en">Home</a>
+        <a href="readme.html" data-i18n="fr">Doc</a><a href="readme.html" data-i18n="en">Docs</a>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="container">
+    <img src="Assets/AppIcon-Dark.png" alt="LectioTempo" class="logo">
+    <span class="eyebrow">🔒 Privacy Policy</span>
+    <h1 data-i18n="fr">Politique de confidentialité</h1>
+    <h1 data-i18n="en">Privacy policy</h1>
+    <p class="meta" data-i18n="fr">Dernière mise à jour : 2026 · LectioTempo V1</p>
+    <p class="meta" data-i18n="en">Last updated: 2026 · LectioTempo V1</p>
+  </div>
+</header>
+
+<div class="container">
+  <article>
+    <!-- FR -->
+    <div data-i18n="fr">
+      <p><strong style="color:var(--text);">LectioTempo respecte intégralement votre vie privée.</strong></p>
+      <ul>
+        <li>
+          <strong>Aucune collecte de données personnelles</strong>
+          L'application ne demande aucune information vous identifiant et ne crée aucun compte utilisateur.
+        </li>
+        <li>
+          <strong>Aucun envoi réseau</strong>
+          L'app fonctionne entièrement hors-ligne. Aucune statistique, aucun événement, aucune télémétrie ne quitte votre appareil.
+        </li>
+        <li>
+          <strong>Stockage local uniquement</strong>
+          Les préférences (langue, thème, mode, pagination), le journal des pages et l'état de la session courante sont enregistrés dans <code>UserDefaults</code> sur votre iPhone/iPad. Ils sont supprimés avec l'application.
+        </li>
+        <li>
+          <strong>Aucun service tiers</strong>
+          Pas d'analytique, pas de publicité, pas de cookies, pas de SDK externe.
+        </li>
+        <li>
+          <strong>Vos droits</strong>
+          Vous pouvez à tout moment effacer toutes les données en désinstallant l'application.
+        </li>
+      </ul>
+    </div>
+
+    <!-- EN -->
+    <div data-i18n="en">
+      <p><strong style="color:var(--text);">LectioTempo fully respects your privacy.</strong></p>
+      <ul>
+        <li>
+          <strong>No personal data collection</strong>
+          The app does not request any identifying information and does not create any user account.
+        </li>
+        <li>
+          <strong>No network calls</strong>
+          The app works entirely offline. No statistics, events or telemetry leave your device.
+        </li>
+        <li>
+          <strong>Local storage only</strong>
+          Preferences (language, theme, mode, pagination), the page log and the current session state are saved in <code>UserDefaults</code> on your iPhone/iPad. They are removed together with the app.
+        </li>
+        <li>
+          <strong>No third-party services</strong>
+          No analytics, no ads, no cookies, no external SDK.
+        </li>
+        <li>
+          <strong>Your rights</strong>
+          You may erase all data at any time by uninstalling the application.
+        </li>
+      </ul>
+    </div>
+
+    <div class="contact-card">
+      <strong data-i18n="fr">Contact / Questions</strong>
+      <strong data-i18n="en">Contact / Questions</strong>
+      <a href="mailto:valerie.otero@free.fr">valerie.otero@free.fr</a>
+    </div>
+  </article>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="links">
+      <a href="index.html" data-i18n="fr">Accueil</a><a href="index.html" data-i18n="en">Home</a>
+      <a href="readme.html" data-i18n="fr">Documentation</a><a href="readme.html" data-i18n="en">Documentation</a>
+      <a href="mailto:valerie.otero@free.fr">Contact</a>
+    </div>
+    <div class="copy">© 2026 LectioTempo — Valérie Otero · V1</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const KEY = 'lectiotempo.lang';
+  const supported = ['fr','en'];
+  function detect() {
+    const stored = localStorage.getItem(KEY);
+    if (stored && supported.includes(stored)) return stored;
+    const nav = (navigator.language || 'fr').slice(0,2).toLowerCase();
+    return supported.includes(nav) ? nav : 'fr';
+  }
+  function apply(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-switch button').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    localStorage.setItem(KEY, lang);
+  }
+  document.querySelectorAll('.lang-switch button').forEach(b => {
+    b.addEventListener('click', () => apply(b.dataset.lang));
+  });
+  apply(detect());
+})();
+</script>
+
+</body>
+</html>

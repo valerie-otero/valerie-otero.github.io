@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LectioTempo — Time your reading, page by page</title>
+<meta name="description" content="Native iOS app to time your reading page by page. Measure speed, regularity, total time. 4 modes: measured, imposed, free, quiz. 100% offline.">
+<link rel="icon" type="image/png" href="Assets/AppIcon-Dark.png">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+
+:root {
+  --bg:#0e1018; --surface:#181c28; --surface2:#1f2435;
+  --border:#2c3248; --border-hi:#3d4460;
+  --accent:#c8f53a; --accent-dim:rgba(200,245,58,.13); --accent-glow:rgba(200,245,58,.30);
+  --text:#eceef8; --text-mid:#a8aec8; --text-dim:#5c6280;
+  --green:#3affc0; --green-dim:rgba(58,255,192,.12);
+  --blue:#60b0ff; --blue-dim:rgba(96,176,255,.13);
+  --purple:#b06aff; --purple-dim:rgba(176,106,255,.13);
+  --orange:#ffb347; --orange-dim:rgba(255,179,71,.13);
+  color-scheme:dark;
+}
+
+/* i18n switching */
+html[lang="fr"] [data-i18n="en"] { display:none !important; }
+html[lang="en"] [data-i18n="fr"] { display:none !important; }
+
+body {
+  font-family:'Plus Jakarta Sans', -apple-system, sans-serif;
+  background:var(--bg); color:var(--text);
+  min-height:100vh; line-height:1.55;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+.container { max-width:1100px; margin:0 auto; padding:0 24px; }
+
+h1, h2, h3 { font-family:'Space Grotesk', sans-serif; font-weight:700; letter-spacing:-.02em; line-height:1.15; }
+h1 { font-size:clamp(40px, 7vw, 72px); letter-spacing:-.04em; }
+h2 { font-size:clamp(28px, 4vw, 42px); margin-bottom:14px; }
+h3 { font-size:20px; margin-bottom:8px; }
+
+/* NAV */
+nav {
+  position:sticky; top:0; z-index:50;
+  background:rgba(14,16,24,.85); backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner {
+  max-width:1100px; margin:0 auto; padding:14px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.nav-brand { display:flex; align-items:center; gap:10px; }
+.nav-brand img { width:34px; height:34px; border-radius:8px; }
+.nav-brand span {
+  font-family:'Space Grotesk', sans-serif; font-weight:700;
+  font-size:18px; letter-spacing:-.5px; color:var(--text);
+}
+.nav-tag {
+  background:var(--accent-dim); color:var(--accent);
+  font-size:10px; font-weight:600; letter-spacing:2px;
+  padding:2px 8px; border-radius:3px;
+  border:1px solid var(--accent-glow);
+}
+.nav-right { display:flex; gap:24px; align-items:center; }
+.nav-links { display:flex; gap:20px; align-items:center; }
+.nav-links a {
+  color:var(--text-mid); font-size:14px; font-weight:500; transition:color .15s;
+}
+.nav-links a:hover { color:var(--text); text-decoration:none; }
+
+/* Language switch */
+.lang-switch {
+  display:flex; gap:0; align-items:center;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; overflow:hidden;
+  font-family:'Space Mono', monospace;
+}
+.lang-switch button {
+  appearance:none; background:none; border:none;
+  color:var(--text-mid); cursor:pointer;
+  padding:6px 11px; font-size:11px; font-weight:700; letter-spacing:1.5px;
+  font-family:'Space Mono', monospace;
+  transition:background .15s, color .15s;
+}
+.lang-switch button:hover { color:var(--text); }
+.lang-switch button.active {
+  background:var(--accent-dim); color:var(--accent);
+}
+
+@media (max-width: 640px) {
+  .nav-links { display:none; }
+}
+
+/* HERO */
+.hero { position:relative; padding:90px 0 70px; overflow:hidden; }
+.hero::before {
+  content:''; position:absolute; width:600px; height:600px;
+  top:-200px; left:50%; transform:translateX(-50%);
+  background:radial-gradient(circle, var(--accent) 0%, transparent 60%);
+  opacity:.18; filter:blur(80px); z-index:0;
+}
+.hero-content {
+  position:relative; z-index:1;
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+}
+.hero-text .eyebrow {
+  display:inline-block; font-family:'Space Mono', monospace;
+  font-size:12px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--accent); padding:6px 12px;
+  background:var(--accent-dim); border:1px solid var(--accent-glow);
+  border-radius:4px; margin-bottom:20px;
+}
+.hero-text h1 { color:var(--text); }
+.hero-text h1 .grad {
+  background:linear-gradient(135deg, var(--accent) 0%, var(--green) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-text .sub { margin-top:20px; font-size:18px; color:var(--text-mid); max-width:520px; }
+.hero-cta { margin-top:32px; display:flex; gap:12px; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 22px; border-radius:10px;
+  font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px;
+  border:1px solid var(--border); background:var(--surface); color:var(--text);
+  cursor:pointer; transition:all .2s;
+}
+.btn:hover { border-color:var(--border-hi); transform:translateY(-1px); text-decoration:none; }
+.btn.primary { background:var(--accent-dim); color:var(--accent); border-color:var(--accent-glow); }
+.btn.primary:hover { background:var(--accent); color:#0e1018; }
+
+.hero-visual { display:flex; justify-content:center; align-items:center; position:relative; }
+.hero-icon {
+  width:min(360px, 80%); height:auto;
+  filter:drop-shadow(0 20px 60px rgba(200,245,58,.30));
+  animation:floaty 6s ease-in-out infinite;
+}
+@keyframes floaty {
+  0%,100% { transform:translateY(0); }
+  50%     { transform:translateY(-12px); }
+}
+
+@media (max-width: 800px) {
+  .hero-content { grid-template-columns:1fr; gap:30px; }
+  .hero-visual { order:-1; }
+  .hero-icon { width:200px; }
+}
+
+/* SECTION */
+section { padding:70px 0; position:relative; }
+.section-head { text-align:center; margin-bottom:48px; }
+.section-head .eyebrow {
+  font-family:'Space Mono', monospace; font-size:11px; letter-spacing:3px;
+  text-transform:uppercase; color:var(--text-dim); margin-bottom:8px; display:block;
+}
+
+/* MODES */
+.modes-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; }
+.mode-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:14px; padding:24px;
+  transition:transform .2s, border-color .2s;
+}
+.mode-card:hover { transform:translateY(-4px); border-color:var(--border-hi); }
+.mode-card .icon {
+  width:44px; height:44px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; margin-bottom:14px;
+}
+.mode-card.measured .icon { background:var(--accent-dim); color:var(--accent); }
+.mode-card.imposed  .icon { background:var(--orange-dim); color:var(--orange); }
+.mode-card.free     .icon { background:var(--blue-dim);   color:var(--blue); }
+.mode-card.quiz     .icon { background:var(--purple-dim); color:var(--purple); }
+.mode-card h3 { color:var(--text); }
+.mode-card p { color:var(--text-mid); font-size:14px; }
+
+@media (max-width: 900px) { .modes-grid { grid-template-columns:repeat(2, 1fr); } }
+@media (max-width: 480px) { .modes-grid { grid-template-columns:1fr; } }
+
+/* SCREENS */
+.screens { background:linear-gradient(180deg, transparent 0%, var(--surface) 50%, transparent 100%); }
+.screens-grid {
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+  max-width:1000px; margin:0 auto;
+}
+.screen-frame {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:24px; padding:8px; overflow:hidden;
+  transition:transform .3s;
+}
+.screen-frame:hover { transform:translateY(-6px); }
+.screen-frame img { width:100%; height:auto; display:block; border-radius:18px; }
+@media (max-width: 800px) { .screens-grid { grid-template-columns:1fr; max-width:340px; } }
+
+/* FEATURES */
+.features-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+.feature {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:24px;
+}
+.feature .symbol {
+  font-size:24px; margin-bottom:12px;
+  width:44px; height:44px;
+  background:var(--accent-dim);
+  border:1px solid var(--accent-glow);
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--accent);
+}
+.feature h3 { color:var(--text); }
+.feature p { color:var(--text-mid); font-size:14px; }
+
+@media (max-width: 900px) { .features-grid { grid-template-columns:1fr; } }
+
+/* PRIVACY HIGHLIGHT */
+.privacy-block {
+  background:linear-gradient(135deg, var(--accent-dim), var(--green-dim));
+  border:1px solid var(--accent-glow);
+  border-radius:16px; padding:40px;
+  display:grid; grid-template-columns:auto 1fr; gap:30px; align-items:center;
+}
+.privacy-block .lock { font-size:60px; line-height:1; }
+.privacy-block h2 { color:var(--text); margin-bottom:6px; }
+.privacy-block p { color:var(--text-mid); }
+@media (max-width: 700px) { .privacy-block { grid-template-columns:1fr; text-align:center; } }
+
+/* FOOTER */
+footer {
+  margin-top:60px; padding:40px 0 60px;
+  border-top:1px solid var(--border); text-align:center;
+}
+footer .links { display:flex; justify-content:center; gap:24px; margin-bottom:16px; flex-wrap:wrap; }
+footer .links a { color:var(--text-mid); font-size:14px; }
+footer .copy { color:var(--text-dim); font-size:13px; font-family:'Space Mono', monospace; }
+
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity .6s, transform .6s; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <img src="Assets/AppIcon-Dark.png" alt="LectioTempo">
+      <span>LectioTempo</span>
+      <span class="nav-tag">V 1</span>
+    </div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#modes" data-i18n="fr">Modes</a><a href="#modes" data-i18n="en">Modes</a>
+        <a href="#features" data-i18n="fr">Fonctions</a><a href="#features" data-i18n="en">Features</a>
+        <a href="#privacy" data-i18n="fr">Confidentialité</a><a href="#privacy" data-i18n="en">Privacy</a>
+        <a href="readme.html" data-i18n="fr">Doc</a><a href="readme.html" data-i18n="en">Docs</a>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container hero-content">
+    <div class="hero-text">
+      <span class="eyebrow" data-i18n="fr">iOS · SwiftUI · 100 % hors-ligne</span>
+      <span class="eyebrow" data-i18n="en">iOS · SwiftUI · 100% offline</span>
+
+      <h1 data-i18n="fr">Lisez. <span class="grad">Mesurez.</span><br>Progressez.</h1>
+      <h1 data-i18n="en">Read. <span class="grad">Measure.</span><br>Improve.</h1>
+
+      <p class="sub" data-i18n="fr">
+        LectioTempo chronomètre votre lecture page par page pour mesurer votre vitesse,
+        votre régularité et le temps total passé sur un document.
+        Quatre modes, zéro distraction, zéro collecte de données.
+      </p>
+      <p class="sub" data-i18n="en">
+        LectioTempo times your reading page by page to measure your speed,
+        your consistency and the total time spent on a document.
+        Four modes, zero distraction, zero data collection.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#modes" class="btn primary" data-i18n="fr">Découvrir les modes →</a>
+        <a href="#modes" class="btn primary" data-i18n="en">Explore the modes →</a>
+        <a href="readme.html" class="btn" data-i18n="fr">Documentation</a>
+        <a href="readme.html" class="btn" data-i18n="en">Documentation</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="Assets/AppIcon-Dark.png" alt="LectioTempo icon" class="hero-icon">
+    </div>
+  </div>
+</header>
+
+<!-- MODES -->
+<section id="modes">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="fr">4 modes</span>
+      <span class="eyebrow" data-i18n="en">4 modes</span>
+      <h2 data-i18n="fr">Une session adaptée à chaque contexte</h2>
+      <h2 data-i18n="en">A session for every context</h2>
+    </div>
+    <div class="modes-grid">
+      <div class="mode-card measured reveal">
+        <div class="icon">⏱</div>
+        <h3 data-i18n="fr">Temps mesuré</h3>
+        <h3 data-i18n="en">Measured time</h3>
+        <p data-i18n="fr">Chrono libre, validation manuelle dès que le temps minimum est atteint. Pour mesurer un rythme confortable.</p>
+        <p data-i18n="en">Free timer, manual validation as soon as the minimum time is reached. To gauge a comfortable pace.</p>
+      </div>
+      <div class="mode-card imposed reveal">
+        <div class="icon">⌛</div>
+        <h3 data-i18n="fr">Temps imposé</h3>
+        <h3 data-i18n="en">Imposed time</h3>
+        <p data-i18n="fr">La page se verrouille pendant la durée minimum puis se déverrouille automatiquement. Idéal pour travailler la régularité.</p>
+        <p data-i18n="en">The page locks for the minimum duration then unlocks automatically. Great for building consistency.</p>
+      </div>
+      <div class="mode-card free reveal">
+        <div class="icon">🏃</div>
+        <h3 data-i18n="fr">Vitesse libre</h3>
+        <h3 data-i18n="en">Free speed</h3>
+        <p data-i18n="fr">Aucune contrainte. Tournez les pages quand vous voulez. L'app mesure votre vitesse réelle et calcule la moyenne.</p>
+        <p data-i18n="en">No constraint. Turn pages whenever you want. The app measures your real speed and computes the average.</p>
+      </div>
+      <div class="mode-card quiz reveal">
+        <div class="icon">📝</div>
+        <h3 data-i18n="fr">Quiz / QCM</h3>
+        <h3 data-i18n="en">Quiz / MCQ</h3>
+        <p data-i18n="fr">Entraînement examen : compte à rebours global de session + décompte par question. Bannière de fin quand le temps est écoulé.</p>
+        <p data-i18n="en">Exam practice: global session countdown + per-question countdown. End banner when time is up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENS -->
+<section class="screens" id="screens">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="fr">Interface</span>
+      <span class="eyebrow" data-i18n="en">Interface</span>
+      <h2 data-i18n="fr">Pensée pour la lecture, pas pour le scroll</h2>
+      <h2 data-i18n="en">Designed for reading, not for scrolling</h2>
+    </div>
+    <div class="screens-grid">
+      <div class="screen-frame reveal" data-i18n="fr"><img src="screens/Sim1_FR.png" alt="Configuration de la session"></div>
+      <div class="screen-frame reveal" data-i18n="en"><img src="screens/Sim1_EN.png" alt="Session configuration"></div>
+      <div class="screen-frame reveal" data-i18n="fr"><img src="screens/Sim2_FR.png" alt="Session en cours"></div>
+      <div class="screen-frame reveal" data-i18n="en"><img src="screens/Sim2_EN.png" alt="Session running"></div>
+      <div class="screen-frame reveal" data-i18n="fr"><img src="screens/Sim3_FR.png" alt="Mode focus plein écran"></div>
+      <div class="screen-frame reveal" data-i18n="en"><img src="screens/Sim3_EN.png" alt="Full-screen focus mode"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="fr">Fonctions</span>
+      <span class="eyebrow" data-i18n="en">Features</span>
+      <h2 data-i18n="fr">Tout ce qu'il faut, rien de superflu</h2>
+      <h2 data-i18n="en">Everything you need, nothing more</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature reveal">
+        <div class="symbol">📊</div>
+        <h3 data-i18n="fr">Métriques en temps réel</h3>
+        <h3 data-i18n="en">Real-time metrics</h3>
+        <p data-i18n="fr">Temps sur la page, moyenne, régularité (%), ETA de fin, cumul session.</p>
+        <p data-i18n="en">Page time, average, consistency (%), end ETA, session total.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="symbol">📈</div>
+        <h3 data-i18n="fr">Graphique de vitesse</h3>
+        <h3 data-i18n="en">Speed chart</h3>
+        <p data-i18n="fr">Visualisation des durées par page en mode libre pour repérer vos baisses de régime.</p>
+        <p data-i18n="en">Per-page duration chart in free mode to spot your slow-downs.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="symbol">🔍</div>
+        <h3 data-i18n="fr">Mode plein écran</h3>
+        <h3 data-i18n="en">Full-screen focus</h3>
+        <p data-i18n="fr">Overlay focus avec uniquement le timer et les contrôles essentiels. Lecture immersive.</p>
+        <p data-i18n="en">Focus overlay with just the timer and essential controls. Immersive reading.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="symbol">⌨️</div>
+        <h3 data-i18n="fr">Raccourcis clavier</h3>
+        <h3 data-i18n="en">Keyboard shortcuts</h3>
+        <p data-i18n="fr">Espace, ←, P, F, Maj+R. Productivité maximale avec un clavier externe.</p>
+        <p data-i18n="en">Space, ←, P, F, Shift+R. Maximum productivity with an external keyboard.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="symbol">🌓</div>
+        <h3 data-i18n="fr">Thème clair / sombre</h3>
+        <h3 data-i18n="en">Light / dark theme</h3>
+        <p data-i18n="fr">Bascule instantanée et persistante. Adapté à toutes les ambiances de lecture.</p>
+        <p data-i18n="en">Instant and persistent toggle. Fits any reading ambiance.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="symbol">💾</div>
+        <h3 data-i18n="fr">Restauration auto</h3>
+        <h3 data-i18n="en">Auto resume</h3>
+        <p data-i18n="fr">Fermez l'app au milieu d'une session : tout est restauré au lancement suivant.</p>
+        <p data-i18n="en">Close the app mid-session: everything is restored on next launch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy">
+  <div class="container">
+    <div class="privacy-block reveal">
+      <div class="lock">🔒</div>
+      <div>
+        <h2 data-i18n="fr">100 % hors-ligne. Vraiment.</h2>
+        <h2 data-i18n="en">100% offline. Really.</h2>
+        <p data-i18n="fr">
+          Pas de compte. Pas de réseau. Pas d'analytique. Pas de publicité.
+          Les préférences et l'historique restent dans <code>UserDefaults</code> sur votre appareil
+          et disparaissent avec l'application.
+          <a href="privacy.html" style="color:var(--text); text-decoration:underline;">Lire la politique complète →</a>
+        </p>
+        <p data-i18n="en">
+          No account. No network. No analytics. No ads.
+          Preferences and history stay in <code>UserDefaults</code> on your device
+          and disappear together with the app.
+          <a href="privacy.html" style="color:var(--text); text-decoration:underline;">Read the full policy →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="links">
+      <a href="readme.html" data-i18n="fr">Documentation</a>
+      <a href="readme.html" data-i18n="en">Documentation</a>
+      <a href="privacy.html" data-i18n="fr">Confidentialité</a>
+      <a href="privacy.html" data-i18n="en">Privacy</a>
+      <a href="mailto:valerie.otero@free.fr">Contact</a>
+    </div>
+    <div class="copy">© 2026 LectioTempo — Valérie Otero · V1</div>
+  </div>
+</footer>
+
+<script>
+// ── i18n ─────────────────────────────────
+(function(){
+  const KEY = 'lectiotempo.lang';
+  const supported = ['fr','en'];
+  function detect() {
+    const stored = localStorage.getItem(KEY);
+    if (stored && supported.includes(stored)) return stored;
+    const nav = (navigator.language || 'fr').slice(0,2).toLowerCase();
+    return supported.includes(nav) ? nav : 'fr';
+  }
+  function apply(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-switch button').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    localStorage.setItem(KEY, lang);
+  }
+  document.querySelectorAll('.lang-switch button').forEach(b => {
+    b.addEventListener('click', () => apply(b.dataset.lang));
+  });
+  apply(detect());
+})();
+
+// ── Reveal on scroll ─────────────────────
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

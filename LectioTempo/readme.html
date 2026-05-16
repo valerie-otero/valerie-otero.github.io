@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LectioTempo — Documentation</title>
+<meta name="description" content="LectioTempo technical documentation: SwiftUI architecture, reading modes, build, project structure.">
+<link rel="icon" type="image/png" href="Assets/AppIcon-Dark.png">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --bg:#0e1018; --surface:#181c28; --surface2:#1f2435; --border:#2c3248;
+  --accent:#c8f53a; --accent-dim:rgba(200,245,58,.13); --accent-glow:rgba(200,245,58,.30);
+  --text:#eceef8; --text-mid:#a8aec8; --text-dim:#5c6280;
+  --green:#3affc0; --green-dim:rgba(58,255,192,.12);
+  --blue:#60b0ff; --blue-dim:rgba(96,176,255,.13);
+  --purple:#b06aff; --purple-dim:rgba(176,106,255,.13);
+  --orange:#ffb347; --orange-dim:rgba(255,179,71,.13);
+  color-scheme:dark;
+}
+html[lang="fr"] [data-i18n="en"] { display:none !important; }
+html[lang="en"] [data-i18n="fr"] { display:none !important; }
+
+body {
+  font-family:'Plus Jakarta Sans', sans-serif;
+  background:var(--bg); color:var(--text);
+  min-height:100vh; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container { max-width:860px; margin:0 auto; padding:0 24px; }
+
+nav {
+  position:sticky; top:0; z-index:50;
+  background:rgba(14,16,24,.85); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner {
+  max-width:1100px; margin:0 auto; padding:14px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.nav-brand { display:flex; align-items:center; gap:10px; }
+.nav-brand img { width:34px; height:34px; border-radius:8px; }
+.nav-brand span {
+  font-family:'Space Grotesk', sans-serif; font-weight:700;
+  font-size:18px; color:var(--text);
+}
+.nav-tag {
+  background:var(--accent-dim); color:var(--accent);
+  font-size:10px; font-weight:600; letter-spacing:2px;
+  padding:2px 8px; border-radius:3px;
+  border:1px solid var(--accent-glow);
+}
+.nav-right { display:flex; gap:20px; align-items:center; }
+.nav-links a { color:var(--text-mid); font-size:14px; font-weight:500; margin-left:20px; }
+.nav-links a:hover { color:var(--text); text-decoration:none; }
+
+.lang-switch {
+  display:flex; align-items:center;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; overflow:hidden;
+  font-family:'Space Mono', monospace;
+}
+.lang-switch button {
+  appearance:none; background:none; border:none;
+  color:var(--text-mid); cursor:pointer;
+  padding:6px 11px; font-size:11px; font-weight:700; letter-spacing:1.5px;
+  font-family:'Space Mono', monospace;
+}
+.lang-switch button:hover { color:var(--text); }
+.lang-switch button.active { background:var(--accent-dim); color:var(--accent); }
+
+@media (max-width:640px) { .nav-links { display:none; } }
+
+header.page-hero { padding:60px 0 30px; text-align:center; }
+header.page-hero img.logo {
+  width:90px; height:90px; border-radius:20px;
+  filter:drop-shadow(0 10px 40px rgba(200,245,58,.30));
+  margin-bottom:20px;
+}
+header.page-hero .eyebrow {
+  display:inline-block;
+  font-family:'Space Mono', monospace;
+  font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--accent);
+  padding:5px 10px;
+  background:var(--accent-dim);
+  border:1px solid var(--accent-glow);
+  border-radius:4px;
+  margin-bottom:18px;
+}
+header.page-hero h1 {
+  font-family:'Space Grotesk', sans-serif; font-weight:700;
+  font-size:clamp(32px, 5vw, 48px); letter-spacing:-.03em;
+  color:var(--text);
+}
+header.page-hero .sub { color:var(--text-mid); max-width:580px; margin:14px auto 0; }
+
+main { padding:30px 0 60px; }
+h2 {
+  font-family:'Space Grotesk', sans-serif; font-weight:700;
+  font-size:28px; margin:50px 0 16px; color:var(--text);
+  letter-spacing:-.02em;
+}
+h2:first-child { margin-top:0; }
+h3 {
+  font-family:'Space Grotesk', sans-serif; font-weight:600;
+  font-size:18px; margin:24px 0 10px; color:var(--text);
+}
+p { color:var(--text-mid); margin:12px 0; }
+ul, ol { color:var(--text-mid); margin:12px 0 12px 22px; }
+li { margin-bottom:6px; }
+li strong { color:var(--text); }
+
+code {
+  font-family:'Space Mono', monospace;
+  background:rgba(200,245,58,.08);
+  color:var(--accent);
+  padding:2px 6px;
+  border-radius:4px;
+  font-size:.9em;
+}
+pre {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px;
+  overflow-x:auto;
+  margin:16px 0;
+  font-family:'Space Mono', monospace;
+  font-size:13px;
+  line-height:1.6;
+  color:var(--text-mid);
+}
+pre code { background:none; padding:0; color:inherit; }
+
+table {
+  width:100%; border-collapse:collapse; margin:16px 0;
+  background:var(--surface); border-radius:10px; overflow:hidden;
+  border:1px solid var(--border);
+}
+th, td { padding:12px 16px; text-align:left; border-bottom:1px solid var(--border); }
+th {
+  background:var(--surface2); color:var(--text);
+  font-family:'Space Grotesk', sans-serif; font-weight:600;
+  font-size:13px; letter-spacing:.5px; text-transform:uppercase;
+}
+td { color:var(--text-mid); font-size:14px; }
+tr:last-child td { border-bottom:none; }
+td code { font-size:12px; }
+
+.modes-list { display:grid; gap:14px; margin:16px 0; }
+.mode-item {
+  display:grid; grid-template-columns:auto 1fr; gap:18px; align-items:center;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:18px 22px;
+}
+.mode-item .badge {
+  width:50px; height:50px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px;
+}
+.mode-item.m1 .badge { background:var(--accent-dim); color:var(--accent); }
+.mode-item.m2 .badge { background:var(--orange-dim); color:var(--orange); }
+.mode-item.m3 .badge { background:var(--blue-dim); color:var(--blue); }
+.mode-item.m4 .badge { background:var(--purple-dim); color:var(--purple); }
+.mode-item h3 { margin:0 0 4px; }
+.mode-item p { margin:0; font-size:14px; }
+
+.callout {
+  background:linear-gradient(135deg, var(--accent-dim), var(--green-dim));
+  border:1px solid var(--accent-glow);
+  border-radius:12px;
+  padding:20px 24px;
+  margin:20px 0;
+}
+.callout strong { color:var(--text); }
+
+footer {
+  padding:30px 0 50px; text-align:center;
+  border-top:1px solid var(--border);
+}
+footer .links { display:flex; justify-content:center; gap:24px; margin-bottom:12px; flex-wrap:wrap; }
+footer .links a { color:var(--text-mid); font-size:14px; }
+footer .copy { color:var(--text-dim); font-size:13px; font-family:'Space Mono', monospace; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="Assets/AppIcon-Dark.png" alt="LectioTempo">
+      <span>LectioTempo</span>
+      <span class="nav-tag">V 1</span>
+    </a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="index.html" data-i18n="fr">Accueil</a><a href="index.html" data-i18n="en">Home</a>
+        <a href="privacy.html" data-i18n="fr">Confidentialité</a><a href="privacy.html" data-i18n="en">Privacy</a>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="container">
+    <img src="Assets/AppIcon-Dark.png" alt="LectioTempo" class="logo">
+    <span class="eyebrow">📖 Documentation</span>
+    <h1>LectioTempo — README</h1>
+    <p class="sub" data-i18n="fr">Application iOS native (SwiftUI) qui transforme la lecture en mesure&nbsp;: vitesse, régularité, temps total.</p>
+    <p class="sub" data-i18n="en">Native iOS app (SwiftUI) that turns reading into measurement: speed, consistency, total time.</p>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <h2 data-i18n="fr">🎯 Vue d'ensemble</h2>
+    <h2 data-i18n="en">🎯 Overview</h2>
+    <p data-i18n="fr">
+      <strong style="color:var(--text);">LectioTempo</strong> chronomètre votre lecture page par page.
+      Vous fixez un nombre de pages, un temps minimum par page, et l'app calcule
+      votre rythme réel, votre régularité et votre ETA de fin de document.
+      Quatre modes couvrent les usages : lecture confortable, entraînement à un rythme imposé,
+      mesure libre, et entraînement examen / QCM.
+    </p>
+    <p data-i18n="en">
+      <strong style="color:var(--text);">LectioTempo</strong> times your reading page by page.
+      You set a number of pages, a minimum time per page, and the app computes
+      your real pace, consistency, and the document end ETA.
+      Four modes cover every use case: comfortable reading, training at an imposed pace,
+      free measurement, and exam / MCQ practice.
+    </p>
+
+    <h2 data-i18n="fr">📚 Les 4 modes</h2>
+    <h2 data-i18n="en">📚 The 4 modes</h2>
+    <div class="modes-list">
+      <div class="mode-item m1">
+        <div class="badge">⏱</div>
+        <div>
+          <h3 data-i18n="fr">Temps mesuré</h3>
+          <h3 data-i18n="en">Measured time</h3>
+          <p data-i18n="fr">Chrono libre&nbsp;; la page peut être validée dès que le temps minimum est atteint.</p>
+          <p data-i18n="en">Free timer; the page can be validated as soon as the minimum time is reached.</p>
+        </div>
+      </div>
+      <div class="mode-item m2">
+        <div class="badge">⌛</div>
+        <div>
+          <h3 data-i18n="fr">Temps imposé</h3>
+          <h3 data-i18n="en">Imposed time</h3>
+          <p data-i18n="fr">La page reste verrouillée pendant la durée minimum puis se déverrouille automatiquement.</p>
+          <p data-i18n="en">The page stays locked for the minimum duration then unlocks automatically.</p>
+        </div>
+      </div>
+      <div class="mode-item m3">
+        <div class="badge">🏃</div>
+        <div>
+          <h3 data-i18n="fr">Vitesse libre</h3>
+          <h3 data-i18n="en">Free speed</h3>
+          <p data-i18n="fr">Aucune contrainte. L'app mesure la vitesse réelle et calcule la moyenne, avec un graphique par page.</p>
+          <p data-i18n="en">No constraint. The app measures real speed and computes the average, with a per-page chart.</p>
+        </div>
+      </div>
+      <div class="mode-item m4">
+        <div class="badge">📝</div>
+        <div>
+          <h3 data-i18n="fr">Quiz / QCM</h3>
+          <h3 data-i18n="en">Quiz / MCQ</h3>
+          <p data-i18n="fr">Examen / entraînement&nbsp;: décompte global de session + décompte par question. Bannière de fin quand le temps est écoulé.</p>
+          <p data-i18n="en">Exam / training: global session countdown + per-question countdown. End banner when time is up.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 data-i18n="fr">✨ Fonctionnalités</h2>
+    <h2 data-i18n="en">✨ Features</h2>
+    <ul data-i18n="fr">
+      <li><strong>Métriques live</strong> : temps sur la page, moyenne, régularité (%), ETA.</li>
+      <li><strong>Graphique de vitesse</strong> par page (mode libre).</li>
+      <li><strong>Mode focus plein écran</strong> avec overlay minimaliste.</li>
+      <li><strong>Thème clair / sombre</strong> persistant.</li>
+      <li><strong>Bilingue</strong> FR / EN.</li>
+      <li><strong>Raccourcis clavier</strong> (clavier externe) : <code>Espace</code> valider, <code>←</code> reculer, <code>P</code> pause, <code>F</code> focus, <code>⇧+R</code> reset.</li>
+      <li><strong>Restauration de session</strong> automatique au lancement.</li>
+      <li><strong>Haptics</strong> contextuels.</li>
+      <li><strong>100 % hors-ligne</strong>.</li>
+    </ul>
+    <ul data-i18n="en">
+      <li><strong>Live metrics</strong>: page time, average, consistency (%), ETA.</li>
+      <li><strong>Speed chart</strong> per page (free mode).</li>
+      <li><strong>Full-screen focus mode</strong> with a minimalist overlay.</li>
+      <li><strong>Persistent</strong> light / dark theme.</li>
+      <li><strong>Bilingual</strong> FR / EN.</li>
+      <li><strong>Keyboard shortcuts</strong> (external keyboard): <code>Space</code> validate, <code>←</code> back, <code>P</code> pause, <code>F</code> focus, <code>⇧+R</code> reset.</li>
+      <li><strong>Automatic session restore</strong> on launch.</li>
+      <li>Contextual <strong>haptics</strong>.</li>
+      <li><strong>100% offline</strong>.</li>
+    </ul>
+
+    <h2 data-i18n="fr">🚀 Build &amp; run</h2>
+    <h2 data-i18n="en">🚀 Build &amp; run</h2>
+    <p data-i18n="fr">Prérequis :</p>
+    <p data-i18n="en">Requirements:</p>
+    <ul data-i18n="fr">
+      <li><strong>Xcode 16+</strong> avec le SDK iOS 26.</li>
+      <li><strong>iOS 17+</strong> sur l'appareil cible (Simulator ou physique).</li>
+      <li>Aucune dépendance externe (SPM vide).</li>
+    </ul>
+    <ul data-i18n="en">
+      <li><strong>Xcode 16+</strong> with the iOS 26 SDK.</li>
+      <li><strong>iOS 17+</strong> on the target device (Simulator or physical).</li>
+      <li>No external dependencies (empty SPM).</li>
+    </ul>
+    <pre><code>git clone &lt;repo&gt;
+cd LectioTempo
+open LectioTempo.xcodeproj</code></pre>
+    <p data-i18n="fr">Puis <code>⌘R</code> dans Xcode. C'est tout.</p>
+    <p data-i18n="en">Then <code>⌘R</code> in Xcode. That's it.</p>
+
+    <h2 data-i18n="fr">🏗️ Architecture</h2>
+    <h2 data-i18n="en">🏗️ Architecture</h2>
+    <p data-i18n="fr">
+      Architecture <strong>MVVM</strong> légère avec <code>SessionViewModel</code> comme état central,
+      observé par toutes les vues via <code>@StateObject</code> / <code>@ObservedObject</code>.
+      Le timer est piloté par un <code>Timer.publish</code> Combine.
+      L'état est sérialisé dans <code>UserDefaults</code> pour la restauration.
+    </p>
+    <p data-i18n="en">
+      Lightweight <strong>MVVM</strong> with <code>SessionViewModel</code> as the central state,
+      observed by all views through <code>@StateObject</code> / <code>@ObservedObject</code>.
+      The timer is driven by a Combine <code>Timer.publish</code>.
+      State is serialized to <code>UserDefaults</code> for resume.
+    </p>
+
+    <h3 data-i18n="fr">Structure du projet</h3>
+    <h3 data-i18n="en">Project structure</h3>
+    <pre><code>LectioTempo/
+├── LectioTempoApp.swift          # Entry point (@main)
+├── ContentView.swift
+├── ViewModels/
+│   └── SessionViewModel.swift    # State machine + Combine timer
+├── Models/
+│   ├── PageRecord.swift          # Page log entry
+│   ├── ReadingMode.swift         # .measured | .imposed | .free | .quiz
+│   └── SessionState.swift        # UserDefaults persistence
+├── Views/
+│   ├── RootView.swift            # Main composition
+│   ├── HeaderView.swift
+│   ├── BannersView.swift
+│   ├── ConfigCard.swift
+│   ├── TimerCard.swift
+│   ├── MetricsGrid.swift
+│   ├── SpeedMetricsGrid.swift
+│   ├── SpeedChartView.swift
+│   ├── DocProgressCard.swift
+│   ├── PageLogCard.swift
+│   ├── StatusRow.swift
+│   ├── ControlsRow.swift
+│   ├── NavButtonsRow.swift
+│   ├── ModeToggleView.swift
+│   ├── ImposedCountdownView.swift
+│   ├── FocusOverlayView.swift
+│   ├── CompletionView.swift
+│   ├── FAQView.swift
+│   ├── PrivacyView.swift
+│   └── PreviewContainer.swift
+├── Theme/
+│   └── AppTheme.swift            # Color + typography tokens
+├── Localization/
+│   └── LocalizationManager.swift # FR / EN
+└── Utils/
+    ├── HapticsManager.swift
+    └── TimeFormatter.swift</code></pre>
+
+    <h3 data-i18n="fr">Composants principaux</h3>
+    <h3 data-i18n="en">Main components</h3>
+    <table data-i18n="fr">
+      <thead><tr><th>Type</th><th>Rôle</th></tr></thead>
+      <tbody>
+        <tr><td><code>SessionViewModel</code></td><td>Machine à états (stopped / running / paused / completed), timers, calculs métriques, persistance.</td></tr>
+        <tr><td><code>ReadingMode</code></td><td>Enum des 4 modes.</td></tr>
+        <tr><td><code>PageRecord</code></td><td>Tuple page + durée + horodatage.</td></tr>
+        <tr><td><code>SessionState</code></td><td>Encodage Codable + I/O <code>UserDefaults</code>.</td></tr>
+        <tr><td><code>LocalizationManager</code></td><td>Dictionnaires FR / EN injectés via <code>@Environment</code>.</td></tr>
+        <tr><td><code>AppTheme</code></td><td>Palette dark / light alignée sur cette doc.</td></tr>
+      </tbody>
+    </table>
+    <table data-i18n="en">
+      <thead><tr><th>Type</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><code>SessionViewModel</code></td><td>State machine (stopped / running / paused / completed), timers, metric computation, persistence.</td></tr>
+        <tr><td><code>ReadingMode</code></td><td>Enum of the 4 modes.</td></tr>
+        <tr><td><code>PageRecord</code></td><td>Page + duration + timestamp tuple.</td></tr>
+        <tr><td><code>SessionState</code></td><td>Codable encoding + <code>UserDefaults</code> I/O.</td></tr>
+        <tr><td><code>LocalizationManager</code></td><td>FR / EN dictionaries injected via <code>@Environment</code>.</td></tr>
+        <tr><td><code>AppTheme</code></td><td>Dark / light palette aligned with these docs.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 data-i18n="fr">🌍 Localisation</h2>
+    <h2 data-i18n="en">🌍 Localization</h2>
+    <p data-i18n="fr">
+      Tous les textes passent par <code>LocalizationManager.t(.cle)</code>.
+      Pour ajouter une langue : étendre l'enum <code>Lang</code> et ajouter une entrée dans le dictionnaire de <code>LocalizationManager.swift</code>.
+    </p>
+    <p data-i18n="en">
+      All texts go through <code>LocalizationManager.t(.key)</code>.
+      To add a language: extend the <code>Lang</code> enum and add an entry in the dictionary in <code>LocalizationManager.swift</code>.
+    </p>
+
+    <h2 data-i18n="fr">🔐 Confidentialité</h2>
+    <h2 data-i18n="en">🔐 Privacy</h2>
+    <div class="callout" data-i18n="fr">
+      <strong>LectioTempo ne collecte rien.</strong> Pas de compte, pas de réseau, pas d'analytique,
+      pas de SDK tiers. Toutes les données restent localement dans <code>UserDefaults</code>
+      et disparaissent avec l'application.
+      <a href="privacy.html" style="color:var(--text);">Lire la politique complète →</a>
+    </div>
+    <div class="callout" data-i18n="en">
+      <strong>LectioTempo collects nothing.</strong> No account, no network, no analytics,
+      no third-party SDK. All data stays locally in <code>UserDefaults</code>
+      and disappears with the app.
+      <a href="privacy.html" style="color:var(--text);">Read the full policy →</a>
+    </div>
+
+    <h2 data-i18n="fr">📬 Contact</h2>
+    <h2 data-i18n="en">📬 Contact</h2>
+    <p data-i18n="fr">
+      Auteur : <strong style="color:var(--text);">Valérie Otero</strong><br>
+      Email : <a href="mailto:valerie.otero@free.fr">valerie.otero@free.fr</a>
+    </p>
+    <p data-i18n="en">
+      Author: <strong style="color:var(--text);">Valérie Otero</strong><br>
+      Email: <a href="mailto:valerie.otero@free.fr">valerie.otero@free.fr</a>
+    </p>
+
+    <h2 data-i18n="fr">📄 Licence</h2>
+    <h2 data-i18n="en">📄 License</h2>
+    <p data-i18n="fr">© 2026 Valérie Otero — Tous droits réservés.</p>
+    <p data-i18n="en">© 2026 Valérie Otero — All rights reserved.</p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="links">
+      <a href="index.html" data-i18n="fr">Accueil</a><a href="index.html" data-i18n="en">Home</a>
+      <a href="privacy.html" data-i18n="fr">Confidentialité</a><a href="privacy.html" data-i18n="en">Privacy</a>
+      <a href="mailto:valerie.otero@free.fr">Contact</a>
+    </div>
+    <div class="copy">© 2026 LectioTempo — Valérie Otero · V1</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const KEY = 'lectiotempo.lang';
+  const supported = ['fr','en'];
+  function detect() {
+    const stored = localStorage.getItem(KEY);
+    if (stored && supported.includes(stored)) return stored;
+    const nav = (navigator.language || 'fr').slice(0,2).toLowerCase();
+    return supported.includes(nav) ? nav : 'fr';
+  }
+  function apply(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-switch button').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    localStorage.setItem(KEY, lang);
+  }
+  document.querySelectorAll('.lang-switch button').forEach(b => {
+    b.addEventListener('click', () => apply(b.dataset.lang));
+  });
+  apply(detect());
+})();
+</script>
+
+</body>
+</html>
