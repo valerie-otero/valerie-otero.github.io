@@ -4,404 +4,859 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CapRoute — Préparation de navigation VFR</title>
-<meta name="description" content="CapRoute — Préparation de navigation VFR / VFR flight planning for iPhone & iPad.">
+<meta name="description" content="CapRoute : préparation de navigation VFR sur iPhone et iPad. Rose des Nords, matrice Route/Cap, vent par branche, export PDF kneeboard, iCloud.">
 <link rel="icon" type="image/png" href="AppIcon/AppIcon-Light.png">
 <style>
-  :root {
-    --bg: #f6f7fb;
-    --surface: #ffffff;
-    --text: #0f172a;
-    --text-dim: #475569;
-    --muted: #94a3b8;
-    --border: #e2e8f0;
-    --accent: #0ea5e9;
-    --accent-strong: #0284c7;
-    --pink: #ec4899;
-    --green: #10b981;
-    --radius: 16px;
-    --shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
-  }
-  @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0b1220;
-      --surface: #131c2d;
-      --text: #e2e8f0;
-      --text-dim: #94a3b8;
-      --muted: #64748b;
-      --border: #1f2a3d;
-      --shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+        --primary: #0ea5e9;
+        --primary-dark: #0284c7;
+        --accent: #06b6d4;
+        --aviation-orange: #f59e0b;
+        --text: #0f172a;
+        --secondary-text: #475569;
+        --muted: #94a3b8;
+        --bg: #ffffff;
+        --section-bg: #f0f9ff;
+        --card-bg: #ffffff;
+        --border: #e0f2fe;
+        --shadow-sm: 0 4px 12px rgba(15,23,42,0.05);
+        --shadow-md: 0 14px 36px rgba(14,165,233,0.18);
+        --shadow-lg: 0 30px 80px rgba(15,23,42,0.22);
     }
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bg); color: var(--text); }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { color: var(--accent-strong); }
 
-  html[lang="fr"] [data-en] { display: none !important; }
-  html[lang="en"] [data-fr] { display: none !important; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
 
-  .lang {
-    display: flex; justify-content: flex-end; gap: .35rem;
-    font-size: .8rem; margin-bottom: .5rem;
-  }
-  .lang button {
-    padding: .25rem .6rem;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    color: var(--text-dim);
-    background: transparent;
-    cursor: pointer;
-    font: inherit;
-  }
-  html[lang="fr"] .lang button[data-set="fr"],
-  html[lang="en"] .lang button[data-set="en"] {
-    background: var(--accent); color: #fff; border-color: var(--accent);
-  }
+    /* ============ Header ============ */
+    header {
+        background: rgba(255,255,255,0.78);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        position: sticky; top: 0; z-index: 100;
+        border-bottom: 1px solid var(--border);
+    }
+    .nav {
+        display: flex; align-items: center; justify-content: space-between;
+        height: 58px; gap: 16px;
+    }
+    .logo {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-weight: 700; font-size: 17px; color: var(--text); text-decoration: none;
+        letter-spacing: -0.01em;
+    }
+    .logo img { height: 34px; width: 34px; border-radius: 10px; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .home-link {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-size: 14px; font-weight: 600; color: #fff;
+        background: var(--primary); text-decoration: none;
+        padding: 8px 16px; border-radius: 980px;
+        transition: background .2s, transform .2s, box-shadow .2s;
+        box-shadow: 0 2px 10px rgba(14,165,233,.35);
+    }
+    .home-link:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(14,165,233,.5); }
+    .lang-switch {
+        display: inline-flex; background: #e0f2fe; padding: 3px; border-radius: 980px;
+    }
+    .lang-switch button {
+        border: 0; background: transparent; cursor: pointer;
+        padding: 6px 14px; border-radius: 980px; font-size: 13px; font-weight: 600;
+        color: var(--secondary-text); transition: all .2s;
+    }
+    .lang-switch button.active {
+        background: #fff; color: var(--text);
+        box-shadow: 0 2px 6px rgba(15,23,42,.08);
+    }
 
-  header.hero {
-    display: flex;
-    align-items: center;
-    gap: 1.75rem;
-    flex-wrap: wrap;
-    padding: 1.5rem 0 2rem;
-  }
-  header.hero img.icon {
-    width: 128px; height: 128px;
-    border-radius: 28px;
-    box-shadow: var(--shadow);
-  }
-  header.hero h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-  }
-  header.hero .tag { color: var(--text-dim); font-size: 1.1rem; margin-top: .35rem; }
-  header.hero .badge {
-    display: inline-block;
-    margin-top: .75rem;
-    padding: .35rem .7rem;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    font-size: .8rem;
-    color: var(--text-dim);
-  }
+    /* ============ Hero ============ */
+    .hero {
+        position: relative; overflow: hidden;
+        padding: 90px 0 70px;
+        background:
+            radial-gradient(1100px 600px at 80% -10%, rgba(14,165,233,.22), transparent 60%),
+            radial-gradient(900px 500px at -10% 20%, rgba(6,182,212,.18), transparent 60%),
+            linear-gradient(180deg, #ffffff 0%, #e0f2fe 100%);
+    }
+    /* Aviation grid backdrop */
+    .hero::before {
+        content: ''; position: absolute; inset: 0;
+        background-image:
+            linear-gradient(rgba(14,165,233,.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(14,165,233,.08) 1px, transparent 1px);
+        background-size: 40px 40px;
+        mask-image: radial-gradient(700px 400px at 50% 30%, #000 30%, transparent 75%);
+        -webkit-mask-image: radial-gradient(700px 400px at 50% 30%, #000 30%, transparent 75%);
+        pointer-events: none;
+    }
+    .hero-grid {
+        position: relative;
+        display: grid; grid-template-columns: 1.05fr 1fr;
+        gap: 60px; align-items: center;
+    }
+    .eyebrow {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(14,165,233,.12); color: var(--primary-dark);
+        font-size: 13px; font-weight: 600;
+        padding: 6px 14px; border-radius: 980px; margin-bottom: 22px;
+    }
+    .hero h1 {
+        font-size: clamp(38px, 5.4vw, 60px);
+        line-height: 1.04; font-weight: 800; letter-spacing: -0.03em;
+        margin: 0 0 18px;
+        background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 60%, #06b6d4 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .lead {
+        font-size: 20px; color: var(--secondary-text);
+        margin: 0 0 32px; max-width: 540px;
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+    .app-store-badge-img { display: inline-block; transition: transform .2s; }
+    .app-store-badge-img:hover { transform: scale(1.04); }
+    .app-store-badge-img img { height: 56px; width: auto; display: block; }
+    .secondary-cta {
+        font-size: 15px; font-weight: 600; color: var(--primary-dark);
+        text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .secondary-cta:hover { text-decoration: underline; }
 
-  section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem 1.5rem;
-    margin: 1rem 0;
-    box-shadow: var(--shadow);
-  }
-  section h2 { font-size: 1.25rem; margin-bottom: .9rem; letter-spacing: -0.01em; }
-  section p + p { margin-top: .6rem; }
+    /* Compass visual */
+    .hero-visual {
+        position: relative; display: flex; justify-content: center; align-items: center;
+        min-height: 420px;
+    }
+    .compass-card {
+        position: relative;
+        width: 100%; max-width: 360px;
+        background: linear-gradient(145deg, #ffffff, #f0f9ff);
+        border-radius: 32px; padding: 28px;
+        box-shadow: var(--shadow-lg);
+        transform: rotate(-2deg);
+        transition: transform .6s cubic-bezier(.2,.8,.2,1);
+        border: 1px solid var(--border);
+    }
+    .compass-card:hover { transform: rotate(0) translateY(-4px); }
+    .compass-svg { width: 100%; height: auto; display: block; }
+    .compass-stats {
+        margin-top: 18px;
+        display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+        font-size: 12px; text-align: center;
+    }
+    .compass-stats div {
+        background: rgba(14,165,233,.08); border-radius: 10px; padding: 8px 6px;
+        color: var(--primary-dark); font-weight: 600;
+    }
+    .compass-stats div b { display: block; font-size: 15px; color: var(--text); }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  .feature { padding: 1rem; border: 1px solid var(--border); border-radius: 12px; }
-  .feature .ico {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: .55rem;
-    background: rgba(14, 165, 233, 0.10);
-    color: var(--accent);
-  }
-  .feature .ico svg { width: 24px; height: 24px; }
-  .feature.pink .ico   { background: rgba(236, 72, 153, 0.12); color: var(--pink); }
-  .feature.green .ico  { background: rgba(16, 185, 129, 0.12); color: var(--green); }
-  .feature.cyan .ico   { background: rgba(34, 211, 238, 0.14); color: #06b6d4; }
-  .feature.blue .ico   { background: rgba(14, 165, 233, 0.12); color: var(--accent); }
-  .feature.violet .ico { background: rgba(139, 92, 246, 0.14); color: #8b5cf6; }
-  .feature.amber .ico  { background: rgba(245, 158, 11, 0.14); color: #f59e0b; }
-  .feature h3 { font-size: 1rem; margin-bottom: .25rem; }
-  .feature p { color: var(--text-dim); font-size: .92rem; }
+    .floating-badge {
+        position: absolute; background: #fff;
+        border-radius: 16px; padding: 12px 16px;
+        box-shadow: var(--shadow-md);
+        display: flex; align-items: center; gap: 10px;
+        font-size: 13px; font-weight: 600; color: var(--text);
+        animation: floatY 4s ease-in-out infinite;
+    }
+    .badge-emoji { font-size: 22px; }
+    .badge-1 { top: 4%; left: -8%; animation-delay: 0s; }
+    .badge-2 { bottom: 8%; right: -10%; animation-delay: 1.5s; }
+    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
 
-  .shots {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  .shots figure { margin: 0; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--bg); }
-  .shots img { display: block; width: 100%; height: auto; }
-  .shots figcaption { padding: .5rem .75rem; font-size: .85rem; color: var(--text-dim); border-top: 1px solid var(--border); }
+    /* ============ Animated compass ============ */
+    .compass-svg .cap-card,
+    .compass-svg .heading-needle,
+    .compass-svg .wind-arrow,
+    .compass-svg .center-hub,
+    .compass-svg .pulse-ring { transform-origin: 120px 120px; }
+    .compass-svg .cap-card { animation: capSway 9s ease-in-out infinite; }
+    .compass-svg .heading-needle { animation: needleSwing 4.5s ease-in-out infinite; }
+    .compass-svg .wind-arrow { animation: windRotate 7s ease-in-out infinite alternate; }
+    .compass-svg .pulse-ring { animation: pulseRing 3s ease-out infinite; }
+    .compass-svg .pulse-ring-2 { animation-delay: 1.5s; }
+    .compass-svg .center-hub { animation: hubBeat 2.2s ease-in-out infinite; }
+    .compass-svg .north-letter { animation: northGlow 3s ease-in-out infinite; transform-origin: center; }
+    .compass-svg .course-line { stroke-dasharray: 4 5; animation: courseDash 1.5s linear infinite; }
+    @keyframes capSway     { 0%,100% { transform: rotate(-6deg);} 50% { transform: rotate(6deg);} }
+    @keyframes needleSwing { 0%,100% { transform: rotate(24deg);} 50% { transform: rotate(32deg);} }
+    @keyframes windRotate  { 0% { transform: rotate(190deg);} 100% { transform: rotate(230deg);} }
+    @keyframes pulseRing   { 0% { transform: scale(.45); opacity:.7;} 100% { transform: scale(5.5); opacity: 0;} }
+    @keyframes hubBeat     { 0%,100% { transform: scale(1);} 50% { transform: scale(1.12);} }
+    @keyframes northGlow   { 0%,100% { fill:#ec4899; filter: drop-shadow(0 0 2px rgba(236,72,153,.6));} 50% { fill:#f97316; filter: drop-shadow(0 0 6px rgba(249,115,22,.85));} }
+    @keyframes courseDash  { to { stroke-dashoffset: -18; } }
+    @media (prefers-reduced-motion: reduce) {
+        .compass-svg * { animation: none !important; }
+    }
 
-  .disclaimer {
-    border-left: 3px solid var(--pink);
-    padding: .6rem .9rem;
-    background: rgba(236, 72, 153, 0.06);
-    border-radius: 8px;
-    color: var(--text-dim);
-    font-size: .92rem;
-  }
+    /* ============ Stats ============ */
+    .stats { background: #0b1220; color: #fff; padding: 32px 0; }
+    .stats-grid {
+        display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; text-align: center;
+    }
+    .stat-num {
+        font-size: 30px; font-weight: 800; letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 2px; }
 
-  footer {
-    margin-top: 2.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: .85rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: .5rem;
-  }
+    /* ============ Sections ============ */
+    section.section { padding: 100px 0; }
+    .section-eyebrow {
+        display: block; text-align: center; font-size: 14px; font-weight: 700;
+        color: var(--primary-dark); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px;
+    }
+    .section-title {
+        text-align: center; font-size: clamp(28px, 4vw, 44px);
+        font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px;
+    }
+    .section-sub {
+        text-align: center; color: var(--secondary-text);
+        font-size: 18px; max-width: 660px; margin: 0 auto 60px;
+    }
+
+    /* Features */
+    .features { background: var(--section-bg); }
+    .features-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px;
+    }
+    .feature-card {
+        background: var(--card-bg); padding: 32px 28px; border-radius: 22px;
+        box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s;
+        position: relative; overflow: hidden;
+        border: 1px solid rgba(14,165,233,.08);
+    }
+    .feature-card::before {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(135deg, transparent 60%, rgba(14,165,233,.07));
+        opacity: 0; transition: opacity .3s;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 52px; height: 52px; border-radius: 14px;
+        background: linear-gradient(135deg, rgba(14,165,233,.16), rgba(6,182,212,.16));
+        font-size: 26px; margin-bottom: 18px;
+    }
+    .feature-card h3 { margin: 0 0 10px; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+    .feature-card p { margin: 0; color: var(--secondary-text); font-size: 15px; }
+
+    /* Screenshots */
+    .screens-section { background: linear-gradient(180deg, #ffffff 0%, #e0f2fe 100%); }
+    .screens-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 28px; max-width: 800px; margin: 0 auto;
+    }
+    .screens-grid figure {
+        margin: 0; background: #fff; border-radius: 22px;
+        overflow: hidden; box-shadow: var(--shadow-md);
+        border: 1px solid var(--border);
+        transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .screens-grid figure:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 28px 70px rgba(14,165,233,.28);
+    }
+    .screens-grid img { width: 100%; height: auto; display: block; }
+    .screens-grid figcaption {
+        padding: 12px 18px; font-size: 14px; color: var(--secondary-text);
+        border-top: 1px solid var(--border); font-weight: 500;
+    }
+
+    /* Privacy / Disclaimer */
+    .info-card {
+        max-width: 760px; margin: 0 auto;
+        background: linear-gradient(135deg, #f0fff5 0%, #e7fbe8 100%);
+        border: 1px solid #c8f0c8;
+        border-radius: 24px; padding: 36px 32px;
+        box-shadow: var(--shadow-sm);
+    }
+    .info-card h3 {
+        margin: 0 0 12px; font-size: 22px; color: #1b8a3a;
+        display: flex; align-items: center; gap: 10px;
+    }
+    .info-card p { color: #166534; margin: 6px 0; }
+    .info-card a { color: #166534; font-weight: 600; }
+
+    .warn-card {
+        max-width: 760px; margin: 24px auto 0;
+        background: linear-gradient(135deg, #fffaf0 0%, #fff3e0 100%);
+        border: 1px solid #fbd5a5;
+        border-radius: 24px; padding: 28px 32px;
+        box-shadow: var(--shadow-sm);
+    }
+    .warn-card h3 {
+        margin: 0 0 12px; font-size: 20px; color: #b45309;
+        display: flex; align-items: center; gap: 10px;
+    }
+    .warn-card p { color: #92400e; margin: 0; font-size: 15px; }
+
+    /* Store banner */
+    .store-banner {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0c4a6e 60%, #06b6d4 130%);
+        color: #fff; padding: 90px 0; text-align: center;
+        position: relative; overflow: hidden;
+    }
+    .store-banner::before {
+        content: ''; position: absolute; inset: 0;
+        background:
+            radial-gradient(600px 300px at 20% 30%, rgba(56,189,248,.35), transparent 60%),
+            radial-gradient(500px 400px at 80% 70%, rgba(6,182,212,.35), transparent 60%);
+        pointer-events: none;
+    }
+    .store-banner .container { position: relative; }
+    .store-banner h2 {
+        font-size: clamp(28px, 4vw, 42px); font-weight: 700;
+        margin: 0 0 14px; letter-spacing: -0.02em;
+    }
+    .store-banner p { font-size: 18px; margin: 0 0 32px; opacity: .95; }
+
+    /* Footer */
+    footer {
+        background: var(--section-bg); padding: 50px 0 40px;
+        font-size: 13px; color: var(--muted); border-top: 1px solid var(--border);
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 18px; }
+    .footer-links a { color: var(--secondary-text); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--primary); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 880px) {
+        .hero { padding: 60px 0 40px; }
+        .hero-grid { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+        .lead { margin-left: auto; margin-right: auto; }
+        .hero-cta { justify-content: center; }
+        .compass-card { max-width: 320px; transform: rotate(0); }
+        .floating-badge { display: none; }
+        .stats-grid { grid-template-columns: repeat(2,1fr); gap: 20px; }
+        section.section { padding: 70px 0; }
+    }
+    @media (max-width: 520px) {
+        .nav { height: 52px; }
+        .home-link { padding: 7px 12px; font-size: 13px; }
+        .home-link .label-text { display: none; }
+    }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="lang" role="group" aria-label="Language">
-    <button type="button" data-set="fr">FR</button>
-    <button type="button" data-set="en">EN</button>
-  </div>
-
-  <header class="hero">
-    <img class="icon" src="AppIcon/AppIcon-Light.png" alt="CapRoute">
-    <div>
-      <h1>CapRoute</h1>
-      <p class="tag">
-        <span data-fr>Préparation de navigation VFR — iPhone &amp; iPad</span>
-        <span data-en>VFR flight planning — iPhone &amp; iPad</span>
-      </p>
-      <span class="badge">iOS 17+ · SwiftUI · iCloud</span>
+<header>
+    <div class="container nav">
+        <a href="#" class="logo">
+            <img src="AppIcon/AppIcon-Light.png" alt="CapRoute Logo">
+            <span>CapRoute</span>
+        </a>
+        <div class="nav-actions">
+            <a href="https://valerie-otero.github.io/" class="home-link" id="link-home">
+                <span>🏠</span><span class="label-text">Toutes les apps</span>
+            </a>
+            <div class="lang-switch" role="tablist">
+                <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+                <button id="btn-en" onclick="setLang('en')">EN</button>
+            </div>
+        </div>
     </div>
-  </header>
+</header>
 
-  <section>
-    <h2>
-      <span data-fr>Une nav VFR, claire et complète</span>
-      <span data-en>A clear, complete VFR nav</span>
-    </h2>
-    <p data-fr>
-      CapRoute calcule la chaîne complète <strong>Rv → Rm → Cv → Cm → Cc</strong>,
-      la <strong>dérive subie</strong>, la <strong>correction de cap</strong>,
-      la <strong>vitesse sol</strong> et le <strong>temps de vol</strong> branche par branche,
-      à partir du vent, de la TAS, de la déclinaison magnétique et de la déviation compas.
-    </p>
-    <p data-en>
-      CapRoute computes the full chain <strong>TC → MC → TH → MH → CH</strong>,
-      the <strong>wind drift</strong>, the <strong>heading correction</strong>,
-      <strong>ground speed</strong> and <strong>time</strong> for each leg,
-      from wind, TAS, magnetic variation and compass deviation.
-    </p>
-    <p data-fr>
-      Chaque navigation s'exporte en <strong>PDF A4</strong> prêt à imprimer ou à glisser
-      dans un kneeboard, avec rose des Nords, matrice Route/Cap et résultats détaillés.
-    </p>
-    <p data-en>
-      Every flight exports to a print-ready <strong>A4 PDF</strong> for your kneeboard,
-      with the compass rose, the Course/Heading matrix and detailed results.
-    </p>
-  </section>
+<!-- ============ FRENCH ============ -->
+<div id="content-fr">
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">✈️ Navigation VFR · iPhone &amp; iPad</span>
+                <h1>Votre nav VFR, sans approximation.</h1>
+                <p class="lead">Rv → Rm → Cv → Cm → Cc, dérive, vitesse sol, temps par branche — calculés à partir du vent, de la TAS et de la déclinaison. Export PDF kneeboard inclus.</p>
+                <div class="hero-cta">
+                    <a href="https://apps.apple.com/fr/app/caproute/id6769453543" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
+                    </a>
+                    <a href="#features" class="secondary-cta">Découvrir les fonctionnalités →</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="compass-card">
+                    <svg class="compass-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs>
+                            <radialGradient id="bezelGrad" cx="50%" cy="50%" r="60%">
+                                <stop offset="0%" stop-color="#f0f9ff"/>
+                                <stop offset="80%" stop-color="#e0f2fe"/>
+                                <stop offset="100%" stop-color="#7dd3fc"/>
+                            </radialGradient>
+                            <radialGradient id="dialGrad" cx="50%" cy="40%" r="65%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#e0f2fe"/>
+                            </radialGradient>
+                            <linearGradient id="needleN" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#ef4444"/>
+                                <stop offset="55%" stop-color="#f97316"/>
+                                <stop offset="100%" stop-color="#fbbf24"/>
+                            </linearGradient>
+                            <linearGradient id="needleS" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#94a3b8"/>
+                                <stop offset="100%" stop-color="#cbd5e1"/>
+                            </linearGradient>
+                            <linearGradient id="windGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#ec4899"/>
+                                <stop offset="100%" stop-color="#8b5cf6"/>
+                            </linearGradient>
+                            <filter id="needleGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="2.4" result="b"/>
+                                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                        </defs>
 
-  <section>
-    <h2><span data-fr>Fonctionnalités</span><span data-en>Features</span></h2>
-    <div class="grid">
-      <div class="feature pink">
-        <div class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="9"/>
-            <polygon points="12,5 14,12 12,11 10,12" fill="currentColor" stroke="none"/>
-            <polygon points="12,19 10,12 12,13 14,12" fill="currentColor" opacity=".35" stroke="none"/>
-          </svg>
-        </div>
-        <h3><span data-fr>Rose des Nords</span><span data-en>Compass rose</span></h3>
-        <p>
-          <span data-fr>Rv, Rm, Cv, Cc, vent et dérive visualisés simultanément.</span>
-          <span data-en>TC, MC, TH, CH, wind and drift visualised together.</span>
-        </p>
-      </div>
-      <div class="feature blue">
-        <div class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="16" rx="2"/>
-            <path d="M3 10h18M3 16h18M9 4v16M15 4v16"/>
-          </svg>
-        </div>
-        <h3><span data-fr>Matrice Route/Cap</span><span data-en>Course/Heading matrix</span></h3>
-        <p>
-          <span data-fr>Toute la chaîne magnétique lisible en un coup d'œil.</span>
-          <span data-en>The full magnetic chain at a glance.</span>
-        </p>
-      </div>
-      <div class="feature cyan">
-        <div class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 8h11a3 3 0 1 0-3-3"/>
-            <path d="M3 14h15a3 3 0 1 1-3 3"/>
-            <path d="M3 11h8"/>
-          </svg>
-        </div>
-        <h3><span data-fr>Calcul vent complet</span><span data-en>Full wind solution</span></h3>
-        <p>
-          <span data-fr>WCA, composante face/arrière, GS et temps exacts.</span>
-          <span data-en>WCA, head/tail component, exact GS and time.</span>
-        </p>
-      </div>
-      <div class="feature cyan">
-        <div class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="9"/>
-            <path d="M6 11h8a2 2 0 1 0-2-2"/>
-            <path d="M6 14h10a2 2 0 1 1-2 2"/>
-          </svg>
-        </div>
-        <h3><span data-fr>Vent par branche</span><span data-en>Per-leg wind</span></h3>
-        <p>
-          <span data-fr>Chaque branche hérite du vent global ou définit le sien — étiquettes hérité / personnalisé.</span>
-          <span data-en>Each leg inherits the nav-wide wind or defines its own — inherited / custom tags.</span>
-        </p>
-      </div>
-      <div class="feature amber">
-        <div class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
-            <path d="M13 3v5h5"/>
-            <path d="M9 14h6M9 17h4"/>
-          </svg>
-        </div>
-        <h3><span data-fr>Export PDF</span><span data-en>PDF export</span></h3>
-        <p>
-          <span data-fr>Une page par branche, généré localement, prêt kneeboard.</span>
-          <span data-en>One page per leg, generated locally, kneeboard-ready.</span>
-        </p>
-      </div>
-      <div class="feature violet">
-        <div class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 8h13l-3-3"/>
-            <path d="M20 16H7l3 3"/>
-          </svg>
-        </div>
-        <h3><span data-fr>Nav retour</span><span data-en>Return flight</span></h3>
-        <p>
-          <span data-fr>Inversion 1-tap : branches retournées, Rv +180°, setup conservé.</span>
-          <span data-en>1-tap reverse: legs flipped, TC +180°, setup preserved.</span>
-        </p>
-      </div>
-      <div class="feature green">
-        <div class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 18a5 5 0 1 1 .8-9.94A6 6 0 0 1 19 12a4 4 0 0 1 0 8H7z"/>
-            <path d="M12 12v6m0 0l-2-2m2 2l2-2"/>
-          </svg>
-        </div>
-        <h3>iCloud</h3>
-        <p>
-          <span data-fr>Synchro privée entre vos appareils. Suppression locale ou globale.</span>
-          <span data-en>Private sync across your devices. Local or global delete.</span>
-        </p>
-      </div>
-    </div>
-  </section>
+                        <!-- Bezel -->
+                        <circle cx="120" cy="120" r="116" fill="url(#bezelGrad)" stroke="#0284c7" stroke-width="2"/>
+                        <circle cx="120" cy="120" r="110" fill="none" stroke="#0ea5e9" stroke-width=".6" stroke-dasharray="2 3" opacity=".55"/>
 
-  <section>
-    <h2><span data-fr>Captures d'écran</span><span data-en>Screenshots</span></h2>
-    <p style="color:var(--text-dim); font-size:.95rem;">
-      <span data-fr>Aperçus de l'app sur iPhone et iPad — rose des Nords, matrice Route/Cap et export PDF.</span>
-      <span data-en>Previews on iPhone and iPad — compass rose, Course/Heading matrix and PDF export.</span>
-    </p>
-    <div class="shots">
-      <figure data-fr>
-        <img src="screenshots/01.png" alt="CapRoute">
-        <figcaption>Vue principale</figcaption>
-      </figure>
-      <figure data-fr>
-        <img src="screenshots/02.png" alt="CapRoute">
-        <figcaption>Détail d'une branche</figcaption>
-      </figure>
-      <figure data-en>
-        <img src="screenshots/01_EN.png" alt="CapRoute">
-        <figcaption>Main view</figcaption>
-      </figure>
-      <figure data-en>
-        <img src="screenshots/02_EN.png" alt="CapRoute">
-        <figcaption>Leg detail</figcaption>
-      </figure>
-    </div>
-  </section>
+                        <!-- Rotating compass card -->
+                        <g class="cap-card">
+                            <!-- Minor ticks every 5° (72 ticks) -->
+                            <circle cx="120" cy="120" r="102" fill="none" stroke="#0369a1" stroke-width="10" stroke-dasharray="1 7.9" opacity=".5"/>
+                            <!-- Major ticks every 30° (12 ticks) -->
+                            <circle cx="120" cy="120" r="102" fill="none" stroke="#0c4a6e" stroke-width="14" stroke-dasharray="3 50.4" opacity=".85"/>
+                            <!-- Inner dial -->
+                            <circle cx="120" cy="120" r="94" fill="url(#dialGrad)"/>
 
-  <section>
-    <h2><span data-fr>Confidentialité</span><span data-en>Privacy</span></h2>
-    <p data-fr>
-      CapRoute ne collecte aucune donnée personnelle, n'utilise aucun tracker, aucune analytics,
-      aucun compte tiers. Vos navigations restent sur vos appareils et, si vous activez iCloud,
-      dans votre propre conteneur iCloud privé.<br>
-      <strong>Contact&nbsp;: <a href="mailto:valerie.otero@free.fr">m'écrire</a></strong>
-    </p>
-    <p data-en>
-      CapRoute collects no personal data, uses no trackers, no analytics, no third-party
-      accounts. Your flights stay on your devices and, if you enable iCloud, in your own
-      private iCloud container.<br>
-      <strong>Contact: <a href="mailto:valerie.otero@free.fr">write to me</a></strong>
-    </p>
-    <p style="margin-top:.75rem;">
-      → <a href="privacy.html">
-        <span data-fr>Politique de confidentialité complète</span>
-        <span data-en>Full privacy policy</span>
-      </a>
-    </p>
-  </section>
+                            <!-- Cardinal letters -->
+                            <text x="120" y="50" text-anchor="middle" font-size="22" font-weight="800" class="north-letter">N</text>
+                            <text x="120" y="200" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">S</text>
+                            <text x="40" y="126" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">W</text>
+                            <text x="200" y="126" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">E</text>
+                            <!-- Intermediates -->
+                            <g font-size="10" font-weight="600" fill="#475569">
+                                <text x="170" y="74" text-anchor="middle">NE</text>
+                                <text x="170" y="178" text-anchor="middle">SE</text>
+                                <text x="70" y="178" text-anchor="middle">SW</text>
+                                <text x="70" y="74" text-anchor="middle">NW</text>
+                            </g>
+                        </g>
 
-  <section>
-    <h2><span data-fr>Avertissement</span><span data-en>Disclaimer</span></h2>
-    <p class="disclaimer" data-fr>
-      CapRoute est une aide à la préparation. Elle ne remplace pas un log de navigation papier,
-      un EFB officiel, ni un briefing météo. La responsabilité finale du calcul, de la navigation et
-      de la sécurité incombe au commandant de bord. Croisez toujours les valeurs avec une autre source.
-    </p>
-    <p class="disclaimer" data-en>
-      CapRoute is a planning aid. It does not replace a paper navigation log, an official EFB
-      or a weather briefing. Final responsibility for the calculations, the flight and safety
-      lies with the pilot in command. Always cross-check values with another source.
-    </p>
-  </section>
+                        <!-- Pulse rings emanating from center -->
+                        <circle class="pulse-ring" cx="120" cy="120" r="14" fill="none" stroke="#0ea5e9" stroke-width="2"/>
+                        <circle class="pulse-ring pulse-ring-2" cx="120" cy="120" r="14" fill="none" stroke="#06b6d4" stroke-width="2"/>
 
-  <footer>
-    <span>
-      <span data-fr>© 2026 Valérie Otero — Tous droits réservés.</span>
-      <span data-en>© 2026 Valérie Otero — All rights reserved.</span>
-    </span>
-    <span>
-      <a href="privacy.html"><span data-fr>Confidentialité</span><span data-en>Privacy</span></a>
-      ·
-      <a href="README.html">README</a>
-    </span>
-  </footer>
+                        <!-- Course (Rv) reference line, fixed -->
+                        <line class="course-line" x1="120" y1="120" x2="120" y2="38" stroke="#0ea5e9" stroke-width="1.4" opacity=".55"/>
 
+                        <!-- Wind arrow (rotating) -->
+                        <g class="wind-arrow">
+                            <line x1="120" y1="62" x2="120" y2="100" stroke="url(#windGrad)" stroke-width="2.6" stroke-linecap="round"/>
+                            <polygon points="120,104 113,93 127,93" fill="#ec4899"/>
+                            <circle cx="120" cy="60" r="3" fill="#ec4899" opacity=".8"/>
+                            <text x="120" y="56" text-anchor="middle" font-size="8" font-weight="700" fill="#9d174d">VENT</text>
+                        </g>
+
+                        <!-- Heading needle (Cap) -->
+                        <g class="heading-needle" filter="url(#needleGlow)">
+                            <polygon points="120,42 132,120 120,132 108,120" fill="url(#needleN)"/>
+                            <polygon points="120,198 108,120 120,108 132,120" fill="url(#needleS)" opacity=".75"/>
+                        </g>
+
+                        <!-- Center hub with plane -->
+                        <g class="center-hub">
+                            <circle cx="120" cy="120" r="12" fill="#0f172a"/>
+                            <circle cx="120" cy="120" r="12" fill="none" stroke="#fbbf24" stroke-width="1.4"/>
+                            <path d="M120 113 L120 128 M111 119 L129 119 M115 124 L125 124" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+                        </g>
+                    </svg>
+                    <div class="compass-stats">
+                        <div>Rv<b>045°</b></div>
+                        <div>Cm<b>052°</b></div>
+                        <div>GS<b>108 kt</b></div>
+                    </div>
+                </div>
+                <div class="floating-badge badge-1">
+                    <span class="badge-emoji">🧭</span>
+                    <span>Rose des Nords</span>
+                </div>
+                <div class="floating-badge badge-2">
+                    <span class="badge-emoji">📄</span>
+                    <span>PDF kneeboard</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container stats-grid">
+            <div><div class="stat-num">VFR</div><div class="stat-label">Préparation complète</div></div>
+            <div><div class="stat-num">Rv→Cc</div><div class="stat-label">Chaîne magnétique</div></div>
+            <div><div class="stat-num">PDF</div><div class="stat-label">Export A4 kneeboard</div></div>
+            <div><div class="stat-num">iCloud</div><div class="stat-label">Sync privée</div></div>
+        </div>
+    </section>
+
+    <section id="features" class="section features">
+        <div class="container">
+            <span class="section-eyebrow">Fonctionnalités</span>
+            <h2 class="section-title">Tout ce qu'il faut pour un log clair</h2>
+            <p class="section-sub">Une nav rigoureuse, branche par branche, prête à imprimer ou à glisser dans votre kneeboard.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧭</div>
+                    <h3>Rose des Nords</h3>
+                    <p>Rv, Rm, Cv, Cc, vent et dérive visualisés simultanément, en un coup d'œil.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Matrice Route/Cap</h3>
+                    <p>Toute la chaîne magnétique lisible en un instant : Rv → Rm → Cv → Cm → Cc.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💨</div>
+                    <h3>Calcul vent complet</h3>
+                    <p>WCA, composante face/arrière, vitesse sol et temps exacts par branche.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🪁</div>
+                    <h3>Vent par branche</h3>
+                    <p>Chaque branche hérite du vent global ou définit le sien (étiquettes hérité / personnalisé).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3>Export PDF</h3>
+                    <p>Une page par branche, généré localement, prêt à imprimer et glisser dans votre kneeboard.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔁</div>
+                    <h3>Nav retour 1-tap</h3>
+                    <p>Branches retournées, Rv +180°, setup conservé — gain de temps en piste.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>iCloud privé</h3>
+                    <p>Synchro entre vos appareils dans votre propre conteneur iCloud. Suppression locale ou globale.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>iPhone &amp; iPad</h3>
+                    <p>SwiftUI natif, iOS 17+. Interface optimisée pour chaque format.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section screens-section">
+        <div class="container">
+            <span class="section-eyebrow">Aperçus</span>
+            <h2 class="section-title">L'app en images</h2>
+            <p class="section-sub">Rose des Nords, matrice Route/Cap, détail de branche et export PDF.</p>
+            <div class="screens-grid">
+                <figure>
+                    <img src="screenshots/01.png" alt="CapRoute — vue principale">
+                    <figcaption>Vue principale</figcaption>
+                </figure>
+                <figure>
+                    <img src="screenshots/02.png" alt="CapRoute — détail d'une branche">
+                    <figcaption>Détail d'une branche</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="info-card">
+                <h3>🛡️ Confidentialité totale</h3>
+                <p>Aucune donnée personnelle collectée. Aucun tracker, aucune analytics, aucun compte tiers.</p>
+                <p>Vos navigations restent sur vos appareils, et si vous activez iCloud, dans votre propre conteneur iCloud privé.</p>
+                <p><a href="privacy.html">Voir la politique de confidentialité complète →</a></p>
+            </div>
+            <div class="warn-card">
+                <h3>⚠️ Avertissement</h3>
+                <p>CapRoute est une <strong>aide à la préparation</strong>. Elle ne remplace pas un log de navigation papier, un EFB officiel ni un briefing météo. La responsabilité finale du calcul, de la navigation et de la sécurité incombe au commandant de bord. Croisez toujours les valeurs avec une autre source.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="store-banner">
+        <div class="container">
+            <h2>Disponible sur l'App Store</h2>
+            <p>Téléchargez CapRoute sur votre iPhone et iPad.</p>
+            <a href="https://apps.apple.com/fr/app/caproute/id6769453543" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
+            </a>
+        </div>
+    </section>
 </div>
 
+<!-- ============ ENGLISH ============ -->
+<div id="content-en" class="hidden">
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">✈️ VFR planning · iPhone &amp; iPad</span>
+                <h1>Your VFR nav, with no guesswork.</h1>
+                <p class="lead">TC → MC → TH → MH → CH, drift, ground speed, leg time — all computed from wind, TAS and magnetic variation. Kneeboard-ready PDF included.</p>
+                <div class="hero-cta">
+                    <a href="https://apps.apple.com/fr/app/caproute/id6769453543" class="app-store-badge-img" aria-label="Download on the App Store">
+                        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
+                    </a>
+                    <a href="#features-en" class="secondary-cta">See the features →</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="compass-card">
+                    <svg class="compass-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs>
+                            <radialGradient id="bezelGrad2" cx="50%" cy="50%" r="60%">
+                                <stop offset="0%" stop-color="#f0f9ff"/>
+                                <stop offset="80%" stop-color="#e0f2fe"/>
+                                <stop offset="100%" stop-color="#7dd3fc"/>
+                            </radialGradient>
+                            <radialGradient id="dialGrad2" cx="50%" cy="40%" r="65%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#e0f2fe"/>
+                            </radialGradient>
+                            <linearGradient id="needleN2" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#ef4444"/>
+                                <stop offset="55%" stop-color="#f97316"/>
+                                <stop offset="100%" stop-color="#fbbf24"/>
+                            </linearGradient>
+                            <linearGradient id="needleS2" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#94a3b8"/>
+                                <stop offset="100%" stop-color="#cbd5e1"/>
+                            </linearGradient>
+                            <linearGradient id="windGrad2" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#ec4899"/>
+                                <stop offset="100%" stop-color="#8b5cf6"/>
+                            </linearGradient>
+                            <filter id="needleGlow2" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="2.4" result="b"/>
+                                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                        </defs>
+
+                        <circle cx="120" cy="120" r="116" fill="url(#bezelGrad2)" stroke="#0284c7" stroke-width="2"/>
+                        <circle cx="120" cy="120" r="110" fill="none" stroke="#0ea5e9" stroke-width=".6" stroke-dasharray="2 3" opacity=".55"/>
+
+                        <g class="cap-card">
+                            <circle cx="120" cy="120" r="102" fill="none" stroke="#0369a1" stroke-width="10" stroke-dasharray="1 7.9" opacity=".5"/>
+                            <circle cx="120" cy="120" r="102" fill="none" stroke="#0c4a6e" stroke-width="14" stroke-dasharray="3 50.4" opacity=".85"/>
+                            <circle cx="120" cy="120" r="94" fill="url(#dialGrad2)"/>
+
+                            <text x="120" y="50" text-anchor="middle" font-size="22" font-weight="800" class="north-letter">N</text>
+                            <text x="120" y="200" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">S</text>
+                            <text x="40" y="126" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">W</text>
+                            <text x="200" y="126" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">E</text>
+                            <g font-size="10" font-weight="600" fill="#475569">
+                                <text x="170" y="74" text-anchor="middle">NE</text>
+                                <text x="170" y="178" text-anchor="middle">SE</text>
+                                <text x="70" y="178" text-anchor="middle">SW</text>
+                                <text x="70" y="74" text-anchor="middle">NW</text>
+                            </g>
+                        </g>
+
+                        <circle class="pulse-ring" cx="120" cy="120" r="14" fill="none" stroke="#0ea5e9" stroke-width="2"/>
+                        <circle class="pulse-ring pulse-ring-2" cx="120" cy="120" r="14" fill="none" stroke="#06b6d4" stroke-width="2"/>
+
+                        <line class="course-line" x1="120" y1="120" x2="120" y2="38" stroke="#0ea5e9" stroke-width="1.4" opacity=".55"/>
+
+                        <g class="wind-arrow">
+                            <line x1="120" y1="62" x2="120" y2="100" stroke="url(#windGrad2)" stroke-width="2.6" stroke-linecap="round"/>
+                            <polygon points="120,104 113,93 127,93" fill="#ec4899"/>
+                            <circle cx="120" cy="60" r="3" fill="#ec4899" opacity=".8"/>
+                            <text x="120" y="56" text-anchor="middle" font-size="8" font-weight="700" fill="#9d174d">WIND</text>
+                        </g>
+
+                        <g class="heading-needle" filter="url(#needleGlow2)">
+                            <polygon points="120,42 132,120 120,132 108,120" fill="url(#needleN2)"/>
+                            <polygon points="120,198 108,120 120,108 132,120" fill="url(#needleS2)" opacity=".75"/>
+                        </g>
+
+                        <g class="center-hub">
+                            <circle cx="120" cy="120" r="12" fill="#0f172a"/>
+                            <circle cx="120" cy="120" r="12" fill="none" stroke="#fbbf24" stroke-width="1.4"/>
+                            <path d="M120 113 L120 128 M111 119 L129 119 M115 124 L125 124" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+                        </g>
+                    </svg>
+                    <div class="compass-stats">
+                        <div>TC<b>045°</b></div>
+                        <div>MH<b>052°</b></div>
+                        <div>GS<b>108 kt</b></div>
+                    </div>
+                </div>
+                <div class="floating-badge badge-1">
+                    <span class="badge-emoji">🧭</span>
+                    <span>Compass rose</span>
+                </div>
+                <div class="floating-badge badge-2">
+                    <span class="badge-emoji">📄</span>
+                    <span>Kneeboard PDF</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container stats-grid">
+            <div><div class="stat-num">VFR</div><div class="stat-label">Complete planning</div></div>
+            <div><div class="stat-num">TC→CH</div><div class="stat-label">Magnetic chain</div></div>
+            <div><div class="stat-num">PDF</div><div class="stat-label">A4 kneeboard export</div></div>
+            <div><div class="stat-num">iCloud</div><div class="stat-label">Private sync</div></div>
+        </div>
+    </section>
+
+    <section id="features-en" class="section features">
+        <div class="container">
+            <span class="section-eyebrow">Features</span>
+            <h2 class="section-title">Everything you need for a clean log</h2>
+            <p class="section-sub">A rigorous nav, leg by leg, ready to print or drop into your kneeboard.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧭</div>
+                    <h3>Compass rose</h3>
+                    <p>TC, MC, TH, CH, wind and drift visualized together, at a glance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Course/Heading matrix</h3>
+                    <p>The full magnetic chain in an instant: TC → MC → TH → MH → CH.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💨</div>
+                    <h3>Full wind solution</h3>
+                    <p>WCA, head/tail component, exact ground speed and time per leg.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🪁</div>
+                    <h3>Per-leg wind</h3>
+                    <p>Each leg inherits the nav-wide wind or defines its own (inherited / custom tags).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3>PDF export</h3>
+                    <p>One page per leg, generated locally, ready to print and slide into your kneeboard.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔁</div>
+                    <h3>1-tap return flight</h3>
+                    <p>Legs flipped, TC +180°, setup preserved — save time on the apron.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Private iCloud</h3>
+                    <p>Sync across your devices in your own iCloud container. Local or global delete.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>iPhone &amp; iPad</h3>
+                    <p>Native SwiftUI, iOS 17+. UI optimized for every form factor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section screens-section">
+        <div class="container">
+            <span class="section-eyebrow">Previews</span>
+            <h2 class="section-title">CapRoute in pictures</h2>
+            <p class="section-sub">Compass rose, Course/Heading matrix, leg detail and PDF export.</p>
+            <div class="screens-grid">
+                <figure>
+                    <img src="screenshots/01_EN.png" alt="CapRoute — main view">
+                    <figcaption>Main view</figcaption>
+                </figure>
+                <figure>
+                    <img src="screenshots/02_EN.png" alt="CapRoute — leg detail">
+                    <figcaption>Leg detail</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="info-card">
+                <h3>🛡️ Total privacy</h3>
+                <p>No personal data collected. No trackers, no analytics, no third-party accounts.</p>
+                <p>Your flights stay on your devices and, if you enable iCloud, in your own private iCloud container.</p>
+                <p><a href="privacy.html">View the full privacy policy →</a></p>
+            </div>
+            <div class="warn-card">
+                <h3>⚠️ Disclaimer</h3>
+                <p>CapRoute is a <strong>planning aid</strong>. It does not replace a paper navigation log, an official EFB or a weather briefing. Final responsibility for the calculations, the flight and safety lies with the pilot in command. Always cross-check values with another source.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="store-banner">
+        <div class="container">
+            <h2>Available on the App Store</h2>
+            <p>Download CapRoute on your iPhone and iPad.</p>
+            <a href="https://apps.apple.com/fr/app/caproute/id6769453543" class="app-store-badge-img" aria-label="Download on the App Store">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
+            </a>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="https://valerie-otero.github.io/" id="link-home-footer">Accueil du site</a>
+            <a href="privacy.html" id="link-privacy">Politique de confidentialité</a>
+            <a href="README.html" id="link-docs">Documentation</a>
+            <a href="mailto:valerie.otero@free.fr" id="link-contact">Contact / Support</a>
+        </div>
+        <p>&copy; 2026 Valérie Otero — CapRoute.</p>
+    </div>
+</footer>
+
 <script>
-  (function () {
-    var KEY = 'caproute-lang';
-    function apply(l) {
-      document.documentElement.setAttribute('lang', l);
-      try { localStorage.setItem(KEY, l); } catch (e) {}
+    let currentLang = 'fr';
+    function setLang(lang) {
+        if (lang === currentLang) return;
+        const fr = document.getElementById('content-fr');
+        const en = document.getElementById('content-en');
+        const btnFr = document.getElementById('btn-fr');
+        const btnEn = document.getElementById('btn-en');
+        const linkHome = document.getElementById('link-home');
+        const linkHomeFooter = document.getElementById('link-home-footer');
+        const linkPrivacy = document.getElementById('link-privacy');
+        const linkDocs = document.getElementById('link-docs');
+        const linkContact = document.getElementById('link-contact');
+
+        if (lang === 'en') {
+            fr.classList.add('hidden'); en.classList.remove('hidden');
+            btnFr.classList.remove('active'); btnEn.classList.add('active');
+            document.documentElement.lang = 'en';
+            document.title = "CapRoute — VFR flight planning";
+            if (linkHome) linkHome.querySelector('.label-text').textContent = "All apps";
+            if (linkHomeFooter) linkHomeFooter.textContent = "Website home";
+            if (linkPrivacy) linkPrivacy.textContent = "Privacy Policy";
+            if (linkDocs) linkDocs.textContent = "Documentation";
+            if (linkContact) linkContact.textContent = "Contact / Support";
+        } else {
+            en.classList.add('hidden'); fr.classList.remove('hidden');
+            btnEn.classList.remove('active'); btnFr.classList.add('active');
+            document.documentElement.lang = 'fr';
+            document.title = "CapRoute — Préparation de navigation VFR";
+            if (linkHome) linkHome.querySelector('.label-text').textContent = "Toutes les apps";
+            if (linkHomeFooter) linkHomeFooter.textContent = "Accueil du site";
+            if (linkPrivacy) linkPrivacy.textContent = "Politique de confidentialité";
+            if (linkDocs) linkDocs.textContent = "Documentation";
+            if (linkContact) linkContact.textContent = "Contact / Support";
+        }
+        currentLang = lang;
     }
-    var saved = null;
-    try { saved = localStorage.getItem(KEY); } catch (e) {}
-    var initial = saved || ((navigator.language || 'fr').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en');
-    apply(initial);
-    document.querySelectorAll('.lang button[data-set]').forEach(function (b) {
-      b.addEventListener('click', function () { apply(b.getAttribute('data-set')); });
-    });
-  })();
+
+    const userLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+    if (userLang.startsWith('en')) setLang('en');
 </script>
+
 </body>
 </html>
