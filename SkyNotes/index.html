@@ -1,174 +1,621 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyNotes - Notes projet & Checklists</title>
-    <style>
-        :root {
-            --primary-color: #007AFF;
-            --bg-color: #F5F5F7;
-            --text-color: #1D1D1F;
-            --card-bg: #FFFFFF;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: var(--card-bg);
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 22px;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #89CFF0 0%, #007AFF 100%);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,122,255,0.3);
-        }
-        h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-        .subtitle {
-            color: #86868B;
-            font-size: 1.2rem;
-            margin-top: 0.5rem;
-        }
-        main {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        .card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 18px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-        }
-        .card h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-        }
-        .download-badge {
-            display: inline-block;
-            background-color: #000;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 1.5rem;
-        }
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: #86868B;
-            font-size: 0.9rem;
-        }
-        a { color: var(--primary-color); text-decoration: none; }
-        a:hover { text-decoration: underline; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkyNotes — Notes & Checklists pour vos projets</title>
+<meta name="description" content="SkyNotes : notes, checklists colorées et modèles pour organiser vos projets, briefings et missions. iPhone, iPad, Mac.">
+<style>
+    :root {
+        --primary: #007aff;
+        --primary-dark: #0060df;
+        --accent: #5ac8fa;
+        --text: #0a0a0c;
+        --secondary-text: #475569;
+        --muted: #64748b;
+        --bg: #ffffff;
+        --section-bg: #f5f7fb;
+        --card-bg: #ffffff;
+        --border: #e2e8f0;
+        --shadow-sm: 0 4px 12px rgba(15,23,42,0.05);
+        --shadow-md: 0 14px 36px rgba(0,122,255,0.12);
+        --shadow-lg: 0 30px 80px rgba(15,23,42,0.18);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    /* ============ Header ============ */
+    header {
+        background: rgba(255,255,255,0.78);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        position: sticky; top: 0; z-index: 100;
+        border-bottom: 1px solid var(--border);
+    }
+    .nav {
+        display: flex; align-items: center; justify-content: space-between;
+        height: 58px; gap: 16px;
+    }
+    .logo {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-weight: 700; font-size: 17px; color: var(--text); text-decoration: none;
+        letter-spacing: -0.01em;
+    }
+    .logo img { height: 34px; width: 34px; border-radius: 10px; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .home-link {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-size: 14px; font-weight: 600; color: #fff;
+        background: var(--primary); text-decoration: none;
+        padding: 8px 16px; border-radius: 980px;
+        transition: background .2s, transform .2s, box-shadow .2s;
+        box-shadow: 0 2px 10px rgba(0,122,255,.3);
+    }
+    .home-link:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,122,255,.45); }
+    .lang-switch {
+        display: inline-flex; background: #eef3f8; padding: 3px; border-radius: 980px;
+    }
+    .lang-switch button {
+        border: 0; background: transparent; cursor: pointer;
+        padding: 6px 14px; border-radius: 980px; font-size: 13px; font-weight: 600;
+        color: var(--secondary-text); transition: all .2s;
+    }
+    .lang-switch button.active {
+        background: #fff; color: var(--text);
+        box-shadow: 0 2px 6px rgba(15,23,42,.08);
+    }
+
+    /* ============ Hero ============ */
+    .hero {
+        position: relative; overflow: hidden;
+        padding: 90px 0 70px;
+        background:
+            radial-gradient(1100px 600px at 80% -10%, rgba(0,122,255,.16), transparent 60%),
+            radial-gradient(900px 500px at -10% 20%, rgba(90,200,250,.22), transparent 60%),
+            linear-gradient(180deg, #ffffff 0%, #eef6ff 100%);
+    }
+    .hero-grid {
+        position: relative;
+        display: grid; grid-template-columns: 1.05fr 1fr;
+        gap: 60px; align-items: center;
+    }
+    .eyebrow {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(0,122,255,.1); color: var(--primary);
+        font-size: 13px; font-weight: 600;
+        padding: 6px 14px; border-radius: 980px; margin-bottom: 22px;
+        letter-spacing: .02em;
+    }
+    .hero h1 {
+        font-size: clamp(38px, 5.4vw, 62px);
+        line-height: 1.04; font-weight: 800; letter-spacing: -0.03em;
+        margin: 0 0 18px;
+        background: linear-gradient(135deg, #0a0a0c 0%, #007aff 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .lead {
+        font-size: 20px; color: var(--secondary-text);
+        margin: 0 0 32px; max-width: 540px;
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+    .app-store-badge-img { display: inline-block; transition: transform .2s; }
+    .app-store-badge-img:hover { transform: scale(1.04); }
+    .app-store-badge-img img { height: 56px; width: auto; display: block; }
+    .secondary-cta {
+        font-size: 15px; font-weight: 600; color: var(--primary);
+        text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .secondary-cta:hover { text-decoration: underline; }
+
+    /* Phone mockup */
+    .hero-visual {
+        position: relative; display: flex; justify-content: center; align-items: center;
+    }
+    .phone-frame {
+        position: relative; width: 100%; max-width: 340px; aspect-ratio: 9/19.5;
+        background: linear-gradient(145deg, #0f0f12, #232328);
+        border-radius: 48px; padding: 12px;
+        box-shadow: var(--shadow-lg), 0 0 0 2px rgba(255,255,255,.06) inset, 0 0 90px rgba(0,122,255,.3);
+        transform: rotate(-3deg);
+        transition: transform .6s cubic-bezier(.2,.8,.2,1);
+    }
+    .phone-frame:hover { transform: rotate(0) translateY(-6px); }
+    .phone-frame img, .phone-frame video {
+        width: 100%; height: 100%; object-fit: cover;
+        border-radius: 36px; display: block;
+    }
+    .floating-badge {
+        position: absolute; background: #fff;
+        border-radius: 16px; padding: 12px 16px;
+        box-shadow: var(--shadow-md);
+        display: flex; align-items: center; gap: 10px;
+        font-size: 13px; font-weight: 600; color: var(--text);
+        animation: floatY 4s ease-in-out infinite;
+    }
+    .check-dot {
+        width: 22px; height: 22px; border-radius: 6px;
+        display: inline-flex; align-items: center; justify-content: center;
+        color: #fff; font-size: 13px; font-weight: 800;
+    }
+    .check-dot.blue { background: #007aff; }
+    .check-dot.green { background: #34c759; }
+    .check-dot.orange { background: #ff9500; }
+    .badge-1 { top: 12%; left: -10%; animation-delay: 0s; }
+    .badge-2 { bottom: 14%; right: -10%; animation-delay: 1.5s; }
+    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+    /* ============ Stats ============ */
+    .stats { background: #0b1220; color: #fff; padding: 32px 0; }
+    .stats-grid {
+        display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; text-align: center;
+    }
+    .stat-num {
+        font-size: 30px; font-weight: 800; letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #ffffff 0%, #5ac8fa 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 2px; }
+
+    /* ============ Sections ============ */
+    section.section { padding: 100px 0; }
+    .section-eyebrow {
+        display: block; text-align: center; font-size: 14px; font-weight: 700;
+        color: var(--primary); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px;
+    }
+    .section-title {
+        text-align: center; font-size: clamp(28px, 4vw, 44px);
+        font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px;
+    }
+    .section-sub {
+        text-align: center; color: var(--secondary-text);
+        font-size: 18px; max-width: 660px; margin: 0 auto 60px;
+    }
+
+    /* Features */
+    .features { background: var(--section-bg); }
+    .features-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px;
+    }
+    .feature-card {
+        background: var(--card-bg); padding: 32px 28px; border-radius: 22px;
+        box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s;
+        position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(135deg, transparent 60%, rgba(0,122,255,.06));
+        opacity: 0; transition: opacity .3s;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 52px; height: 52px; border-radius: 14px;
+        background: linear-gradient(135deg, rgba(0,122,255,.14), rgba(90,200,250,.18));
+        font-size: 26px; margin-bottom: 18px;
+    }
+    .feature-card h3 { margin: 0 0 10px; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+    .feature-card p { margin: 0; color: var(--secondary-text); font-size: 15px; }
+
+    /* Demo + screens */
+    .showcase { background: linear-gradient(180deg, #ffffff 0%, #eef6ff 100%); }
+    .showcase-grid {
+        display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; align-items: center;
+    }
+    .showcase-grid.two { grid-template-columns: 1fr 1fr; max-width: 720px; margin: 0 auto; }
+    .showcase-grid > * {
+        border-radius: 28px; overflow: hidden;
+        box-shadow: 0 24px 60px rgba(15,23,42,.16);
+        border: 1px solid rgba(15,23,42,.05);
+        transition: transform .35s ease, box-shadow .35s ease;
+        background: #000;
+    }
+    .showcase-grid > *:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 32px 80px rgba(15,23,42,.25);
+    }
+    .showcase-grid img, .showcase-grid video {
+        width: 100%; display: block; height: auto;
+    }
+
+    /* What's new */
+    .whatsnew-card {
+        max-width: 760px; margin: 0 auto;
+        background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+        border: 1px solid var(--border);
+        border-radius: 24px; padding: 36px 32px;
+        box-shadow: var(--shadow-sm);
+    }
+    .whatsnew-card h3 {
+        margin: 0 0 18px; font-size: 22px;
+        background: linear-gradient(135deg, #0a0a0c 0%, #007aff 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .whatsnew-list { list-style: none; padding: 0; margin: 0; }
+    .whatsnew-list li {
+        display: flex; gap: 14px; align-items: flex-start;
+        padding: 12px 0; border-top: 1px solid var(--border);
+        font-size: 15px; color: var(--secondary-text);
+    }
+    .whatsnew-list li:first-child { border-top: 0; }
+    .whatsnew-list .ico { font-size: 22px; flex: 0 0 auto; }
+    .whatsnew-list strong { color: var(--text); }
+
+    /* Store banner */
+    .store-banner {
+        background: linear-gradient(135deg, #007aff 0%, #5e5ce6 100%);
+        color: #fff; padding: 90px 0; text-align: center;
+        position: relative; overflow: hidden;
+    }
+    .store-banner::before {
+        content: ''; position: absolute; inset: 0;
+        background:
+            radial-gradient(600px 300px at 20% 30%, rgba(255,255,255,.18), transparent 60%),
+            radial-gradient(500px 400px at 80% 70%, rgba(90,200,250,.3), transparent 60%);
+        pointer-events: none;
+    }
+    .store-banner .container { position: relative; }
+    .store-banner h2 {
+        font-size: clamp(28px, 4vw, 42px); font-weight: 700;
+        margin: 0 0 14px; letter-spacing: -0.02em;
+    }
+    .store-banner p { font-size: 18px; margin: 0 0 32px; opacity: .95; }
+
+    /* Footer */
+    footer {
+        background: var(--section-bg); padding: 50px 0 40px;
+        font-size: 13px; color: var(--muted); border-top: 1px solid var(--border);
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 18px; }
+    .footer-links a { color: var(--secondary-text); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--primary); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 880px) {
+        .hero { padding: 60px 0 40px; }
+        .hero-grid { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+        .lead { margin-left: auto; margin-right: auto; }
+        .hero-cta { justify-content: center; }
+        .phone-frame { max-width: 280px; transform: rotate(0); }
+        .floating-badge { display: none; }
+        .stats-grid { grid-template-columns: repeat(2,1fr); gap: 20px; }
+        section.section { padding: 70px 0; }
+        .showcase-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+        .nav { height: 52px; }
+        .home-link { padding: 7px 12px; font-size: 13px; }
+        .home-link .label-text { display: none; }
+    }
+</style>
 </head>
 <body>
 
 <header>
-    <div class="logo">
-        <img src="logo.png" alt="SkyNotes Logo" style="width: 100%; height: 100%; border-radius: 22px;">
+    <div class="container nav">
+        <a href="#" class="logo">
+            <img src="logoSkyNotes.png" alt="SkyNotes Logo" onerror="this.src='logo.png'">
+            <span>SkyNotes</span>
+        </a>
+        <div class="nav-actions">
+            <a href="https://valerie-otero.github.io/" class="home-link" id="link-home">
+                <span>🏠</span><span class="label-text">Toutes les apps</span>
+            </a>
+            <div class="lang-switch" role="tablist">
+                <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+                <button id="btn-en" onclick="setLang('en')">EN</button>
+            </div>
+        </div>
     </div>
-    <h1>SkyNotes</h1>
-    <p class="subtitle">ToDoList & Checklists pour vos projets</p>
-    <a href="https://apps.apple.com/app/skynotes/id6755604004" class="download-badge">Télécharger sur l'App Store</a>
 </header>
 
-<main>
-    <section>
-        <h2>Simplicité et Efficacité</h2>
-        <p>SkyNotes est conçue pour être simple, rapide et fiable, en vol comme au sol. Organisez vos idées, préparez vos missions et ne manquez aucune étape grâce aux checklists colorées.</p>
-        
-        <div style="margin-top: 2rem; text-align: center;">
-            <video autoplay muted loop playsinline controls style="max-width: 300px; width: 100%; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
-                <source src="SkyNotes.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la balise vidéo.
-            </video>
+<!-- ============ FRENCH ============ -->
+<div id="content-fr">
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">📝 Version 1.1 disponible</span>
+                <h1>Notes & checklists,<br>tête en l'air, tête tranquille.</h1>
+                <p class="lead">Organisez vos projets, vos briefings et vos missions. Listes colorées, modèles réutilisables, recherche instantanée — au sol comme en vol.</p>
+                <div class="hero-cta">
+                    <a href="https://apps.apple.com/fr/app/skynotes/id6755604004" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
+                    </a>
+                    <a href="#features" class="secondary-cta">Découvrir les fonctionnalités →</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-frame">
+                    <video autoplay muted loop playsinline>
+                        <source src="SkyNotes.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="floating-badge badge-1">
+                    <span class="check-dot blue">✓</span>
+                    <span>Briefing complet</span>
+                </div>
+                <div class="floating-badge badge-2">
+                    <span class="check-dot green">✓</span>
+                    <span>3 listes prêtes</span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <div class="feature-grid">
-        <div class="card">
-            <h3>📂 Projets</h3>
-            <p>Créez un projet par sujet (brief, mission, formation). Tout est rangé et accessible rapidement.</p>
-        </div>
-        <div class="card">
-            <h3>✅ Checklists Colorées</h3>
-            <p>Associez des couleurs à vos listes pour une identification visuelle immédiate. Type Checklist ou To-Do.</p>
-        </div>
-        <div class="card">
-            <h3>📝 Modèles</h3>
-            <p>Gagnez du temps en créant des modèles réutilisables pour vos procédures fréquentes.</p>
-        </div>
-        <div class="card">
-            <h3>🔄 Import / Export</h3>
-            <p>Vos données vous appartiennent. Exportez en Markdown ou CSV pour archiver ou partager.</p>
-        </div>
-        <div class="card">
-            <h3>🔍 Recherche Rapide</h3>
-            <p>Retrouvez instantanément un projet ou une note grâce au moteur de recherche intégré.</p>
-        </div>
-
-    </div>
-
-    <section style="margin-top: 3rem;">
-        <div class="card" style="background: linear-gradient(to bottom right, #ffffff, #f0f8ff); border: 1px solid #e1e4e8;">
-            <h2 style="margin-top: 0; color: #007AFF; text-align: center;">✨ Nouveautés v1.1</h2>
-            <ul style="list-style: none; padding: 0; margin: 1rem 0 0 0;">
-                <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
-                    <span style="position: absolute; left: 0;">🚀</span>
-                    <strong>Contenu de démarrage :</strong> Un guide interactif pour prendre en main l'app immédiatement.
-                </li>
-                <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
-                    <span style="position: absolute; left: 0;">☕️</span>
-                    <strong>Tip Jar :</strong> Soutenez le développement de l'application directement depuis les réglages.
-                </li>
-                <li style="padding-left: 2rem; position: relative;">
-                    <span style="position: absolute; left: 0;">🌍</span>
-                    <strong>Langues :</strong> Support complet Anglais / Français.
-                </li>
-            </ul>
+    <section class="stats">
+        <div class="container stats-grid">
+            <div><div class="stat-num">∞</div><div class="stat-label">Projets &amp; listes</div></div>
+            <div><div class="stat-num">2</div><div class="stat-label">Langues : FR / EN</div></div>
+            <div><div class="stat-num">MD / CSV</div><div class="stat-label">Import &amp; export</div></div>
+            <div><div class="stat-num">0</div><div class="stat-label">Donnée collectée</div></div>
         </div>
     </section>
-</main>
+
+    <section id="features" class="section features">
+        <div class="container">
+            <span class="section-eyebrow">Fonctionnalités</span>
+            <h2 class="section-title">Simple, rapide, fiable</h2>
+            <p class="section-sub">Pensée pour les pilotes, utile à tous : SkyNotes range vos idées et vos procédures, sans friction.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📂</div>
+                    <h3>Projets</h3>
+                    <p>Un projet par sujet : brief, mission, formation. Tout est rangé et accessible en un geste.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Checklists colorées</h3>
+                    <p>Associez des couleurs à vos listes pour une identification visuelle immédiate — Checklist ou To-Do.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Modèles réutilisables</h3>
+                    <p>Créez des modèles pour vos procédures fréquentes et déclinez-les en un tap.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Import / Export</h3>
+                    <p>Vos données vous appartiennent. Exportez en Markdown ou CSV pour archiver ou partager.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Recherche rapide</h3>
+                    <p>Retrouvez instantanément un projet, une liste ou une ligne grâce au moteur de recherche intégré.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Vie privée</h3>
+                    <p>Aucun compte, aucun traqueur. Tout reste sur votre appareil.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section showcase">
+        <div class="container">
+            <span class="section-eyebrow">Aperçu</span>
+            <h2 class="section-title">L'app en action</h2>
+            <p class="section-sub">Une interface épurée, des couleurs claires, des gestes naturels.</p>
+            <div class="showcase-grid two">
+                <img src="Simulator Screenshot - iPhone 11 Pro Max - 2026-05-18 at 19.01.39.png" alt="Capture SkyNotes 1">
+                <img src="Simulator Screenshot - iPhone 11 Pro Max - 2026-05-18 at 19.01.50.png" alt="Capture SkyNotes 2">
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <span class="section-eyebrow">Nouveautés</span>
+            <h2 class="section-title">Quoi de neuf en v1.1</h2>
+            <p class="section-sub">Les dernières améliorations apportées à SkyNotes.</p>
+            <div class="whatsnew-card">
+                <ul class="whatsnew-list">
+                    <li><span class="ico">🚀</span><div><strong>Contenu de démarrage.</strong> Un guide interactif pour prendre en main l'app immédiatement.</div></li>
+                    <li><span class="ico">☕️</span><div><strong>Tip Jar.</strong> Soutenez le développement directement depuis les réglages.</div></li>
+                    <li><span class="ico">🌍</span><div><strong>Langues.</strong> Support complet Anglais / Français.</div></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="store-banner">
+        <div class="container">
+            <h2>Disponible sur l'App Store</h2>
+            <p>Téléchargez SkyNotes sur votre iPhone, iPad ou Mac.</p>
+            <a href="https://apps.apple.com/fr/app/skynotes/id6755604004" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
+            </a>
+        </div>
+    </section>
+</div>
+
+<!-- ============ ENGLISH ============ -->
+<div id="content-en" class="hidden">
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">📝 Version 1.1 available</span>
+                <h1>Notes & checklists,<br>head in the clouds, mind at ease.</h1>
+                <p class="lead">Organize your projects, briefings and missions. Colored lists, reusable templates, instant search — on the ground or in the air.</p>
+                <div class="hero-cta">
+                    <a href="https://apps.apple.com/fr/app/skynotes/id6755604004" class="app-store-badge-img" aria-label="Download on the App Store">
+                        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
+                    </a>
+                    <a href="#features-en" class="secondary-cta">See the features →</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-frame">
+                    <video autoplay muted loop playsinline>
+                        <source src="SkyNotes.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="floating-badge badge-1">
+                    <span class="check-dot blue">✓</span>
+                    <span>Briefing ready</span>
+                </div>
+                <div class="floating-badge badge-2">
+                    <span class="check-dot green">✓</span>
+                    <span>3 lists done</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container stats-grid">
+            <div><div class="stat-num">∞</div><div class="stat-label">Projects &amp; lists</div></div>
+            <div><div class="stat-num">2</div><div class="stat-label">Languages: EN / FR</div></div>
+            <div><div class="stat-num">MD / CSV</div><div class="stat-label">Import &amp; export</div></div>
+            <div><div class="stat-num">0</div><div class="stat-label">Data collected</div></div>
+        </div>
+    </section>
+
+    <section id="features-en" class="section features">
+        <div class="container">
+            <span class="section-eyebrow">Features</span>
+            <h2 class="section-title">Simple, fast, reliable</h2>
+            <p class="section-sub">Designed for pilots, useful for everyone: SkyNotes keeps your ideas and procedures in order, friction-free.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📂</div>
+                    <h3>Projects</h3>
+                    <p>One project per topic: briefing, mission, training. Everything organized, accessible in a tap.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Colored checklists</h3>
+                    <p>Assign colors for instant visual identification — Checklist or To-Do style.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Reusable templates</h3>
+                    <p>Build templates for your recurring procedures and reuse them in one tap.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Import / Export</h3>
+                    <p>Your data is yours. Export to Markdown or CSV to archive or share.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Fast search</h3>
+                    <p>Find any project, list or line instantly with the built-in search engine.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy first</h3>
+                    <p>No account, no tracker. Everything stays on your device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section showcase">
+        <div class="container">
+            <span class="section-eyebrow">Preview</span>
+            <h2 class="section-title">SkyNotes in action</h2>
+            <p class="section-sub">A clean interface, clear colors, natural gestures.</p>
+            <div class="showcase-grid two">
+                <img src="Simulator Screenshot - iPhone 11 Pro Max - 2026-05-18 at 19.01.39.png" alt="SkyNotes screenshot 1">
+                <img src="Simulator Screenshot - iPhone 11 Pro Max - 2026-05-18 at 19.01.50.png" alt="SkyNotes screenshot 2">
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <span class="section-eyebrow">What's new</span>
+            <h2 class="section-title">What's new in v1.1</h2>
+            <p class="section-sub">The latest improvements to SkyNotes.</p>
+            <div class="whatsnew-card">
+                <ul class="whatsnew-list">
+                    <li><span class="ico">🚀</span><div><strong>Getting started content.</strong> An interactive guide to grasp the app right away.</div></li>
+                    <li><span class="ico">☕️</span><div><strong>Tip Jar.</strong> Support development directly from settings.</div></li>
+                    <li><span class="ico">🌍</span><div><strong>Languages.</strong> Full English / French support.</div></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="store-banner">
+        <div class="container">
+            <h2>Available on the App Store</h2>
+            <p>Download SkyNotes on your iPhone, iPad or Mac.</p>
+            <a href="https://apps.apple.com/fr/app/skynotes/id6755604004" class="app-store-badge-img" aria-label="Download on the App Store">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
+            </a>
+        </div>
+    </section>
+</div>
 
 <footer>
-    <p>&copy; 2025 Valérie Otero. Tous droits réservés.</p>
-    <p>
-        <a href="privacy_policy.html">Politique de confidentialité</a> | 
-        <a href="mailto:valerie.otero@free.fr">Support</a>
-    </p>
+    <div class="container">
+        <div class="footer-links">
+            <a href="https://valerie-otero.github.io/" id="link-home-footer">Accueil du site</a>
+            <a href="privacy_policy.html" id="link-privacy">Politique de confidentialité</a>
+            <a href="README.html" id="link-docs">Documentation</a>
+            <a href="mailto:valerie.otero@free.fr" id="link-contact">Contact / Support</a>
+        </div>
+        <p>&copy; 2026 Valérie Otero — SkyNotes.</p>
+    </div>
 </footer>
+
+<script>
+    let currentLang = 'fr';
+    function setLang(lang) {
+        if (lang === currentLang) return;
+        const fr = document.getElementById('content-fr');
+        const en = document.getElementById('content-en');
+        const btnFr = document.getElementById('btn-fr');
+        const btnEn = document.getElementById('btn-en');
+        const linkHome = document.getElementById('link-home');
+        const linkHomeFooter = document.getElementById('link-home-footer');
+        const linkPrivacy = document.getElementById('link-privacy');
+        const linkDocs = document.getElementById('link-docs');
+        const linkContact = document.getElementById('link-contact');
+
+        if (lang === 'en') {
+            fr.classList.add('hidden'); en.classList.remove('hidden');
+            btnFr.classList.remove('active'); btnEn.classList.add('active');
+            document.documentElement.lang = 'en';
+            document.title = "SkyNotes — Notes & Checklists";
+            if (linkHome) linkHome.querySelector('.label-text').textContent = "All apps";
+            if (linkHomeFooter) linkHomeFooter.textContent = "Website home";
+            if (linkPrivacy) linkPrivacy.textContent = "Privacy Policy";
+            if (linkDocs) linkDocs.textContent = "Documentation";
+            if (linkContact) linkContact.textContent = "Contact / Support";
+        } else {
+            en.classList.add('hidden'); fr.classList.remove('hidden');
+            btnEn.classList.remove('active'); btnFr.classList.add('active');
+            document.documentElement.lang = 'fr';
+            document.title = "SkyNotes — Notes & Checklists pour vos projets";
+            if (linkHome) linkHome.querySelector('.label-text').textContent = "Toutes les apps";
+            if (linkHomeFooter) linkHomeFooter.textContent = "Accueil du site";
+            if (linkPrivacy) linkPrivacy.textContent = "Politique de confidentialité";
+            if (linkDocs) linkDocs.textContent = "Documentation";
+            if (linkContact) linkContact.textContent = "Contact / Support";
+        }
+        currentLang = lang;
+    }
+
+    const userLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+    if (userLang.startsWith('en')) setLang('en');
+</script>
 
 </body>
 </html>
