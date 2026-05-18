@@ -3,309 +3,669 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>METAR•TAF Flow - Météo Aéronautique / Aviation Weather</title>
+<title>METAR•TAF Flow — Météo aéronautique / Aviation Weather</title>
+<meta name="description" content="METAR•TAF Flow : météo aéronautique pour pilotes. METAR et TAF en temps réel, décodage visuel, gestion de route, éphéméride. iPhone, iPad, Mac.">
 <style>
-    body { 
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-        line-height: 1.6; 
-        color: #333; 
-        margin: 0; 
-        padding: 0; 
-        background-color: #fbfbfd; 
-    }
-    .container { 
-        max-width: 980px; 
-        margin: 0 auto; 
-        padding: 40px 20px; 
-        background: white; 
-        box-shadow: 0 0 40px rgba(0,0,0,0.05);
-        min-height: 100vh;
-    }
-    h1 { 
-        color: #1d1d1f; 
-        text-align: center; 
-        margin-bottom: 10px; 
-        font-weight: 700;
-        font-size: 2.5em;
-        letter-spacing: -0.02em;
-    }
-    .subtitle {
-        text-align: center;
-        color: #86868b;
-        margin-bottom: 40px;
-        font-size: 1.3em;
-        font-weight: 400;
-    }
-    h2 { 
-        color: #1d1d1f; 
-        font-size: 2em;
-        margin-top: 60px; 
-        margin-bottom: 30px;
-        text-align: center;
-    }
-    h3 {
-        color: #1d1d1f;
-        margin-top: 0;
-        font-size: 1.2em;
-        font-weight: 600;
-    }
-    p { 
-        color: #515154;
-        margin-bottom: 15px; 
-        font-size: 1.05em;
-    }
-    
-    /* Language Switcher */
-    .lang-switch { 
-        text-align: center; 
-        margin-bottom: 50px; 
-        background: #f5f5f7;
-        display: inline-block;
-        padding: 4px;
-        border-radius: 25px;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    .lang-switch a { 
-        display: inline-block; 
-        padding: 8px 24px; 
-        text-decoration: none; 
-        color: #515154; 
-        border-radius: 20px; 
-        font-weight: 500;
-        font-size: 0.9em;
-        transition: all 0.2s ease; 
-    }
-    .lang-switch a.active { 
-        background: white; 
-        color: #000; 
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    :root {
+        --primary: #0a84ff;
+        --primary-dark: #0060df;
+        --accent: #5ac8fa;
+        --sky-1: #e0f2ff;
+        --sky-2: #c7e6ff;
+        --text: #0a0a0c;
+        --secondary-text: #475569;
+        --muted: #64748b;
+        --bg: #ffffff;
+        --section-bg: #f4f8fc;
+        --card-bg: #ffffff;
+        --border: #e2e8f0;
+        --warn-bg: #fff7e6;
+        --warn-fg: #92400e;
+        --shadow-sm: 0 4px 12px rgba(15,23,42,0.05);
+        --shadow-md: 0 14px 36px rgba(10,132,255,0.12);
+        --shadow-lg: 0 30px 80px rgba(15,23,42,0.18);
     }
 
-    /* Sections */
-    .section { display: none; animation: fadeIn 0.4s ease-in-out; }
-    .section.active { display: block; }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Hero Section */
+    .container {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    /* ============ Header ============ */
+    header {
+        background: rgba(255,255,255,0.78);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        position: sticky; top: 0; z-index: 100;
+        border-bottom: 1px solid var(--border);
+    }
+    .nav {
+        display: flex; align-items: center; justify-content: space-between;
+        height: 58px; gap: 16px;
+    }
+    .logo {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-weight: 700; font-size: 17px; color: var(--text); text-decoration: none;
+        letter-spacing: -0.01em;
+    }
+    .logo img { height: 34px; width: 34px; border-radius: 10px; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+    .home-link {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-size: 14px; font-weight: 600; color: #fff;
+        background: var(--primary); text-decoration: none;
+        padding: 8px 16px; border-radius: 980px;
+        transition: background .2s, transform .2s, box-shadow .2s;
+        box-shadow: 0 2px 10px rgba(10,132,255,.3);
+    }
+    .home-link:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(10,132,255,.45); }
+
+    .lang-switch {
+        display: inline-flex; background: #eef3f8; padding: 3px; border-radius: 980px;
+    }
+    .lang-switch button {
+        border: 0; background: transparent; cursor: pointer;
+        padding: 6px 14px; border-radius: 980px; font-size: 13px; font-weight: 600;
+        color: var(--secondary-text); transition: all .2s;
+    }
+    .lang-switch button.active {
+        background: #fff; color: var(--text);
+        box-shadow: 0 2px 6px rgba(15,23,42,.08);
+    }
+
+    /* ============ Hero ============ */
     .hero {
-        text-align: center;
-        max-width: 700px;
-        margin: 0 auto 60px auto;
+        position: relative; overflow: hidden;
+        padding: 90px 0 70px;
+        background:
+            radial-gradient(1100px 600px at 80% -10%, rgba(10,132,255,.16), transparent 60%),
+            radial-gradient(900px 500px at -10% 20%, rgba(90,200,250,.22), transparent 60%),
+            linear-gradient(180deg, #ffffff 0%, #eef6ff 100%);
     }
-    .hero p {
-        font-size: 1.3em;
-        line-height: 1.5;
-        color: #1d1d1f;
+    /* Decorative grid lines (aviation feel) */
+    .hero::before {
+        content: ''; position: absolute; inset: 0;
+        background-image:
+            linear-gradient(rgba(10,132,255,.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(10,132,255,.06) 1px, transparent 1px);
+        background-size: 44px 44px;
+        mask-image: radial-gradient(700px 400px at 50% 30%, #000 30%, transparent 75%);
+        -webkit-mask-image: radial-gradient(700px 400px at 50% 30%, #000 30%, transparent 75%);
+        pointer-events: none;
+    }
+    .hero-grid {
+        position: relative;
+        display: grid; grid-template-columns: 1.05fr 1fr;
+        gap: 60px; align-items: center;
+    }
+    .eyebrow {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(10,132,255,.1); color: var(--primary);
+        font-size: 13px; font-weight: 600;
+        padding: 6px 14px; border-radius: 980px; margin-bottom: 22px;
+        letter-spacing: .02em;
+    }
+    .hero h1 {
+        font-size: clamp(38px, 5.4vw, 62px);
+        line-height: 1.04; font-weight: 800; letter-spacing: -0.03em;
+        margin: 0 0 18px;
+        background: linear-gradient(135deg, #0a0a0c 0%, #0a84ff 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .lead {
+        font-size: 20px; color: var(--secondary-text);
+        margin: 0 0 32px; max-width: 540px;
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+    .app-store-badge-img { display: inline-block; transition: transform .2s; }
+    .app-store-badge-img:hover { transform: scale(1.04); }
+    .app-store-badge-img img { height: 56px; width: auto; display: block; }
+    .secondary-cta {
+        font-size: 15px; font-weight: 600; color: var(--primary);
+        text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .secondary-cta:hover { text-decoration: underline; }
+
+    /* Phone mockup */
+    .hero-visual {
+        position: relative; display: flex; justify-content: center; align-items: center;
+    }
+    .phone-frame {
+        position: relative; width: 100%; max-width: 340px; aspect-ratio: 9/19.5;
+        background: linear-gradient(145deg, #0f0f12, #232328);
+        border-radius: 48px; padding: 12px;
+        box-shadow: var(--shadow-lg), 0 0 0 2px rgba(255,255,255,.06) inset, 0 0 90px rgba(10,132,255,.3);
+        transform: rotate(-3deg);
+        transition: transform .6s cubic-bezier(.2,.8,.2,1);
+    }
+    .phone-frame:hover { transform: rotate(0) translateY(-6px); }
+    .phone-frame img {
+        width: 100%; height: 100%; object-fit: cover;
+        border-radius: 36px; display: block;
+    }
+    .floating-badge {
+        position: absolute; background: #fff;
+        border-radius: 16px; padding: 12px 16px;
+        box-shadow: var(--shadow-md);
+        display: flex; align-items: center; gap: 10px;
+        font-size: 13px; font-weight: 600; color: var(--text);
+        animation: floatY 4s ease-in-out infinite;
+    }
+    .floating-badge .pill {
+        display: inline-block; padding: 2px 8px; border-radius: 999px;
+        font-size: 11px; font-weight: 700; letter-spacing: .03em;
+    }
+    .pill.vfr { background: #d1f5d3; color: #1b8a3a; }
+    .pill.ifr { background: #ffe1e1; color: #b91c1c; }
+    .badge-1 { top: 10%; left: -8%; animation-delay: 0s; }
+    .badge-2 { bottom: 14%; right: -10%; animation-delay: 1.5s; }
+    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+    /* ============ Stats ============ */
+    .stats { background: #0b1220; color: #fff; padding: 32px 0; }
+    .stats-grid {
+        display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; text-align: center;
+    }
+    .stat-num {
+        font-size: 30px; font-weight: 800; letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #ffffff 0%, #5ac8fa 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 2px; }
+
+    /* ============ Sections ============ */
+    section.section { padding: 100px 0; }
+    .section-eyebrow {
+        display: block; text-align: center; font-size: 14px; font-weight: 700;
+        color: var(--primary); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px;
+    }
+    .section-title {
+        text-align: center; font-size: clamp(28px, 4vw, 44px);
+        font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px;
+    }
+    .section-sub {
+        text-align: center; color: var(--secondary-text);
+        font-size: 18px; max-width: 660px; margin: 0 auto 60px;
     }
 
-    /* Features Grid */
+    /* Features */
+    .features { background: var(--section-bg); }
     .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-        margin-bottom: 60px;
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px;
     }
     .feature-card {
-        background: #f5f5f7;
-        padding: 30px;
-        border-radius: 20px;
-        transition: transform 0.2s ease;
+        background: var(--card-bg); padding: 32px 28px; border-radius: 22px;
+        box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s;
+        position: relative; overflow: hidden;
     }
-    .feature-card:hover {
-        transform: translateY(-5px);
+    .feature-card::before {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(135deg, transparent 60%, rgba(10,132,255,.06));
+        opacity: 0; transition: opacity .3s;
     }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 52px; height: 52px; border-radius: 14px;
+        background: linear-gradient(135deg, rgba(10,132,255,.14), rgba(90,200,250,.18));
+        font-size: 26px; margin-bottom: 18px;
+    }
+    .feature-card h3 { margin: 0 0 10px; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+    .feature-card p { margin: 0; color: var(--secondary-text); font-size: 15px; }
 
     /* Screenshots */
-    .screenshots-title {
-        text-align: center;
-        margin-bottom: 40px;
-        color: #86868b;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 0.9em;
-        font-weight: 600;
+    .screens-section { background: linear-gradient(180deg, #ffffff 0%, #eef6ff 100%); }
+    .screens-tabs {
+        display: inline-flex; background: #fff; padding: 4px;
+        border-radius: 980px; box-shadow: var(--shadow-sm);
+        margin: 0 auto 40px; border: 1px solid var(--border);
     }
-    .screenshot-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-        margin-bottom: 60px;
+    .screens-tabs-wrap { display: flex; justify-content: center; }
+    .screens-tabs button {
+        border: 0; background: transparent; cursor: pointer;
+        padding: 8px 20px; border-radius: 980px; font-weight: 600; font-size: 14px;
+        color: var(--secondary-text); transition: all .2s;
     }
-    .screenshot-grid img {
-        width: 100%;
+    .screens-tabs button.active {
+        background: var(--primary); color: #fff;
+        box-shadow: 0 4px 12px rgba(10,132,255,.35);
+    }
+    .screens-grid {
+        display: grid; grid-template-columns: repeat(2,1fr); gap: 32px;
+    }
+    .screens-grid.iphone { max-width: 720px; margin: 0 auto; }
+    .screens-grid img {
+        width: 100%; border-radius: 24px;
+        box-shadow: 0 24px 60px rgba(15,23,42,.18);
+        transition: transform .35s ease, box-shadow .35s ease;
+        border: 1px solid rgba(15,23,42,.05);
+    }
+    .screens-grid img:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 32px 80px rgba(15,23,42,.25);
+    }
+    .screens-panel { display: none; }
+    .screens-panel.active { display: block; animation: fadeIn .35s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Safety notice */
+    .notice {
+        background: var(--warn-bg);
+        color: var(--warn-fg);
         border-radius: 18px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        transition: transform 0.3s ease;
-        border: 1px solid rgba(0,0,0,0.05);
+        padding: 22px 26px;
+        font-size: 15px;
+        max-width: 820px;
+        margin: 0 auto;
+        border: 1px solid #fce7b8;
+        line-height: 1.55;
     }
-    .screenshot-grid img:hover {
-        transform: scale(1.02);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    .notice strong { color: #7c2d12; }
+
+    /* Store banner */
+    .store-banner {
+        background: linear-gradient(135deg, #0a84ff 0%, #1e3a8a 100%);
+        color: #fff; padding: 90px 0; text-align: center;
+        position: relative; overflow: hidden;
     }
-    
+    .store-banner::before {
+        content: ''; position: absolute; inset: 0;
+        background:
+            radial-gradient(600px 300px at 20% 30%, rgba(255,255,255,.15), transparent 60%),
+            radial-gradient(500px 400px at 80% 70%, rgba(90,200,250,.3), transparent 60%);
+        pointer-events: none;
+    }
+    .store-banner .container { position: relative; }
+    .store-banner h2 {
+        font-size: clamp(28px, 4vw, 42px); font-weight: 700;
+        margin: 0 0 14px; letter-spacing: -0.02em;
+    }
+    .store-banner p { font-size: 18px; margin: 0 0 32px; opacity: .95; }
+
     /* Footer */
-    footer { 
-        text-align: center; 
-        margin-top: 80px; 
-        padding-top: 40px; 
-        border-top: 1px solid #e5e5e5;
-        color: #86868b; 
-        font-size: 0.9em;
+    footer {
+        background: var(--section-bg); padding: 50px 0 40px;
+        font-size: 13px; color: var(--muted); border-top: 1px solid var(--border);
     }
-    footer a {
-        color: #0066cc;
-        text-decoration: none;
-    }
-    footer a:hover {
-        text-decoration: underline;
-    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 18px; }
+    .footer-links a { color: var(--secondary-text); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--primary); }
+
+    .hidden { display: none !important; }
 
     /* Responsive */
-    @media (max-width: 768px) {
-        .screenshot-grid {
-            grid-template-columns: 1fr;
-        }
-        .container {
-            padding: 20px;
-        }
-        h1 {
-            font-size: 2em;
-        }
+    @media (max-width: 880px) {
+        .hero { padding: 60px 0 40px; }
+        .hero-grid { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+        .lead { margin-left: auto; margin-right: auto; }
+        .hero-cta { justify-content: center; }
+        .phone-frame { max-width: 280px; transform: rotate(0); }
+        .floating-badge { display: none; }
+        .stats-grid { grid-template-columns: repeat(2,1fr); gap: 20px; }
+        section.section { padding: 70px 0; }
+        .screens-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+        .nav { height: 52px; }
+        .home-link { padding: 7px 12px; font-size: 13px; }
+        .home-link .label-text { display: none; }
     }
 </style>
-<script>
-    function showLang(lang) {
-        document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-        document.getElementById(lang).classList.add('active');
-        document.querySelectorAll('.lang-switch a').forEach(el => el.classList.remove('active'));
-        document.getElementById('btn-' + lang).classList.add('active');
-        document.documentElement.lang = lang;
-    }
-</script>
 </head>
-<body onload="showLang('fr')">
+<body>
 
-<div class="container">
-    <img src="LogoMTF.png" alt="Logo METAR-TAF Flow" style="width: 140px; height: 140px; display: block; margin: 0 auto 25px auto; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);">
-    
-    <h1>METAR•TAF Flow</h1>
-    <div class="subtitle">L'essentiel de la météo aéronautique / Essential Aviation Weather<br><span style="font-size: 0.8em">Version 1.2</span></div>
-    
-    <div class="lang-switch">
-        <a href="#" id="btn-fr" onclick="showLang('fr'); return false;">Français</a>
-        <a href="#" id="btn-en" onclick="showLang('en'); return false;">English</a>
+<header>
+    <div class="container nav">
+        <a href="#" class="logo">
+            <img src="LogoMTF.png" alt="METAR•TAF Flow Logo">
+            <span>METAR•TAF Flow</span>
+        </a>
+        <div class="nav-actions">
+            <a href="https://valerie-otero.github.io/" class="home-link" id="link-home">
+                <span>🏠</span><span class="label-text">Toutes les apps</span>
+            </a>
+            <div class="lang-switch" role="tablist">
+                <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+                <button id="btn-en" onclick="setLang('en')">EN</button>
+            </div>
+        </div>
     </div>
+</header>
 
-    <!-- FRANÇAIS -->
-    <div id="fr" class="section active">
-        <div class="hero">
-            <p><strong>METAR•TAF Flow</strong> est l'outil indispensable pour les pilotes et passionnés d'aviation. Accédez instantanément aux conditions météorologiques et prévisions pour tous les aéroports du monde, avec une interface claire, moderne et intuitive.</p>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>🌍 Données Mondiales</h3>
-                <p>Accès direct aux serveurs de la NOAA pour des données METAR et TAF en temps réel, où que vous soyez.</p>
+<!-- ============ FRENCH ============ -->
+<div id="content-fr">
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">✈️ Version 1.2 disponible</span>
+                <h1>La météo aéronautique,<br>enfin claire.</h1>
+                <p class="lead">METAR et TAF en temps réel, décodés visuellement, pour tous les aéroports du monde. Pensé par et pour les pilotes — iPhone, iPad et Mac.</p>
+                <div class="hero-cta">
+                    <a href="https://apps.apple.com/fr/app/metar-taf-flow/id6757341500" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
+                    </a>
+                    <a href="#features" class="secondary-cta">Découvrir les fonctionnalités →</a>
+                </div>
             </div>
-            <div class="feature-card">
-                <h3>🎨 Décodage Visuel</h3>
-                <p>Visualisez instantanément les conditions de vol (VFR, IFR, etc.) grâce à un code couleur intuitif et un décodage clair.</p>
-            </div>
-            <div class="feature-card">
-                <h3>✈️ Gestion de Route</h3>
-                <p>Créez des groupes d'aéroports, organisez vos vols et visualisez la météo sur l'ensemble de votre trajet en un coup d'œil.</p>
-            </div>
-            <div class="feature-card">
-                <h3>☀️ Éphéméride Précise</h3>
-                <p>Calcul automatique des heures de lever/coucher du soleil et du crépuscule civil selon votre position et la réglementation.</p>
-            </div>
-        </div>
-
-        <div class="screenshots-title">Aperçu sur iPhone</div>
-        <div class="screenshot-grid">
-            <img src="Screen/iPhone 17 Pro FR.png" alt="Capture d'écran iPhone 1">
-            <img src="Screen/iPhone 17 Pro FR2.png" alt="Capture d'écran iPhone 2">
-        </div>
-
-        <div class="screenshots-title">Aperçu sur iPad</div>
-        <div class="screenshot-grid">
-            <img src="Screen/Ipad13FR.png" alt="Capture d'écran iPad 1">
-            <img src="Screen/Ipad13FR2.png" alt="Capture d'écran iPad 2">
-        </div>
-
-        <div style="margin-top: 40px; padding: 20px; background: #fff3cd; border-radius: 12px; color: #856404; font-size: 0.9em; text-align: center;">
-            <strong>Sécurité & Responsabilité :</strong> L'utilisation de cette application relève de la seule responsabilité du Commandant de Bord. Elle ne se substitue pas aux documents officiels ni à l'analyse des cartes météorologiques réglementaires. Le développeur décline toute responsabilité quant à l'utilisation des données.
-        </div>
-
-        <h2 id="support-fr">Support & Contact</h2>
-        <p style="text-align: center;">
-            Besoin d'aide ou une suggestion ?<br>
-            <a href="mailto:valerie.otero@free.fr" style="display: inline-block; background: #007aff; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; margin-top: 10px; font-weight: 500;">Contacter le support par email</a>
-        </p>
-    </div>
-
-    <!-- ENGLISH -->
-    <div id="en" class="section">
-        <div class="hero">
-            <p><strong>METAR•TAF Flow</strong> is the essential tool for pilots and aviation enthusiasts. Get instant access to weather conditions and forecasts for airports worldwide, with a clean, modern, and intuitive interface.</p>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>🌍 Worldwide Data</h3>
-                <p>Direct access to NOAA servers for real-time METAR and TAF data, wherever you are.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🎨 Visual Decoding</h3>
-                <p>Instantly visualize flight conditions (VFR, IFR, etc.) with intuitive color coding and clear decoding.</p>
-            </div>
-            <div class="feature-card">
-                <h3>✈️ Route Management</h3>
-                <p>Create airport groups, organize your flights, and view weather across your entire route at a glance.</p>
-            </div>
-            <div class="feature-card">
-                <h3>☀️ Accurate Ephemeris</h3>
-                <p>Automatic calculation of sunrise/sunset times and civil twilight based on your location and regulations.</p>
+            <div class="hero-visual">
+                <div class="phone-frame">
+                    <img src="Screen/iPhone 17 Pro FR.png" alt="METAR•TAF Flow sur iPhone">
+                </div>
+                <div class="floating-badge badge-1">
+                    <span class="pill vfr">VFR</span>
+                    <span>LFPG · 280° 12kt</span>
+                </div>
+                <div class="floating-badge badge-2">
+                    <span class="pill ifr">IFR</span>
+                    <span>LFMN · BKN 008</span>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="screenshots-title">iPhone Preview</div>
-        <div class="screenshot-grid">
-            <img src="Screen/iPhone 17 Pro EN.png" alt="iPhone Screenshot 1">
-            <img src="Screen/iPhone 17 Pro EN2.png" alt="iPhone Screenshot 2">
+    <section class="stats">
+        <div class="container stats-grid">
+            <div><div class="stat-num">10 000+</div><div class="stat-label">Aéroports couverts</div></div>
+            <div><div class="stat-num">NOAA</div><div class="stat-label">Source officielle</div></div>
+            <div><div class="stat-num">100%</div><div class="stat-label">Temps réel</div></div>
+            <div><div class="stat-num">0</div><div class="stat-label">Donnée collectée</div></div>
         </div>
+    </section>
 
-        <div class="screenshots-title">iPad Preview</div>
-        <div class="screenshot-grid">
-            <img src="Screen/Ipad13EN.png" alt="iPad Screenshot 1">
-            <img src="Screen/Ipad13EN2.png" alt="iPad Screenshot 2">
+    <section id="features" class="section features">
+        <div class="container">
+            <span class="section-eyebrow">Fonctionnalités</span>
+            <h2 class="section-title">Pensé pour le briefing du pilote</h2>
+            <p class="section-sub">Toutes les informations essentielles, au bon endroit, dans le bon ordre.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Données mondiales</h3>
+                    <p>Accès direct aux serveurs NOAA pour des METAR et TAF en temps réel, où que vous soyez.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Décodage visuel</h3>
+                    <p>Visualisez instantanément les conditions de vol (VFR, MVFR, IFR, LIFR) grâce à un code couleur clair.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛫</div>
+                    <h3>Gestion de route</h3>
+                    <p>Créez des groupes d'aéroports, organisez vos vols et visualisez la météo sur tout le trajet.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☀️</div>
+                    <h3>Éphéméride précise</h3>
+                    <p>Lever / coucher du soleil et crépuscule civil calculés selon votre position et la réglementation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📡</div>
+                    <h3>Décodage METAR/TAF</h3>
+                    <p>Chaque code traduit en clair : vent, visibilité, nuages, plafond, températures, QNH.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Vie privée</h3>
+                    <p>Aucun compte, aucun traqueur. Tout reste sur votre appareil.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div style="margin-top: 40px; padding: 20px; background: #fff3cd; border-radius: 12px; color: #856404; font-size: 0.9em; text-align: center;">
-            <strong>Safety & Liability:</strong> Use of this app is the sole responsibility of the Pilot in Command. It does not replace official documents or the analysis of regulatory weather charts. The developer declines all liability regarding the use of the data.
+    <section class="section screens-section">
+        <div class="container">
+            <span class="section-eyebrow">Aperçus</span>
+            <h2 class="section-title">Conçu pour iPhone, iPad et Mac</h2>
+            <p class="section-sub">Une expérience optimisée pour chaque appareil, du cockpit au bureau.</p>
+
+            <div class="screens-tabs-wrap">
+                <div class="screens-tabs">
+                    <button class="active" data-target="screens-iphone-fr" onclick="showScreens(this)">iPhone</button>
+                    <button data-target="screens-ipad-fr" onclick="showScreens(this)">iPad</button>
+                </div>
+            </div>
+
+            <div id="screens-iphone-fr" class="screens-panel active">
+                <div class="screens-grid iphone">
+                    <img src="Screen/iPhone 17 Pro FR.png" alt="Capture iPhone 1">
+                    <img src="Screen/iPhone 17 Pro FR2.png" alt="Capture iPhone 2">
+                </div>
+            </div>
+            <div id="screens-ipad-fr" class="screens-panel">
+                <div class="screens-grid">
+                    <img src="Screen/Ipad13FR.png" alt="Capture iPad 1">
+                    <img src="Screen/Ipad13FR2.png" alt="Capture iPad 2">
+                </div>
+            </div>
         </div>
+    </section>
 
-        <h2 id="support-en">Support & Contact</h2>
-        <p style="text-align: center;">
-            Need help or have a suggestion?<br>
-            <a href="mailto:valerie.otero@free.fr" style="display: inline-block; background: #007aff; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; margin-top: 10px; font-weight: 500;">Contact Support by Email</a>
-        </p>
-    </div>
+    <section class="section">
+        <div class="container">
+            <div class="notice">
+                <strong>Sécurité & responsabilité.</strong> L'utilisation de cette application relève de la seule responsabilité du Commandant de bord. Elle ne se substitue pas aux documents officiels ni à l'analyse des cartes météorologiques réglementaires. Le développeur décline toute responsabilité quant à l'utilisation des données.
+            </div>
+        </div>
+    </section>
 
-    <footer>
-        <p>© Valérie Otero - 2026 - METAR•TAF Flow</p>
-        <p>
-            <a href="PrivacyPolicy.html">Privacy Policy</a> • 
-            <a href="README.html">Documentation</a>
-        </p>
-    </footer>
+    <section class="store-banner">
+        <div class="container">
+            <h2>Disponible sur l'App Store</h2>
+            <p>Téléchargez METAR•TAF Flow sur votre iPhone, iPad ou Mac.</p>
+            <a href="https://apps.apple.com/fr/app/metar-taf-flow/id6757341500" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
+            </a>
+        </div>
+    </section>
 </div>
+
+<!-- ============ ENGLISH ============ -->
+<div id="content-en" class="hidden">
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">✈️ Version 1.2 available</span>
+                <h1>Aviation weather,<br>finally clear.</h1>
+                <p class="lead">Real-time METAR and TAF, visually decoded, for every airport in the world. Built by pilots, for pilots — on iPhone, iPad and Mac.</p>
+                <div class="hero-cta">
+                    <a href="https://apps.apple.com/fr/app/metar-taf-flow/id6757341500" class="app-store-badge-img" aria-label="Download on the App Store">
+                        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
+                    </a>
+                    <a href="#features-en" class="secondary-cta">See the features →</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-frame">
+                    <img src="Screen/iPhone 17 Pro EN.png" alt="METAR•TAF Flow on iPhone">
+                </div>
+                <div class="floating-badge badge-1">
+                    <span class="pill vfr">VFR</span>
+                    <span>KJFK · 280° 12kt</span>
+                </div>
+                <div class="floating-badge badge-2">
+                    <span class="pill ifr">IFR</span>
+                    <span>KSFO · BKN 008</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container stats-grid">
+            <div><div class="stat-num">10,000+</div><div class="stat-label">Airports covered</div></div>
+            <div><div class="stat-num">NOAA</div><div class="stat-label">Official source</div></div>
+            <div><div class="stat-num">100%</div><div class="stat-label">Real-time</div></div>
+            <div><div class="stat-num">0</div><div class="stat-label">Data collected</div></div>
+        </div>
+    </section>
+
+    <section id="features-en" class="section features">
+        <div class="container">
+            <span class="section-eyebrow">Features</span>
+            <h2 class="section-title">Built for pilot briefings</h2>
+            <p class="section-sub">Every essential piece of information, in the right place, in the right order.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Worldwide data</h3>
+                    <p>Direct access to NOAA servers for real-time METAR and TAF, wherever you are.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Visual decoding</h3>
+                    <p>Instantly see flight conditions (VFR, MVFR, IFR, LIFR) thanks to a clear color code.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛫</div>
+                    <h3>Route management</h3>
+                    <p>Create airport groups, organize your flights and view weather across the whole route.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☀️</div>
+                    <h3>Accurate ephemeris</h3>
+                    <p>Sunrise / sunset and civil twilight calculated from your position and applicable rules.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📡</div>
+                    <h3>METAR / TAF decoder</h3>
+                    <p>Each code translated into plain English: wind, visibility, clouds, ceiling, temperature, QNH.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy first</h3>
+                    <p>No account, no tracker. Everything stays on your device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section screens-section">
+        <div class="container">
+            <span class="section-eyebrow">Previews</span>
+            <h2 class="section-title">Designed for iPhone, iPad and Mac</h2>
+            <p class="section-sub">An experience tailored to each device, from cockpit to desk.</p>
+
+            <div class="screens-tabs-wrap">
+                <div class="screens-tabs">
+                    <button class="active" data-target="screens-iphone-en" onclick="showScreens(this)">iPhone</button>
+                    <button data-target="screens-ipad-en" onclick="showScreens(this)">iPad</button>
+                </div>
+            </div>
+
+            <div id="screens-iphone-en" class="screens-panel active">
+                <div class="screens-grid iphone">
+                    <img src="Screen/iPhone 17 Pro EN.png" alt="iPhone screenshot 1">
+                    <img src="Screen/iPhone 17 Pro EN2.png" alt="iPhone screenshot 2">
+                </div>
+            </div>
+            <div id="screens-ipad-en" class="screens-panel">
+                <div class="screens-grid">
+                    <img src="Screen/Ipad13EN.png" alt="iPad screenshot 1">
+                    <img src="Screen/Ipad13EN2.png" alt="iPad screenshot 2">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="notice">
+                <strong>Safety & liability.</strong> Use of this app is the sole responsibility of the Pilot in Command. It does not replace official documents or the analysis of regulatory weather charts. The developer declines all liability regarding the use of the data.
+            </div>
+        </div>
+    </section>
+
+    <section class="store-banner">
+        <div class="container">
+            <h2>Available on the App Store</h2>
+            <p>Download METAR•TAF Flow on your iPhone, iPad or Mac.</p>
+            <a href="https://apps.apple.com/fr/app/metar-taf-flow/id6757341500" class="app-store-badge-img" aria-label="Download on the App Store">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
+            </a>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="https://valerie-otero.github.io/" id="link-home-footer">Accueil du site</a>
+            <a href="PrivacyPolicy.html" id="link-privacy">Politique de confidentialité</a>
+            <a href="README.html" id="link-docs">Documentation</a>
+            <a href="mailto:valerie.otero@free.fr" id="link-contact">Contact / Support</a>
+        </div>
+        <p>&copy; 2026 Valérie Otero — METAR•TAF Flow.</p>
+    </div>
+</footer>
+
+<script>
+    let currentLang = 'fr';
+    function setLang(lang) {
+        if (lang === currentLang) return;
+        const fr = document.getElementById('content-fr');
+        const en = document.getElementById('content-en');
+        const btnFr = document.getElementById('btn-fr');
+        const btnEn = document.getElementById('btn-en');
+        const linkHome = document.getElementById('link-home');
+        const linkHomeFooter = document.getElementById('link-home-footer');
+        const linkPrivacy = document.getElementById('link-privacy');
+        const linkDocs = document.getElementById('link-docs');
+        const linkContact = document.getElementById('link-contact');
+
+        if (lang === 'en') {
+            fr.classList.add('hidden'); en.classList.remove('hidden');
+            btnFr.classList.remove('active'); btnEn.classList.add('active');
+            document.documentElement.lang = 'en';
+            document.title = "METAR•TAF Flow — Aviation Weather";
+            if (linkHome) linkHome.querySelector('.label-text').textContent = "All apps";
+            if (linkHomeFooter) linkHomeFooter.textContent = "Website home";
+            if (linkPrivacy) linkPrivacy.textContent = "Privacy Policy";
+            if (linkDocs) linkDocs.textContent = "Documentation";
+            if (linkContact) linkContact.textContent = "Contact / Support";
+        } else {
+            en.classList.add('hidden'); fr.classList.remove('hidden');
+            btnEn.classList.remove('active'); btnFr.classList.add('active');
+            document.documentElement.lang = 'fr';
+            document.title = "METAR•TAF Flow — Météo aéronautique";
+            if (linkHome) linkHome.querySelector('.label-text').textContent = "Toutes les apps";
+            if (linkHomeFooter) linkHomeFooter.textContent = "Accueil du site";
+            if (linkPrivacy) linkPrivacy.textContent = "Politique de confidentialité";
+            if (linkDocs) linkDocs.textContent = "Documentation";
+            if (linkContact) linkContact.textContent = "Contact / Support";
+        }
+        currentLang = lang;
+    }
+
+    function showScreens(btn) {
+        const tabs = btn.parentElement.querySelectorAll('button');
+        tabs.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const targetId = btn.dataset.target;
+        // siblings panels
+        const section = btn.closest('section');
+        section.querySelectorAll('.screens-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(targetId).classList.add('active');
+    }
+
+    const userLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+    if (userLang.startsWith('en')) setLang('en');
+</script>
 
 </body>
 </html>
