@@ -3,191 +3,523 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AirMultiChrono - Le chronomètre multi-voies ultime</title>
-    <meta name="description" content="AirMultiChrono : Chronomètre multi-voies pour iPhone et iPad. Idéal pour l'aviation, le sport et la cuisine. Profils, alarmes visuelles, haptique.">
+    <title>AirMultiChrono — Le chronomètre multi-voies ultime</title>
+    <meta name="description" content="AirMultiChrono : chronomètre multi-voies pour iPhone, iPad et Mac. Idéal pour l'aviation, le sport et la cuisine. Profils, alarmes visuelles, haptique.">
     <style>
         :root {
             --primary: #007aff;
+            --primary-dark: #0051d5;
+            --accent: #5ac8b6;
             --bg: #ffffff;
             --text: #1d1d1f;
-            --secondary-text: #86868b;
+            --secondary-text: #6e6e73;
+            --muted: #86868b;
             --section-bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --border: #e5e5e7;
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
+            --shadow-lg: 0 30px 80px rgba(0,0,0,0.15);
         }
 
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
             color: var(--text);
             background: var(--bg);
-            line-height: 1.5;
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
-            max-width: 980px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
-        /* Header */
+        /* ============ Header ============ */
         header {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid #e5e5e5;
+            border-bottom: 1px solid var(--border);
         }
 
         .nav-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 44px;
+            height: 56px;
+            gap: 16px;
         }
 
         .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             font-weight: 600;
-            font-size: 18px;
+            font-size: 17px;
             color: var(--text);
             text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .logo img {
+            height: 32px;
+            width: 32px;
+            border-radius: 8px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            background: var(--primary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 980px;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(0,122,255,0.25);
+        }
+
+        .home-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(0,122,255,0.35);
         }
 
         .lang-switch {
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 500;
             color: var(--primary);
-            background: none;
+            background: transparent;
             border: 1px solid var(--primary);
-            padding: 4px 10px;
-            border-radius: 15px;
+            padding: 6px 12px;
+            border-radius: 980px;
             transition: all 0.2s;
         }
 
         .lang-switch:hover {
             background: var(--primary);
-            color: white;
+            color: #fff;
         }
 
-        /* Hero */
+        /* ============ Hero ============ */
         .hero {
-            text-align: center;
+            position: relative;
             padding: 80px 0 60px;
+            overflow: hidden;
+            background:
+                radial-gradient(1200px 600px at 80% -10%, rgba(0,122,255,0.12), transparent 60%),
+                radial-gradient(900px 500px at -10% 30%, rgba(90,200,182,0.18), transparent 60%),
+                linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,122,255,0.08);
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 980px;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
         }
 
         .hero h1 {
-            font-size: 48px;
-            line-height: 1.1;
-            font-weight: 700;
-            margin-bottom: 15px;
+            font-size: clamp(40px, 5.5vw, 64px);
+            line-height: 1.05;
+            font-weight: 800;
+            margin: 0 0 18px;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #1d1d1f 0%, #007aff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
-            font-size: 24px;
+        .hero .lead {
+            font-size: 20px;
             color: var(--secondary-text);
-            max-width: 700px;
-            margin: 0 auto 30px;
-            font-weight: 400;
+            margin: 0 0 32px;
+            max-width: 540px;
+            line-height: 1.5;
         }
 
-        .app-store-badge {
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .app-store-badge-img {
             display: inline-block;
-            background: #000;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
             transition: transform 0.2s;
         }
 
-        .app-store-badge:hover {
-            transform: scale(1.05);
+        .app-store-badge-img:hover {
+            transform: scale(1.04);
         }
 
-        /* Features */
-        .features {
-            background: var(--section-bg);
-            padding: 80px 0;
+        .app-store-badge-img img {
+            height: 56px;
+            width: auto;
+            display: block;
         }
+
+        .secondary-cta {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .secondary-cta:hover {
+            text-decoration: underline;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .device-frame {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            aspect-ratio: 9 / 19.5;
+            background: linear-gradient(145deg, #1d1d1f, #2c2c2e);
+            border-radius: 48px;
+            padding: 12px;
+            box-shadow:
+                var(--shadow-lg),
+                0 0 0 2px rgba(255,255,255,0.05) inset,
+                0 0 80px rgba(0,122,255,0.25);
+            transform: rotate(-3deg);
+            transition: transform 0.6s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .device-frame:hover {
+            transform: rotate(0deg) translateY(-6px);
+        }
+
+        .device-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 36px;
+            display: block;
+        }
+
+        .floating-badge {
+            position: absolute;
+            background: #fff;
+            border-radius: 16px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            animation: floatY 4s ease-in-out infinite;
+        }
+
+        .floating-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #34c759;
+            box-shadow: 0 0 0 4px rgba(52,199,89,0.2);
+        }
+
+        .badge-1 { top: 12%; left: -8%; animation-delay: 0s; }
+        .badge-2 { bottom: 18%; right: -10%; animation-delay: 1.5s; }
+        .badge-2 .dot { background: #ff9500; box-shadow: 0 0 0 4px rgba(255,149,0,0.2); }
+
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ============ Stats strip ============ */
+        .stats {
+            background: var(--text);
+            color: #fff;
+            padding: 28px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff 0%, #5ac8b6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 2px;
+        }
+
+        /* ============ Sections ============ */
+        section.section { padding: 100px 0; }
+
+        .section-eyebrow {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            margin: 0 0 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: var(--secondary-text);
+            font-size: 18px;
+            max-width: 640px;
+            margin: 0 auto 60px;
+        }
+
+        /* ============ Features ============ */
+        .features { background: var(--section-bg); }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
         }
 
         .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: var(--card-bg);
+            padding: 32px 28px;
+            border-radius: 22px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 60%, rgba(0,122,255,0.06));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
         .feature-icon {
-            font-size: 32px;
-            margin-bottom: 15px;
-            color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(0,122,255,0.12), rgba(90,200,182,0.15));
+            font-size: 26px;
+            margin-bottom: 18px;
         }
 
         .feature-card h3 {
             margin: 0 0 10px;
-            font-size: 20px;
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }
 
         .feature-card p {
             margin: 0;
             color: var(--secondary-text);
+            font-size: 15px;
+            line-height: 1.55;
         }
 
-        /* Use Cases */
-        .use-cases {
-            padding: 80px 0;
+        /* ============ Use cases ============ */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
         }
 
-        .use-cases h2, .features h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 40px;
+        .use-case {
+            padding: 36px 28px;
+            border-radius: 22px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            transition: transform 0.3s, border-color 0.3s;
         }
 
-        .use-case-item {
-            margin-bottom: 30px;
+        .use-case:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
         }
 
-        .use-case-item h3 {
-            font-size: 22px;
-            margin-bottom: 8px;
+        .use-case-emoji {
+            font-size: 38px;
+            margin-bottom: 14px;
+            display: block;
         }
 
-        /* Footer */
-        footer {
-            background: #f5f5f7;
-            padding: 40px 0;
-            font-size: 12px;
+        .use-case h3 {
+            font-size: 20px;
+            margin: 0 0 10px;
+            font-weight: 600;
+        }
+
+        .use-case p {
+            margin: 0;
             color: var(--secondary-text);
-            border-top: 1px solid #e5e5e5;
+            font-size: 15px;
+        }
+
+        /* ============ Store banner ============ */
+        .store-banner {
+            background: linear-gradient(135deg, #007aff 0%, #5e5ce6 100%);
+            color: #fff;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .store-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(600px 300px at 20% 30%, rgba(255,255,255,0.15), transparent 60%),
+                radial-gradient(500px 400px at 80% 70%, rgba(90,200,182,0.25), transparent 60%);
+            pointer-events: none;
+        }
+
+        .store-banner .container { position: relative; }
+
+        .store-banner h2 {
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 700;
+            margin: 0 0 14px;
+            letter-spacing: -0.02em;
+        }
+
+        .store-banner p {
+            font-size: 18px;
+            margin: 0 0 32px;
+            opacity: 0.95;
+        }
+
+        /* ============ Footer ============ */
+        footer {
+            background: var(--section-bg);
+            padding: 50px 0 40px;
+            font-size: 13px;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-bottom: 18px;
         }
 
         .footer-links a {
             color: var(--secondary-text);
             text-decoration: none;
-            margin-right: 20px;
+            transition: color 0.2s;
         }
 
-        .footer-links a:hover {
-            text-decoration: underline;
+        .footer-links a:hover { color: var(--primary); }
+
+        /* ============ Utilities ============ */
+        .hidden { display: none; }
+
+        /* ============ Responsive ============ */
+        @media (max-width: 880px) {
+            .hero { padding: 60px 0 40px; }
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                text-align: center;
+            }
+            .hero .lead { margin-left: auto; margin-right: auto; }
+            .hero-cta { justify-content: center; }
+            .device-frame { max-width: 280px; transform: rotate(0); }
+            .floating-badge { display: none; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .use-cases-grid { grid-template-columns: 1fr; }
+            section.section { padding: 70px 0; }
         }
 
-        /* Utilities */
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 36px; }
-            .hero p { font-size: 18px; }
+        @media (max-width: 520px) {
+            .nav-content { height: 52px; }
+            .home-link { padding: 7px 12px; font-size: 13px; }
+            .home-link .label-text { display: none; }
+            .lang-switch { padding: 5px 10px; }
         }
     </style>
 </head>
@@ -196,145 +528,246 @@
     <header>
         <div class="container nav-content">
             <a href="#" class="logo">
-                <img src="AirMultiChrono.png" alt="AirMultiChrono Logo" style="height: 32px; vertical-align: middle; margin-right: 8px;">
-                AirMultiChrono
+                <img src="AirMultiChrono.png" alt="AirMultiChrono Logo">
+                <span>AirMultiChrono</span>
             </a>
-            <button class="lang-switch" onclick="toggleLanguage()">English</button>
+            <div class="nav-actions">
+                <a href="https://valerie-otero.github.io/" class="home-link" id="link-home">
+                    <span>🏠</span><span class="label-text">Toutes les apps</span>
+                </a>
+                <button class="lang-switch" onclick="toggleLanguage()">English</button>
+            </div>
         </div>
     </header>
 
-    <!-- FRENCH CONTENT -->
+    <!-- ============ FRENCH ============ -->
     <div id="content-fr">
-        <section class="hero container">
-            <h1>Maîtrisez le temps.<br>En toute simplicité.</h1>
-            <p>Le chronomètre multi-voies conçu pour les pilotes, les pros et les passionnés. Profils, alarmes visuelles et précision absolue.</p>
-            
-            <div style="margin: 30px 0;">
-                <img src="AirMultiChrono.png" alt="AirMultiChrono" style="max-width: 200px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-text">
+                    <span class="hero-eyebrow">✨ Version 1.5 disponible</span>
+                    <h1>Maîtrisez le temps.<br>En toute simplicité.</h1>
+                    <p class="lead">Le chronomètre multi-voies conçu pour les pilotes, les pros et les passionnés. Profils, alarmes visuelles et précision absolue — sur iPhone, iPad et Mac.</p>
+                    <div class="hero-cta">
+                        <a href="https://apps.apple.com/us/app/airmultichrono/id6754513036" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                            <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
+                        </a>
+                        <a href="#features" class="secondary-cta">Découvrir les nouveautés →</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="device-frame">
+                        <img src="Simulator Screenshot - iPhone 11 Pro Max - 2026-05-18 at 18.31.04.png" alt="AirMultiChrono sur iPhone">
+                    </div>
+                    <div class="floating-badge badge-1">
+                        <span class="dot"></span>
+                        <span>Chrono 1 en cours</span>
+                    </div>
+                    <div class="floating-badge badge-2">
+                        <span class="dot"></span>
+                        <span>3 voies actives</span>
+                    </div>
+                </div>
             </div>
-
-            <a href="https://apps.apple.com/app/airmultichrono/id6754513036" class="app-store-badge">Télécharger sur l'App Store</a>
         </section>
 
-        <section class="features">
+        <section class="stats">
+            <div class="container stats-grid">
+                <div><div class="stat-num">3+</div><div class="stat-label">Voies parallèles</div></div>
+                <div><div class="stat-num">∞</div><div class="stat-label">Profils sauvegardés</div></div>
+                <div><div class="stat-num">100%</div><div class="stat-label">Hors-ligne</div></div>
+                <div><div class="stat-num">0</div><div class="stat-label">Donnée collectée</div></div>
+            </div>
+        </section>
+
+        <section id="features" class="section features">
             <div class="container">
-                <h2>Nouveautés Version 1.5</h2>
+                <span class="section-eyebrow">Nouveautés 1.5</span>
+                <h2 class="section-title">Repensé pour aller plus loin</h2>
+                <p class="section-sub">Une nouvelle interface, plus claire et plus accessible, sans rien sacrifier à la puissance.</p>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">⚙️</div>
-                        <h3>Réglages Défilants</h3>
-                        <p>Le menu s'ouvre dans une feuille scrollable, corrigeant le menu tronqué sous iOS 26. Tous les réglages sont accessibles.</p>
+                        <h3>Réglages défilants</h3>
+                        <p>Le menu s'ouvre dans une feuille scrollable, corrigeant le menu tronqué sous iOS 26. Tous les réglages restent accessibles.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🏷️</div>
-                        <h3>Indicateur de Mode</h3>
-                        <p>Un badge Solo/Multi s'affiche sous la barre du haut pour visualiser le mode en cours d'un coup d'œil.</p>
+                        <h3>Indicateur de mode</h3>
+                        <p>Un badge Solo / Multi s'affiche sous la barre du haut pour visualiser le mode en cours d'un coup d'œil.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🧭</div>
-                        <h3>Navigation Intégrée</h3>
+                        <h3>Navigation intégrée</h3>
                         <p>À propos, FAQ et Profils sont accessibles directement depuis la feuille Réglages, sans conflit d'affichage.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">📂</div>
-                        <h3>Profils de Configuration</h3>
-                        <p>Sauvegardez vos dispositions, noms et alarmes. Passez d'un avion à un autre ou d'une activité à une autre en un instant.</p>
+                        <h3>Profils de configuration</h3>
+                        <p>Sauvegardez vos dispositions, noms et alarmes. Passez d'un avion ou d'une activité à l'autre en un instant.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">📊</div>
-                        <h3>Jauge Visuelle</h3>
-                        <p>Une barre de progression fluide sous chaque chrono pour visualiser le temps restant avant l'alarme en un coup d'œil.</p>
+                        <h3>Jauge visuelle</h3>
+                        <p>Une barre de progression fluide sous chaque chrono pour visualiser le temps restant avant l'alarme.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">📳</div>
-                        <h3>Retour Haptique</h3>
+                        <h3>Retour haptique</h3>
                         <p>Ressentez chaque action. Des vibrations subtiles confirment vos démarrages, arrêts et réinitialisations (iPhone).</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="use-cases container">
-            <h2>Pourquoi AirMultiChrono ?</h2>
-            <div class="use-case-item">
-                <h3>✈️ Aviation & VFR</h3>
-                <p>Gérez vos réservoirs (G/D) et vos temps de navigation. Le totalisateur global suit votre temps de vol. Fonctionne 100% hors ligne.</p>
-            </div>
-            <div class="use-case-item">
-                <h3>🍳 Cuisine & Quotidien</h3>
-                <p>Lancez plusieurs cuissons en parallèle. Chaque feu a son chrono, avec des alarmes distinctes.</p>
-            </div>
-            <div class="use-case-item">
-                <h3>🔒 Vie Privée</h3>
-                <p>Aucune collecte de données. Aucun compte requis. Tout reste sur votre appareil.</p>
-            </div>
-        </section>
-    </div>
-
-    <!-- ENGLISH CONTENT -->
-    <div id="content-en" class="hidden">
-        <section class="hero container">
-            <h1>Master your time.<br>Simply powerful.</h1>
-            <p>The multi-track stopwatch designed for pilots, pros, and enthusiasts. Profiles, visual alarms, and absolute precision.</p>
-            
-            <div style="margin: 30px 0;">
-                <img src="AirMultiChrono.png" alt="AirMultiChrono" style="max-width: 200px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            </div>
-
-            <a href="https://apps.apple.com/app/airmultichrono/id6754513036" class="app-store-badge">Download on the App Store</a>
-        </section>
-
-        <section class="features">
+        <section class="section">
             <div class="container">
-                <h2>New in Version 1.5</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">⚙️</div>
-                        <h3>Scrollable Settings</h3>
-                        <p>The settings menu now opens as a scrollable sheet, fixing the truncated menu on iOS 26. All settings are accessible.</p>
+                <span class="section-eyebrow">Pour qui ?</span>
+                <h2 class="section-title">Pourquoi AirMultiChrono ?</h2>
+                <p class="section-sub">Un seul outil, pensé pour les usages les plus exigeants comme les plus quotidiens.</p>
+                <div class="use-cases-grid">
+                    <div class="use-case">
+                        <span class="use-case-emoji">✈️</span>
+                        <h3>Aviation & VFR</h3>
+                        <p>Gérez vos réservoirs (G/D) et vos temps de navigation. Le totalisateur global suit votre temps de vol. Fonctionne 100% hors ligne.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🏷️</div>
-                        <h3>Mode Indicator</h3>
-                        <p>A Solo/Multi badge is displayed below the top bar so you can see the current mode at a glance.</p>
+                    <div class="use-case">
+                        <span class="use-case-emoji">🍳</span>
+                        <h3>Cuisine & Quotidien</h3>
+                        <p>Lancez plusieurs cuissons en parallèle. Chaque feu a son chrono, avec des alarmes distinctes.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🧭</div>
-                        <h3>Integrated Navigation</h3>
-                        <p>About, FAQ and Profiles are accessible directly from the Settings sheet, with no display conflicts.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📂</div>
-                        <h3>Configuration Profiles</h3>
-                        <p>Save your layouts, names, and alarms. Switch between aircraft or activities instantly.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3>Visual Gauge</h3>
-                        <p>A fluid progress bar under each timer lets you visualize time remaining before alarm at a glance.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📳</div>
-                        <h3>Haptic Feedback</h3>
-                        <p>Feel every action. Subtle vibrations confirm your starts, stops, and resets (iPhone).</p>
+                    <div class="use-case">
+                        <span class="use-case-emoji">🔒</span>
+                        <h3>Vie privée</h3>
+                        <p>Aucune collecte de données. Aucun compte requis. Tout reste sur votre appareil.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="use-cases container">
-            <h2>Why AirMultiChrono?</h2>
-            <div class="use-case-item">
-                <h3>✈️ Aviation & VFR</h3>
-                <p>Manage your fuel tanks (L/R) and navigation legs. The global totalizer tracks your flight time. Works 100% offline.</p>
+        <section class="store-banner">
+            <div class="container">
+                <h2>Disponible dès maintenant sur l'App Store</h2>
+                <p>Téléchargez AirMultiChrono sur votre iPhone, iPad ou Mac.</p>
+                <a href="https://apps.apple.com/us/app/airmultichrono/id6754513036" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
+                </a>
             </div>
-            <div class="use-case-item">
-                <h3>🍳 Cooking & Daily Life</h3>
-                <p>Run multiple timers in parallel. Each burner gets its own chrono with distinct alarms.</p>
+        </section>
+    </div>
+
+    <!-- ============ ENGLISH ============ -->
+    <div id="content-en" class="hidden">
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-text">
+                    <span class="hero-eyebrow">✨ Version 1.5 available</span>
+                    <h1>Master your time.<br>Simply powerful.</h1>
+                    <p class="lead">The multi-track stopwatch built for pilots, pros and enthusiasts. Profiles, visual alarms and absolute precision — on iPhone, iPad and Mac.</p>
+                    <div class="hero-cta">
+                        <a href="https://apps.apple.com/us/app/airmultichrono/id6754513036" class="app-store-badge-img" aria-label="Download on the App Store">
+                            <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
+                        </a>
+                        <a href="#features-en" class="secondary-cta">See what's new →</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="device-frame">
+                        <img src="Simulator Screenshot - iPhone 11 Pro Max - 2026-05-18 at 18.31.04.png" alt="AirMultiChrono on iPhone">
+                    </div>
+                    <div class="floating-badge badge-1">
+                        <span class="dot"></span>
+                        <span>Chrono 1 running</span>
+                    </div>
+                    <div class="floating-badge badge-2">
+                        <span class="dot"></span>
+                        <span>3 active tracks</span>
+                    </div>
+                </div>
             </div>
-            <div class="use-case-item">
-                <h3>🔒 Privacy First</h3>
-                <p>No data collection. No account required. Everything stays on your device.</p>
+        </section>
+
+        <section class="stats">
+            <div class="container stats-grid">
+                <div><div class="stat-num">3+</div><div class="stat-label">Parallel tracks</div></div>
+                <div><div class="stat-num">∞</div><div class="stat-label">Saved profiles</div></div>
+                <div><div class="stat-num">100%</div><div class="stat-label">Offline</div></div>
+                <div><div class="stat-num">0</div><div class="stat-label">Data collected</div></div>
+            </div>
+        </section>
+
+        <section id="features-en" class="section features">
+            <div class="container">
+                <span class="section-eyebrow">What's new in 1.5</span>
+                <h2 class="section-title">Redesigned to go further</h2>
+                <p class="section-sub">A clearer, more accessible interface — without sacrificing any power.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Scrollable settings</h3>
+                        <p>The settings menu now opens as a scrollable sheet, fixing the truncated menu on iOS 26. All settings remain accessible.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏷️</div>
+                        <h3>Mode indicator</h3>
+                        <p>A Solo / Multi badge appears below the top bar so you can see the current mode at a glance.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧭</div>
+                        <h3>Integrated navigation</h3>
+                        <p>About, FAQ and Profiles are accessible directly from the Settings sheet, with no display conflicts.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📂</div>
+                        <h3>Configuration profiles</h3>
+                        <p>Save your layouts, names and alarms. Switch between aircraft or activities instantly.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Visual gauge</h3>
+                        <p>A fluid progress bar under each timer lets you visualize time remaining before alarm at a glance.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📳</div>
+                        <h3>Haptic feedback</h3>
+                        <p>Feel every action. Subtle vibrations confirm your starts, stops and resets (iPhone).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <span class="section-eyebrow">Who is it for?</span>
+                <h2 class="section-title">Why AirMultiChrono?</h2>
+                <p class="section-sub">One tool, designed for the most demanding uses as well as the simplest everyday ones.</p>
+                <div class="use-cases-grid">
+                    <div class="use-case">
+                        <span class="use-case-emoji">✈️</span>
+                        <h3>Aviation & VFR</h3>
+                        <p>Manage your fuel tanks (L/R) and navigation legs. The global totalizer tracks your flight time. Works 100% offline.</p>
+                    </div>
+                    <div class="use-case">
+                        <span class="use-case-emoji">🍳</span>
+                        <h3>Cooking & daily life</h3>
+                        <p>Run multiple timers in parallel. Each burner has its own chrono, with distinct alarms.</p>
+                    </div>
+                    <div class="use-case">
+                        <span class="use-case-emoji">🔒</span>
+                        <h3>Privacy first</h3>
+                        <p>No data collection. No account required. Everything stays on your device.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="store-banner">
+            <div class="container">
+                <h2>Available now on the App Store</h2>
+                <p>Download AirMultiChrono on your iPhone, iPad or Mac.</p>
+                <a href="https://apps.apple.com/us/app/airmultichrono/id6754513036" class="app-store-badge-img" aria-label="Download on the App Store">
+                    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
+                </a>
             </div>
         </section>
     </div>
@@ -342,10 +775,11 @@
     <footer>
         <div class="container">
             <div class="footer-links">
+                <a href="https://valerie-otero.github.io/" id="link-home-footer">Accueil du site</a>
                 <a href="PrivacyPolicy.html" id="link-privacy">Politique de confidentialité</a>
                 <a href="mailto:valerie.otero@free.fr" id="link-contact">Contact / Support</a>
             </div>
-            <p style="margin-top: 20px;">&copy; 2025 Valérie Otero. AirMultiChrono.</p>
+            <p>&copy; 2025 Valérie Otero — AirMultiChrono.</p>
         </div>
     </footer>
 
@@ -357,33 +791,36 @@
             const en = document.getElementById('content-en');
             const btn = document.querySelector('.lang-switch');
             const linkPrivacy = document.getElementById('link-privacy');
-            
+            const linkHome = document.getElementById('link-home');
+            const linkHomeFooter = document.getElementById('link-home-footer');
+
             if (currentLang === 'fr') {
-                // Switch to EN
                 fr.classList.add('hidden');
                 en.classList.remove('hidden');
                 btn.textContent = 'Français';
                 document.documentElement.lang = 'en';
-                document.title = "AirMultiChrono - The ultimate multi-track stopwatch";
+                document.title = "AirMultiChrono — The ultimate multi-track stopwatch";
                 linkPrivacy.textContent = "Privacy Policy";
                 linkPrivacy.href = "PrivacyPolicy.html#en";
+                if (linkHome) linkHome.querySelector('.label-text').textContent = "All apps";
+                if (linkHomeFooter) linkHomeFooter.textContent = "Website home";
                 currentLang = 'en';
             } else {
-                // Switch to FR
                 en.classList.add('hidden');
                 fr.classList.remove('hidden');
                 btn.textContent = 'English';
                 document.documentElement.lang = 'fr';
-                document.title = "AirMultiChrono - Le chronomètre multi-voies ultime";
+                document.title = "AirMultiChrono — Le chronomètre multi-voies ultime";
                 linkPrivacy.textContent = "Politique de confidentialité";
                 linkPrivacy.href = "PrivacyPolicy.html#fr";
+                if (linkHome) linkHome.querySelector('.label-text').textContent = "Toutes les apps";
+                if (linkHomeFooter) linkHomeFooter.textContent = "Accueil du site";
                 currentLang = 'fr';
             }
         }
 
-        // Auto-detect language
         const userLang = navigator.language || navigator.userLanguage;
-        if (userLang.startsWith('en')) {
+        if (userLang && userLang.startsWith('en')) {
             toggleLanguage();
         }
     </script>
