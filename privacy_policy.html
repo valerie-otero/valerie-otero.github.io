@@ -28,8 +28,14 @@
     footer{margin:24px 0;color:var(--muted)}
     .hr{height:1px;background:var(--border);margin:20px 0}
   </style>
+  <link rel="stylesheet" href="Assets/css/doc-shared.css">
+  <link rel="stylesheet" href="Assets/css/app-header.css">
+  <script defer src="Assets/js/app-header.js"></script>
+  <style>
+    /* Portfolio root accent — picked up by doc-shared.css */
+    :root { --doc-accent: #3b82f6; --doc-accent-grad: #1e3a8a; }
+  </style>
 </head>
-<body>
   <main>
     <header>
       <div class="icon" aria-hidden="true">✈️</div>
@@ -40,11 +46,11 @@
     </header>
 
     <nav class="lang" aria-label="Language">
-      <a href="#fr">Français</a>
-      <a href="#en">English</a>
+      <a href="#" data-lang-btn="fr">Français</a>
+      <a href="#" data-lang-btn="en">English</a>
     </nav>
 
-    <section id="fr" class="card" lang="fr">
+    <section id="fr" class="card lang-content fr" lang="fr">
       <h2>Français (FR)</h2>
           <div class="container">
       <h1>Politique de Confidentialité</h1>
@@ -121,7 +127,7 @@
       </ul>
     </section>
 
-    <section id="en" class="card" lang="en">
+    <section id="en" class="card lang-content en" lang="en">
       <h2>English (EN)</h2>
       <p class="meta">      <strong>Effective Date:</strong> December 4, 2025<br/>
       <strong>Version:</strong> 1.1<br/>

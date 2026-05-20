@@ -28,8 +28,15 @@
     footer{margin:24px 0;color:var(--muted)}
     .hr{height:1px;background:var(--border);margin:20px 0}
   </style>
+  <link rel="stylesheet" href="../Assets/css/doc-shared.css">
+  <link rel="stylesheet" href="../Assets/css/app-header.css">
+  <script defer src="../Assets/js/app-header.js"></script>
+  <style>
+    :root { --doc-accent: #007aff; --doc-accent-grad: #5ac8fa; }
+  </style>
 </head>
 <body>
+<div class="doc-topbar"><a href="index.html" class="doc-brand"><span>↩</span><span>AirMultiChrono <span class="tag">— Accueil / Home</span></span></a><div class="doc-back"><a href="index.html">← Retour à l'app</a><span class="sep">·</span><a href="index.html">← Back to app</a><span class="sep">·</span><a href="../index.html">⌂ Toutes les apps</a></div></div>
   <main>
     <header>
       <div class="icon" aria-hidden="true">🔒</div>
@@ -40,11 +47,11 @@
     </header>
 
     <nav class="lang" aria-label="Language">
-      <a href="#fr">Français</a>
-      <a href="#en">English</a>
+      <a href="#" data-lang-btn="fr">Français</a>
+      <a href="#" data-lang-btn="en">English</a>
     </nav>
 
-    <section id="fr" class="card" lang="fr">
+    <section id="fr" class="card lang-content fr" lang="fr">
       <h2>Français (FR)</h2>
       <p class="meta"><strong>Date d'effet :</strong> 30 mars 2026<br/>
       <strong>Version :</strong> 1.5<br/>
@@ -120,7 +127,7 @@
       </ul>
     </section>
 
-    <section id="en" class="card" lang="en">
+    <section id="en" class="card lang-content en" lang="en">
       <h2>English (EN)</h2>
       <p class="meta"><strong>Effective Date:</strong> March 30, 2026<br/>
       <strong>Version:</strong> 1.5<br/>

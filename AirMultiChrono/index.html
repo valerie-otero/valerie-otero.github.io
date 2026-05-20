@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AirMultiChrono — Le chronomètre multi-voies ultime</title>
-    <meta name="description" content="AirMultiChrono : chronomètre multi-voies pour iPhone, iPad et Mac. Idéal pour l'aviation, le sport et la cuisine. Profils, alarmes visuelles, haptique.">
+    <title data-fr="AirMultiChrono — Le chronomètre multi-voies ultime" data-en="AirMultiChrono — The ultimate multi-channel stopwatch">AirMultiChrono — Le chronomètre multi-voies ultime</title>
+    <meta name="description"
+          data-fr="AirMultiChrono : chronomètre multi-voies pour iPhone, iPad et Mac. Idéal pour l'aviation, le sport et la cuisine. Profils, alarmes visuelles, haptique."
+          data-en="AirMultiChrono: multi-channel stopwatch for iPhone, iPad and Mac. Ideal for aviation, sports and cooking. Profiles, visual alarms, haptics."
+          content="AirMultiChrono : chronomètre multi-voies pour iPhone, iPad et Mac. Idéal pour l'aviation, le sport et la cuisine. Profils, alarmes visuelles, haptique.">
     <style>
         :root {
             --primary: #007aff;
@@ -20,6 +23,10 @@
             --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
             --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
             --shadow-lg: 0 30px 80px rgba(0,0,0,0.15);
+            /* Unified app-header theme */
+            --app-primary: #007aff;
+            --app-primary-dark: #0060df;
+            --app-accent: #5ac8b6;
         }
 
         * { box-sizing: border-box; }
@@ -191,9 +198,15 @@
         }
 
         .app-store-badge-img img {
-            height: 56px;
+            height: 110px;
             width: auto;
             display: block;
+            filter: drop-shadow(0 12px 36px rgba(0,0,0,.4));
+        }
+        .store-banner .app-store-badge-img img { height: 140px; filter: drop-shadow(0 18px 50px rgba(0,0,0,.5)); }
+        @media (max-width: 600px) {
+          .app-store-badge-img img { height: 72px; }
+          .store-banner .app-store-badge-img img { height: 88px; }
         }
 
         .secondary-cta {
@@ -459,16 +472,18 @@
         .store-banner .container { position: relative; }
 
         .store-banner h2 {
-            font-size: clamp(28px, 4vw, 40px);
-            font-weight: 700;
-            margin: 0 0 14px;
+            font-size: clamp(34px, 5vw, 52px);
+            font-weight: 800;
+            margin: 0 0 18px;
             letter-spacing: -0.02em;
         }
 
         .store-banner p {
-            font-size: 18px;
-            margin: 0 0 32px;
+            font-size: 20px;
+            margin: 0 auto 40px;
             opacity: 0.95;
+            max-width: 620px;
+            padding: 0 16px;
         }
 
         /* ============ Footer ============ */
@@ -522,22 +537,40 @@
             .lang-switch { padding: 5px 10px; }
         }
     </style>
+<link rel="stylesheet" href="../Assets/css/app-header.css">
+<script defer src="../Assets/js/app-header.js"></script>
 </head>
 <body>
 
-    <header>
-        <div class="container nav-content">
-            <a href="#" class="logo">
-                <img src="AirMultiChrono.png" alt="AirMultiChrono Logo">
-                <span>AirMultiChrono</span>
-            </a>
-            <div class="nav-actions">
-                <a href="https://valerie-otero.github.io/" class="home-link" id="link-home">
-                    <span>🏠</span><span class="label-text">Toutes les apps</span>
-                </a>
-                <button class="lang-switch" onclick="toggleLanguage()">English</button>
-            </div>
+    <header class="app-nav" id="top">
+      <div class="app-nav-inner">
+        <a class="app-nav-brand" href="#top" aria-label="AirMultiChrono">
+          <img src="AirMultiChrono.png" alt="AirMultiChrono">
+          <span class="app-nav-name">AirMultiChrono</span>
+          <span class="app-nav-version">v1.5</span>
+        </a>
+        <nav class="app-nav-links" aria-label="Sections">
+          <a href="#features" data-lang="fr">Fonctionnalités</a>
+          <a href="#features" data-lang="en">Features</a>
+          <a href="README.html" data-lang="fr">Doc</a>
+          <a href="README.html" data-lang="en">Docs</a>
+          <a href="PrivacyPolicy.html" data-lang="fr">Confidentialité</a>
+          <a href="PrivacyPolicy.html" data-lang="en">Privacy</a>
+        </nav>
+        <div class="app-nav-actions">
+          <a class="app-nav-home" href="../index.html">
+            <span data-lang="fr">⌂ <span class="label">Toutes les apps</span></span>
+            <span data-lang="en">⌂ <span class="label">All apps</span></span>
+          </a>
+          <div class="app-nav-lang" role="group" aria-label="Language">
+            <button type="button" data-lang-btn="fr">FR</button>
+            <button type="button" data-lang-btn="en">EN</button>
+          </div>
+          <a class="app-nav-cta" data-lang="fr" href="https://apps.apple.com/fr/app/airmultichrono/id6754513036" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+          <a class="app-nav-cta" data-lang="en" href="https://apps.apple.com/us/app/airmultichrono/id6754513036" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+          <button type="button" class="app-nav-burger" aria-label="Menu" aria-expanded="false">☰</button>
         </div>
+      </div>
     </header>
 
     <!-- ============ FRENCH ============ -->
@@ -549,7 +582,7 @@
                     <h1>Maîtrisez le temps.<br>En toute simplicité.</h1>
                     <p class="lead">Le chronomètre multi-voies conçu pour les pilotes, les pros et les passionnés. Profils, alarmes visuelles et précision absolue — sur iPhone, iPad et Mac.</p>
                     <div class="hero-cta">
-                        <a href="https://apps.apple.com/us/app/airmultichrono/id6754513036" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                        <a href="https://apps.apple.com/fr/app/airmultichrono/id6754513036" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
                             <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
                         </a>
                         <a href="#features" class="secondary-cta">Découvrir les nouveautés →</a>
@@ -649,7 +682,7 @@
             <div class="container">
                 <h2>Disponible dès maintenant sur l'App Store</h2>
                 <p>Téléchargez AirMultiChrono sur votre iPhone, iPad ou Mac.</p>
-                <a href="https://apps.apple.com/us/app/airmultichrono/id6754513036" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
+                <a href="https://apps.apple.com/fr/app/airmultichrono/id6754513036" class="app-store-badge-img" aria-label="Télécharger sur l'App Store">
                     <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store">
                 </a>
             </div>
@@ -775,7 +808,7 @@
     <footer>
         <div class="container">
             <div class="footer-links">
-                <a href="https://valerie-otero.github.io/" id="link-home-footer">Accueil du site</a>
+                <a href="../index.html" id="link-home-footer">Accueil du site</a>
                 <a href="PrivacyPolicy.html" id="link-privacy">Politique de confidentialité</a>
                 <a href="mailto:valerie.otero@free.fr" id="link-contact">Contact / Support</a>
             </div>
@@ -784,45 +817,32 @@
     </footer>
 
     <script>
-        let currentLang = 'fr';
-
-        function toggleLanguage() {
-            const fr = document.getElementById('content-fr');
-            const en = document.getElementById('content-en');
-            const btn = document.querySelector('.lang-switch');
-            const linkPrivacy = document.getElementById('link-privacy');
-            const linkHome = document.getElementById('link-home');
-            const linkHomeFooter = document.getElementById('link-home-footer');
-
-            if (currentLang === 'fr') {
-                fr.classList.add('hidden');
-                en.classList.remove('hidden');
-                btn.textContent = 'Français';
-                document.documentElement.lang = 'en';
-                document.title = "AirMultiChrono — The ultimate multi-track stopwatch";
-                linkPrivacy.textContent = "Privacy Policy";
-                linkPrivacy.href = "PrivacyPolicy.html#en";
-                if (linkHome) linkHome.querySelector('.label-text').textContent = "All apps";
-                if (linkHomeFooter) linkHomeFooter.textContent = "Website home";
-                currentLang = 'en';
-            } else {
-                en.classList.add('hidden');
-                fr.classList.remove('hidden');
-                btn.textContent = 'English';
-                document.documentElement.lang = 'fr';
-                document.title = "AirMultiChrono — Le chronomètre multi-voies ultime";
-                linkPrivacy.textContent = "Politique de confidentialité";
-                linkPrivacy.href = "PrivacyPolicy.html#fr";
-                if (linkHome) linkHome.querySelector('.label-text').textContent = "Toutes les apps";
-                if (linkHomeFooter) linkHomeFooter.textContent = "Accueil du site";
-                currentLang = 'fr';
+        // Per-app effects driven by app-header.js's "langchange" event
+        (function () {
+            var titles = {
+                fr: 'AirMultiChrono — Le chronomètre multi-voies ultime',
+                en: 'AirMultiChrono — The ultimate multi-track stopwatch'
+            };
+            var footerLabels = {
+                fr: { 'link-home-footer': 'Accueil du site', 'link-privacy': 'Politique de confidentialité' },
+                en: { 'link-home-footer': 'Website home',    'link-privacy': 'Privacy Policy' }
+            };
+            function apply(lang) {
+                if (lang !== 'fr' && lang !== 'en') lang = 'fr';
+                if (titles[lang]) document.title = titles[lang];
+                var labels = footerLabels[lang];
+                Object.keys(labels).forEach(function (id) {
+                    var el = document.getElementById(id);
+                    if (el) el.textContent = labels[id];
+                });
+                // Preserve original behavior: footer Privacy link points to lang-specific anchor
+                var lp = document.getElementById('link-privacy');
+                if (lp) lp.setAttribute('href', 'PrivacyPolicy.html#' + lang);
             }
-        }
-
-        const userLang = navigator.language || navigator.userLanguage;
-        if (userLang && userLang.startsWith('en')) {
-            toggleLanguage();
-        }
+            document.addEventListener('langchange', function (e) {
+                apply((e && e.detail && e.detail.lang) || 'fr');
+            });
+        })();
     </script>
 </body>
 </html>

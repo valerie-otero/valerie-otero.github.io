@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkyNotes — Notes & Checklists pour vos projets</title>
-<meta name="description" content="SkyNotes : notes, checklists colorées et modèles pour organiser vos projets, briefings et missions. iPhone, iPad, Mac.">
+<title data-fr="SkyNotes — Notes & Checklists pour vos projets" data-en="SkyNotes — Notes & Checklists for your projects">SkyNotes — Notes & Checklists pour vos projets</title>
+<meta name="description"
+      data-fr="SkyNotes : notes, checklists colorées et modèles pour organiser vos projets, briefings et missions. iPhone, iPad, Mac."
+      data-en="SkyNotes: notes, color-coded checklists and templates to organize your projects, briefings and missions. iPhone, iPad, Mac."
+      content="SkyNotes : notes, checklists colorées et modèles pour organiser vos projets, briefings et missions. iPhone, iPad, Mac.">
 <style>
     :root {
         --primary: #007aff;
@@ -20,6 +23,10 @@
         --shadow-sm: 0 4px 12px rgba(15,23,42,0.05);
         --shadow-md: 0 14px 36px rgba(0,122,255,0.12);
         --shadow-lg: 0 30px 80px rgba(15,23,42,0.18);
+        /* Unified app-header theme */
+        --app-primary: #007aff;
+        --app-primary-dark: #0060df;
+        --app-accent: #5ac8fa;
     }
 
     * { box-sizing: border-box; }
@@ -113,7 +120,12 @@
     .hero-cta { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
     .app-store-badge-img { display: inline-block; transition: transform .2s; }
     .app-store-badge-img:hover { transform: scale(1.04); }
-    .app-store-badge-img img { height: 56px; width: auto; display: block; }
+    .app-store-badge-img img { height: 110px; width: auto; display: block; filter: drop-shadow(0 12px 36px rgba(0,0,0,.4)); }
+    .store-banner .app-store-badge-img img { height: 140px; filter: drop-shadow(0 18px 50px rgba(0,0,0,.5)); }
+    @media (max-width: 600px) {
+      .app-store-badge-img img { height: 72px; }
+      .store-banner .app-store-badge-img img { height: 88px; }
+    }
     .secondary-cta {
         font-size: 15px; font-weight: 600; color: var(--primary);
         text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
@@ -269,10 +281,10 @@
     }
     .store-banner .container { position: relative; }
     .store-banner h2 {
-        font-size: clamp(28px, 4vw, 42px); font-weight: 700;
-        margin: 0 0 14px; letter-spacing: -0.02em;
+        font-size: clamp(34px, 5vw, 52px); font-weight: 800;
+        margin: 0 0 18px; letter-spacing: -0.02em;
     }
-    .store-banner p { font-size: 18px; margin: 0 0 32px; opacity: .95; }
+    .store-banner p { font-size: 20px; margin: 0 auto 40px; opacity: .95; max-width: 620px; padding: 0 16px; }
 
     /* Footer */
     footer {
@@ -302,25 +314,40 @@
         .home-link .label-text { display: none; }
     }
 </style>
+<link rel="stylesheet" href="../Assets/css/app-header.css">
+<script defer src="../Assets/js/app-header.js"></script>
 </head>
 <body>
 
-<header>
-    <div class="container nav">
-        <a href="#" class="logo">
-            <img src="logoSkyNotes.png" alt="SkyNotes Logo" onerror="this.src='logo.png'">
-            <span>SkyNotes</span>
-        </a>
-        <div class="nav-actions">
-            <a href="https://valerie-otero.github.io/" class="home-link" id="link-home">
-                <span>🏠</span><span class="label-text">Toutes les apps</span>
-            </a>
-            <div class="lang-switch" role="tablist">
-                <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
-                <button id="btn-en" onclick="setLang('en')">EN</button>
-            </div>
-        </div>
+<header class="app-nav" id="top">
+  <div class="app-nav-inner">
+    <a class="app-nav-brand" href="#top" aria-label="SkyNotes">
+      <img src="logoSkyNotes.png" alt="SkyNotes" onerror="this.src='logo.png'">
+      <span class="app-nav-name">SkyNotes</span>
+      <span class="app-nav-version">v1.1</span>
+    </a>
+    <nav class="app-nav-links" aria-label="Sections">
+      <a href="#features" data-lang="fr">Fonctionnalités</a>
+      <a href="#features" data-lang="en">Features</a>
+      <a href="README.html" data-lang="fr">Doc</a>
+      <a href="README.html" data-lang="en">Docs</a>
+      <a href="privacy_policy.html" data-lang="fr">Confidentialité</a>
+      <a href="privacy_policy.html" data-lang="en">Privacy</a>
+    </nav>
+    <div class="app-nav-actions">
+      <a class="app-nav-home" href="../index.html">
+        <span data-lang="fr">⌂ <span class="label">Toutes les apps</span></span>
+        <span data-lang="en">⌂ <span class="label">All apps</span></span>
+      </a>
+      <div class="app-nav-lang" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="fr">FR</button>
+        <button type="button" data-lang-btn="en">EN</button>
+      </div>
+      <a class="app-nav-cta" data-lang="fr" href="https://apps.apple.com/fr/app/skynotes/id6755604004" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+      <a class="app-nav-cta" data-lang="en" href="https://apps.apple.com/us/app/skynotes/id6755604004" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+      <button type="button" class="app-nav-burger" aria-label="Menu" aria-expanded="false">☰</button>
     </div>
+  </div>
 </header>
 
 <!-- ============ FRENCH ============ -->
@@ -452,7 +479,7 @@
                 <h1>Notes & checklists,<br>head in the clouds, mind at ease.</h1>
                 <p class="lead">Organize your projects, briefings and missions. Colored lists, reusable templates, instant search — on the ground or in the air.</p>
                 <div class="hero-cta">
-                    <a href="https://apps.apple.com/fr/app/skynotes/id6755604004" class="app-store-badge-img" aria-label="Download on the App Store">
+                    <a href="https://apps.apple.com/us/app/skynotes/id6755604004" class="app-store-badge-img" aria-label="Download on the App Store">
                         <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
                     </a>
                     <a href="#features-en" class="secondary-cta">See the features →</a>
@@ -556,7 +583,7 @@
         <div class="container">
             <h2>Available on the App Store</h2>
             <p>Download SkyNotes on your iPhone, iPad or Mac.</p>
-            <a href="https://apps.apple.com/fr/app/skynotes/id6755604004" class="app-store-badge-img" aria-label="Download on the App Store">
+            <a href="https://apps.apple.com/us/app/skynotes/id6755604004" class="app-store-badge-img" aria-label="Download on the App Store">
                 <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
             </a>
         </div>
@@ -566,7 +593,7 @@
 <footer>
     <div class="container">
         <div class="footer-links">
-            <a href="https://valerie-otero.github.io/" id="link-home-footer">Accueil du site</a>
+            <a href="../index.html" id="link-home-footer">Accueil du site</a>
             <a href="privacy_policy.html" id="link-privacy">Politique de confidentialité</a>
             <a href="README.html" id="link-docs">Documentation</a>
             <a href="mailto:valerie.otero@free.fr" id="link-contact">Contact / Support</a>
@@ -576,45 +603,29 @@
 </footer>
 
 <script>
-    let currentLang = 'fr';
-    function setLang(lang) {
-        if (lang === currentLang) return;
-        const fr = document.getElementById('content-fr');
-        const en = document.getElementById('content-en');
-        const btnFr = document.getElementById('btn-fr');
-        const btnEn = document.getElementById('btn-en');
-        const linkHome = document.getElementById('link-home');
-        const linkHomeFooter = document.getElementById('link-home-footer');
-        const linkPrivacy = document.getElementById('link-privacy');
-        const linkDocs = document.getElementById('link-docs');
-        const linkContact = document.getElementById('link-contact');
-
-        if (lang === 'en') {
-            fr.classList.add('hidden'); en.classList.remove('hidden');
-            btnFr.classList.remove('active'); btnEn.classList.add('active');
-            document.documentElement.lang = 'en';
-            document.title = "SkyNotes — Notes & Checklists";
-            if (linkHome) linkHome.querySelector('.label-text').textContent = "All apps";
-            if (linkHomeFooter) linkHomeFooter.textContent = "Website home";
-            if (linkPrivacy) linkPrivacy.textContent = "Privacy Policy";
-            if (linkDocs) linkDocs.textContent = "Documentation";
-            if (linkContact) linkContact.textContent = "Contact / Support";
-        } else {
-            en.classList.add('hidden'); fr.classList.remove('hidden');
-            btnEn.classList.remove('active'); btnFr.classList.add('active');
-            document.documentElement.lang = 'fr';
-            document.title = "SkyNotes — Notes & Checklists pour vos projets";
-            if (linkHome) linkHome.querySelector('.label-text').textContent = "Toutes les apps";
-            if (linkHomeFooter) linkHomeFooter.textContent = "Accueil du site";
-            if (linkPrivacy) linkPrivacy.textContent = "Politique de confidentialité";
-            if (linkDocs) linkDocs.textContent = "Documentation";
-            if (linkContact) linkContact.textContent = "Contact / Support";
+    // Per-app effects driven by app-header.js's "langchange" event
+    (function () {
+        var titles = {
+            fr: 'SkyNotes — Notes & Checklists pour vos projets',
+            en: 'SkyNotes — Notes & Checklists'
+        };
+        var footerLabels = {
+            fr: { 'link-home-footer': 'Accueil du site', 'link-privacy': 'Politique de confidentialité', 'link-docs': 'Documentation', 'link-contact': 'Contact / Support' },
+            en: { 'link-home-footer': 'Website home',    'link-privacy': 'Privacy Policy',                 'link-docs': 'Documentation', 'link-contact': 'Contact / Support' }
+        };
+        function apply(lang) {
+            if (lang !== 'fr' && lang !== 'en') lang = 'fr';
+            if (titles[lang]) document.title = titles[lang];
+            var labels = footerLabels[lang];
+            Object.keys(labels).forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) el.textContent = labels[id];
+            });
         }
-        currentLang = lang;
-    }
-
-    const userLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-    if (userLang.startsWith('en')) setLang('en');
+        document.addEventListener('langchange', function (e) {
+            apply((e && e.detail && e.detail.lang) || 'fr');
+        });
+    })();
 </script>
 
 </body>
