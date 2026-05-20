@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QuantumPass — Mots de passe & physique quantique</title>
-<meta name="description" content="QuantumPass : générateur de mots de passe sécurisé et laboratoire quantique interactif (BB84, sphère de Bloch, TRNG). 100% hors ligne. iPhone, iPad, Mac.">
+<title data-fr="QuantumPass — Mots de passe & physique quantique" data-en="QuantumPass — Passwords & quantum physics">QuantumPass — Mots de passe & physique quantique</title>
+<meta name="description"
+      data-fr="QuantumPass : générateur de mots de passe sécurisé et laboratoire quantique interactif (BB84, sphère de Bloch, TRNG). 100% hors ligne. iPhone, iPad, Mac."
+      data-en="QuantumPass: secure password generator and interactive quantum lab (BB84, Bloch sphere, TRNG). 100% offline. iPhone, iPad, Mac."
+      content="QuantumPass : générateur de mots de passe sécurisé et laboratoire quantique interactif (BB84, sphère de Bloch, TRNG). 100% hors ligne. iPhone, iPad, Mac.">
 <style>
     :root {
         --primary: #6e54ff;
@@ -21,6 +24,10 @@
         --shadow-sm: 0 4px 12px rgba(15,23,42,0.05);
         --shadow-md: 0 14px 36px rgba(110,84,255,0.18);
         --shadow-lg: 0 30px 80px rgba(15,23,42,0.22);
+        /* Unified app-header theme */
+        --app-primary: #6e54ff;
+        --app-primary-dark: #4b35d6;
+        --app-accent: #00d4ff;
     }
 
     * { box-sizing: border-box; }
@@ -126,7 +133,12 @@
     .hero-cta { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
     .app-store-badge-img { display: inline-block; transition: transform .2s; }
     .app-store-badge-img:hover { transform: scale(1.04); }
-    .app-store-badge-img img { height: 56px; width: auto; display: block; }
+    .app-store-badge-img img { height: 110px; width: auto; display: block; filter: drop-shadow(0 12px 36px rgba(0,0,0,.4)); }
+    .store-banner .app-store-badge-img img { height: 140px; filter: drop-shadow(0 18px 50px rgba(0,0,0,.5)); }
+    @media (max-width: 600px) {
+      .app-store-badge-img img { height: 72px; }
+      .store-banner .app-store-badge-img img { height: 88px; }
+    }
     .secondary-cta {
         font-size: 15px; font-weight: 600; color: var(--primary);
         text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
@@ -271,10 +283,10 @@
     }
     .store-banner .container { position: relative; }
     .store-banner h2 {
-        font-size: clamp(28px, 4vw, 42px); font-weight: 700;
-        margin: 0 0 14px; letter-spacing: -0.02em;
+        font-size: clamp(34px, 5vw, 52px); font-weight: 800;
+        margin: 0 0 18px; letter-spacing: -0.02em;
     }
-    .store-banner p { font-size: 18px; margin: 0 0 32px; opacity: .95; }
+    .store-banner p { font-size: 20px; margin: 0 auto 40px; opacity: .95; max-width: 620px; padding: 0 16px; }
 
     /* Footer */
     footer {
@@ -305,25 +317,40 @@
         .screens-scroll img { height: 400px; }
     }
 </style>
+<link rel="stylesheet" href="../Assets/css/app-header.css">
+<script defer src="../Assets/js/app-header.js"></script>
 </head>
 <body>
 
-<header>
-    <div class="container nav">
-        <a href="#" class="logo">
-            <img src="logo.png" alt="QuantumPass Logo">
-            <span>QuantumPass</span>
-        </a>
-        <div class="nav-actions">
-            <a href="https://valerie-otero.github.io/" class="home-link" id="link-home">
-                <span>🏠</span><span class="label-text">Toutes les apps</span>
-            </a>
-            <div class="lang-switch" role="tablist">
-                <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
-                <button id="btn-en" onclick="setLang('en')">EN</button>
-            </div>
-        </div>
+<header class="app-nav" id="top">
+  <div class="app-nav-inner">
+    <a class="app-nav-brand" href="#top" aria-label="QuantumPass">
+      <img src="logo.png" alt="QuantumPass">
+      <span class="app-nav-name">QuantumPass</span>
+      <span class="app-nav-version">v1</span>
+    </a>
+    <nav class="app-nav-links" aria-label="Sections">
+      <a href="#features" data-lang="fr">Fonctionnalités</a>
+      <a href="#features" data-lang="en">Features</a>
+      <a href="README.html" data-lang="fr">Doc</a>
+      <a href="README.html" data-lang="en">Docs</a>
+      <a href="PrivacyPolicy.html" data-lang="fr">Confidentialité</a>
+      <a href="PrivacyPolicy.html" data-lang="en">Privacy</a>
+    </nav>
+    <div class="app-nav-actions">
+      <a class="app-nav-home" href="../index.html">
+        <span data-lang="fr">⌂ <span class="label">Toutes les apps</span></span>
+        <span data-lang="en">⌂ <span class="label">All apps</span></span>
+      </a>
+      <div class="app-nav-lang" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="fr">FR</button>
+        <button type="button" data-lang-btn="en">EN</button>
+      </div>
+      <a class="app-nav-cta" data-lang="fr" href="https://apps.apple.com/fr/app/quantumpass/id6755789663" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+      <a class="app-nav-cta" data-lang="en" href="https://apps.apple.com/us/app/quantumpass/id6755789663" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+      <button type="button" class="app-nav-burger" aria-label="Menu" aria-expanded="false">☰</button>
     </div>
+  </div>
 </header>
 
 <!-- ============ FRENCH ============ -->
@@ -453,7 +480,7 @@
                 <h1>Your secrets, at quantum scale.</h1>
                 <p class="lead">Strong password generator, Diceware passphrases, real-time entropy — and an interactive lab to grasp quantum cryptography. 100% offline.</p>
                 <div class="hero-cta">
-                    <a href="https://apps.apple.com/fr/app/quantumpass/id6755789663" class="app-store-badge-img" aria-label="Download on the App Store">
+                    <a href="https://apps.apple.com/us/app/quantumpass/id6755789663" class="app-store-badge-img" aria-label="Download on the App Store">
                         <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
                     </a>
                     <a href="#features-en" class="secondary-cta">See the features →</a>
@@ -555,7 +582,7 @@
         <div class="container">
             <h2>Available on the App Store</h2>
             <p>Download QuantumPass on your iPhone, iPad or Mac.</p>
-            <a href="https://apps.apple.com/fr/app/quantumpass/id6755789663" class="app-store-badge-img" aria-label="Download on the App Store">
+            <a href="https://apps.apple.com/us/app/quantumpass/id6755789663" class="app-store-badge-img" aria-label="Download on the App Store">
                 <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
             </a>
         </div>
@@ -565,7 +592,7 @@
 <footer>
     <div class="container">
         <div class="footer-links">
-            <a href="https://valerie-otero.github.io/" id="link-home-footer">Accueil du site</a>
+            <a href="../index.html" id="link-home-footer">Accueil du site</a>
             <a href="PrivacyPolicy.html" id="link-privacy">Politique de confidentialité</a>
             <a href="README.html" id="link-docs">Documentation</a>
             <a href="mailto:valerie.otero@free.fr" id="link-contact">Contact / Support</a>
@@ -575,45 +602,29 @@
 </footer>
 
 <script>
-    let currentLang = 'fr';
-    function setLang(lang) {
-        if (lang === currentLang) return;
-        const fr = document.getElementById('content-fr');
-        const en = document.getElementById('content-en');
-        const btnFr = document.getElementById('btn-fr');
-        const btnEn = document.getElementById('btn-en');
-        const linkHome = document.getElementById('link-home');
-        const linkHomeFooter = document.getElementById('link-home-footer');
-        const linkPrivacy = document.getElementById('link-privacy');
-        const linkDocs = document.getElementById('link-docs');
-        const linkContact = document.getElementById('link-contact');
-
-        if (lang === 'en') {
-            fr.classList.add('hidden'); en.classList.remove('hidden');
-            btnFr.classList.remove('active'); btnEn.classList.add('active');
-            document.documentElement.lang = 'en';
-            document.title = "QuantumPass — Passwords & Quantum Physics";
-            if (linkHome) linkHome.querySelector('.label-text').textContent = "All apps";
-            if (linkHomeFooter) linkHomeFooter.textContent = "Website home";
-            if (linkPrivacy) linkPrivacy.textContent = "Privacy Policy";
-            if (linkDocs) linkDocs.textContent = "Documentation";
-            if (linkContact) linkContact.textContent = "Contact / Support";
-        } else {
-            en.classList.add('hidden'); fr.classList.remove('hidden');
-            btnEn.classList.remove('active'); btnFr.classList.add('active');
-            document.documentElement.lang = 'fr';
-            document.title = "QuantumPass — Mots de passe & physique quantique";
-            if (linkHome) linkHome.querySelector('.label-text').textContent = "Toutes les apps";
-            if (linkHomeFooter) linkHomeFooter.textContent = "Accueil du site";
-            if (linkPrivacy) linkPrivacy.textContent = "Politique de confidentialité";
-            if (linkDocs) linkDocs.textContent = "Documentation";
-            if (linkContact) linkContact.textContent = "Contact / Support";
+    // Per-app effects driven by app-header.js's "langchange" event
+    (function () {
+        var titles = {
+            fr: 'QuantumPass — Mots de passe & physique quantique',
+            en: 'QuantumPass — Passwords & Quantum Physics'
+        };
+        var footerLabels = {
+            fr: { 'link-home-footer': 'Accueil du site', 'link-privacy': 'Politique de confidentialité', 'link-docs': 'Documentation', 'link-contact': 'Contact / Support' },
+            en: { 'link-home-footer': 'Website home',    'link-privacy': 'Privacy Policy',                 'link-docs': 'Documentation', 'link-contact': 'Contact / Support' }
+        };
+        function apply(lang) {
+            if (lang !== 'fr' && lang !== 'en') lang = 'fr';
+            if (titles[lang]) document.title = titles[lang];
+            var labels = footerLabels[lang];
+            Object.keys(labels).forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) el.textContent = labels[id];
+            });
         }
-        currentLang = lang;
-    }
-
-    const userLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-    if (userLang.startsWith('en')) setLang('en');
+        document.addEventListener('langchange', function (e) {
+            apply((e && e.detail && e.detail.lang) || 'fr');
+        });
+    })();
 </script>
 
 </body>
