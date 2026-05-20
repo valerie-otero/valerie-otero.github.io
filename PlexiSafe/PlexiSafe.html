@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PlexiSafe — Calcul de fissure sur plexiglas</title>
-  <meta name="description" content="PlexiSafe — Calcul de trou d'arrêt de fissure sur plexiglas via la mécanique de la rupture linéaire élastique (MFLE/LEFM). Disponible sur iPhone et iPad." />
+  <title data-fr="PlexiSafe — Calcul de fissure sur plexiglas" data-en="PlexiSafe — Plexiglas crack analysis">PlexiSafe — Calcul de fissure sur plexiglas</title>
+  <meta name="description"
+        data-fr="PlexiSafe — Calcul de trou d'arrêt de fissure sur plexiglas via la mécanique de la rupture linéaire élastique (MFLE/LEFM). Disponible sur iPhone et iPad."
+        data-en="PlexiSafe — Crack-stop hole calculation for plexiglas using Linear Elastic Fracture Mechanics (LEFM). Available on iPhone and iPad."
+        content="PlexiSafe — Calcul de trou d'arrêt de fissure sur plexiglas via la mécanique de la rupture linéaire élastique (MFLE/LEFM). Disponible sur iPhone et iPad." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
   <style>
@@ -30,6 +33,8 @@
       --sans:        'IBM Plex Sans', sans-serif;
       --radius:      8px;
       --radius-lg:   12px;
+      /* Unified app-header theme (dark) */
+      --app-primary:#38bdf8; --app-primary-dark:#0ea5e9; --app-accent:#38bdf8;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -432,25 +437,42 @@
       footer { padding: 32px 20px; }
     }
   </style>
+<link rel="stylesheet" href="../Assets/css/app-header.css">
+<script defer src="../Assets/js/app-header.js"></script>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav>
-    <img src="AppIcon.png" alt="PlexiSafe logo" class="nav-logo" />
-    <span class="nav-wordmark">Plexi<span>Safe</span></span>
-    <div class="nav-links">
-      <a href="#features" class="nav-link-hide" data-lang="fr">Fonctionnalités</a>
-      <a href="#features" class="nav-link-hide" data-lang="en">Features</a>
-      <a href="#how-it-works" class="nav-link-hide" data-lang="fr">Mode d'emploi</a>
-      <a href="#how-it-works" class="nav-link-hide" data-lang="en">How it works</a>
-      <a href="#privacy" class="nav-link-hide" data-lang="fr">Confidentialité</a>
-      <a href="#privacy" class="nav-link-hide" data-lang="en">Privacy</a>
-      <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
-      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-      <a href="https://apps.apple.com/fr/app/plexisafe/id6761058642" class="nav-cta">⬇ App Store</a>
+  <header class="app-nav" data-theme="dark" id="top">
+    <div class="app-nav-inner">
+      <a class="app-nav-brand" href="#top" aria-label="PlexiSafe">
+        <img src="AppIcon.png" alt="PlexiSafe">
+        <span class="app-nav-name">PlexiSafe</span>
+        <span class="app-nav-version">v1</span>
+      </a>
+      <nav class="app-nav-links" aria-label="Sections">
+        <a href="#features" data-lang="fr">Fonctionnalités</a>
+        <a href="#features" data-lang="en">Features</a>
+        <a href="#how-it-works" data-lang="fr">Mode d'emploi</a>
+        <a href="#how-it-works" data-lang="en">How it works</a>
+        <a href="#privacy" data-lang="fr">Confidentialité</a>
+        <a href="#privacy" data-lang="en">Privacy</a>
+      </nav>
+      <div class="app-nav-actions">
+        <a class="app-nav-home" href="../index.html">
+          <span data-lang="fr">⌂ <span class="label">Toutes les apps</span></span>
+          <span data-lang="en">⌂ <span class="label">All apps</span></span>
+        </a>
+        <div class="app-nav-lang" role="group" aria-label="Language">
+          <button type="button" data-lang-btn="fr">FR</button>
+          <button type="button" data-lang-btn="en">EN</button>
+        </div>
+        <a class="app-nav-cta" data-lang="fr" href="https://apps.apple.com/fr/app/plexisafe/id6761058642" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+        <a class="app-nav-cta" data-lang="en" href="https://apps.apple.com/us/app/plexisafe/id6761058642" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+        <button type="button" class="app-nav-burger" aria-label="Menu" aria-expanded="false">☰</button>
+      </div>
     </div>
-  </nav>
+  </header>
 
   <!-- HERO -->
   <section class="hero">
@@ -468,7 +490,7 @@
       <a href="https://apps.apple.com/fr/app/plexisafe/id6761058642" class="btn-primary" data-lang="fr">
         ⬇ Télécharger sur l'App Store
       </a>
-      <a href="https://apps.apple.com/fr/app/plexisafe/id6761058642" class="btn-primary" data-lang="en">
+      <a href="https://apps.apple.com/us/app/plexisafe/id6761058642" class="btn-primary" data-lang="en">
         ⬇ Download on the App Store
       </a>
     </div>
@@ -725,16 +747,20 @@
   </footer>
 
   <script>
+    // Body-content lang switch: toggles ".visible" on every [data-lang]
+    // element OUTSIDE the unified app-nav header (which has its own CSS).
     function setLang(lang) {
-      document.querySelectorAll('[data-lang]').forEach(el => {
+      document.querySelectorAll('[data-lang]').forEach(function (el) {
+        if (el.closest('.app-nav')) return;
         el.classList.toggle('visible', el.dataset.lang === lang);
       });
-      document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
-      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
       document.documentElement.lang = lang;
     }
-    // Init FR
-    setLang('fr');
+    document.addEventListener('langchange', function (e) {
+      setLang((e && e.detail && e.detail.lang) || 'fr');
+    });
+    // Initial apply (in case langchange fires before this script attaches)
+    setLang(document.documentElement.lang || 'fr');
   </script>
 
 </body>

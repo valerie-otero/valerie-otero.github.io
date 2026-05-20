@@ -125,8 +125,51 @@
             document.getElementById('content-' + lang).classList.add('active');
         }
     </script>
+  <link rel="stylesheet" href="../Assets/css/doc-shared.css">
+  <style>
+    /* ToDoTasks themed overrides */
+    body { background: linear-gradient(180deg, #fff7ed 0%, #f9f9f9 320px); }
+    header {
+      background: linear-gradient(135deg, #FF8C00 0%, #FFB347 100%) !important;
+      padding: 3rem 1rem !important;
+      box-shadow: 0 10px 30px rgba(255, 140, 0, 0.18);
+    }
+    header h1 {
+      font-size: 2.8rem !important;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+    .lang-btn {
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.15) !important;
+      border: 1px solid rgba(255,255,255,0.4) !important;
+      font-weight: 600;
+    }
+    .lang-btn:hover { background: rgba(255,255,255,0.28) !important; }
+    .lang-btn.active {
+      background: white !important;
+      color: #FF8C00 !important;
+      border-color: white !important;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+    .card {
+      border-radius: 16px !important;
+      box-shadow: 0 8px 28px rgba(255, 140, 0, 0.08), 0 2px 6px rgba(0,0,0,0.04) !important;
+      border: 1px solid rgba(255, 140, 0, 0.08);
+    }
+    h2 {
+      color: #d97706 !important;
+      border-bottom: 2px solid #FF8C00 !important;
+    }
+    h3 { color: #b45309 !important; }
+    .badge { border-radius: 6px; }
+    a { color: #FF8C00; }
+    a:hover { color: #d97706; }
+  </style>
 </head>
 <body onload="setLanguage('fr')">
+<div class="doc-topbar"><a href="index.html" class="doc-brand"><span>↩</span><span>ToDoTasks <span class="tag">— Accueil / Home</span></span></a><div class="doc-back"><a href="index.html">← Retour à l'app</a><span class="sep">·</span><a href="index.html">← Back to app</a><span class="sep">·</span><a href="../index.html">⌂ Toutes les apps</a></div></div>
 
 <header>
     <img src="Logo.png" alt="ToDoTasks Logo" style="width: 128px; height: 128px; margin-bottom: 1rem; border-radius: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
@@ -216,7 +259,7 @@
 </div>
 
 <footer>
-    <p>Contact : <a href="mailto:valerie.otero@free.fr">valerie.otero@free.fr</a> | <a href="https://valerie-otero.github.io/ToDoTasks/PrivacyPolicy.html" target="_blank">Politique de Confidentialité</a></p>
+    <p>Contact : <a href="mailto:valerie.otero@free.fr">valerie.otero@free.fr</a> | <a href="PrivacyPolicy.html" target="_blank">Politique de Confidentialité</a></p>
     <p>Copyright &copy; 2026 Valérie Otero. Tous droits réservés.</p>
 </footer>
 

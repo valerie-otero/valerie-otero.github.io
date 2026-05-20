@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDoTasks</title>
+    <title data-fr="ToDoTasks — Tâches & listes simples" data-en="ToDoTasks — Simple tasks & lists">ToDoTasks — Tâches & listes simples</title>
+    <meta name="description"
+          data-fr="ToDoTasks : application native iOS pour gérer vos tâches et listes simplement. Rapide, hors ligne, sans publicité."
+          data-en="ToDoTasks: native iOS app to manage your tasks and lists simply. Fast, offline, ad-free."
+          content="ToDoTasks : application native iOS pour gérer vos tâches et listes simplement. Rapide, hors ligne, sans publicité.">
     <style>
         :root {
             --primary-color: #007AFF;
             --bg-color: #F5F5F7;
             --text-color: #1D1D1F;
             --secondary-text: #86868B;
+            /* Unified app-header theme */
+            --app-primary: #007aff;
+            --app-primary-dark: #0064d2;
+            --app-accent: #5ac8fa;
         }
 
         body {
@@ -144,9 +152,51 @@
             border-top: 1px solid rgba(0,0,0,0.1);
         }
 
+        /* App Store badges */
+        .app-store-badge-img {
+            display: inline-block;
+            margin-top: 8px;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        .app-store-badge-img:hover { transform: translateY(-2px); }
+        .app-store-badge-img img {
+            height: 110px;
+            width: auto;
+            filter: drop-shadow(0 12px 36px rgba(0,0,0,0.25));
+        }
+
+        /* Store banner section */
+        .store-banner {
+            background: linear-gradient(135deg, #FF8C00 0%, #FFB347 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-top: 40px;
+        }
+        .store-banner h2 {
+            font-size: clamp(34px, 5vw, 52px);
+            font-weight: 800;
+            margin: 0 0 18px;
+            letter-spacing: -0.02em;
+        }
+        .store-banner p {
+            font-size: 20px;
+            margin: 0 auto 40px;
+            opacity: 0.95;
+            max-width: 620px;
+            padding: 0 16px;
+        }
+        .store-banner .app-store-badge-img img {
+            height: 140px;
+            filter: drop-shadow(0 18px 50px rgba(0,0,0,0.4));
+        }
+
         @media (max-width: 734px) {
             h1 { font-size: 36px; }
             .subtitle { font-size: 20px; }
+            .app-store-badge-img img { height: 72px; }
+            .store-banner { padding: 60px 16px; }
+            .store-banner .app-store-badge-img img { height: 88px; }
         }
 
         /* Utility classes for language toggling */
@@ -164,20 +214,40 @@
             to { opacity: 1; }
         }
     </style>
+    <link rel="stylesheet" href="../Assets/css/app-header.css">
+    <script defer src="../Assets/js/app-header.js"></script>
 </head>
 <body>
 
-    <header>
-        <div class="nav-container">
-            <a href="#" class="nav-logo">ToDoTasks</a>
-            <div style="display: flex; align-items: center; gap: 20px;">
-                <span style="font-size: 12px; color: var(--primary-color);">Version 1.1</span>
-                <div class="lang-switch">
-                    <button class="lang-btn active" onclick="setLanguage('fr')" id="btn-fr">FR</button>
-                    <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
-                </div>
-            </div>
+    <header class="app-nav" id="top">
+      <div class="app-nav-inner">
+        <a class="app-nav-brand" href="#top" aria-label="ToDoTasks">
+          <img src="Logo.png" alt="ToDoTasks">
+          <span class="app-nav-name">ToDoTasks</span>
+          <span class="app-nav-version">v1.1</span>
+        </a>
+        <nav class="app-nav-links" aria-label="Sections">
+          <a href="#features" data-lang="fr">Fonctionnalités</a>
+          <a href="#features" data-lang="en">Features</a>
+          <a href="README_FR.html" data-lang="fr">Doc</a>
+          <a href="README.html" data-lang="en">Docs</a>
+          <a href="PrivacyPolicy.html" data-lang="fr">Confidentialité</a>
+          <a href="PrivacyPolicy.html" data-lang="en">Privacy</a>
+        </nav>
+        <div class="app-nav-actions">
+          <a class="app-nav-home" href="../index.html">
+            <span data-lang="fr">⌂ <span class="label">Toutes les apps</span></span>
+            <span data-lang="en">⌂ <span class="label">All apps</span></span>
+          </a>
+          <div class="app-nav-lang" role="group" aria-label="Language">
+            <button type="button" data-lang-btn="fr">FR</button>
+            <button type="button" data-lang-btn="en">EN</button>
+          </div>
+          <a class="app-nav-cta" data-lang="fr" href="https://apps.apple.com/fr/app/todotasks/id6756194433" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+          <a class="app-nav-cta" data-lang="en" href="https://apps.apple.com/us/app/todotasks/id6756194433" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+          <button type="button" class="app-nav-burger" aria-label="Menu" aria-expanded="false">☰</button>
         </div>
+      </div>
     </header>
 
     <section class="hero">
@@ -188,12 +258,18 @@
         <div class="lang-content fr">
             <h1>Organisez votre journée.<br>Simplement.</h1>
             <p class="subtitle">La To-Do List native pour macOS avec horloge et calendrier intégrés.</p>
+            <a href="https://apps.apple.com/fr/app/todotasks/id6756194433" class="app-store-badge-img" target="_blank" aria-label="Télécharger sur l'App Store">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Télécharger sur l'App Store">
+            </a>
         </div>
 
         <!-- English Text -->
         <div class="lang-content en hidden">
             <h1>Organize your day.<br>Simply.</h1>
             <p class="subtitle">The native macOS To-Do List with integrated clock and calendar.</p>
+            <a href="https://apps.apple.com/us/app/todotasks/id6756194433" class="app-store-badge-img" target="_blank" aria-label="Download on the App Store">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+            </a>
         </div>
     </section>
 
@@ -202,7 +278,7 @@
         <img id="app-screenshot" src="Screen/ScreenFR.png" alt="App Screenshot" class="app-screenshot">
     </section>
 
-    <section class="features">
+    <section class="features" id="features">
         <div class="features-grid">
             <!-- Feature 1 -->
             <div class="feature-card">
@@ -254,45 +330,43 @@
         </div>
     </section>
 
+    <section class="store-banner">
+        <div class="lang-content fr">
+            <h2>Disponible sur le Mac App Store</h2>
+            <p>Téléchargez ToDoTasks gratuitement et reprenez le contrôle de votre journée.</p>
+            <a href="https://apps.apple.com/fr/app/todotasks/id6756194433" class="app-store-badge-img" target="_blank" aria-label="Télécharger sur l'App Store">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Télécharger sur l'App Store">
+            </a>
+        </div>
+        <div class="lang-content en hidden">
+            <h2>Available on the Mac App Store</h2>
+            <p>Download ToDoTasks for free and take back control of your day.</p>
+            <a href="https://apps.apple.com/us/app/todotasks/id6756194433" class="app-store-badge-img" target="_blank" aria-label="Download on the App Store">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+            </a>
+        </div>
+    </section>
+
     <footer>
         <div class="lang-content fr">
             <p>&copy; 2026 Valerie Otero. Tous droits réservés.</p>
-            <p><a href="https://valerie-otero.github.io/ToDoTasks/PrivacyPolicy.html">Politique de confidentialité</a></p>
+            <p><a href="PrivacyPolicy.html">Politique de confidentialité</a></p>
         </div>
         <div class="lang-content en hidden">
             <p>&copy; 2026 Valerie Otero. All rights reserved.</p>
-            <p><a href="https://valerie-otero.github.io/ToDoTasks/PrivacyPolicy.html">Privacy Policy</a></p>
+            <p><a href="PrivacyPolicy.html">Privacy Policy</a></p>
         </div>
     </footer>
 
     <script>
-        function setLanguage(lang) {
-            // Update Text Content
-            const frElements = document.querySelectorAll('.lang-content.fr');
-            const enElements = document.querySelectorAll('.lang-content.en');
-            
-            if (lang === 'fr') {
-                frElements.forEach(el => el.classList.remove('hidden'));
-                enElements.forEach(el => el.classList.add('hidden'));
-                document.documentElement.lang = 'fr';
-            } else {
-                frElements.forEach(el => el.classList.add('hidden'));
-                enElements.forEach(el => el.classList.remove('hidden'));
-                document.documentElement.lang = 'en';
+        // Per-app side effects driven by app-header.js's "langchange" event
+        document.addEventListener('langchange', function (e) {
+            var lang = (e && e.detail && e.detail.lang) || 'fr';
+            var screenshot = document.getElementById('app-screenshot');
+            if (screenshot) {
+                screenshot.src = lang === 'en' ? 'Screen/ScreenEN.png' : 'Screen/ScreenFR.png';
             }
-
-            // Update Image
-            const screenshot = document.getElementById('app-screenshot');
-            if (lang === 'fr') {
-                screenshot.src = "Screen/ScreenFR.png";
-            } else {
-                screenshot.src = "Screen/ScreenEN.png";
-            }
-
-            // Update Buttons
-            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-        }
+        });
     </script>
 </body>
 </html>
