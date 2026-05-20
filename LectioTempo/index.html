@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LectioTempo — Time your reading, page by page</title>
-<meta name="description" content="Native iOS app to time your reading page by page. Measure speed, regularity, total time. 4 modes: measured, imposed, free, quiz. 100% offline.">
+<title data-fr="LectioTempo — Chronométrez votre lecture, page après page" data-en="LectioTempo — Time your reading, page by page">LectioTempo — Chronométrez votre lecture, page après page</title>
+<meta name="description"
+      data-fr="Application iOS native pour chronométrer votre lecture page après page. Mesurez la vitesse, la régularité, le temps total. 4 modes : mesuré, imposé, libre, quiz. 100% hors ligne."
+      data-en="Native iOS app to time your reading page by page. Measure speed, regularity, total time. 4 modes: measured, imposed, free, quiz. 100% offline."
+      content="Application iOS native pour chronométrer votre lecture page après page. Mesurez la vitesse, la régularité, le temps total. 4 modes : mesuré, imposé, libre, quiz. 100% hors ligne.">
 <link rel="icon" type="image/png" href="Assets/AppIcon-Dark.png">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -20,6 +23,8 @@
   --purple:#b06aff; --purple-dim:rgba(176,106,255,.13);
   --orange:#ffb347; --orange-dim:rgba(255,179,71,.13);
   color-scheme:dark;
+  /* Unified app-header theme (dark) */
+  --app-primary:#c8f53a; --app-primary-dark:#aedb1f; --app-accent:#c8f53a;
 }
 
 /* i18n switching */
@@ -122,17 +127,17 @@ nav {
   background-clip:text;
 }
 .hero-text .sub { margin-top:20px; font-size:18px; color:var(--text-mid); max-width:520px; }
-.hero-cta { margin-top:32px; display:flex; gap:12px; flex-wrap:wrap; }
+.hero-cta { margin-top:32px; display:flex; gap:18px; flex-wrap:wrap; align-items:center; }
 .btn {
   display:inline-flex; align-items:center; gap:8px;
-  padding:14px 22px; border-radius:10px;
-  font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px;
-  border:1px solid var(--border); background:var(--surface); color:var(--text);
+  padding:0 16px; height:38px; border-radius:8px;
+  font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:13px;
+  border:1px solid var(--border); background:transparent; color:var(--text-mid);
   cursor:pointer; transition:all .2s;
 }
-.btn:hover { border-color:var(--border-hi); transform:translateY(-1px); text-decoration:none; }
-.btn.primary { background:var(--accent-dim); color:var(--accent); border-color:var(--accent-glow); }
-.btn.primary:hover { background:var(--accent); color:#0e1018; }
+.btn:hover { border-color:var(--border-hi); color:var(--text); transform:translateY(-1px); text-decoration:none; }
+.btn.primary { background:transparent; color:var(--accent); border-color:var(--accent-glow); }
+.btn.primary:hover { background:var(--accent-dim); color:var(--accent); border-color:var(--accent); }
 
 .hero-visual { display:flex; justify-content:center; align-items:center; position:relative; min-height:560px; }
 .hero-visual::before {
@@ -186,8 +191,49 @@ nav {
   50%     { transform:translateY(-10px); }
 }
 
-.hero-cta .appstore-badge img { height:46px; display:block; transition:transform .2s; }
+.hero-cta .appstore-badge img { height:88px; display:block; transition:transform .2s; filter:drop-shadow(0 12px 36px rgba(0,0,0,.5)); }
 .hero-cta .appstore-badge:hover img { transform:scale(1.04); }
+
+/* Home pill button (like METAR) */
+.home-link {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:13px; font-weight:700; letter-spacing:.5px;
+  color:#0e1018; background:var(--accent);
+  padding:8px 16px; border-radius:980px;
+  text-decoration:none;
+  transition:background .2s, transform .2s, box-shadow .2s;
+  box-shadow:0 2px 10px rgba(200,245,58,.35);
+}
+.home-link:hover { background:#fff; transform:translateY(-1px); text-decoration:none; box-shadow:0 6px 18px rgba(200,245,58,.5); }
+
+/* Big Store banner section */
+.store-banner {
+  background:
+    radial-gradient(600px 300px at 20% 30%, rgba(200,245,58,.15), transparent 60%),
+    radial-gradient(500px 400px at 80% 70%, rgba(58,255,192,.18), transparent 60%),
+    linear-gradient(135deg, #1a1f2e 0%, #0e1018 100%);
+  color:#fff; padding:90px 0; text-align:center;
+  position:relative; overflow:hidden;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.store-banner h2 {
+  font-size:clamp(34px, 5vw, 52px); font-weight:800;
+  margin:0 0 18px; letter-spacing:-.02em;
+  background:linear-gradient(135deg, var(--accent) 0%, var(--green) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.store-banner p { font-size:20px; margin:0 auto 40px; color:var(--text-mid); max-width:620px; padding:0 16px; }
+.store-banner .app-store-badge-img img {
+  height:110px; width:auto; display:inline-block;
+  filter:drop-shadow(0 14px 40px rgba(0,0,0,.55));
+  transition:transform .2s;
+}
+@media (max-width: 600px) {
+  .hero-cta .appstore-badge img { height:64px; }
+  .store-banner .app-store-badge-img img { height:76px; }
+}
+.store-banner .app-store-badge-img:hover img { transform:scale(1.05); }
 
 @media (max-width: 800px) {
   .hero-content { grid-template-columns:1fr; gap:30px; }
@@ -288,30 +334,43 @@ footer .copy { color:var(--text-dim); font-size:13px; font-family:'Space Mono', 
 .reveal { opacity:0; transform:translateY(20px); transition:opacity .6s, transform .6s; }
 .reveal.visible { opacity:1; transform:translateY(0); }
 </style>
+<link rel="stylesheet" href="../Assets/css/app-header.css">
+<script defer src="../Assets/js/app-header.js"></script>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="nav-brand">
+<header class="app-nav" data-theme="dark" id="top">
+  <div class="app-nav-inner">
+    <a class="app-nav-brand" href="#top" aria-label="LectioTempo">
       <img src="Assets/AppIcon-Dark.png" alt="LectioTempo">
-      <span>LectioTempo</span>
-      <span class="nav-tag">V 1</span>
-    </div>
-    <div class="nav-right">
-      <div class="nav-links">
-        <a href="#modes" data-i18n="fr">Modes</a><a href="#modes" data-i18n="en">Modes</a>
-        <a href="#features" data-i18n="fr">Fonctions</a><a href="#features" data-i18n="en">Features</a>
-        <a href="#privacy" data-i18n="fr">Confidentialité</a><a href="#privacy" data-i18n="en">Privacy</a>
-        <a href="readme.html" data-i18n="fr">Doc</a><a href="readme.html" data-i18n="en">Docs</a>
+      <span class="app-nav-name">LectioTempo</span>
+      <span class="app-nav-version">v1</span>
+    </a>
+    <nav class="app-nav-links" aria-label="Sections">
+      <a href="#modes" data-lang="fr">Modes</a>
+      <a href="#modes" data-lang="en">Modes</a>
+      <a href="#features" data-lang="fr">Fonctions</a>
+      <a href="#features" data-lang="en">Features</a>
+      <a href="readme.html" data-lang="fr">Doc</a>
+      <a href="readme.html" data-lang="en">Docs</a>
+      <a href="privacy.html" data-lang="fr">Confidentialité</a>
+      <a href="privacy.html" data-lang="en">Privacy</a>
+    </nav>
+    <div class="app-nav-actions">
+      <a class="app-nav-home" href="../index.html">
+        <span data-lang="fr">⌂ <span class="label">Toutes les apps</span></span>
+        <span data-lang="en">⌂ <span class="label">All apps</span></span>
+      </a>
+      <div class="app-nav-lang" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="fr">FR</button>
+        <button type="button" data-lang-btn="en">EN</button>
       </div>
-      <div class="lang-switch" role="group" aria-label="Language">
-        <button type="button" data-lang="fr">FR</button>
-        <button type="button" data-lang="en">EN</button>
-      </div>
+      <a class="app-nav-cta" data-lang="fr" href="https://apps.apple.com/fr/app/lectiotempo/id6770065543" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+      <a class="app-nav-cta" data-lang="en" href="https://apps.apple.com/us/app/lectiotempo/id6770065543" target="_blank" rel="noopener">⬇ <span class="label">App Store</span></a>
+      <button type="button" class="app-nav-burger" aria-label="Menu" aria-expanded="false">☰</button>
     </div>
   </div>
-</nav>
+</header>
 
 <!-- HERO -->
 <header class="hero">
@@ -335,7 +394,10 @@ footer .copy { color:var(--text-dim); font-size:13px; font-family:'Space Mono', 
       </p>
 
       <div class="hero-cta">
-        <a href="https://apps.apple.com/fr/app/lectiotempo/id6770065543" class="appstore-badge" target="_blank" rel="noopener" aria-label="Download LectioTempo on the App Store">
+        <a href="https://apps.apple.com/fr/app/lectiotempo/id6770065543" class="appstore-badge" target="_blank" rel="noopener" aria-label="Télécharger LectioTempo sur l'App Store" data-i18n="fr">
+          <img src="../Assets/download-on-the-app-store-1.png" alt="Télécharger sur l'App Store">
+        </a>
+        <a href="https://apps.apple.com/us/app/lectiotempo/id6770065543" class="appstore-badge" target="_blank" rel="noopener" aria-label="Download LectioTempo on the App Store" data-i18n="en">
           <img src="../Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
         </a>
         <a href="#modes" class="btn primary" data-i18n="fr">Découvrir les modes →</a>
@@ -506,6 +568,22 @@ footer .copy { color:var(--text-dim); font-size:13px; font-family:'Space Mono', 
   </div>
 </section>
 
+<!-- STORE BANNER -->
+<section class="store-banner">
+  <div class="container">
+    <h2 data-i18n="fr">Disponible sur l'App Store</h2>
+    <h2 data-i18n="en">Available on the App Store</h2>
+    <p data-i18n="fr">Téléchargez LectioTempo sur votre iPhone et iPad.</p>
+    <p data-i18n="en">Download LectioTempo on your iPhone and iPad.</p>
+    <a href="https://apps.apple.com/fr/app/lectiotempo/id6770065543" class="app-store-badge-img" target="_blank" rel="noopener" aria-label="Télécharger LectioTempo sur l'App Store" data-i18n="fr">
+      <img src="../Assets/download-on-the-app-store-1.png" alt="Télécharger sur l'App Store">
+    </a>
+    <a href="https://apps.apple.com/us/app/lectiotempo/id6770065543" class="app-store-badge-img" target="_blank" rel="noopener" aria-label="Download LectioTempo on the App Store" data-i18n="en">
+      <img src="../Assets/download-on-the-app-store-1.png" alt="Download on the App Store">
+    </a>
+  </div>
+</section>
+
 <footer>
   <div class="container">
     <div class="links">
@@ -520,28 +598,9 @@ footer .copy { color:var(--text-dim); font-size:13px; font-family:'Space Mono', 
 </footer>
 
 <script>
-// ── i18n ─────────────────────────────────
-(function(){
-  const KEY = 'lectiotempo.lang';
-  const supported = ['fr','en'];
-  function detect() {
-    const stored = localStorage.getItem(KEY);
-    if (stored && supported.includes(stored)) return stored;
-    const nav = (navigator.language || 'fr').slice(0,2).toLowerCase();
-    return supported.includes(nav) ? nav : 'fr';
-  }
-  function apply(lang) {
-    document.documentElement.lang = lang;
-    document.querySelectorAll('.lang-switch button').forEach(b => {
-      b.classList.toggle('active', b.dataset.lang === lang);
-    });
-    localStorage.setItem(KEY, lang);
-  }
-  document.querySelectorAll('.lang-switch button').forEach(b => {
-    b.addEventListener('click', () => apply(b.dataset.lang));
-  });
-  apply(detect());
-})();
+// i18n is now driven by /Assets/js/app-header.js (sets html[lang]),
+// combined with the existing `html[lang="fr"] [data-i18n="en"]` CSS rule
+// so body translations keep working automatically.
 
 // ── Reveal on scroll ─────────────────────
 const io = new IntersectionObserver((entries) => {

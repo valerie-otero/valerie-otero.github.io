@@ -1,0 +1,439 @@
+/* ============================================================
+   Shared documentation / privacy page styles
+   Adds an elegant sticky top bar + light typographic polish.
+   Theme-neutral: overlays a glass dark bar that works on any
+   underlying page background (light or dark).
+   ============================================================ */
+
+body {
+    padding-top: 68px !important;
+}
+
+.doc-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 24px;
+    background: rgba(14, 16, 24, 0.82);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #f3f4f8;
+    font-size: 14px;
+}
+
+.doc-topbar * {
+    box-sizing: border-box;
+}
+
+.doc-topbar .doc-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.9;
+}
+
+.doc-topbar .doc-brand:hover {
+    opacity: 1;
+}
+
+.doc-topbar .doc-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.doc-topbar .doc-back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 980px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    white-space: nowrap;
+}
+
+.doc-topbar .doc-back a:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.22);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.doc-topbar .doc-back .sep {
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 400;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding-top: 60px !important;
+    }
+    .doc-topbar {
+        padding: 10px 14px;
+        gap: 10px;
+    }
+    .doc-topbar .doc-brand span.tag {
+        display: none;
+    }
+    .doc-topbar .doc-back a {
+        padding: 7px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Light typographic polish for the page body underneath
+   (kept light to avoid overriding each app's own theme) */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   "Génial" doc-page styling
+   Applies to Privacy/README pages that load doc-shared.css.
+   Theme tokens (override per app in inline <style>):
+     --doc-accent        : main accent color
+     --doc-accent-soft   : 12% tint of accent
+     --doc-accent-grad   : second gradient stop
+   ============================================================ */
+
+:root {
+    --doc-accent:      #0a66c2;
+    --doc-accent-soft: rgba(10, 102, 194, 0.10);
+    --doc-accent-grad: #5ac8fa;
+    --doc-surface:     #ffffff;
+    --doc-surface-2:   #f6f8fc;
+    --doc-ink:         #111418;
+    --doc-ink-soft:    #5b6470;
+    --doc-border:      rgba(15, 23, 42, 0.08);
+    --doc-radius:      16px;
+    --doc-shadow:      0 1px 2px rgba(15, 23, 42, 0.04),
+                       0 8px 28px rgba(15, 23, 42, 0.06);
+    --doc-shadow-lg:   0 2px 6px rgba(15, 23, 42, 0.06),
+                       0 18px 48px rgba(15, 23, 42, 0.12);
+}
+
+/* Soft page backdrop (uses a layered radial glow on top of existing bg) */
+body {
+    background-image:
+        radial-gradient(900px 380px at 12% -80px,
+            color-mix(in srgb, var(--doc-accent) 14%, transparent), transparent 60%),
+        radial-gradient(700px 320px at 100% -40px,
+            color-mix(in srgb, var(--doc-accent-grad) 14%, transparent), transparent 65%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Main column */
+main {
+    max-width: 920px !important;
+    padding: 32px 24px 48px !important;
+}
+
+/* ---------- Hero header (the page <header> inside <main>) ---------- */
+main > header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 26px 28px;
+    margin: 8px 0 22px;
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-border);
+    border-radius: 22px;
+    box-shadow: var(--doc-shadow-lg);
+    overflow: hidden;
+    isolation: isolate;
+}
+main > header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(420px 220px at 0% 0%,
+            color-mix(in srgb, var(--doc-accent) 16%, transparent), transparent 70%),
+        linear-gradient(135deg,
+            color-mix(in srgb, var(--doc-accent) 7%, transparent),
+            color-mix(in srgb, var(--doc-accent-grad) 7%, transparent));
+}
+main > header::after {
+    content: "";
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        color-mix(in srgb, var(--doc-accent-grad) 22%, transparent), transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+main > header .icon {
+    flex: 0 0 auto;
+    width: 64px;
+    height: 64px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px !important;
+    background: var(--doc-surface);
+    border-radius: 18px;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.08),
+        0 10px 24px color-mix(in srgb, var(--doc-accent) 22%, transparent);
+    border: 1px solid var(--doc-border);
+}
+main > header img {
+    border-radius: 18px !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.08),
+        0 10px 24px color-mix(in srgb, var(--doc-accent) 22%, transparent);
+}
+main > header h1 {
+    font-size: clamp(22px, 2.6vw, 30px) !important;
+    line-height: 1.18 !important;
+    letter-spacing: -0.02em;
+    font-weight: 800 !important;
+    color: var(--doc-ink) !important;
+    margin: 0 0 6px !important;
+    background: linear-gradient(135deg, var(--doc-ink) 0%,
+        color-mix(in srgb, var(--doc-accent) 70%, var(--doc-ink)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+main > header .muted {
+    color: var(--doc-ink-soft) !important;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ---------- Segmented language toggle (nav.lang) ---------- */
+nav.lang {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 4px !important;
+    margin: 4px 0 22px !important;
+    padding: 5px !important;
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-border);
+    border-radius: 999px;
+    box-shadow: var(--doc-shadow);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+nav.lang a,
+nav.lang [data-lang-btn] {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px !important;
+    margin: 0 !important;
+    border-radius: 999px;
+    font-weight: 600 !important;
+    font-size: 13px;
+    letter-spacing: 0.01em;
+    color: var(--doc-ink-soft) !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: color .18s ease, background .18s ease, transform .18s ease;
+    user-select: none;
+}
+nav.lang a::before,
+nav.lang [data-lang-btn]::before {
+    content: "";
+    width: 18px;
+    height: 12px;
+    border-radius: 2px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.08);
+    opacity: 0.85;
+    transition: opacity .18s ease;
+}
+nav.lang [data-lang-btn="fr"]::before {
+    background-image: linear-gradient(90deg, #0055A4 0 33%, #FFFFFF 33% 66%, #EF4135 66% 100%);
+}
+nav.lang [data-lang-btn="en"]::before {
+    background-image:
+        linear-gradient(180deg,
+            #012169 0 7%, #FFFFFF 7% 13%, #C8102E 13% 20%, #FFFFFF 20% 27%, #012169 27% 33%,
+            #C8102E 33% 40%, #012169 40% 60%, #C8102E 60% 67%,
+            #012169 67% 73%, #FFFFFF 73% 80%, #C8102E 80% 87%, #FFFFFF 87% 93%, #012169 93% 100%);
+}
+nav.lang a:hover,
+nav.lang [data-lang-btn]:hover {
+    color: var(--doc-ink) !important;
+    background: var(--doc-surface-2);
+    text-decoration: none !important;
+}
+nav.lang [data-lang-btn].is-active {
+    background: linear-gradient(135deg, var(--doc-accent), var(--doc-accent-grad));
+    color: #fff !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.10),
+        0 6px 16px color-mix(in srgb, var(--doc-accent) 35%, transparent);
+}
+nav.lang [data-lang-btn].is-active::before { opacity: 1; }
+
+/* ---------- Cards (section.card / .lang-content) ---------- */
+section.card,
+main > section.lang-content {
+    background: var(--doc-surface) !important;
+    border: 1px solid var(--doc-border) !important;
+    border-radius: var(--doc-radius) !important;
+    box-shadow: var(--doc-shadow);
+    padding: 28px 30px !important;
+    margin: 0 0 20px !important;
+    transition: box-shadow .25s ease, transform .25s ease;
+}
+section.card:hover {
+    box-shadow: var(--doc-shadow-lg);
+}
+
+/* Hide the bilingual "Français (FR)" / "English (EN)" inner labels — redundant
+   since the active toggle pill already tells the user which lang is shown. */
+section.lang-content > h2:first-child {
+    font-size: 13px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--doc-ink-soft) !important;
+    font-weight: 700 !important;
+    margin: 0 0 18px !important;
+    padding: 0 0 12px !important;
+    border-bottom: 1px solid var(--doc-border);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+section.lang-content > h2:first-child::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--doc-accent), var(--doc-accent-grad));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--doc-accent) 18%, transparent);
+}
+
+/* Inner headings */
+section.card h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: var(--doc-ink) !important;
+    margin: 24px 0 10px !important;
+    letter-spacing: -0.01em;
+}
+section.card h3 {
+    position: relative;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--doc-accent) !important;
+    margin: 22px 0 8px !important;
+    padding-left: 14px;
+    letter-spacing: 0;
+}
+section.card h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 4px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, var(--doc-accent), var(--doc-accent-grad));
+}
+section.card p { margin: 8px 0; color: var(--doc-ink); }
+section.card ul { margin: 10px 0 14px 22px; }
+section.card li { margin: 4px 0; }
+section.card li strong { color: var(--doc-ink); }
+section.card .meta {
+    background: var(--doc-surface-2);
+    border: 1px solid var(--doc-border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 4px 0 14px !important;
+    font-size: 14px;
+    color: var(--doc-ink-soft);
+}
+section.card .meta strong { color: var(--doc-ink); }
+section.card a {
+    color: var(--doc-accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--doc-accent) 35%, transparent);
+    transition: color .15s ease, border-color .15s ease;
+}
+section.card a:hover {
+    color: color-mix(in srgb, var(--doc-accent) 80%, #000 20%);
+    border-bottom-color: var(--doc-accent);
+}
+section.card code {
+    background: var(--doc-surface-2) !important;
+    border: 1px solid var(--doc-border);
+    font-size: 0.92em;
+    padding: 1px 6px !important;
+}
+
+/* Smooth fade-in when switching language */
+section.lang-content { animation: docFadeIn .35s ease both; }
+@keyframes docFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    main { padding: 22px 16px 36px !important; }
+    main > header {
+        padding: 20px 18px;
+        gap: 14px;
+        border-radius: 18px;
+    }
+    main > header .icon,
+    main > header img { width: 52px; height: 52px; font-size: 28px !important; }
+    main > header h1 { font-size: 20px !important; }
+    section.card { padding: 22px 18px !important; }
+    nav.lang { width: 100%; justify-content: center; }
+    nav.lang a,
+    nav.lang [data-lang-btn] { padding: 9px 14px !important; }
+}
+
+/* Dark mode honors prefers-color-scheme (apps can still override) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --doc-surface:   #14181f;
+        --doc-surface-2: #1b212c;
+        --doc-ink:       #f3f4f8;
+        --doc-ink-soft:  #9aa3b2;
+        --doc-border:    rgba(255, 255, 255, 0.08);
+        --doc-shadow:    0 1px 2px rgba(0, 0, 0, 0.3),
+                         0 8px 28px rgba(0, 0, 0, 0.35);
+        --doc-shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.35),
+                         0 18px 48px rgba(0, 0, 0, 0.55);
+    }
+}
