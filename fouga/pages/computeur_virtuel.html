@@ -4,9 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Computeur de vol virtuel — Fouga CM 170 R Magister</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900&family=Saira+Semi+Condensed:wght@500;600;700&family=Spectral:wght@300;400;500&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/fonts.css">
 <style>
 :root{
   --paper:#efe7d5; --panel:#f7f1e4; --panel-2:#f1e9d8;
@@ -75,6 +73,11 @@ table.vals .lab{font-family:var(--lab);text-transform:uppercase;letter-spacing:.
 table.vals .val{font-family:var(--mono);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
 table.vals .val span{color:var(--muted);font-weight:400;font-size:.84em}
 .note{margin-top:14px;font-size:.82rem;font-style:italic;color:var(--muted)}
+.calc-toggle{margin-top:12px;font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.68rem;font-weight:700;
+  color:var(--ink-soft);background:transparent;border:1px solid var(--line-strong);border-radius:20px;padding:6px 13px;cursor:pointer;transition:.2s}
+.calc-toggle:hover{border-color:var(--brass);color:var(--brass)}
+.calc-toggle.on{background:var(--brass);color:#f7f1e4;border-color:var(--brass)}
+.calc-cmp{color:var(--brass)!important;font-weight:600!important;font-size:.84em;margin-left:6px;white-space:nowrap}
 .reset{margin-top:18px;font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;font-weight:700;
   background:none;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:999px;padding:9px 16px;cursor:pointer}
 .reset:hover{border-color:var(--rouge);color:var(--rouge)}
@@ -194,6 +197,7 @@ table.vals .val span{color:var(--muted);font-weight:400;font-size:.84em}
         <tr><td class="lab">Distance franchissable</td><td class="val" id="t-dist">—</td></tr>
         <tr><td class="lab">Temps de voyage</td><td class="val" id="t-temps">—</td></tr>
       </table>
+      <button class="calc-toggle" id="calcToggle" aria-pressed="false" title="Affiche, à côté de la TAS gravée, la vitesse vraie recalculée par formule (CAS et altitude pression)">Comparer au calcul</button>
       <p class="note" id="note"></p>
       <button class="reset" id="reset">Réinitialiser</button>
     </div>
@@ -243,7 +247,7 @@ const RING=[
 ];
 const STEP=360/RING.length, baseAngle=i=>i*STEP;
 const D={
- 19000:{30:[310,"5,2",160,153,416,"7,0",710,"1 h 44"],25:[375,"6,3",176,170,428,"7,1",655,"1 h 33"],20:[440,"7,4",192,186,430,"7,1",597,"1 h 24"],15:[510,"8,5",209,202,430,"7,1",545,"1 h 17"],10:[600,"10,0",222,215,426,"7,1",486,"1 h 09"],5:[670,"11,2",233,225,422,"7,0",446,"1 h 04"],0:null},
+ 19000:{30:null,25:[310,"5,2",160,153,416,"7,0",710,"1 h 44"],20:[375,"6,3",176,170,428,"7,1",655,"1 h 33"],15:[440,"7,4",192,186,430,"7,1",597,"1 h 24"],10:[510,"8,5",209,202,430,"7,1",545,"1 h 17"],5:[600,"10,0",222,215,426,"7,1",486,"1 h 09"],0:[670,"11,2",233,225,422,"7,0",446,"1 h 04"]},
  20000:{30:[320,"5,4",172,162,482,"8,0",740,"1 h 37"],25:[380,"6,4",190,182,495,"8,2",696,"1 h 28"],20:[450,"7,5",205,197,492,"8,2",631,"1 h 20"],15:[525,"8,8",220,212,491,"8,2",573,"1 h 12"],10:[600,"10,0",235,227,486,"8,1",523,"1 h 06"],5:[695,"11,6",260,242,482,"8,0",474,"1 h 00"],0:[775,"13,0",264,254,477,"7,9",436,"0 h 55"]},
  21000:{30:[390,"6,5",190,183,546,"9,1",698,"1 h 24"],25:[465,"7,8",212,203,550,"9,2",642,"1 h 15"],20:[550,"9,2",229,220,552,"9,2",586,"1 h 07"],15:[640,"10,7",249,238,550,"9,1",530,"1 h 01"],10:[740,"12,4",266,255,547,"9,1",480,"0 h 53"],5:[850,"14,2",282,272,542,"9,0",437,"0 h 48"],0:[960,"16,0",298,286,538,"8,9",396,"0 h 45"]},
 };
@@ -317,7 +321,7 @@ const couronne=document.getElementById("couronne");
 const idxForZ=z=>RING.findIndex(m=>m.z===z);
 function nearRot(t,c){while(t-c>180)t-=360;while(t-c<-180)t+=360;return t;}
 function applyRot(rot){couronne.style.transform=`rotate(${rot}deg)`;positionLabels(rot);}
-let raf=null;
+let raf=null, showCalc=false;
 function animTo(target){cancelAnimationFrame(raf);const s=state.rot,t0=performance.now(),dur=560;target=nearRot(target,s);
   (function step(t){const k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);state.rot=s+(target-s)*e;applyRot(state.rot);if(k<1)raf=requestAnimationFrame(step);else{state.rot=target;applyRot(target);}})(performance.now());}
 function renderR(){
@@ -329,7 +333,7 @@ function renderR(){
     ROWS.forEach(b=>valRefs[b.key].main.textContent = b.key==="reg"?reg:"—");
     ["t-conso","t-ias","t-cas","t-tas","t-dist","t-temps"].forEach(id=>document.getElementById(id).textContent="—");
     document.getElementById("t-reg").textContent=reg+" t/m";
-    note.textContent="Au régime 19.000 t/m, le cas « SOL » n’est pas gravé sur l’instrument (fenêtre vierge).";
+    note.textContent="Au régime 19.000 t/m, le cas « 30.000′ » n’est pas gravé sur l’instrument (fenêtre vierge) : au-dessus de 30.000′, on affiche 20.000 t/m.";
   }else{
     ROWS.forEach(b=>valRefs[b.key].main.textContent=b.f(row));
     const [ch,cm,ias,cas,tas,tm,dist,temps]=row;
@@ -337,7 +341,9 @@ function renderR(){
     document.getElementById("t-conso").innerHTML=ch+' l/h <span>· '+cm+' l/min</span>';
     document.getElementById("t-ias").innerHTML=ias+' <span>kt</span>';
     document.getElementById("t-cas").innerHTML=cas+' <span>kt</span>';
-    document.getElementById("t-tas").innerHTML=tas+' km/h <span>· '+tm+' km/min</span>';
+    let tasHtml=tas+' km/h <span>· '+tm+' km/min</span>';
+    if(showCalc){const tc=Math.round((cas/Math.sqrt(sigma(m.z)))*1.852);tasHtml+=' <span class="calc-cmp">calc. ≈ '+tc+' km/h</span>';}
+    document.getElementById("t-tas").innerHTML=tasHtml;
     document.getElementById("t-dist").innerHTML=dist+' <span>km</span>';
     document.getElementById("t-temps").textContent=temps; note.textContent="";
   }
@@ -355,6 +361,7 @@ function endR(){if(!dr)return;dr=false;couronne.classList.remove("drag");let bes
 couronne.addEventListener("pointerup",endR);couronne.addEventListener("pointercancel",endR);
 couronne.addEventListener("click",e=>{if(mv)e.stopPropagation();},true);
 document.getElementById("reset").addEventListener("click",()=>{state.reg=20000;selectZ(20,true);});
+document.getElementById("calcToggle").addEventListener("click",function(){showCalc=!showCalc;this.classList.toggle("on",showCalc);this.setAttribute("aria-pressed",showCalc);renderR();});
 
 /* ===================== VERSO : règle à calcul ===================== */
 const logA=v=>360*Math.log10(v/10);          // single decade, 10 at top (0°), 100 = full turn
