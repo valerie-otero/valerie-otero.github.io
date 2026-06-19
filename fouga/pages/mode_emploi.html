@@ -129,6 +129,28 @@ td.arr{font-family:var(--mono);text-align:left;padding-left:18px;white-space:now
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .note-mini{font-size:.86rem;color:var(--muted);font-style:italic;margin:10px 2px 0}
 
+/* table / chart view toggle */
+.viewtoggle{display:inline-flex;gap:4px;background:var(--panel-2);border:1px solid var(--line-strong);
+  border-radius:999px;padding:4px;margin:0 0 18px}
+.viewtoggle button{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;font-weight:600;
+  border:0;background:transparent;color:var(--ink-soft);padding:7px 18px;border-radius:999px;cursor:pointer;transition:.2s}
+.viewtoggle button:hover{color:var(--ink)}
+.viewtoggle button.active{background:var(--ink);color:var(--paper)}
+
+/* performance curves */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:2px}
+@media(max-width:760px){.charts{grid-template-columns:1fr}}
+.chartcard{background:var(--panel);border:1.5px solid var(--grid);border-radius:10px;box-shadow:var(--shadow);
+  padding:16px 16px 12px;margin:0}
+.chartcard h4{font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;font-weight:700;
+  color:var(--blue);margin:0}
+.chartcard .unit{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.66rem;color:var(--muted);margin:2px 0 8px}
+.chartcard svg{display:block;width:100%;height:auto}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin:14px 2px 0;font-family:var(--lab);text-transform:uppercase;
+  letter-spacing:.08em;font-size:.74rem;font-weight:600;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:18px;height:3px;border-radius:2px}
+
 /* steps */
 .steps{counter-reset:step;margin-top:18px;border-left:2px solid var(--line-strong);padding-left:0}
 .step{position:relative;padding:0 0 40px 78px;counter-increment:step}
@@ -296,6 +318,12 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
     <h3 style="font-family:var(--disp);color:var(--blue);font-size:1.5rem;margin:0 0 6px">Grille de croisière — 3 régimes × 7 altitudes</h3>
     <p style="margin:.2em 0 18px;color:var(--ink-soft)">À régime constant, monter en altitude réduit la consommation et la vitesse indiquée mais conserve la vitesse vraie : d’où un meilleur rendement kilométrique en altitude.</p>
     <div class="reveal">
+      <div class="viewtoggle" role="tablist" aria-label="Affichage de la grille de croisière">
+        <button class="active" data-view="table">Tableau</button>
+        <button data-view="chart">Courbe</button>
+      </div>
+
+      <div id="cruise-table">
       <div class="tabs" role="tablist">
         <button class="tab-btn active" data-tab="r19">Régime 19.000 t/m</button>
         <button class="tab-btn" data-tab="r20">Régime 20.000 t/m</button>
@@ -350,6 +378,9 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
           </tbody>
         </table></div>
       </div>
+      </div><!-- /#cruise-table -->
+
+      <div id="cruise-charts" hidden></div>
     </div>
 
     <!-- Montée / Descente -->
@@ -608,6 +639,68 @@ document.querySelectorAll('.tab-btn').forEach(function(b){
     b.parentElement.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
     document.querySelectorAll('.tabpane').forEach(p=>p.classList.toggle('active',p.id===pane));
+  });
+});
+
+// ---- courbes de performances (grille de croisière) ----
+(function(){
+  var host=document.getElementById('cruise-charts');
+  if(!host) return;
+  var ALT=[0,5,10,15,20,25,30];
+  var XL =['SOL','5','10','15','20','25','30'];
+  var REG=[
+    {name:'19.000 t/m',color:'#9a7320',
+     conso:[670,600,510,440,375,310,null],dist:[446,486,545,597,655,710,null],tas:[422,426,430,430,428,416,null],rdt:[7.0,7.1,7.1,7.1,7.1,7.0,null]},
+    {name:'20.000 t/m',color:'#274d72',
+     conso:[775,695,600,525,450,380,320],dist:[436,474,523,573,631,696,740],tas:[477,482,486,491,492,495,482],rdt:[7.9,8.0,8.1,8.2,8.2,8.2,8.0]},
+    {name:'21.000 t/m',color:'#9c3a2d',
+     conso:[960,850,740,640,550,465,390],dist:[396,437,480,530,586,642,698],tas:[538,542,547,550,552,550,546],rdt:[8.9,9.0,9.1,9.1,9.2,9.2,9.1]}
+  ];
+  var Q=[
+    {k:'conso',title:'Consommation',unit:'litres / heure',dec:0},
+    {k:'dist', title:'Distance franchissable',unit:'kilomètres',dec:0},
+    {k:'tas',  title:'Vitesse vraie (TAS)',unit:'km/h',dec:0},
+    {k:'rdt',  title:'Rendement',unit:'km / minute',dec:1}
+  ];
+  var W=340,H=216,mL=46,mR=12,mT=14,mB=32, pw=W-mL-mR, ph=H-mT-mB;
+  function nf(v,dec){return dec?(Math.round(v*10)/10).toFixed(1).replace('.',','):String(Math.round(v));}
+  function chart(q){
+    var vals=[]; REG.forEach(function(r){r[q.k].forEach(function(v){if(v!=null)vals.push(v);});});
+    var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals);
+    var pad=(mx-mn)*0.10||1; mn-=pad; mx+=pad;
+    var x=function(i){return mL+ALT[i]/30*pw;};
+    var y=function(v){return mT+(1-(v-mn)/(mx-mn))*ph;};
+    var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+q.title+' selon l\'altitude, par régime moteur">';
+    for(var t=0;t<4;t++){
+      var vv=mn+(mx-mn)*t/3, yy=y(vv).toFixed(1);
+      s+='<line x1="'+mL+'" y1="'+yy+'" x2="'+(W-mR)+'" y2="'+yy+'" stroke="#bcad86" stroke-width="'+(t===0?1:0.6)+'"'+(t>0?' stroke-dasharray="2 3"':'')+'/>'
+        +'<text x="'+(mL-6)+'" y="'+(y(vv)+3).toFixed(1)+'" text-anchor="end" font-family="Spline Sans Mono,monospace" font-size="9" fill="#7a7160">'+nf(vv,q.dec)+'</text>';
+    }
+    ALT.forEach(function(a,i){
+      s+='<text x="'+x(i).toFixed(1)+'" y="'+(H-12)+'" text-anchor="middle" font-family="Saira Semi Condensed,sans-serif" font-size="8.5" fill="#7a7160">'+XL[i]+'</text>';
+    });
+    s+='<text x="'+(mL+pw/2)+'" y="'+(H-1)+'" text-anchor="middle" font-family="Saira Semi Condensed,sans-serif" font-size="7.5" letter-spacing="1.2" fill="#9b8a62">ALTITUDE (×1000 ft)</text>';
+    REG.forEach(function(r){
+      var pts=[],dots='';
+      r[q.k].forEach(function(v,i){ if(v==null)return; var px=x(i).toFixed(1),py=y(v).toFixed(1); pts.push(px+','+py); dots+='<circle cx="'+px+'" cy="'+py+'" r="2.4" fill="'+r.color+'"/>'; });
+      s+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+r.color+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'+dots;
+    });
+    return s+'</svg>';
+  }
+  var h='<div class="charts">';
+  Q.forEach(function(q){ h+='<figure class="chartcard"><h4>'+q.title+'</h4><div class="unit">'+q.unit+'</div>'+chart(q)+'</figure>'; });
+  h+='</div><div class="legend">'+REG.map(function(r){return '<span><i style="background:'+r.color+'"></i>'+r.name+'</span>';}).join('')+'</div>';
+  h+='<p class="note-mini">Abscisse : altitude SOL → 30 000 ft. Le régime 19.000 t/m n’est pas gravé à 30 000′ (courbe interrompue).</p>';
+  host.innerHTML=h;
+})();
+
+// ---- bascule tableau / courbe ----
+document.querySelectorAll('.viewtoggle button').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v=b.dataset.view;
+    b.parentElement.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b);});
+    document.getElementById('cruise-table').hidden=(v!=='table');
+    document.getElementById('cruise-charts').hidden=(v!=='chart');
   });
 });
 
