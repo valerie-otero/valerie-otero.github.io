@@ -1,0 +1,2287 @@
+{
+  "sourceLanguage" : "fr",
+  "strings" : {
+    "—" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "—"
+          }
+        }
+      }
+    },
+    "·" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
+          }
+        }
+      }
+    },
+    "· calibré" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· calibrated"
+          }
+        }
+      }
+    },
+    "« H. exacte » : hauteur théorique pour graver la pige. « Repère » : hauteur arrondie au cm ; « Écart » : volume induit par l'arrondi. Outil d'aide à la lecture, sans valeur métrologique : une mesure imprécise fausse le résultat ; l'utilisateur est responsable de l'exactitude des mesures." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“Exact h.”: theoretical height for engraving the dipstick. “Mark”: height rounded to the cm; “Diff.”: volume caused by the rounding. A reading aid, with no metrological value: an inaccurate measurement distorts the result; the user is responsible for the accuracy of the measurements."
+          }
+        }
+      }
+    },
+    "« H. exacte » : hauteur théorique pour le volume indiqué. « Repère » : hauteur arrondie au cm pour une lecture à la pige ; « Écart » : volume induit par cet arrondi. Les repères majeurs sont en gras et en couleur." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“Exact h.”: theoretical height for the indicated volume. “Mark”: height rounded to the cm for a dipstick reading; “Diff.”: volume caused by that rounding. Major marks are shown in bold and colour."
+          }
+        }
+      }
+    },
+    "%@ (importé %lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (imported %lld)"
+          }
+        }
+      }
+    },
+    "%@ (importé)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (imported)"
+          }
+        }
+      }
+    },
+    "%lld %% de la hauteur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%% of the height"
+          }
+        }
+      }
+    },
+    "%lld cm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld cm"
+          }
+        }
+      }
+    },
+    "%lld élément(s) du fichier portent un nom déjà présent dans votre bibliothèque. Que faire ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld item(s) in the file have a name already in your library. What would you like to do?"
+          }
+        }
+      }
+    },
+    "%lld mm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld mm"
+          }
+        }
+      }
+    },
+    "2D" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2D"
+          }
+        }
+      }
+    },
+    "3D" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3D"
+          }
+        }
+      }
+    },
+    "À propos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        }
+      }
+    },
+    "À quoi sert la « forme libre » sans plan ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is the “free form” for, without a plan?"
+          }
+        }
+      }
+    },
+    "Affichage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display"
+          }
+        }
+      }
+    },
+    "Ajouter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
+    },
+    "Ajouter un point" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a point"
+          }
+        }
+      }
+    },
+    "Ajuste un facteur k (entre 0,7 et 1,3) pour qu'une hauteur mesurée corresponde à un volume connu — par exemple un ticket de plein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjusts a factor k (between 0.7 and 1.3) so a measured height matches a known volume — for example a fill-up receipt."
+          }
+        }
+      }
+    },
+    "Annuler" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "Aperçu" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview"
+          }
+        }
+      }
+    },
+    "Au lancement" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On launch"
+          }
+        }
+      }
+    },
+    "Aucun liquide" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No liquid"
+          }
+        }
+      }
+    },
+    "Aucun liquide sélectionné — le poids n'est pas calculé." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No liquid selected — weight is not calculated."
+          }
+        }
+      }
+    },
+    "Aucun plan attaché." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No plan attached."
+          }
+        }
+      }
+    },
+    "Aucun point défini." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No points defined."
+          }
+        }
+      }
+    },
+    "Aucun récipient" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No container"
+          }
+        }
+      }
+    },
+    "Aucun récipient sélectionné" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No container selected"
+          }
+        }
+      }
+    },
+    "Avertissement" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disclaimer"
+          }
+        }
+      }
+    },
+    "Bac ou cuve rectangulaire — longueur × largeur × hauteur." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rectangular bin or tank — length × width × height."
+          }
+        }
+      }
+    },
+    "Boîte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Box"
+          }
+        }
+      }
+    },
+    "Boîte + puisard" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Box + sump"
+          }
+        }
+      }
+    },
+    "Boîte à fond incliné" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Box with sloped bottom"
+          }
+        }
+      }
+    },
+    "Boîtes rectangulaires, cylindres verticaux et horizontaux, formes composées calculées (boîte avec puisard, boîte à fond incliné), et la forme libre définie par vos propres mesures hauteur → volume. On choisit la forme à la création et on saisit les cotes ; le volume, la masse et le % se calculent à partir de la hauteur lue à la pige." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rectangular boxes, vertical and horizontal cylinders, computed composite shapes (box with sump, box with sloped bottom), and the free form defined by your own height → volume measurements. Pick the shape when creating the container and enter the dimensions; volume, mass and % are computed from the height read on the dipstick."
+          }
+        }
+      }
+    },
+    "C'est la sensibilité au niveau courant : de combien le volume varie pour 1 mm d'erreur de mesure. Plus la valeur est grande, plus une mesure précise est importante." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's the sensitivity at the current level: how much the volume changes for a 1 mm measurement error. The larger the value, the more important an accurate reading is."
+          }
+        }
+      }
+    },
+    "Calculer le calibrage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compute calibration"
+          }
+        }
+      }
+    },
+    "Calibrage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calibration"
+          }
+        }
+      }
+    },
+    "Calibrage appliqué : k = %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calibration applied: k = %@"
+          }
+        }
+      }
+    },
+    "Capacité %@ · hauteur pleine %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capacity %@ · full height %@"
+          }
+        }
+      }
+    },
+    "Capacité %@ · hauteur pleine %@ · %@ %@ kg/L" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capacity %@ · full height %@ · %@ %@ kg/L"
+          }
+        }
+      }
+    },
+    "ce liquide" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "this liquid"
+          }
+        }
+      }
+    },
+    "Centimètres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centimeters"
+          }
+        }
+      }
+    },
+    "Choisissez la forme composée voulue. Pour le puisard : les cotes de la cuve principale, puis celles du puisard (L × l × profondeur). Pour le fond incliné : la longueur, la largeur, puis les deux profondeurs (côté profond et côté faible) — l'ordre des deux côtés n'a aucune importance, Voluma prend le plus grand comme côté profond. Le barème est calculé automatiquement, sans mesure." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick the composite shape you need. For the sump: the main tank dimensions, then the sump dimensions (L × W × depth). For the sloped bottom: length, width, then the two depths (deep side and shallow side) — the order of the two sides doesn't matter, Voluma takes the larger as the deep side. The chart is computed automatically, with no measurement."
+          }
+        }
+      }
+    },
+    "Choisissez un récipient pour commencer la lecture." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a container to start reading."
+          }
+        }
+      }
+    },
+    "Choix de la langue de l'application, indépendamment du réglage du système." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose the app language, independently of the system setting."
+          }
+        }
+      }
+    },
+    "Choix purement visuel : les calculs restent effectués en interne (litres, kilogrammes)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display choice only: calculations are performed internally (liters, kilograms)."
+          }
+        }
+      }
+    },
+    "Comment calibrer ma cuve avec un ticket de plein ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How do I calibrate my tank with a fill-up receipt?"
+          }
+        }
+      }
+    },
+    "Comment donner une couleur à un liquide ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How do I give a liquid a color?"
+          }
+        }
+      }
+    },
+    "Comment générer et imprimer une pige (barème) ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How do I generate and print a dipstick (gauge chart)?"
+          }
+        }
+      }
+    },
+    "Comment mesurer la hauteur à la pige ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How do I measure the height with a dipstick?"
+          }
+        }
+      }
+    },
+    "Comment saisir une cuve à puisard ou à fond incliné ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How do I enter a tank with a sump or a sloped bottom?"
+          }
+        }
+      }
+    },
+    "Confidentialité" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        }
+      }
+    },
+    "Contact" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact"
+          }
+        }
+      }
+    },
+    "Côté faible" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shallow side"
+          }
+        }
+      }
+    },
+    "Côté profond (H)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deep side (H)"
+          }
+        }
+      }
+    },
+    "Couleur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color"
+          }
+        }
+      }
+    },
+    "Coupe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cross-section"
+          }
+        }
+      }
+    },
+    "Coupe du récipient" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Container cross-section"
+          }
+        }
+      }
+    },
+    "CSV" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CSV"
+          }
+        }
+      }
+    },
+    "Cuve principale (mm)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Main tank (mm)"
+          }
+        }
+      }
+    },
+    "Cuve rectangulaire à fond incliné, profondeurs différentes d'un bout à l'autre." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rectangular tank with a sloped bottom, different depths from one end to the other."
+          }
+        }
+      }
+    },
+    "Cuve rectangulaire avec un puisard (fond plus profond) — volume calculé exactement." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rectangular tank with a sump (deeper bottom) — volume computed exactly."
+          }
+        }
+      }
+    },
+    "Cuve/citerne couchée — diamètre × longueur." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lying tank or cistern — diameter × length."
+          }
+        }
+      }
+    },
+    "Cylindre horizontal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horizontal cylinder"
+          }
+        }
+      }
+    },
+    "Cylindre vertical" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vertical cylinder"
+          }
+        }
+      }
+    },
+    "Dans l'éditeur du récipient (mode Modifier), section Calibrage : saisissez la hauteur mesurée et le volume connu (par exemple un plein facturé). Voluma calcule un facteur k (limité à 0,7–1,3) qui ajuste toutes les lectures de ce récipient." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the container editor (Edit mode), Calibration section: enter the measured height and the known volume (for example an invoiced fill-up). Voluma computes a factor k (limited to 0.7–1.3) that adjusts all readings for this container."
+          }
+        }
+      }
+    },
+    "Dans la fiche d'un liquide (mode Modifier), touchez « Couleur ». La teinte sert à repérer d'un coup d'œil le liquide dans la coupe et les listes (idéal pour distinguer les essences)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In a liquid's screen (Edit mode), tap “Color”. The tint helps you spot the liquid at a glance in the cross-section and lists (ideal for distinguishing fuels)."
+          }
+        }
+      }
+    },
+    "Densité" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Density"
+          }
+        }
+      }
+    },
+    "Depuis la lecture, ouvrez « Table de graduation », choisissez le pas (repères tous les X), puis exportez en PDF (format A4, prêt à imprimer) ou en CSV via les boutons en bas. Le pas est enregistré avec le récipient." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From the reading screen, open “Graduation table”, choose the step (marks every X), then export as PDF (A4, ready to print) or CSV using the buttons at the bottom. The step is saved with the container."
+          }
+        }
+      }
+    },
+    "Désinstaller l'app n'efface pas la copie iCloud, qui redescend ensuite. Les doublons exacts (mêmes nom, forme, cotes, calibrage) sont fusionnés automatiquement au lancement, sans toucher aux récipients réellement distincts. Pour repartir d'un jeu d'exemples propre, utilisez Réglages → « Réinitialiser l'app »." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uninstalling the app does not erase the iCloud copy, which then re-downloads. Exact duplicates (same name, shape, dimensions, calibration) are merged automatically at launch, without touching genuinely distinct containers. To start from a clean set of examples, use Settings → \"Reset the app\"."
+          }
+        }
+      }
+    },
+    "Diamètre (D)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diameter (D)"
+          }
+        }
+      }
+    },
+    "Dimensions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions"
+          }
+        }
+      }
+    },
+    "Dimensions (mm)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions (mm)"
+          }
+        }
+      }
+    },
+    "Données" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data"
+          }
+        }
+      }
+    },
+    "Écart" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diff."
+          }
+        }
+      }
+    },
+    "Écart invraisemblable (hors 0,7–1,3) : calibrage refusé." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Implausible deviation (outside 0.7–1.3): calibration rejected."
+          }
+        }
+      }
+    },
+    "Efface tous vos récipients et liquides (y compris sur vos appareils synchronisés iCloud) et restaure les exemples de départ." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erases all your containers and liquids (including on your iCloud-synced devices) and restores the starting examples."
+          }
+        }
+      }
+    },
+    "Exemple : 50 mm → 5 L, puis 150 mm → 18 L. Au moins 2 points ; touchez « + » pour en ajouter, balayez une ligne pour la supprimer." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Example: 50 mm → 5 L, then 150 mm → 18 L. At least 2 points; tap “+” to add one, swipe a row to delete it."
+          }
+        }
+      }
+    },
+    "Facteur actuel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current factor"
+          }
+        }
+      }
+    },
+    "Fermer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
+    "Fichier illisible : %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unreadable file: %@"
+          }
+        }
+      }
+    },
+    "Fichier trop volumineux (max 30 Mo)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File too large (max 30 MB)."
+          }
+        }
+      }
+    },
+    "Foire aux questions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frequently asked questions"
+          }
+        }
+      }
+    },
+    "Forme" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shape"
+          }
+        }
+      }
+    },
+    "Forme libre" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free form"
+          }
+        }
+      }
+    },
+    "Forme quelconque, sans dimensions : on la définit par des mesures hauteur → volume." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Any shape, no dimensions: defined by height → volume measurements."
+          }
+        }
+      }
+    },
+    "Formes régulières = calculées d'après les cotes. Formes composées (puisard, fond incliné) = calculées aussi. Forme libre = définie par vos mesures." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regular shapes = computed from dimensions. Composite shapes (sump, sloped bottom) = computed too. Free form = defined by your measurements."
+          }
+        }
+      }
+    },
+    "Fût ou bidon debout — diamètre × hauteur." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upright drum or can — diameter × height."
+          }
+        }
+      }
+    },
+    "Gallons impériaux" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imperial gallons"
+          }
+        }
+      }
+    },
+    "Gallons US" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "US gallons"
+          }
+        }
+      }
+    },
+    "Garder les deux (importer en copie)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep both (import as a copy)"
+          }
+        }
+      }
+    },
+    "Génération du PDF…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generating PDF…"
+          }
+        }
+      }
+    },
+    "H. exacte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exact h."
+          }
+        }
+      }
+    },
+    "Hauteur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Height"
+          }
+        }
+      }
+    },
+    "Hauteur (H)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Height (H)"
+          }
+        }
+      }
+    },
+    "Hauteur (pige)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Height (dipstick)"
+          }
+        }
+      }
+    },
+    "Hauteur à la pige" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dipstick height"
+          }
+        }
+      }
+    },
+    "Hauteur mesurée" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measured height"
+          }
+        }
+      }
+    },
+    "Hauteur pleine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full height"
+          }
+        }
+      }
+    },
+    "Horizontal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horizontal"
+          }
+        }
+      }
+    },
+    "Ignorer les doublons" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip duplicates"
+          }
+        }
+      }
+    },
+    "Import JSON" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JSON import"
+          }
+        }
+      }
+    },
+    "Importé : %lld ajouté(s), %lld mis à jour, %lld ignoré(s)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imported: %lld added, %lld updated, %lld skipped."
+          }
+        }
+      }
+    },
+    "Importer (JSON)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import (JSON)"
+          }
+        }
+      }
+    },
+    "Importer un plan (PDF, image, DOCX)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import a plan (PDF, image, DOCX)"
+          }
+        }
+      }
+    },
+    "J'ai des doublons après réinstallation, que faire ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I have duplicates after reinstalling, what should I do?"
+          }
+        }
+      }
+    },
+    "Kilogrammes (kg)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilograms (kg)"
+          }
+        }
+      }
+    },
+    "L" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L"
+          }
+        }
+      }
+    },
+    "L'export reprend vos récipients (nom, forme — y compris les formes composées puisard/fond incliné —, cotes, calibrage k et pas de jauge) et vos liquides (densité, viscosité, note). Les plans/documents attachés ne sont PAS inclus dans le fichier JSON ; ils restent sauvegardés via iCloud. Le fichier est entièrement ré-importable." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The export includes your containers (name, shape — including composite sump/sloped shapes —, dimensions, calibration k and gauge step) and your liquids (density, viscosity, note). Attached plans/documents are NOT included in the JSON file; they stay backed up via iCloud. The file is fully re-importable."
+          }
+        }
+      }
+    },
+    "L'import fusionne par nom : un récipient existant portant le même nom est mis à jour avec les valeurs du fichier. N'importez que des fichiers de confiance ; les valeurs aberrantes (densité absurde, points hors borne) sont automatiquement filtrées. Pour préserver un récipient calibré, renommez-le avant d'importer." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import merges by name: an existing container with the same name is updated with the file's values. Only import trusted files; out-of-range values (absurd density, out-of-bounds points) are automatically filtered out. To preserve a calibrated container, rename it before importing."
+          }
+        }
+      }
+    },
+    "La couleur sert à identifier le liquide (essences, gazole…) dans la coupe et les listes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The color helps identify the liquid (fuels, diesel…) in the cross-section and lists."
+          }
+        }
+      }
+    },
+    "La forme libre est définie par les points de jauge ci-dessous." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The free form is defined by the gauge points below."
+          }
+        }
+      }
+    },
+    "La viscosité est indicative : elle n'entre pas dans le calcul du volume ou du poids. Seule la densité détermine le poids." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viscosity is indicative: it is not used in the volume or weight calculation. Only density determines the weight."
+          }
+        }
+      }
+    },
+    "La viscosité influence-t-elle le calcul ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Does viscosity affect the calculation?"
+          }
+        }
+      }
+    },
+    "Langue" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        }
+      }
+    },
+    "Largeur (W)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Width (W)"
+          }
+        }
+      }
+    },
+    "Le fichier n'a pas pu être ouvert." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The file could not be opened."
+          }
+        }
+      }
+    },
+    "Le fond descend du côté faible vers le côté profond. Voluma calcule la table hauteur → volume à partir de ces cotes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The floor slopes down from the shallow side to the deep side. Voluma computes the height → volume table from these dimensions."
+          }
+        }
+      }
+    },
+    "Le puisard est le creux du fond, plus profond, sous la cuve. Voluma calcule la table hauteur → volume à partir de ces cotes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sump is the deeper recess in the floor, beneath the tank. Voluma computes the height → volume table from these dimensions."
+          }
+        }
+      }
+    },
+    "Le volume ne dépend que de la géométrie du récipient et de la hauteur — pas du liquide. Seul le poids change d'un liquide à l'autre, via sa densité." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume depends only on the container geometry and the height — not on the liquid. Only the weight changes from one liquid to another, through its density."
+          }
+        }
+      }
+    },
+    "Lecture" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reading"
+          }
+        }
+      }
+    },
+    "Lecture & mesure" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reading & measurement"
+          }
+        }
+      }
+    },
+    "Les plans (PDF, image, document) que vous joignez à un récipient sont embarqués dans votre base privée et synchronisés via iCloud, comme le reste de vos données." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The plans (PDF, image, document) you attach to a container are embedded in your private database and synced via iCloud, like the rest of your data."
+          }
+        }
+      }
+    },
+    "Les récipients, liquides et plans que vous créez sont stockés sur votre appareil. Si iCloud est activé, ils sont synchronisés via votre compte iCloud privé (CloudKit). Ces données restent les vôtres : le développeur n'y a pas accès et elles ne transitent par aucun serveur tiers." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The containers, liquids and plans you create are stored on your device. If iCloud is enabled, they are synced via your private iCloud account (CloudKit). This data remains yours: the developer has no access to it and it does not pass through any third-party server."
+          }
+        }
+      }
+    },
+    "Libre" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free"
+          }
+        }
+      }
+    },
+    "Liquide" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liquid"
+          }
+        }
+      }
+    },
+    "Liquide par défaut" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default liquid"
+          }
+        }
+      }
+    },
+    "Liquide verrouillé. Touchez « Modifier » pour changer ses propriétés." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liquid locked. Tap “Edit” to change its properties."
+          }
+        }
+      }
+    },
+    "Liquides" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liquids"
+          }
+        }
+      }
+    },
+    "Liquides d'exemple" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sample liquids"
+          }
+        }
+      }
+    },
+    "Liquides d'exemple ajoutés : %lld." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sample liquids added: %lld."
+          }
+        }
+      }
+    },
+    "Litres (L)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liters (L)"
+          }
+        }
+      }
+    },
+    "Livres (lb)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pounds (lb)"
+          }
+        }
+      }
+    },
+    "Longueur (L)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Length (L)"
+          }
+        }
+      }
+    },
+    "Maîtrise de vos données" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control of your data"
+          }
+        }
+      }
+    },
+    "Masse" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mass"
+          }
+        }
+      }
+    },
+    "Mes données sont-elles synchronisées entre mes appareils ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Is my data synced across my devices?"
+          }
+        }
+      }
+    },
+    "Mesure" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measurement"
+          }
+        }
+      }
+    },
+    "Millimètres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Millimeters"
+          }
+        }
+      }
+    },
+    "mm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mm"
+          }
+        }
+      }
+    },
+    "Modifier" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
+    },
+    "Niveau bas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Low level"
+          }
+        }
+      }
+    },
+    "Niveau quasi plein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nearly full"
+          }
+        }
+      }
+    },
+    "Nom" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "Nom du liquide" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liquid name"
+          }
+        }
+      }
+    },
+    "Nom du récipient" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Container name"
+          }
+        }
+      }
+    },
+    "Noms déjà présents" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Names already present"
+          }
+        }
+      }
+    },
+    "Non calibré" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not calibrated"
+          }
+        }
+      }
+    },
+    "Non. La viscosité est purement indicative ; elle n'entre pas dans le calcul du volume ni du poids. Seule la densité détermine le poids." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No. Viscosity is purely indicative; it is not used in the volume or weight calculation. Only density determines the weight."
+          }
+        }
+      }
+    },
+    "Note" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        }
+      }
+    },
+    "Nous contacter par e-mail" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact us by email"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Oui : si iCloud est activé, vos récipients, liquides et plans sont synchronisés automatiquement via votre compte iCloud privé, sur tous vos appareils connectés au même identifiant Apple." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes: if iCloud is enabled, your containers, liquids and plans are synced automatically via your private iCloud account, across all devices signed in to the same Apple Account."
+          }
+        }
+      }
+    },
+    "Oui, dans Réglages → Affichage : volume en litres ou en gallons (US / impérial), masse en kilogrammes ou en livres, hauteur en cm ou mm. C'est purement visuel : les calculs restent effectués en interne en litres et kilogrammes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes, in Settings → Display: volume in liters or gallons (US / imperial), mass in kilograms or pounds, height in cm or mm. It's purely visual: calculations are still performed internally in liters and kilograms."
+          }
+        }
+      }
+    },
+    "Oui. Dans la lecture, le champ « Volume connu » est bidirectionnel : entrez un volume (par exemple un ticket de plein) et la hauteur correspondante se calcule — et inversement quand vous bougez la pige." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes. In the reading screen, the “Known volume” field is bidirectional: enter a volume (for example a fill-up receipt) and the corresponding height is computed — and vice versa when you move the dipstick."
+          }
+        }
+      }
+    },
+    "Page %lld/%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Page %lld/%lld"
+          }
+        }
+      }
+    },
+    "Pas enregistré avec le récipient." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step saved with the container."
+          }
+        }
+      }
+    },
+    "PDF" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDF"
+          }
+        }
+      }
+    },
+    "Plan" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan"
+          }
+        }
+      }
+    },
+    "Plan de coupe ou plan industriel attaché au récipient, embarqué et synchronisé via iCloud." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cross-section or industrial drawing attached to the container, embedded and synced via iCloud."
+          }
+        }
+      }
+    },
+    "Plan indisponible" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan unavailable"
+          }
+        }
+      }
+    },
+    "Plans importés" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imported plans"
+          }
+        }
+      }
+    },
+    "Plongez une pige (jauge) verticale jusqu'au fond du récipient, retirez-la et lisez la hauteur mouillée. Saisissez cette hauteur dans Voluma : il en déduit le volume, le poids et le pourcentage de remplissage." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insert a vertical dipstick down to the bottom of the container, pull it out and read the wetted height. Enter this height in Voluma: it derives the volume, weight and fill percentage."
+          }
+        }
+      }
+    },
+    "Poids" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight"
+          }
+        }
+      }
+    },
+    "Poids calculé pour %@ · %@ kg/L" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight for %1$@ · %2$@ kg/L"
+          }
+        }
+      }
+    },
+    "Points de jauge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gauge points"
+          }
+        }
+      }
+    },
+    "Politique de confidentialité" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy policy"
+          }
+        }
+      }
+    },
+    "Pour éviter toute modification accidentelle (ou remise à zéro), un récipient enregistré s'ouvre en lecture seule. Touchez « Modifier » pour déverrouiller et changer ses dimensions, sa forme ou son calibrage." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To prevent any accidental change (or reset), a saved container opens read-only. Tap “Edit” to unlock and change its dimensions, shape or calibration."
+          }
+        }
+      }
+    },
+    "Pour un récipient de forme inconnue ou irrégulière, relevez quelques couples hauteur/volume (par remplissages successifs mesurés). Voluma interpole linéairement entre ces points de jauge pour estimer le volume à toute hauteur." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For a container of unknown or irregular shape, record a few height/volume pairs (through successive measured fills). Voluma interpolates linearly between these gauge points to estimate the volume at any height."
+          }
+        }
+      }
+    },
+    "Pourquoi la table de graduation est-elle la même pour tous les liquides ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why is the graduation table the same for all liquids?"
+          }
+        }
+      }
+    },
+    "Pourquoi un récipient enregistré est-il verrouillé ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why is a saved container locked?"
+          }
+        }
+      }
+    },
+    "Précision : ± 1 mm = ± %@ à ce niveau" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accuracy: ± 1 mm = ± %@ at this level"
+          }
+        }
+      }
+    },
+    "Premier de la liste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First in the list"
+          }
+        }
+      }
+    },
+    "Profondeur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depth"
+          }
+        }
+      }
+    },
+    "Profondeurs (mm)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depths (mm)"
+          }
+        }
+      }
+    },
+    "Propriétés" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Properties"
+          }
+        }
+      }
+    },
+    "Puis-je afficher en gallons ou en livres ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can I display in gallons or pounds?"
+          }
+        }
+      }
+    },
+    "Puis-je saisir un volume au lieu d'une hauteur ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can I enter a volume instead of a height?"
+          }
+        }
+      }
+    },
+    "Puisard (mm)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sump (mm)"
+          }
+        }
+      }
+    },
+    "Que contient (et ne contient pas) l'export JSON ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What does (and doesn't) the JSON export contain?"
+          }
+        }
+      }
+    },
+    "Que se passe-t-il si j'importe un récipient du même nom qu'un des miens ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What happens if I import a container with the same name as one of mine?"
+          }
+        }
+      }
+    },
+    "Que signifie « ± 1 mm = ± X » sous la lecture ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What does “± 1 mm = ± X” under the reading mean?"
+          }
+        }
+      }
+    },
+    "Quelles formes de récipients Voluma sait-il jauger ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which container shapes can Voluma gauge?"
+          }
+        }
+      }
+    },
+    "Récipient" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Container"
+          }
+        }
+      }
+    },
+    "Récipient par défaut" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default container"
+          }
+        }
+      }
+    },
+    "Récipient plein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Container full"
+          }
+        }
+      }
+    },
+    "Récipient verrouillé. Touchez « Modifier » pour changer ses dimensions, sa forme ou son calibrage." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Container locked. Tap “Edit” to change its dimensions, shape or calibration."
+          }
+        }
+      }
+    },
+    "Récipients" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Containers"
+          }
+        }
+      }
+    },
+    "Récipients & calibrage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Containers & calibration"
+          }
+        }
+      }
+    },
+    "Récipients d'exemple" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sample containers"
+          }
+        }
+      }
+    },
+    "Récipients d'exemple ajoutés : %lld." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sample containers added: %lld."
+          }
+        }
+      }
+    },
+    "Réglages" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Réinitialiser l'app" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset the app"
+          }
+        }
+      }
+    },
+    "Réinitialiser l'app ?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset the app?"
+          }
+        }
+      }
+    },
+    "Réinitialiser le calibrage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset calibration"
+          }
+        }
+      }
+    },
+    "Remplacer le plan" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace plan"
+          }
+        }
+      }
+    },
+    "Remplacer les existants" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace existing"
+          }
+        }
+      }
+    },
+    "Remplissage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill"
+          }
+        }
+      }
+    },
+    "Renseignez la hauteur mesurée à la pige (version cm) ou un volume connu — par exemple un ticket de plein (version litres) : l'autre se calcule. ⚠️ Mesurez avec soin : un relevé imprécis fausse le résultat ; vous êtes responsable de l'exactitude des mesures." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the height measured with the dipstick (cm version) or a known volume — for example a fill-up receipt (liters version): the other is computed. ⚠️ Measure carefully: an inaccurate reading distorts the result; you are responsible for the accuracy of the measurements."
+          }
+        }
+      }
+    },
+    "Repère" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark"
+          }
+        }
+      }
+    },
+    "Repères tous les" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marks every"
+          }
+        }
+      }
+    },
+    "Reste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remaining"
+          }
+        }
+      }
+    },
+    "Sauvegarde & partage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup & sharing"
+          }
+        }
+      }
+    },
+    "Supprimer le plan" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete plan"
+          }
+        }
+      }
+    },
+    "Synchronisation iCloud" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud sync"
+          }
+        }
+      }
+    },
+    "Table de graduation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Graduation table"
+          }
+        }
+      }
+    },
+    "Table de pige" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dipstick table"
+          }
+        }
+      }
+    },
+    "Terminé" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Touchez + pour ajouter un liquide, ou chargez les liquides d'exemple." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap + to add a liquid, or load the sample liquids."
+          }
+        }
+      }
+    },
+    "Touchez + pour créer un récipient, chargez les récipients d'exemple ou importez une bibliothèque JSON." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap + to create a container, load the sample containers, or import a JSON library."
+          }
+        }
+      }
+    },
+    "Tous les liquides d'exemple sont déjà présents." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All sample liquids are already present."
+          }
+        }
+      }
+    },
+    "Tous les récipients d'exemple sont déjà présents." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All sample containers are already present."
+          }
+        }
+      }
+    },
+    "Tout effacer et restaurer les exemples" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erase everything and restore the examples"
+          }
+        }
+      }
+    },
+    "Tout exporter (JSON)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export all (JSON)"
+          }
+        }
+      }
+    },
+    "Unités & impression" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Units & printing"
+          }
+        }
+      }
+    },
+    "Versez un volume connu, mesurez la hauteur, et ajoutez le couple. Répétez pour 2 ou 3 paliers : Voluma interpole entre les points." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour in a known volume, measure the height, and add the pair. Repeat for 2 or 3 levels: Voluma interpolates between the points."
+          }
+        }
+      }
+    },
+    "Vertical" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vertical"
+          }
+        }
+      }
+    },
+    "Viscosité" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viscosity"
+          }
+        }
+      }
+    },
+    "Voluma est un outil d'aide à la lecture, sans valeur réglementaire ni métrologique. La fiabilité du résultat dépend entièrement de la mesure : une hauteur mal relevée donne un volume faux. Mesurez avec soin et vérifiez vos relevés ; l'utilisateur est seul responsable de l'exactitude des mesures et des décisions qui en découlent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voluma is a reading aid, with no regulatory or metrological value. The reliability of the result depends entirely on the measurement: a poorly read height gives a wrong volume. Measure carefully and double-check your readings; the user is solely responsible for the accuracy of the measurements and the decisions made from them."
+          }
+        }
+      }
+    },
+    "Voluma ne collecte aucune donnée personnelle et n'utilise aucun traceur ni aucun outil d'analyse d'usage." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voluma collects no personal data and uses no trackers or usage analytics."
+          }
+        }
+      }
+    },
+    "Volume" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume"
+          }
+        }
+      }
+    },
+    "Volume %@, poids %@, remplissage %@, reste %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@, weight %@, fill %@, remaining %@"
+          }
+        }
+      }
+    },
+    "Volume connu" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Known volume"
+          }
+        }
+      }
+    },
+    "Volume plein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full volume"
+          }
+        }
+      }
+    },
+    "Vos données" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your data"
+          }
+        }
+      }
+    },
+    "Vos récipients, liquides et plans sont stockés sur l'appareil et synchronisés via votre iCloud privé. L'export produit un fichier JSON ré-importable." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your containers, liquids and plans are stored on the device and synced via your private iCloud. Export produces a re-importable JSON file."
+          }
+        }
+      }
+    },
+    "Vous pouvez à tout moment consulter, modifier, exporter (au format JSON) ou supprimer vos données depuis l'application. La suppression d'un récipient ou d'un liquide est répercutée sur vos appareils synchronisés." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can view, edit, export (as JSON) or delete your data from the app at any time. Deleting a container or a liquid is propagated to your synced devices."
+          }
+        }
+      }
+    },
+    "Vue" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
