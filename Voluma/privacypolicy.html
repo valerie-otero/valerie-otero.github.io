@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voluma — Politique de confidentialité / Privacy Policy</title>
+<meta name="description" content="Voluma — Politique de confidentialité (FR & EN). Aucune collecte de données ; stockage local et iCloud privé. / Privacy Policy (FR & EN): no data collection; local and private iCloud storage.">
+<link rel="icon" type="image/png" href="AppIcon-Light.png">
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --text-dim: #475569;
+    --muted: #94a3b8;
+    --border: #e2e8f0;
+    --accent: #0ea5e9;
+    --radius: 14px;
+    --shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1220;
+      --surface: #131c2d;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --muted: #64748b;
+      --border: #1f2a3d;
+      --shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); }
+
+  html[lang="fr"] [data-en] { display: none !important; }
+  html[lang="en"] [data-fr] { display: none !important; }
+
+  .doc-topbar {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+    max-width: 760px; margin: 0 auto; padding: .9rem 1.25rem;
+    font-size: .85rem; color: var(--text-dim);
+  }
+  .doc-topbar a { text-decoration: none; color: var(--text-dim); }
+  .doc-topbar a:hover { color: var(--accent); }
+  .doc-topbar .sep { color: var(--muted); margin: 0 .4rem; }
+  .doc-topbar .brand { font-weight: 700; color: var(--text); }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 1rem 1.25rem 4rem; }
+
+  .lang {
+    display: flex; justify-content: flex-end; gap: .35rem;
+    font-size: .8rem; margin-bottom: .5rem;
+  }
+  .lang button {
+    padding: .25rem .6rem; border: 1px solid var(--border);
+    border-radius: 999px; color: var(--text-dim);
+    background: transparent; cursor: pointer; font: inherit;
+  }
+  html[lang="fr"] .lang button[data-set="fr"],
+  html[lang="en"] .lang button[data-set="en"] {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+
+  header.doc { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+  header.doc img { width: 64px; height: 64px; border-radius: 14px; box-shadow: var(--shadow); }
+  header.doc h1 { font-size: 1.6rem; letter-spacing: -0.02em; }
+  header.doc .sub { color: var(--text-dim); font-size: .95rem; }
+
+  article {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.75rem; box-shadow: var(--shadow);
+  }
+  article h2 { font-size: 1.15rem; margin: 1.4rem 0 .55rem; letter-spacing: -0.01em; }
+  article h2:first-of-type { margin-top: 0; }
+  article p, article li { color: var(--text-dim); }
+  article p + p, article ul + p { margin-top: .65rem; }
+  article ul { padding-left: 1.25rem; margin: .35rem 0; }
+  article li { margin: .2rem 0; }
+  article strong { color: var(--text); }
+
+  .meta {
+    margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border);
+    color: var(--muted); font-size: .85rem;
+  }
+  footer { margin-top: 1.75rem; color: var(--muted); font-size: .85rem; text-align: center; }
+  footer a { text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="doc-topbar">
+  <a href="index.html"><span class="brand">Voluma</span> <span data-fr>— Accueil</span><span data-en>— Home</span></a>
+  <div>
+    <a href="index.html"><span data-fr>← Retour à l'app</span><span data-en>← Back to app</span></a>
+    <span class="sep">·</span>
+    <a href="../../index.html">⌂ <span data-fr>Toutes les apps</span><span data-en>All apps</span></a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-set="fr">FR</button>
+    <button type="button" data-set="en">EN</button>
+  </div>
+
+  <header class="doc">
+    <img src="AppIcon-Light.png" alt="Voluma">
+    <div>
+      <h1><span data-fr>Politique de confidentialité</span><span data-en>Privacy Policy</span></h1>
+      <div class="sub"><span data-fr>Application Voluma — iOS / iPadOS</span><span data-en>Voluma app — iOS / iPadOS</span></div>
+    </div>
+  </header>
+
+  <article>
+
+    <h2><span data-fr>1. Notre engagement</span><span data-en>1. Our commitment</span></h2>
+    <p data-fr>
+      <strong>Voluma ne collecte, ne transmet et ne vend aucune donnée personnelle.</strong>
+      Aucun traceur, aucun outil d'analytics, aucun service publicitaire ni aucun compte tiers
+      n'est intégré à l'application. L'éditeur n'a accès à aucune de vos données.
+    </p>
+    <p data-en>
+      <strong>Voluma does not collect, transmit or sell any personal data.</strong>
+      No trackers, no analytics tools, no advertising services and no third-party accounts
+      are integrated into the app. The developer has access to none of your data.
+    </p>
+
+    <h2><span data-fr>2. Données traitées par l'application</span><span data-en>2. Data processed by the app</span></h2>
+    <p data-fr>Les seules données traitées sont celles que vous saisissez vous-même pour jauger un récipient :</p>
+    <p data-en>The only data processed is data you enter yourself to gauge a container:</p>
+    <ul data-fr>
+      <li>récipients : nom, forme, dimensions, calibrage et pas de jauge ;</li>
+      <li>liquides : densité, viscosité, couleur et note ;</li>
+      <li>points de jauge (couples hauteur / volume) que vous renseignez ;</li>
+      <li>plans techniques que vous choisissez d'attacher (PDF, image, DOCX).</li>
+    </ul>
+    <ul data-en>
+      <li>containers: name, shape, dimensions, calibration and gauge step;</li>
+      <li>liquids: density, viscosity, colour and note;</li>
+      <li>gauge points (height / volume pairs) you provide;</li>
+      <li>technical plans you choose to attach (PDF, image, DOCX).</li>
+    </ul>
+    <p data-fr>
+      Aucune de ces informations n'a de caractère personnel au sens du RGPD : elles décrivent
+      uniquement vos récipients et vos liquides.
+    </p>
+    <p data-en>
+      None of this information is personal data under the GDPR: it only describes your
+      containers and liquids.
+    </p>
+
+    <h2><span data-fr>3. Stockage local</span><span data-en>3. Local storage</span></h2>
+    <p data-fr>
+      Vos données sont stockées <strong>localement sur votre appareil</strong> via <em>SwiftData</em>.
+      Elles ne quittent pas l'appareil sauf si vous activez iCloud (voir ci-dessous) ou si vous les
+      partagez vous-même (export JSON, CSV ou PDF).
+    </p>
+    <p data-en>
+      Your data is stored <strong>locally on your device</strong> via <em>SwiftData</em>.
+      It does not leave the device unless you enable iCloud (see below) or share it yourself
+      (JSON, CSV or PDF export).
+    </p>
+
+    <h2><span data-fr>4. Synchronisation iCloud (optionnelle)</span><span data-en>4. iCloud sync (optional)</span></h2>
+    <p data-fr>
+      Si vous êtes connecté·e à iCloud, vos récipients, liquides et plans sont synchronisés via
+      <strong>CloudKit</strong> dans <em>votre conteneur iCloud privé</em>. Apple est alors le seul
+      intermédiaire technique : nous n'avons <strong>aucun accès</strong> à ces données. Les
+      conditions d'Apple s'appliquent
+      (<a href="https://www.apple.com/legal/privacy/fr-ww/">apple.com/legal/privacy</a>).
+    </p>
+    <p data-en>
+      If you are signed in to iCloud, your containers, liquids and plans are synced via
+      <strong>CloudKit</strong> in <em>your own private iCloud container</em>. Apple is the only
+      technical intermediary in this case: we have <strong>no access</strong> to that data.
+      Apple's terms apply
+      (<a href="https://www.apple.com/legal/privacy/en-ww/">apple.com/legal/privacy</a>).
+    </p>
+    <p data-fr>
+      Vous pouvez à tout moment réinitialiser l'application (Réglages → « Réinitialiser l'app »),
+      ce qui efface vos données localement et, via iCloud, sur tous vos appareils synchronisés.
+    </p>
+    <p data-en>
+      You can reset the app at any time (Settings → “Reset the app”), which erases your data
+      locally and, via iCloud, on all your synced devices.
+    </p>
+
+    <h2><span data-fr>5. Plans attachés &amp; import de fichiers</span><span data-en>5. Attached plans &amp; file import</span></h2>
+    <p data-fr>
+      Les plans (PDF, image, DOCX) et les bibliothèques JSON que vous importez restent
+      <strong>sur votre appareil et dans votre iCloud privé</strong>. Ils ne sont envoyés à aucun
+      serveur de l'éditeur. Les valeurs importées sont validées localement (les valeurs aberrantes
+      sont écartées) ; aucun traitement n'a lieu en ligne.
+    </p>
+    <p data-en>
+      Plans (PDF, image, DOCX) and JSON libraries you import stay <strong>on your device and in
+      your private iCloud</strong>. They are not sent to any developer server. Imported values are
+      validated locally (out-of-range values are discarded); no processing happens online.
+    </p>
+
+    <h2><span data-fr>6. Partage de fichiers (PDF / CSV / JSON)</span><span data-en>6. File sharing (PDF / CSV / JSON)</span></h2>
+    <p data-fr>
+      Les exports (table de pige PDF en A4, CSV, sauvegarde JSON) sont générés
+      <strong>entièrement localement</strong>. Ils ne sont envoyés nulle part : c'est vous qui
+      choisissez, via la feuille de partage iOS, leur destination (Mail, AirDrop, Fichiers…).
+    </p>
+    <p data-en>
+      Exports (A4 PDF gauge chart, CSV, JSON backup) are generated <strong>entirely locally</strong>.
+      They are not sent anywhere: you choose, via the iOS share sheet, where to send them
+      (Mail, AirDrop, Files…).
+    </p>
+
+    <h2><span data-fr>7. Permissions système</span><span data-en>7. System permissions</span></h2>
+    <p data-fr>
+      Voluma ne demande aucun accès à la caméra, au microphone, à la localisation, aux contacts,
+      à la photothèque, à la santé ni aux capteurs de mouvement. L'import de plans utilise le
+      sélecteur de fichiers standard, déclenché par vous, sans accès permanent.
+    </p>
+    <p data-en>
+      Voluma requests no access to camera, microphone, location, contacts, photo library, health
+      or motion sensors. Plan import uses the standard, user-initiated document picker, with no
+      persistent access.
+    </p>
+
+    <h2><span data-fr>8. Avertissement métrologique</span><span data-en>8. Metrological notice</span></h2>
+    <p data-fr>
+      Voluma est un outil d'aide à la lecture, sans valeur métrologique légale. La fiabilité du
+      résultat dépend entièrement de l'exactitude de vos mesures et de vos saisies ; l'utilisateur
+      reste seul responsable de l'exactitude des mesures et des décisions qui en découlent.
+    </p>
+    <p data-en>
+      Voluma is a reading aid with no legal metrological value. The reliability of the result
+      depends entirely on the accuracy of your measurements and entries; the user remains solely
+      responsible for measurement accuracy and any resulting decisions.
+    </p>
+
+    <h2><span data-fr>9. Enfants</span><span data-en>9. Children</span></h2>
+    <p data-fr>
+      L'application ne s'adresse pas spécifiquement à un public de moins de 13 ans et ne collecte
+      sciemment aucune donnée concernant les enfants.
+    </p>
+    <p data-en>
+      The app is not specifically directed at children under 13 and does not knowingly collect
+      any data concerning children.
+    </p>
+
+    <h2><span data-fr>10. Sécurité</span><span data-en>10. Security</span></h2>
+    <p data-fr>
+      Les données sont stockées via les API standard du système (SwiftData / CloudKit), qui
+      bénéficient du chiffrement d'iOS et, pour iCloud, du chiffrement Apple en transit et au repos.
+    </p>
+    <p data-en>
+      Data is stored via the standard system APIs (SwiftData / CloudKit), which benefit from iOS
+      encryption and, for iCloud, from Apple's encryption in transit and at rest.
+    </p>
+
+    <h2><span data-fr>11. Modifications</span><span data-en>11. Changes</span></h2>
+    <p data-fr>
+      Cette politique peut être mise à jour pour refléter une évolution de l'application ou du cadre
+      légal. La date de dernière mise à jour est indiquée ci-dessous ; toute évolution substantielle
+      sera signalée dans les notes de version sur l'App Store.
+    </p>
+    <p data-en>
+      This policy may be updated to reflect changes to the app or the legal framework. The
+      last-updated date is shown below; any substantial change will be reported in the release
+      notes on the App Store.
+    </p>
+
+    <h2><span data-fr>12. Contact</span><span data-en>12. Contact</span></h2>
+    <p data-fr>Pour toute question relative à cette politique&nbsp;: <a href="mailto:valerie.otero@free.fr">m'écrire</a>.</p>
+    <p data-en>For any question regarding this policy: <a href="mailto:valerie.otero@free.fr">write to me</a>.</p>
+
+    <div class="meta">
+      <span data-fr>Dernière mise à jour : 24 juin 2026 — Version 1.0.<br>Éditeur : Valérie Otero.</span>
+      <span data-en>Last updated: 24 June 2026 — Version 1.0.<br>Publisher: Valérie Otero.</span>
+    </div>
+  </article>
+
+  <footer>
+    <a href="index.html">
+      <span data-fr>← Retour à la page produit</span>
+      <span data-en>← Back to product page</span>
+    </a>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var KEY = 'voluma-lang';
+    function apply(l) {
+      document.documentElement.setAttribute('lang', l);
+      try { localStorage.setItem(KEY, l); } catch (e) {}
+    }
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    var initial = saved || ((navigator.language || 'fr').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en');
+    apply(initial);
+    document.querySelectorAll('.lang button[data-set]').forEach(function (b) {
+      b.addEventListener('click', function () { apply(b.getAttribute('data-set')); });
+    });
+  })();
+</script>
+</body>
+</html>
