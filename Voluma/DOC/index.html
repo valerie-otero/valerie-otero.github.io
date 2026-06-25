@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-fr="Voluma — Jauge universelle de volume" data-en="Voluma — Universal volume gauge">Voluma — Jauge universelle de volume</title>
+<meta name="description"
+      data-fr="Voluma : d'une hauteur mesurée à la pige, calcule volume, masse et % de remplissage pour toute forme de récipient (cuve, cylindre, fond incliné, puisard, forme libre) et tout liquide. Table de pige PDF A4, coupe 2D/3D, iCloud, FR/EN."
+      data-en="Voluma: from a dipstick height, computes volume, mass and fill % for any container shape (tank, cylinder, sloped bottom, sump, free form) and any liquid. A4 PDF gauge chart, 2D/3D cross-section, iCloud, FR/EN."
+      content="Voluma : jauge universelle de volume pour iPhone et iPad.">
+<link rel="icon" type="image/png" href="AppIcon-Light.png">
+<style>
+    :root {
+        --primary: #0ea5e9;
+        --primary-dark: #0284c7;
+        --accent: #06b6d4;
+        --text: #0f172a;
+        --secondary-text: #475569;
+        --muted: #94a3b8;
+        --bg: #ffffff;
+        --section-bg: #f0f9ff;
+        --card-bg: #ffffff;
+        --border: #e0f2fe;
+        --shadow-sm: 0 4px 12px rgba(15,23,42,0.05);
+        --shadow-md: 0 14px 36px rgba(14,165,233,0.18);
+        --shadow-lg: 0 30px 80px rgba(15,23,42,0.22);
+        --app-primary: #0ea5e9;
+        --app-primary-dark: #0284c7;
+        --app-accent: #06b6d4;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        margin: 0; color: var(--text); background: var(--bg); line-height: 1.55;
+        -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    /* ============ Hero ============ */
+    .hero {
+        position: relative; overflow: hidden; padding: 90px 0 70px;
+        background:
+            radial-gradient(1100px 600px at 80% -10%, rgba(14,165,233,.22), transparent 60%),
+            radial-gradient(900px 500px at -10% 20%, rgba(6,182,212,.18), transparent 60%),
+            linear-gradient(180deg, #ffffff 0%, #e0f2fe 100%);
+    }
+    .hero::before {
+        content: ''; position: absolute; inset: 0;
+        background-image:
+            linear-gradient(rgba(14,165,233,.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(14,165,233,.08) 1px, transparent 1px);
+        background-size: 40px 40px;
+        mask-image: radial-gradient(700px 400px at 50% 30%, #000 30%, transparent 75%);
+        -webkit-mask-image: radial-gradient(700px 400px at 50% 30%, #000 30%, transparent 75%);
+        pointer-events: none;
+    }
+    .hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; gap: 60px; align-items: center; }
+    .eyebrow {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(14,165,233,.12); color: var(--primary-dark);
+        font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 980px; margin-bottom: 22px;
+    }
+    .hero h1 {
+        font-size: clamp(38px, 5.4vw, 60px); line-height: 1.04; font-weight: 800; letter-spacing: -0.03em;
+        margin: 0 0 18px;
+        background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 60%, #06b6d4 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .lead { font-size: 20px; color: var(--secondary-text); margin: 0 0 32px; max-width: 540px; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+    .soon-badge {
+        display: inline-flex; align-items: center; gap: 9px;
+        background: #0f172a; color: #fff; font-weight: 600; font-size: 16px;
+        padding: 13px 24px; border-radius: 980px; box-shadow: var(--shadow-md);
+    }
+    .secondary-cta {
+        font-size: 15px; font-weight: 600; color: var(--primary-dark);
+        text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .secondary-cta:hover { text-decoration: underline; }
+
+    /* ============ Tank visual ============ */
+    .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; min-height: 420px; }
+    .tank-card {
+        position: relative; width: 100%; max-width: 360px;
+        background: linear-gradient(145deg, #ffffff, #f0f9ff);
+        border-radius: 32px; padding: 28px; box-shadow: var(--shadow-lg);
+        transform: rotate(-2deg); transition: transform .6s cubic-bezier(.2,.8,.2,1);
+        border: 1px solid var(--border);
+    }
+    .tank-card:hover { transform: rotate(0) translateY(-4px); }
+    .tank-svg { width: 100%; height: auto; display: block; }
+    .tank-stats { margin-top: 18px; display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; font-size: 12px; text-align: center; }
+    .tank-stats div { background: rgba(14,165,233,.08); border-radius: 10px; padding: 8px 6px; color: var(--primary-dark); font-weight: 600; }
+    .tank-stats div b { display: block; font-size: 15px; color: var(--text); }
+    .floating-badge {
+        position: absolute; background: #fff; border-radius: 16px; padding: 12px 16px;
+        box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 10px;
+        font-size: 13px; font-weight: 600; color: var(--text); animation: floatY 4s ease-in-out infinite;
+    }
+    .badge-emoji { font-size: 22px; }
+    .badge-1 { top: 4%; left: -8%; animation-delay: 0s; }
+    .badge-2 { bottom: 8%; right: -10%; animation-delay: 1.5s; }
+    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+    /* Animated liquid */
+    .tank-svg .liquid-group { animation: levelSway 6.5s ease-in-out infinite; }
+    .tank-svg .surface { animation: surfaceShift 3.5s ease-in-out infinite alternate; }
+    .tank-svg .drop { animation: dropFall 3.2s ease-in infinite; transform-origin: 120px 0; }
+    .tank-svg .tick-live { animation: tickGlow 3s ease-in-out infinite; }
+    @keyframes levelSway   { 0%,100% { transform: translateY(30px);} 50% { transform: translateY(-26px);} }
+    @keyframes surfaceShift{ 0% { transform: translateX(-3px);} 100% { transform: translateX(3px);} }
+    @keyframes dropFall    { 0% { transform: translateY(-6px); opacity: 0;} 25% { opacity: 1;} 60% { transform: translateY(96px); opacity: 1;} 64% { opacity: 0;} 100% { opacity: 0;} }
+    @keyframes tickGlow    { 0%,100% { stroke: #0ea5e9; opacity:.5;} 50% { stroke: #06b6d4; opacity: 1;} }
+    @media (prefers-reduced-motion: reduce) { .tank-svg *, .floating-badge { animation: none !important; } }
+
+    /* ============ Stats ============ */
+    .stats { background: #0b1220; color: #fff; padding: 32px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; text-align: center; }
+    .stat-num {
+        font-size: 30px; font-weight: 800; letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 2px; }
+
+    /* ============ Sections ============ */
+    section.section { padding: 100px 0; }
+    .section-eyebrow { display: block; text-align: center; font-size: 14px; font-weight: 700; color: var(--primary-dark); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; }
+    .section-title { text-align: center; font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px; }
+    .section-sub { text-align: center; color: var(--secondary-text); font-size: 18px; max-width: 660px; margin: 0 auto 60px; }
+
+    /* Features */
+    .features { background: var(--section-bg); }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px; }
+    .feature-card {
+        background: var(--card-bg); padding: 32px 28px; border-radius: 22px;
+        box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s;
+        position: relative; overflow: hidden; border: 1px solid rgba(14,165,233,.08);
+    }
+    .feature-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 60%, rgba(14,165,233,.07)); opacity: 0; transition: opacity .3s; }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, rgba(14,165,233,.16), rgba(6,182,212,.16)); font-size: 26px; margin-bottom: 18px; }
+    .feature-card h3 { margin: 0 0 10px; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+    .feature-card p { margin: 0; color: var(--secondary-text); font-size: 15px; }
+
+    /* Screenshots */
+    .screens-section { background: linear-gradient(180deg, #ffffff 0%, #e0f2fe 100%); }
+    .screens-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; max-width: 880px; margin: 0 auto; }
+    .screens-grid figure { margin: 0; background: #fff; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--border); transition: transform .35s ease, box-shadow .35s ease; }
+    .screens-grid figure:hover { transform: translateY(-6px); box-shadow: 0 28px 70px rgba(14,165,233,.28); }
+    .screens-grid img { width: 100%; height: auto; display: block; }
+    .screens-grid figcaption { padding: 12px 18px; font-size: 14px; color: var(--secondary-text); border-top: 1px solid var(--border); font-weight: 500; }
+
+    /* Privacy / Disclaimer */
+    .info-card { max-width: 760px; margin: 0 auto; background: linear-gradient(135deg, #f0fff5 0%, #e7fbe8 100%); border: 1px solid #c8f0c8; border-radius: 24px; padding: 36px 32px; box-shadow: var(--shadow-sm); }
+    .info-card h3 { margin: 0 0 12px; font-size: 22px; color: #1b8a3a; display: flex; align-items: center; gap: 10px; }
+    .info-card p { color: #166534; margin: 6px 0; }
+    .info-card a { color: #166534; font-weight: 600; }
+    .warn-card { max-width: 760px; margin: 24px auto 0; background: linear-gradient(135deg, #fffaf0 0%, #fff3e0 100%); border: 1px solid #fbd5a5; border-radius: 24px; padding: 28px 32px; box-shadow: var(--shadow-sm); }
+    .warn-card h3 { margin: 0 0 12px; font-size: 20px; color: #b45309; display: flex; align-items: center; gap: 10px; }
+    .warn-card p { color: #92400e; margin: 0; font-size: 15px; }
+
+    /* Store banner */
+    .store-banner { background: linear-gradient(135deg, #0ea5e9 0%, #0c4a6e 60%, #06b6d4 130%); color: #fff; padding: 90px 0; text-align: center; position: relative; overflow: hidden; }
+    .store-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(600px 300px at 20% 30%, rgba(56,189,248,.35), transparent 60%), radial-gradient(500px 400px at 80% 70%, rgba(6,182,212,.35), transparent 60%); pointer-events: none; }
+    .store-banner .container { position: relative; }
+    .store-banner h2 { font-size: clamp(34px, 5vw, 52px); font-weight: 800; margin: 0 0 18px; letter-spacing: -0.02em; }
+    .store-banner p { font-size: 20px; margin: 0 auto 40px; opacity: .95; max-width: 620px; padding: 0 16px; }
+    .store-soon { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.4); color: #fff; font-weight: 700; font-size: 18px; padding: 14px 28px; border-radius: 980px; }
+
+    /* Footer */
+    footer { background: var(--section-bg); padding: 50px 0 40px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 18px; }
+    .footer-links a { color: var(--secondary-text); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--primary); }
+
+    .hidden { display: none !important; }
+
+    /* Bascule FR/EN pour les éléments [data-lang] hors header (footer, etc.) */
+    html[lang="fr"] [data-lang="en"],
+    html[lang="en"] [data-lang="fr"] { display: none !important; }
+
+    @media (max-width: 880px) {
+        .hero { padding: 60px 0 40px; }
+        .hero-grid { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+        .lead { margin-left: auto; margin-right: auto; }
+        .hero-cta { justify-content: center; }
+        .tank-card { max-width: 320px; transform: rotate(0); }
+        .floating-badge { display: none; }
+        .stats-grid { grid-template-columns: repeat(2,1fr); gap: 20px; }
+        section.section { padding: 70px 0; }
+    }
+</style>
+<link rel="stylesheet" href="../../Assets/css/app-header.css">
+<script defer src="../../Assets/js/app-header.js"></script>
+</head>
+<body>
+
+<header class="app-nav" id="top">
+  <div class="app-nav-inner">
+    <a class="app-nav-brand" href="#top" aria-label="Voluma">
+      <img src="AppIcon-Light.png" alt="Voluma">
+      <span class="app-nav-name">Voluma</span>
+      <span class="app-nav-version">v1</span>
+    </a>
+    <nav class="app-nav-links" aria-label="Sections">
+      <a href="#features" data-lang="fr">Fonctionnalités</a>
+      <a href="#features" data-lang="en">Features</a>
+      <a href="readme.html" data-lang="fr">Doc</a>
+      <a href="readme.html" data-lang="en">Docs</a>
+      <a href="privacypolicy.html" data-lang="fr">Confidentialité</a>
+      <a href="privacypolicy.html" data-lang="en">Privacy</a>
+    </nav>
+    <div class="app-nav-actions">
+      <a class="app-nav-home" href="../../index.html">
+        <span data-lang="fr">⌂ <span class="label">Toutes les apps</span></span>
+        <span data-lang="en">⌂ <span class="label">All apps</span></span>
+      </a>
+      <div class="app-nav-lang" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="fr">FR</button>
+        <button type="button" data-lang-btn="en">EN</button>
+      </div>
+      <a class="app-nav-cta" href="#store"><span data-lang="fr">🍏 <span class="label">Bientôt</span></span><span data-lang="en">🍏 <span class="label">Soon</span></span></a>
+      <button type="button" class="app-nav-burger" aria-label="Menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ FRENCH ============ -->
+<div id="content-fr">
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">💧 Jauge de volume · iPhone &amp; iPad</span>
+                <h1>Le volume exact, d'une simple hauteur.</h1>
+                <p class="lead">Mesurez une hauteur à la pige et Voluma calcule le <strong>volume</strong>, la <strong>masse</strong> et le <strong>% de remplissage</strong> — pour n'importe quel récipient et n'importe quel liquide. Table de pige PDF A4 incluse.</p>
+                <div class="hero-cta">
+                    <span class="soon-badge">🍏 Bientôt sur l'App Store</span>
+                    <a href="#features" class="secondary-cta">Découvrir les fonctionnalités →</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="tank-card">
+                    <svg class="tank-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="liqGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#38bdf8"/>
+                                <stop offset="100%" stop-color="#0284c7"/>
+                            </linearGradient>
+                            <clipPath id="tankClip"><rect x="48" y="44" width="128" height="160" rx="20"/></clipPath>
+                        </defs>
+
+                        <!-- Cuve -->
+                        <rect x="48" y="44" width="128" height="160" rx="20" fill="#f8fbff" stroke="#0284c7" stroke-width="2.4"/>
+                        <rect x="48" y="44" width="128" height="160" rx="20" fill="none" stroke="#0ea5e9" stroke-width=".6" stroke-dasharray="2 3" opacity=".5"/>
+
+                        <!-- Liquide (clippé par la cuve) -->
+                        <g clip-path="url(#tankClip)">
+                            <g class="liquid-group">
+                                <rect x="40" y="120" width="144" height="150" fill="url(#liqGrad)" opacity=".92"/>
+                                <path class="surface" d="M40 120 Q72 112 104 120 T168 120 T232 120 V128 H40 Z" fill="#7dd3fc" opacity=".9"/>
+                            </g>
+                        </g>
+
+                        <!-- Graduations litres (paroi gauche) -->
+                        <g stroke="#0369a1" stroke-width="2" opacity=".55">
+                            <line x1="56" y1="72" x2="70" y2="72"/>
+                            <line class="tick-live" x1="56" y1="104" x2="74" y2="104"/>
+                            <line x1="56" y1="136" x2="70" y2="136"/>
+                            <line x1="56" y1="168" x2="70" y2="168"/>
+                        </g>
+
+                        <!-- Pige (dipstick) -->
+                        <g>
+                            <rect x="150" y="30" width="7" height="150" rx="3" fill="#0f172a"/>
+                            <rect x="150" y="30" width="7" height="150" rx="3" fill="none" stroke="#fbbf24" stroke-width="1" opacity=".7"/>
+                            <g stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round">
+                                <line x1="157" y1="60" x2="166" y2="60"/>
+                                <line x1="157" y1="86" x2="170" y2="86"/>
+                                <line x1="157" y1="112" x2="166" y2="112"/>
+                                <line x1="157" y1="138" x2="170" y2="138"/>
+                                <line x1="157" y1="164" x2="166" y2="164"/>
+                            </g>
+                            <circle cx="153.5" cy="26" r="6" fill="#0f172a"/>
+                        </g>
+
+                        <!-- Goutte qui tombe -->
+                        <circle class="drop" cx="120" cy="36" r="5" fill="#38bdf8"/>
+                    </svg>
+                    <div class="tank-stats">
+                        <div>Volume<b>181,5 L</b></div>
+                        <div>Masse<b>151,6 kg</b></div>
+                        <div>Niveau<b>37 %</b></div>
+                    </div>
+                </div>
+                <div class="floating-badge badge-1"><span class="badge-emoji">📐</span><span>5 formes &amp; calibrage</span></div>
+                <div class="floating-badge badge-2"><span class="badge-emoji">📄</span><span>Pige PDF A4</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container stats-grid">
+            <div><div class="stat-num">5</div><div class="stat-label">Formes de récipients</div></div>
+            <div><div class="stat-num">L · kg · %</div><div class="stat-label">Volume, masse, niveau</div></div>
+            <div><div class="stat-num">PDF A4</div><div class="stat-label">Pige prête à imprimer</div></div>
+            <div><div class="stat-num">iCloud</div><div class="stat-label">Sync privée</div></div>
+        </div>
+    </section>
+
+    <section id="features" class="section features">
+        <div class="container">
+            <span class="section-eyebrow">Fonctionnalités</span>
+            <h2 class="section-title">Tout ce qu'il faut pour jauger juste</h2>
+            <p class="section-sub">Le moteur de calcul travaille en interne en litres et kilogrammes ; l'affichage s'adapte à vos unités.</p>
+            <div class="features-grid">
+                <div class="feature-card"><div class="feature-icon">📦</div><h3>Toutes les formes</h3><p>Boîte, cylindre vertical &amp; horizontal, boîte à fond incliné, boîte + puisard, et forme libre par table de mesures.</p></div>
+                <div class="feature-card"><div class="feature-icon">💧</div><h3>Tout liquide</h3><p>Le poids découle de la densité ; une couleur par liquide pour repérer les essences d'un coup d'œil.</p></div>
+                <div class="feature-card"><div class="feature-icon">📐</div><h3>Calibrage</h3><p>Ajustez les lectures à votre récipient réel à partir d'un volume connu (un ticket de plein, par ex.).</p></div>
+                <div class="feature-card"><div class="feature-icon">🧊</div><h3>Coupe 2D &amp; 3D</h3><p>Le niveau s'affiche sur la vraie forme du récipient, en 2D comme en 3D (caméra libre).</p></div>
+                <div class="feature-card"><div class="feature-icon">🔁</div><h3>Bidirectionnel</h3><p>Saisissez une hauteur de pige ou un volume connu : l'autre se calcule automatiquement.</p></div>
+                <div class="feature-card"><div class="feature-icon">📄</div><h3>Table de pige &amp; export</h3><p>Générez un barème hauteur → volume, imprimable en PDF A4, ou exportez en CSV.</p></div>
+                <div class="feature-card"><div class="feature-icon">📏</div><h3>Unités au choix</h3><p>Volume en litres ou gallons (US / impérial), masse en kg ou livres, hauteur en cm ou mm.</p></div>
+                <div class="feature-card"><div class="feature-icon">☁️</div><h3>iCloud</h3><p>Vos récipients, liquides et plans suivent sur tous vos appareils, via votre iCloud privé.</p></div>
+                <div class="feature-card"><div class="feature-icon">🌍</div><h3>Bilingue FR / EN</h3><p>Interface et nombres entièrement en français ou en anglais, au choix.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section screens-section">
+        <div class="container">
+            <span class="section-eyebrow">Aperçus</span>
+            <h2 class="section-title">L'app en images</h2>
+            <p class="section-sub">Lecture instantanée, coupe 2D &amp; 3D fidèle à la forme réelle du récipient.</p>
+            <div class="screens-grid">
+                <figure><img src="screenshots/light/FR/1-lecture-2d.png" alt="Voluma — lecture"><figcaption>Lecture — volume, masse, %</figcaption></figure>
+                <figure><img src="screenshots/light/FR/5-liquides.png" alt="Voluma — liquides"><figcaption>Liquides — densité et couleur</figcaption></figure>
+                <figure><img src="screenshots/light/FR/7-table-graduation.png" alt="Voluma — table de pige"><figcaption>Table de pige — prête à imprimer</figcaption></figure>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="info-card">
+                <h3>🛡️ Confidentialité totale</h3>
+                <p>Aucune donnée personnelle collectée. Aucun tracker, aucune analytics, aucun compte tiers.</p>
+                <p>Vos récipients, liquides et plans restent sur vos appareils, et si vous activez iCloud, dans votre propre conteneur iCloud privé.</p>
+                <p><a href="privacypolicy.html">Voir la politique de confidentialité complète →</a></p>
+            </div>
+            <div class="warn-card">
+                <h3>⚠️ Avertissement</h3>
+                <p>Voluma est une <strong>aide à la lecture</strong>, sans valeur métrologique légale. La fiabilité du résultat dépend de l'exactitude de vos mesures et de vos saisies ; l'utilisateur reste seul responsable de l'exactitude des mesures et des décisions qui en découlent.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="store-banner" id="store">
+        <div class="container">
+            <h2>Bientôt sur l'App Store</h2>
+            <p>Voluma arrive sur iPhone et iPad. En attendant, découvrez la documentation.</p>
+            <span class="store-soon">🍏 Bientôt disponible</span>
+        </div>
+    </section>
+</div>
+
+<!-- ============ ENGLISH ============ -->
+<div id="content-en" class="hidden">
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">💧 Volume gauge · iPhone &amp; iPad</span>
+                <h1>The exact volume, from a single height.</h1>
+                <p class="lead">Measure a height with a dipstick and Voluma computes the <strong>volume</strong>, <strong>mass</strong> and <strong>fill %</strong> — for any container and any liquid. A4 PDF gauge chart included.</p>
+                <div class="hero-cta">
+                    <span class="soon-badge">🍏 Coming soon to the App Store</span>
+                    <a href="#features-en" class="secondary-cta">Explore the features →</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="tank-card">
+                    <svg class="tank-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="liqGrad2" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#38bdf8"/>
+                                <stop offset="100%" stop-color="#0284c7"/>
+                            </linearGradient>
+                            <clipPath id="tankClip2"><rect x="48" y="44" width="128" height="160" rx="20"/></clipPath>
+                        </defs>
+                        <rect x="48" y="44" width="128" height="160" rx="20" fill="#f8fbff" stroke="#0284c7" stroke-width="2.4"/>
+                        <rect x="48" y="44" width="128" height="160" rx="20" fill="none" stroke="#0ea5e9" stroke-width=".6" stroke-dasharray="2 3" opacity=".5"/>
+                        <g clip-path="url(#tankClip2)">
+                            <g class="liquid-group">
+                                <rect x="40" y="120" width="144" height="150" fill="url(#liqGrad2)" opacity=".92"/>
+                                <path class="surface" d="M40 120 Q72 112 104 120 T168 120 T232 120 V128 H40 Z" fill="#7dd3fc" opacity=".9"/>
+                            </g>
+                        </g>
+                        <g stroke="#0369a1" stroke-width="2" opacity=".55">
+                            <line x1="56" y1="72" x2="70" y2="72"/>
+                            <line class="tick-live" x1="56" y1="104" x2="74" y2="104"/>
+                            <line x1="56" y1="136" x2="70" y2="136"/>
+                            <line x1="56" y1="168" x2="70" y2="168"/>
+                        </g>
+                        <g>
+                            <rect x="150" y="30" width="7" height="150" rx="3" fill="#0f172a"/>
+                            <rect x="150" y="30" width="7" height="150" rx="3" fill="none" stroke="#fbbf24" stroke-width="1" opacity=".7"/>
+                            <g stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round">
+                                <line x1="157" y1="60" x2="166" y2="60"/>
+                                <line x1="157" y1="86" x2="170" y2="86"/>
+                                <line x1="157" y1="112" x2="166" y2="112"/>
+                                <line x1="157" y1="138" x2="170" y2="138"/>
+                                <line x1="157" y1="164" x2="166" y2="164"/>
+                            </g>
+                            <circle cx="153.5" cy="26" r="6" fill="#0f172a"/>
+                        </g>
+                        <circle class="drop" cx="120" cy="36" r="5" fill="#38bdf8"/>
+                    </svg>
+                    <div class="tank-stats">
+                        <div>Volume<b>181.5 L</b></div>
+                        <div>Mass<b>151.6 kg</b></div>
+                        <div>Level<b>37 %</b></div>
+                    </div>
+                </div>
+                <div class="floating-badge badge-1"><span class="badge-emoji">📐</span><span>5 shapes &amp; calibration</span></div>
+                <div class="floating-badge badge-2"><span class="badge-emoji">📄</span><span>A4 PDF gauge</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container stats-grid">
+            <div><div class="stat-num">5</div><div class="stat-label">Container shapes</div></div>
+            <div><div class="stat-num">L · kg · %</div><div class="stat-label">Volume, mass, level</div></div>
+            <div><div class="stat-num">A4 PDF</div><div class="stat-label">Print-ready gauge</div></div>
+            <div><div class="stat-num">iCloud</div><div class="stat-label">Private sync</div></div>
+        </div>
+    </section>
+
+    <section id="features-en" class="section features">
+        <div class="container">
+            <span class="section-eyebrow">Features</span>
+            <h2 class="section-title">Everything you need to gauge accurately</h2>
+            <p class="section-sub">The engine works internally in liters and kilograms; the display adapts to your units.</p>
+            <div class="features-grid">
+                <div class="feature-card"><div class="feature-icon">📦</div><h3>Every shape</h3><p>Box, vertical &amp; horizontal cylinder, box with sloped bottom, box + sump, and free form via a measurement table.</p></div>
+                <div class="feature-card"><div class="feature-icon">💧</div><h3>Any liquid</h3><p>Weight comes from density; a colour per liquid to spot fuels at a glance.</p></div>
+                <div class="feature-card"><div class="feature-icon">📐</div><h3>Calibration</h3><p>Tune readings to your real container from a known volume (a fill-up receipt, for instance).</p></div>
+                <div class="feature-card"><div class="feature-icon">🧊</div><h3>2D &amp; 3D cross-section</h3><p>The level is shown on the container's true shape, in 2D and 3D (free camera).</p></div>
+                <div class="feature-card"><div class="feature-icon">🔁</div><h3>Two-way</h3><p>Enter a dipstick height or a known volume: the other is computed automatically.</p></div>
+                <div class="feature-card"><div class="feature-icon">📄</div><h3>Gauge chart &amp; export</h3><p>Generate a height → volume chart, printable as A4 PDF, or export as CSV.</p></div>
+                <div class="feature-card"><div class="feature-icon">📏</div><h3>Your units</h3><p>Volume in liters or gallons (US / imperial), mass in kg or pounds, height in cm or mm.</p></div>
+                <div class="feature-card"><div class="feature-icon">☁️</div><h3>iCloud</h3><p>Your containers, liquids and plans follow you across devices, via your private iCloud.</p></div>
+                <div class="feature-card"><div class="feature-icon">🌍</div><h3>Bilingual FR / EN</h3><p>Interface and numbers fully in French or English, your choice.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section screens-section">
+        <div class="container">
+            <span class="section-eyebrow">Preview</span>
+            <h2 class="section-title">The app in pictures</h2>
+            <p class="section-sub">Instant reading, with a 2D &amp; 3D cross-section faithful to the container's real shape.</p>
+            <div class="screens-grid">
+                <figure><img src="screenshots/light/EN/1-lecture-2d.png" alt="Voluma — reading"><figcaption>Reading — volume, mass, %</figcaption></figure>
+                <figure><img src="screenshots/light/EN/5-liquides.png" alt="Voluma — liquids"><figcaption>Liquids — density and colour</figcaption></figure>
+                <figure><img src="screenshots/light/EN/7-table-graduation.png" alt="Voluma — gauge chart"><figcaption>Gauge chart — print-ready</figcaption></figure>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="info-card">
+                <h3>🛡️ Total privacy</h3>
+                <p>No personal data collected. No trackers, no analytics, no third-party accounts.</p>
+                <p>Your containers, liquids and plans stay on your devices, and if you enable iCloud, in your own private iCloud container.</p>
+                <p><a href="privacypolicy.html">Read the full privacy policy →</a></p>
+            </div>
+            <div class="warn-card">
+                <h3>⚠️ Disclaimer</h3>
+                <p>Voluma is a <strong>reading aid</strong> with no legal metrological value. The reliability of the result depends on the accuracy of your measurements and entries; the user remains solely responsible for measurement accuracy and any resulting decisions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="store-banner" id="store-en">
+        <div class="container">
+            <h2>Coming soon to the App Store</h2>
+            <p>Voluma is coming to iPhone and iPad. In the meantime, explore the documentation.</p>
+            <span class="store-soon">🍏 Coming soon</span>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="../../index.html"><span data-lang="fr">Accueil du site</span><span data-lang="en">Website home</span></a>
+            <a href="privacypolicy.html"><span data-lang="fr">Politique de confidentialité</span><span data-lang="en">Privacy Policy</span></a>
+            <a href="readme.html"><span data-lang="fr">Documentation</span><span data-lang="en">Documentation</span></a>
+            <a href="mailto:valerie.otero@free.fr">Contact / Support</a>
+        </div>
+        <p>&copy; 2025–2026 Valérie Otero — Voluma.</p>
+    </div>
+</footer>
+
+</body>
+</html>
