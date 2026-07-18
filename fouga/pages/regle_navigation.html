@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Règle de navigation — Fouga CM 170 R Magister · Mode d’emploi</title>
+<link rel="stylesheet" href="../assets/css/fonts.css">
+<style>
+:root{
+  --paper:#efe7d5; --paper-2:#e7ddc7; --panel:#f7f1e4; --panel-2:#f1e9d8;
+  --ink:#211f19; --ink-soft:#4f4a3d; --muted:#7a7160;
+  --line:#cabd9f; --line-strong:#b3a586; --grid:#9b8a62; --grid-soft:#bcad86;
+  --blue:#1d3a57; --blue-2:#274d72; --brass:#9a7320; --brass-2:#b78d31; --rouge:#9c3a2d;
+  --shadow:0 18px 40px -22px rgba(40,32,12,.55);
+  --disp:"Fraunces",Georgia,serif;
+  --lab:"Saira Semi Condensed",system-ui,sans-serif;
+  --body:"Spectral",Georgia,serif;
+  --mono:"Spline Sans Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);background:var(--paper);font-family:var(--body);
+  font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,.45), transparent 40%),
+    radial-gradient(circle at 88% 82%, rgba(154,115,32,.06), transparent 45%);
+}
+/* grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.kicker{font-family:var(--lab);text-transform:uppercase;letter-spacing:.28em;font-size:.78rem;font-weight:600;color:var(--brass)}
+h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.05;letter-spacing:-.01em}
+a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:2px}
+
+/* ---------- top nav ---------- */
+header.nav{position:sticky;top:0;z-index:100;background:rgba(239,231,213,.82);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:18px;height:58px;max-width:1120px;margin:0 auto;padding:0 28px}
+.brandmark{font-family:var(--lab);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.86rem;color:var(--ink);white-space:nowrap}
+.brandmark b{color:var(--rouge)}
+nav.links{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+nav.links a{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;font-weight:600;
+  color:var(--ink-soft);text-decoration:none;padding:7px 11px;border-radius:6px;transition:.2s}
+nav.links a:hover,nav.links a.active{background:var(--blue);color:#f4ecd8}
+@media(max-width:900px){nav.links{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:72vh;display:flex;align-items:flex-end;overflow:hidden;color:#f3ead6;background:#15130f}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.9) contrast(1.02);
+  transform:scale(1.06);animation:drift 26s ease-in-out infinite alternate}
+@keyframes drift{to{transform:scale(1.14) translateY(-2%)}}
+.hero::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(18,22,30,.5) 0%,rgba(18,22,30,.2) 34%,rgba(20,18,12,.66) 76%,rgba(16,14,10,.92) 100%)}
+.hero-in{position:relative;z-index:2;padding:0 28px 7vh;max-width:1120px;margin:0 auto;width:100%}
+.hero .kicker{color:var(--brass-2)}
+.hero h1{font-size:clamp(2.4rem,6.4vw,5.2rem);font-weight:900;margin:.18em 0 .1em;color:#f6eedb;
+  text-shadow:0 2px 30px rgba(0,0,0,.4)}
+.hero h1 em{font-style:italic;font-weight:400}
+.hero .lede{font-size:clamp(1.05rem,2.2vw,1.35rem);max-width:50ch;color:#ece2cd;font-weight:300}
+.hero .meta{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;font-family:var(--lab);text-transform:uppercase;
+  letter-spacing:.16em;font-size:.74rem;color:#d9cdb1}
+.hero .meta span{border-left:2px solid var(--brass-2);padding-left:10px}
+.scrollcue{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:3;font-family:var(--lab);
+  text-transform:uppercase;letter-spacing:.2em;font-size:.66rem;color:#e7dcc2;opacity:.85;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,6px)}}
+
+/* ---------- sections ---------- */
+section{padding:88px 0;border-top:1px solid var(--line);scroll-margin-top:64px}
+section:nth-of-type(even){background:linear-gradient(180deg,var(--panel),var(--panel-2))}
+.sec-head{max-width:760px;margin-bottom:42px}
+.sec-head h2{font-size:clamp(2rem,4.2vw,3.1rem);margin:.18em 0 .35em}
+.sec-head p{color:var(--ink-soft);font-size:1.12rem;margin:0}
+.lead-rule{width:64px;height:3px;background:var(--brass);border-radius:2px}
+h3.sub{font-family:var(--disp);color:var(--blue);font-size:1.5rem;margin:0 0 6px}
+p.sub-p{margin:.2em 0 18px;color:var(--ink-soft)}
+
+/* feature rows */
+.feature{display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:center;margin:46px 0}
+.feature.rev{grid-template-columns:1fr 1.05fr}
+.feature.rev .figure{order:-1}
+@media(max-width:860px){.feature,.feature.rev{grid-template-columns:1fr}.feature.rev .figure{order:0}}
+.feature h3{font-size:1.5rem;margin:0 0 .4em;color:var(--blue)}
+.feature p{margin:.5em 0}
+.figure{margin:0}
+.figure .frame{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line-strong);
+  box-shadow:var(--shadow);background:#0d0c0a}
+.figure img{display:block;width:100%;height:auto;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.figure:hover img{transform:scale(1.04)}
+.figure figcaption{font-family:var(--lab);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;
+  color:var(--muted);margin-top:10px;display:flex;gap:8px;align-items:center}
+.figure figcaption::before{content:"";width:16px;height:2px;background:var(--brass)}
+.tag{position:absolute;top:12px;left:12px;z-index:2;font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;
+  font-size:.66rem;font-weight:700;color:#f2e8d2;background:rgba(29,58,87,.85);padding:5px 10px;border-radius:5px;backdrop-filter:blur(3px)}
+
+/* pleine largeur : la règle est un objet long et étroit */
+.plate{margin:0 0 34px}
+.plate .frame{position:relative;border-radius:10px;border:1px solid var(--line-strong);box-shadow:var(--shadow);
+  background:#0d0c0a;padding:10px;overflow:hidden}
+.plate img{display:block;width:100%;height:auto}
+.plate:hover img{transform:none}
+.zoomable{cursor:zoom-in}
+
+/* photo absente : garde-fou visuel tant que le cliché n'est pas déposé */
+.frame.missing{min-height:200px;display:grid;place-items:center;
+  background:repeating-linear-gradient(45deg,#2b2721 0 10px,#211f19 10px 20px)}
+.frame.missing img{display:none}
+.frame.missing .tag{display:none}
+.frame.missing::after{content:"Photo à déposer · " attr(data-file);font-family:var(--lab);text-transform:uppercase;
+  letter-spacing:.14em;font-size:.72rem;font-weight:700;color:#b7a271;text-align:center;padding:20px;line-height:1.8}
+
+/* tool cards */
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
+@media(max-width:940px){.tools{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.tools{grid-template-columns:1fr}}
+.tool{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px;position:relative;overflow:hidden}
+.tool .n{font-family:var(--disp);font-weight:900;font-size:2.2rem;color:var(--brass);opacity:.5;line-height:1}
+.tool h4{font-family:var(--disp);font-size:1.1rem;margin:.3em 0 .35em;color:var(--ink)}
+.tool p{font-size:.94rem;color:var(--ink-soft);margin:0}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto;border:1.5px solid var(--grid);border-radius:10px;box-shadow:var(--shadow);background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:540px}
+caption{caption-side:top;text-align:left;font-family:var(--lab);text-transform:uppercase;letter-spacing:.14em;
+  font-size:.74rem;color:var(--muted);padding:14px 16px 0}
+th,td{padding:9px 13px;text-align:center;border:1px solid var(--grid-soft)}
+thead th{font-family:var(--lab);text-transform:uppercase;letter-spacing:.06em;font-size:.72rem;font-weight:700;
+  background:var(--blue);color:#f1e7d2;border:1px solid rgba(244,236,216,.28)}
+thead tr.sub th{background:var(--blue-2)}
+tbody th,td.rowh{font-family:var(--lab);font-weight:700;background:var(--panel-2);text-align:left;letter-spacing:.02em}
+tbody tr:nth-child(even) td:not(.void):not(.rowh){background:rgba(255,255,255,.45)}
+td.void{background-color:#b4a682;
+  background-image:repeating-linear-gradient(45deg,#2f2b22 0,#2f2b22 2px,transparent 2px,transparent 10px)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr.corr td,tr.corr th{background:#f0e6e2!important;border-top:2px solid var(--rouge)}
+tr.corr .num{color:var(--rouge);font-weight:600}
+/* colonnes moteur */
+th.m2,td.m2{border-left:2px solid var(--blue-2)}
+th.m6,td.m6{border-left:2px solid var(--rouge)}
+.mk{font-family:var(--lab);font-weight:700}
+.mk.m2{color:var(--blue-2)}
+.mk.m6{color:var(--rouge)}
+
+/* tabs */
+.tabs{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}
+.tabs button{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.78rem;font-weight:600;
+  border:1px solid var(--line-strong);background:var(--panel);color:var(--ink-soft);padding:9px 16px;border-radius:999px;cursor:pointer;transition:.2s}
+.tabs button:hover{border-color:var(--brass)}
+.tabs button.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tabpane{display:none}
+.tabpane.active{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.note-mini{font-size:.86rem;color:var(--muted);font-style:italic;margin:10px 2px 0}
+
+/* table / chart view toggle */
+.viewtoggle{display:inline-flex;gap:4px;background:var(--panel-2);border:1px solid var(--line-strong);
+  border-radius:999px;padding:4px;margin:0 0 18px}
+.viewtoggle button{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;font-weight:600;
+  border:0;background:transparent;color:var(--ink-soft);padding:7px 18px;border-radius:999px;cursor:pointer;transition:.2s}
+.viewtoggle button:hover{color:var(--ink)}
+.viewtoggle button.active{background:var(--ink);color:var(--paper)}
+
+/* charts */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:2px}
+@media(max-width:760px){.charts{grid-template-columns:1fr}}
+.chartcard{background:var(--panel);border:1.5px solid var(--grid);border-radius:10px;box-shadow:var(--shadow);
+  padding:16px 16px 12px;margin:0}
+.chartcard h4{font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;font-weight:700;
+  color:var(--blue);margin:0}
+.chartcard .unit{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.66rem;color:var(--muted);margin:2px 0 8px}
+.chartcard svg{display:block;width:100%;height:auto}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin:14px 2px 0;font-family:var(--lab);text-transform:uppercase;
+  letter-spacing:.08em;font-size:.74rem;font-weight:600;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:18px;height:3px;border-radius:2px}
+
+/* steps */
+.steps{counter-reset:step;margin-top:18px;border-left:2px solid var(--line-strong);padding-left:0}
+.step{position:relative;padding:0 0 40px 78px;counter-increment:step}
+.step::before{content:counter(step,decimal-leading-zero);position:absolute;left:-1px;top:-6px;transform:translateX(-50%);
+  font-family:var(--disp);font-weight:900;font-size:1.05rem;color:#f3ead6;background:var(--blue);width:42px;height:42px;
+  border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 6px var(--paper)}
+section:nth-of-type(even) .step::before{box-shadow:0 0 0 6px var(--panel)}
+.step h3{font-size:1.32rem;margin:0 0 .25em;color:var(--ink)}
+.step p{margin:.35em 0}
+.step ul{margin:.4em 0;padding-left:1.1em}
+.step li{margin:.25em 0}
+
+/* callout */
+.callout{border-left:4px solid var(--blue);background:linear-gradient(180deg,#eef3f8,#e9eff6);
+  border-radius:0 10px 10px 0;padding:20px 24px;margin:22px 0;box-shadow:var(--shadow)}
+.callout .lab{font-family:var(--lab);text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;font-weight:700;color:var(--blue);display:block;margin-bottom:6px}
+.callout.warn{border-color:var(--rouge);background:linear-gradient(180deg,#f7ece8,#f3e4df)}
+.callout.warn .lab{color:var(--rouge)}
+.callout.todo{border-color:var(--brass);background:linear-gradient(180deg,#f6f0e0,#f1e9d5)}
+.callout.todo .lab{color:var(--brass)}
+.callout p{margin:.45em 0}
+.callout ul{margin:.5em 0;padding-left:1.1em}
+
+/* example chip row */
+.example{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}
+.chip{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:.84rem;padding:7px 12px;border-radius:8px}
+.chip b{color:var(--brass-2)}
+
+/* glossary */
+.gloss{columns:2;column-gap:46px;margin-top:18px}
+@media(max-width:720px){.gloss{columns:1}}
+.gloss div{break-inside:avoid;margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.gloss dt{font-family:var(--lab);font-weight:700;letter-spacing:.04em;color:var(--blue);text-transform:uppercase;font-size:.84rem}
+.gloss dd{margin:3px 0 0;font-size:.96rem;color:var(--ink-soft)}
+
+/* limitations strip */
+.lims{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+@media(max-width:620px){.lims{grid-template-columns:1fr}}
+.lim{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--rouge);border-radius:8px;padding:18px 20px}
+.lim.vert{border-top-color:#3f6b3a}
+.lim.jaune{border-top-color:var(--brass-2)}
+.lim .v{font-family:var(--disp);font-weight:900;font-size:1.9rem;color:var(--ink)}
+.lim .k{font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;font-size:.74rem;color:var(--muted)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:200;background:rgba(14,12,9,.94);display:none;place-items:center;padding:24px;cursor:zoom-out}
+.lb.on{display:grid}
+.lb img{max-width:100%;max-height:100%;width:auto;height:auto;border-radius:6px;box-shadow:0 30px 80px -20px #000}
+.lb .close{position:absolute;top:16px;right:20px;font-family:var(--lab);text-transform:uppercase;letter-spacing:.14em;
+  font-size:.72rem;font-weight:700;color:#e7dcc2;background:none;border:1px solid rgba(231,220,194,.4);
+  border-radius:999px;padding:8px 15px;cursor:pointer}
+.lb .close:hover{border-color:var(--brass-2);color:#fff}
+
+/* footer */
+footer{background:#191712;color:#cdbf9f;padding:26px 0 24px;border-top:3px solid var(--brass)}
+footer .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-end}
+footer p{margin:.2em 0;font-size:.92rem;color:#b7aa8c}
+footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;color:#8c8068}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero img{animation:none}}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.tabpane{display:block!important}</style></noscript>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <div class="brandmark">Fouga CM&nbsp;170&nbsp;R <b>·</b> Règle de navigation</div>
+    <nav class="links">
+      <a href="#presentation">Présentation</a>
+      <a href="#anatomie">Anatomie</a>
+      <a href="#abaques">Abaques</a>
+      <a href="#calcul">Règle à calcul</a>
+      <a href="#glossaire">Glossaire</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top" style="border-top:none;padding:0">
+  <img src="../assets/img/regle_recto.jpg" alt="Recto de la règle de navigation du Fouga CM 170 R Magister">
+  <div class="hero-in">
+    <h1>Règle de navigation<br><em>Fouga CM&nbsp;170&nbsp;R Magister</em></h1>
+    <p class="lede">Le mode d’emploi illustré de la règle à calcul linéaire établie à Cognac en 1980 — la seule pièce de l’instrumentation à porter, côte à côte, le <strong>Marboré&nbsp;II</strong> et le <strong>Marboré&nbsp;VI</strong>.</p>
+    <div class="meta">
+      <span>Marboré II <b>·</b> Marboré VI</span>
+      <span>Cne Claude Ph — GE 00 315</span>
+      <span>Cognac, 1980</span>
+    </div>
+  </div>
+  <div class="scrollcue">▼ Faire défiler</div>
+</section>
+
+<!-- PRESENTATION -->
+<section id="presentation">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">I · Présentation</div>
+      <h2>Une règle, deux moteurs</h2>
+      <p>Là où le computeur de vol est un disque tournant dédié au seul Marboré&nbsp;II, la règle de navigation est une <strong>règle à calcul linéaire</strong> — un corps gravé, une coulisse mobile — qui traite dans un même geste les deux motorisations du Magister.</p>
+    </div>
+
+    <div class="tools reveal">
+      <div class="tool"><div class="n">A</div><h4>Abaques de performances</h4><p>Distance maximum franchissable, endurance maximum, montée et descentes — pour le Marboré II comme pour le Marboré VI.</p></div>
+      <div class="tool"><div class="n">B</div><h4>Règle à calcul linéaire</h4><p>Vitesse propre, temps, distance, nombre de Mach et consommation, lus sur des échelles logarithmiques glissantes.</p></div>
+      <div class="tool"><div class="n">C</div><h4>Échelles cartographiques</h4><p>Deux réglettes gravées sur les bords du corps : 1/2.000.000ᵉ en haut, 1/1.000.000ᵉ en bas.</p></div>
+      <div class="tool"><div class="n">D</div><h4>Vent & rapporteur</h4><p>Un abaque de vent transparent (dérive, vent effectif) au recto ; un rapporteur 360° au verso.</p></div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:34px">
+      <span class="lab">La légende de l’instrument : <span class="mk m2">●</span> et <span class="mk m6">★</span></span>
+      <p>Partout où les deux moteurs cohabitent — colonnes du tableau, fenêtres de lecture, courbes de montée — le graveur distingue les valeurs par deux symboles&nbsp;: <strong class="mk m2">● Marboré II</strong> et <strong class="mk m6">★ Marboré VI</strong>. Cette page reprend la même convention.</p>
+    </div>
+
+    <div class="callout reveal">
+      <span class="lab">Provenance</span>
+      <p>Le cartouche central porte&nbsp;: «&nbsp;<strong>REGLE DE NAVIGATION — Etablie par Cne CLAUDE Ph — GE 00 315</strong>&nbsp;» et, en regard, «&nbsp;<strong>COGNAC 1980</strong>&nbsp;». Il s’agit donc d’une règle établie au sein du groupement école de la base de Cognac, où le Magister assurait la formation des pilotes — un outil de série d’unité, et non une fourniture du constructeur.</p>
+    </div>
+
+    <div class="callout warn reveal">
+      <span class="lab">Ce que dit la photo, ce que dit la page</span>
+      <p>Toutes les valeurs ci-dessous sont relevées <strong>sur les clichés de l’instrument</strong>, seule source de référence. Les tableaux gravés (distance maximum, endurance maximum, descentes, sécurités) sont lisibles et transcrits intégralement. En revanche l’<strong>abaque de montée</strong> est un faisceau de courbes dont la lecture fine dépasse la résolution des clichés actuels&nbsp;: il est ici présenté en fac-similé, non tabulé. Chaque incertitude est signalée à sa place.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ANATOMIE -->
+<section id="anatomie">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">II · Anatomie</div>
+      <h2>Reconnaître les deux faces</h2>
+      <p>La règle se lit dans le sens de la longueur. Chaque face juxtapose trois blocs&nbsp;: un tableau de performances, un bloc de calcul, et un instrument graphique en bout de règle.</p>
+    </div>
+
+    <figure class="plate reveal">
+      <div class="frame"><span class="tag">Recto · au repos</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Recto complet de la règle de navigation : tableau de distance maximum franchissable, bloc de calcul central, abaque de vent"></div>
+      <figcaption>Recto — distance maximum franchissable, règle à calcul, abaque de vent</figcaption>
+    </figure>
+
+    <div class="feature reveal">
+      <div class="txt">
+        <h3>Recto, panneau gauche — la distance franchissable</h3>
+        <p>Sous l’en-tête <strong>FOUGA</strong>, trois colonnes&nbsp;: <em>Marboré&nbsp;II</em>, <em>Marboré&nbsp;VI</em>, <em>Vit. indiquée</em>. Sept lignes de niveau, du FL&nbsp;300 en haut au palier de 1&nbsp;000&nbsp;pieds en bas. Chaque case donne le <strong>régime à afficher</strong> et la <strong>consommation en litres par minute</strong>.</p>
+        <p>Le titre est gravé verticalement sur le champ&nbsp;: «&nbsp;Distance Maximum Franchissable <strong>Gb</strong>&nbsp;». Le tableau vaut donc pour les <strong>gros bidons</strong> ; une ligne de correction en pied, repérée par un <strong>Pb</strong> cerclé, ramène les valeurs aux <strong>petits bidons</strong>.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Recto · panneau gauche</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Tableau de distance maximum franchissable, colonnes Marboré II et Marboré VI"></div>
+        <figcaption>Tableau « Distance Maximum Franchissable Gb »</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature rev reveal">
+      <div class="txt">
+        <h3>Recto, bloc central — le calcul</h3>
+        <p>Le cœur de la règle empile, du haut vers le bas&nbsp;: la <strong>réglette 1/2.000.000ᵉ</strong>, les deux fenêtres <strong>Nbre de Mach</strong> (FL&nbsp;300 et FL&nbsp;250), la double échelle <strong>VITESSE PROPRE</strong> encadrée de ses échelles de temps, la fenêtre <strong>Cons. — l/minute</strong>, et la <strong>réglette 1/1.000.000ᵉ</strong> en pied.</p>
+        <p>C’est là que se lit le cartouche de provenance, et le repère <strong>VP</strong> qui accroche l’échelle des vitesses propres (100 à 300) au calculateur de vent voisin.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Recto · bloc central</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Bloc central : échelles 1/2.000.000, Mach, vitesse propre, consommation, 1/1.000.000"></div>
+        <figcaption>Échelles glissantes et fenêtres de lecture</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature reveal">
+      <div class="txt">
+        <h3>La coulisse — ce qui bouge</h3>
+        <p>Les cases «&nbsp;Vit. indiquée&nbsp;», «&nbsp;Nbre de Mach&nbsp;» et «&nbsp;Cons.&nbsp;» ne sont pas des cartouches gravés&nbsp;: ce sont des <strong>fenêtres</strong> ouvertes sur une bande mobile. Ce second cliché, coulisse tirée, le démontre — les fenêtres de gauche se vident, celles du Mach affichent une graduation étrangère, et l’extrémité droite du corps découvre des échelles jusque-là masquées (50 à 150, 500 à 1&nbsp;500).</p>
+        <p>Au repos (cliché précédent), les lectures redeviennent cohérentes entre elles&nbsp;: Mach 0,50 au FL&nbsp;300 et au FL&nbsp;250, et des vitesses indiquées qui s’accordent avec ce Mach.</p>
+        <div class="callout todo" style="margin-top:14px">
+          <span class="lab">À confirmer sur l’objet</span>
+          <p>Le nombre exact de pièces mobiles (une coulisse unique portant l’abaque de vent, ou une coulisse plus un curseur transparent indépendant) et la position de référence des fenêtres ne se laissent pas trancher sur quatre clichés. C’est la première mesure à faire pour la <a href="../regle-navigation-virtuelle.html" target="_top">règle virtuelle</a>.</p>
+        </div>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Recto · coulisse tirée</span><img class="zoomable" src="../assets/img/regle_recto_coulisse.jpg" alt="Recto de la règle, coulisse tirée : les fenêtres se vident et les échelles de droite apparaissent"></div>
+        <figcaption>La coulisse en extension</figcaption>
+      </figure>
+    </div>
+
+    <figure class="plate reveal" style="margin-top:20px">
+      <div class="frame"><span class="tag">Verso</span><img class="zoomable" src="../assets/img/regle_verso.jpg" alt="Verso complet de la règle de navigation : abaque de montée, table endurance maximum, rapporteur"></div>
+      <figcaption>Verso — abaque de montée, endurance maximum et descentes, rapporteur 360°</figcaption>
+    </figure>
+
+    <div class="feature rev reveal">
+      <div class="txt">
+        <h3>Verso, panneau gauche — l’abaque de montée</h3>
+        <p>Un faisceau de <strong>quatre courbes</strong> monte du coin inférieur gauche vers le FL&nbsp;300&nbsp;: le Marboré&nbsp;VI à gauche (montée plus courte, plus rapide), le Marboré&nbsp;II à droite, chacun dédoublé en <strong>Pb</strong> et <strong>Gb</strong>. Le long de chaque courbe, des points cotés donnent le <strong>temps de montée</strong> (de 3′ à 24′) ; en marge, des lignes de rappel donnent le <strong>carburant restant</strong> au passage de chaque niveau.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Verso · abaque de montée</span><img class="zoomable" src="../assets/img/regle_verso.jpg" alt="Abaque de montée : quatre courbes Marboré VI / Marboré II en petits et gros bidons"></div>
+        <figcaption>Quatre courbes : VI et II, Pb et Gb</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature reveal">
+      <div class="txt">
+        <h3>Verso, bout de règle — le rapporteur</h3>
+        <p>L’extrémité arrondie porte un <strong>rapporteur 360°</strong> à rose complète, titré «&nbsp;<strong>EXECUTION DES VOLS COM TYPE VICTOR EN TRES BASSE ALTITUDE</strong>&nbsp;» — de quoi relever un cap sur la carte sans quitter la règle des mains. À côté, un encadré <strong>JOUR / NUIT</strong> et un bloc «&nbsp;Conditions…&nbsp;», partiellement masqué par la coulisse sur tous les clichés disponibles.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Verso · rapporteur</span><img class="zoomable" src="../assets/img/regle_verso_rapporteur.jpg" alt="Rapporteur 360° du verso, encadré jour/nuit"></div>
+        <figcaption>Rose des caps et encadré jour / nuit</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ABAQUES -->
+<section id="abaques">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">III · Les abaques</div>
+      <h2>Ce que la règle donne sans calcul</h2>
+      <p>Quatre tableaux gravés couvrent les deux régimes de croisière qui comptent — aller le plus loin, ou rester le plus longtemps — puis la descente et les sécurités.</p>
+    </div>
+
+    <!-- Distance max -->
+    <h3 class="sub">Distance maximum franchissable — gros bidons</h3>
+    <p class="sub-p">À chaque niveau, le régime qui procure la plus grande distance et la consommation qui l’accompagne. Le Marboré&nbsp;VI, plus puissant, tient le même profil <strong>500 à 1&nbsp;300&nbsp;t/m plus bas</strong> que le Marboré&nbsp;II — mais consomme davantage à tous les niveaux.</p>
+
+    <div class="reveal">
+      <div class="viewtoggle" role="tablist" aria-label="Affichage de la distance maximum franchissable">
+        <button class="active" data-view="table" data-target="dist">Tableau</button>
+        <button data-view="chart" data-target="dist">Courbe</button>
+      </div>
+
+      <div id="dist-table">
+        <div class="tablewrap"><table>
+          <caption>Distance maximum franchissable, gros bidons (Gb) — recto</caption>
+          <thead>
+            <tr><th rowspan="2">Niveau</th><th colspan="2" class="m2">● Marboré II</th><th colspan="2" class="m6">★ Marboré VI</th></tr>
+            <tr class="sub"><th class="m2">Régime</th><th>Cons.</th><th class="m6">Régime</th><th>Cons.</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="rowh">FL 300</td><td class="void m2"></td><td class="void"></td><td class="num m6">21 200 t/m</td><td class="num">9,5 l/m</td></tr>
+            <tr><td class="rowh">FL 250</td><td class="num m2">21 000 t/m</td><td class="num">7,2 l/m</td><td class="num m6">20 600 t/m</td><td class="num">9,8 l/m</td></tr>
+            <tr><td class="rowh">FL 200</td><td class="num m2">21 000 t/m</td><td class="num">8,5 l/m</td><td class="num m6">20 100 t/m</td><td class="num">10,1 l/m</td></tr>
+            <tr><td class="rowh">FL 150</td><td class="num m2">20 700 t/m</td><td class="num">9 l/m</td><td class="num m6">19 500 t/m</td><td class="num">10,4 l/m</td></tr>
+            <tr><td class="rowh">FL 100</td><td class="num m2">20 200 t/m</td><td class="num">10,1 l/m</td><td class="num m6">19 000 t/m</td><td class="num">10,8 l/m</td></tr>
+            <tr><td class="rowh">FL 50</td><td class="num m2">19 700 t/m</td><td class="num">10,8 l/m</td><td class="num m6">18 500 t/m</td><td class="num">11,5 l/m</td></tr>
+            <tr><td class="rowh">1 000 ft</td><td class="num m2">19 200 t/m</td><td class="num">11,9 l/m</td><td class="num m6">17 900 t/m</td><td class="num">12,2 l/m</td></tr>
+            <tr class="corr"><td class="rowh">Correction Pb <span style="font-weight:400;color:var(--muted)">(petits bidons)</span></td><td class="num m2">− 200 t/m</td><td class="num">− 0,5 l/m</td><td class="num m6">− 500 t/m</td><td class="num">− 0,5 l/m</td></tr>
+          </tbody>
+        </table></div>
+        <p class="note-mini">Case hachurée : le Marboré II n’a pas de valeur gravée au FL 300. Sa colonne sature à 21 000 t/m dès le FL 200 — le régime nécessaire pour tenir le FL 300 sortirait de la plage utilisable. Le Marboré VI, lui, poursuit jusqu’à 21 200 t/m.</p>
+      </div>
+
+      <div id="dist-charts" hidden></div>
+    </div>
+
+    <div class="callout reveal">
+      <span class="lab">Lire les deux colonnes ensemble</span>
+      <p>Les deux séries sont régulières et se répondent&nbsp;: le régime monte avec le niveau, la consommation baisse. Une seule irrégularité, et elle est logique&nbsp;— du FL&nbsp;200 au FL&nbsp;250, le Marboré&nbsp;II garde le <strong>même régime (21 000 t/m)</strong> ; la consommation chute alors franchement (8,5 → 7,2 l/m) au lieu de la baisse douce observée ailleurs, puisque rien ne vient plus compenser la raréfaction de l’air.</p>
+    </div>
+
+    <!-- Vitesse indiquée & Mach -->
+    <div class="feature reveal" style="margin-top:56px">
+      <div class="txt">
+        <h3>La colonne « Vit. indiquée » et les fenêtres Mach</h3>
+        <p>À droite du tableau, une fenêtre par niveau montre l’<strong>échelle des vitesses indiquées</strong>, où les repères <span class="mk m2">●</span> et <span class="mk m6">★</span> pointent la valeur à tenir pour chaque moteur. La vitesse croît en descendant&nbsp;: de l’ordre de 150–200&nbsp;kt aux niveaux hauts, 200–250&nbsp;kt vers le FL&nbsp;150–100, 250–300&nbsp;kt en bas.</p>
+        <p>Au-dessus, deux fenêtres <strong>Nbre de Mach</strong> couvrent les seuls niveaux où le Mach compte, FL&nbsp;300 et FL&nbsp;250. Les deux affichent, au repos, <strong>0,50</strong>&nbsp;: la croisière de plus grande distance se tient à Mach constant en altitude — et ce Mach 0,50 recoupe bien les vitesses indiquées lues en regard.</p>
+        <div class="callout todo" style="margin-top:14px">
+          <span class="lab">Relevé partiel</span>
+          <p>Les repères <span class="mk m2">●</span>/<span class="mk m6">★</span> se lisent dans les fenêtres, mais leur position exacte sur la graduation demande un cliché macro. Seules les <strong>plages</strong> sont données ci-dessus, pas de valeur au nœud près.</p>
+        </div>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Recto · fenêtres</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Colonne Vit. indiquée et fenêtres Nbre de Mach"></div>
+        <figcaption>Vitesses indiquées et nombre de Mach</figcaption>
+      </figure>
+    </div>
+
+    <!-- Endurance max -->
+    <h3 class="sub" style="margin-top:64px">Endurance maximum</h3>
+    <p class="sub-p">L’autre régime de référence&nbsp;: rester en l’air le plus longtemps possible, à 140–150&nbsp;kt. Le tableau est gravé au verso, altitudes en colonnes — la page en conserve la disposition d’origine.</p>
+
+    <div class="reveal">
+      <div class="viewtoggle" role="tablist" aria-label="Affichage de l’endurance maximum">
+        <button class="active" data-view="table" data-target="endu">Tableau</button>
+        <button data-view="chart" data-target="endu">Courbe</button>
+      </div>
+
+      <div id="endu-table">
+        <div class="tablewrap"><table>
+          <caption>Endurance maximum — verso</caption>
+          <thead><tr><th colspan="2">Altitude × 1 000</th><th>5</th><th>10</th><th>15</th><th>20</th><th>25</th></tr></thead>
+          <tbody>
+            <tr><th rowspan="2" class="m2">● Marboré II</th><td class="rowh">Régime</td><td class="num">17 000</td><td class="num">17 500</td><td class="num">18 000</td><td class="num">18 500</td><td class="num">19 000</td></tr>
+            <tr><td class="rowh">Cons. l/m</td><td class="num">7,8</td><td class="num">6,9</td><td class="num">6,1</td><td class="num">5,5</td><td class="num">5,2</td></tr>
+            <tr><th rowspan="2" class="m6">★ Marboré VI</th><td class="rowh">Régime</td><td class="num">15 500</td><td class="num">16 000</td><td class="num">16 500</td><td class="num">17 100</td><td class="num">17 700</td></tr>
+            <tr><td class="rowh">Cons. l/m</td><td class="num">8,2</td><td class="num">7,1</td><td class="num">6,4</td><td class="num">5,7</td><td class="num">5,4</td></tr>
+            <tr><th colspan="2">Vitesse</th><td class="num" colspan="5">140 / 150 kt</td></tr>
+          </tbody>
+        </table></div>
+        <p class="note-mini">La règle s’arrête au niveau 25 ; le computeur, lui, pousse la même table jusqu’au niveau 30 (19 700 t/m, 5,0 l/m) — pour le seul Marboré II.</p>
+      </div>
+
+      <div id="endu-charts" hidden></div>
+    </div>
+
+    <div class="callout reveal">
+      <span class="lab">Recoupement : la règle et le computeur disent la même chose</span>
+      <p>La ligne <strong>Marboré II</strong> de cette table reproduit <strong>exactement</strong>, cellule par cellule, la table «&nbsp;régime / consommation&nbsp;» gravée sur la face 336 du <a href="../computeur.html" target="_top">computeur de vol</a> — mêmes régimes (17 000 → 19 000 t/m), mêmes consommations (7,8 → 5,2 l/m), même vitesse de référence (140–150 kt). Deux instruments distincts, deux gravures indépendantes, un accord parfait.</p>
+      <p>Ce recoupement est la meilleure garantie de lecture dont on dispose sur cette page&nbsp;: il valide la transcription du tableau, et il donne son sens à la seconde ligne — la colonne <strong>Marboré VI</strong> prolonge au second moteur une table que le computeur ne connaissait que pour le premier.</p>
+    </div>
+
+    <!-- Descentes -->
+    <h3 class="sub" style="margin-top:64px">Descentes</h3>
+    <p class="sub-p">Deux profils gravés sous la table d’endurance, chacun exprimé en <strong>milles nautiques et litres par 1 000 pieds perdus</strong> — de quoi retrancher la descente d’un coup d’œil.</p>
+    <div class="tablewrap reveal"><table style="min-width:600px">
+      <caption>Descentes — verso</caption>
+      <thead><tr><th>Profil</th><th>Vitesse</th><th>Régime</th><th>Distance</th><th>Carburant</th></tr></thead>
+      <tbody>
+        <tr><td class="rowh">ÉCO</td><td class="num">200 kt</td><td>Gaz réduits</td><td class="num">2 Nm / 1 000 ft</td><td class="num">3 L / 1 000 ft</td></tr>
+        <tr><td class="rowh">PERCÉE</td><td class="num">230 kt · A.F. sortis</td><td class="num"><span class="mk m2">●</span> 19 000 &nbsp;·&nbsp; <span class="mk m6">★</span> 17 500</td><td class="num">1 Nm / 1 000 ft</td><td class="num">2,5 L / 1 000 ft</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note-mini">La descente économique va deux fois plus loin pour 1 000 pieds perdus, mais coûte 3 L au lieu de 2,5 L : on choisit la percée pour arriver vite et bas, l’éco pour gagner du terrain.</p>
+
+    <!-- Sécurités -->
+    <h3 class="sub" style="margin-top:64px">Sécurité carburant terrain</h3>
+    <p class="sub-p">Les deux seuils de sécurité carburant gravés au verso.</p>
+    <div class="lims reveal">
+      <div class="lim vert"><div class="k">Vert</div><div class="v">250 L</div></div>
+      <div class="lim jaune"><div class="k">Jaune</div><div class="v">300 L</div></div>
+    </div>
+
+    <!-- Montée -->
+    <div class="feature reveal" style="margin-top:64px">
+      <div class="txt">
+        <h3>Abaque de montée</h3>
+        <p>Quatre courbes, du sol au FL&nbsp;300&nbsp;: <span class="mk m6">★</span> <strong>Marboré VI</strong> à gauche en <em>Pb</em> puis <em>Gb</em>, <span class="mk m2">●</span> <strong>Marboré II</strong> à droite de même. On y lit le temps de montée (points cotés de 3′ à 24′) et, en marge, le carburant restant à chaque niveau.</p>
+        <p>L’ordre des courbes raconte l’essentiel&nbsp;: à bidons égaux, le Marboré&nbsp;VI grimpe plus vite que le Marboré&nbsp;II ; à moteur égal, les petits bidons grimpent plus vite que les gros. Atteindre le FL&nbsp;300 demande de l’ordre de <strong>17 minutes au mieux, 24 au pire</strong>.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Verso · montée</span><img class="zoomable" src="../assets/img/regle_verso.jpg" alt="Abaque de montée du verso, quatre courbes cotées en temps"></div>
+        <figcaption>Fac-similé — abaque de montée</figcaption>
+      </figure>
+    </div>
+    <div class="callout todo reveal">
+      <span class="lab">Non tabulé — à relever</span>
+      <p>Cet abaque est le seul élément de la règle que cette page ne transcrit pas en tableau, et c’est délibéré. Trois points restent indécidables sur les clichés actuels&nbsp;:</p>
+      <ul>
+        <li>la <strong>nature exacte des deux échelles horizontales</strong> (haut et bas), qui ne se superposent pas&nbsp;;</li>
+        <li>l’<strong>appariement des étiquettes Pb / Gb</strong> à leurs courbes, ambigu pour le Marboré II&nbsp;;</li>
+        <li>la <strong>valeur des points cotés intermédiaires</strong>, illisibles au-delà des extrémités.</li>
+      </ul>
+      <p>Plutôt qu’un tableau plausible mais invérifiable, la page s’en tient au fac-similé. Le relevé demande un cliché à plat, éclairage rasant, de la seule zone de l’abaque — et il conditionne la <a href="../regle-navigation-virtuelle.html" target="_top">règle virtuelle</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REGLE A CALCUL -->
+<section id="calcul">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">IV · Règle à calcul & vent</div>
+      <h2>Le bloc central et l’abaque de vent</h2>
+      <p>Passé les tableaux, la règle redevient ce qu’elle est&nbsp;: une règle à calcul. Deux réglettes cartographiques, un jeu d’échelles logarithmiques, un abaque de vent.</p>
+    </div>
+
+    <div class="feature reveal">
+      <div class="txt">
+        <h3>Les deux réglettes cartographiques</h3>
+        <p>Elles occupent les deux bords du corps et se lisent directement sur la carte&nbsp;:</p>
+        <ul>
+          <li><strong>Bord supérieur — 1/2.000.000ᵉ</strong>, graduée de 0 à plus de 160.</li>
+          <li><strong>Bord inférieur — 1/1.000.000ᵉ</strong>, graduée de 0 à 90, <strong>en sens inverse</strong> — les chiffres croissent de la droite vers la gauche.</li>
+        </ul>
+        <p>Deux échelles opposées sur un même objet, c’est un choix d’ergonomie&nbsp;: on retourne la règle bout pour bout selon la carte utilisée, sans jamais avoir à lire à l’envers.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Recto · bords</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Réglettes cartographiques 1/2.000.000 en haut et 1/1.000.000 en bas"></div>
+        <figcaption>1/2.000.000ᵉ en haut, 1/1.000.000ᵉ en bas</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature rev reveal">
+      <div class="txt">
+        <h3>Vitesse propre, temps, distance</h3>
+        <p>Le bandeau <strong>VITESSE PROPRE</strong> superpose deux règles logarithmiques glissantes, chacune graduée deux fois — en <strong>nautiques</strong> et en <strong>unités métriques</strong> — et encadrée par deux échelles de temps&nbsp;:</p>
+        <ul>
+          <li><strong>Échelle haute</strong> — de 10′ à 60′ (le 60 est cerclé, c’est l’index de l’heure) puis 110 à 140.</li>
+          <li><strong>Échelle basse</strong> — de 1′ à 10′, pour les temps courts.</li>
+          <li><strong>Rangée du haut</strong> — 50 à 500 ; <strong>rangée du bas</strong> — 5 à 50 : le même rapport, deux décades.</li>
+        </ul>
+        <p>Le principe est celui de tous les computeurs de vol&nbsp;: on aligne une vitesse sur l’index 60, et l’on lit en regard n’importe quel couple temps ↔ distance. La fenêtre <strong>Cons. — l/minute</strong> attelle la consommation au même mouvement.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Recto · vitesse propre</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Échelles de vitesse propre, temps et consommation"></div>
+        <figcaption>Échelles logarithmiques et index 60</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature reveal">
+      <div class="txt">
+        <h3>L’abaque de vent</h3>
+        <p>En bout de recto, une plaquette transparente — jaunie, fendue, recollée d’adhésif — porte un réseau de courbes. Ses quatre entrées sont gravées en clair&nbsp;:</p>
+        <ul>
+          <li><strong>angle direction du vent / route à suivre</strong> — le faisceau radial, de 0° à 90°&nbsp;;</li>
+          <li><strong>force</strong> — l’intensité du vent&nbsp;;</li>
+          <li><strong>vent effectif</strong> — en ordonnée, de 10 à 50&nbsp;: la composante utile, celle qui s’ajoute ou se retranche à la vitesse propre&nbsp;;</li>
+          <li><strong>dérive</strong> — en abscisse, de 1° à 10°, prolongée par des repères 12°, 15° et 20°, à croiser avec l’échelle <strong>VP</strong> (100 à 300).</li>
+        </ul>
+        <p>C’est un abaque du triangle des vitesses&nbsp;: on entre avec l’angle vent/route et la force, on ressort avec le vent effectif et la dérive — sans tracé, sans rapporteur.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Recto · vent</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Abaque de vent transparent : dérive, vent effectif, angle vent/route"></div>
+        <figcaption>Dérive et vent effectif</figcaption>
+      </figure>
+    </div>
+
+    <div class="callout warn reveal">
+      <span class="lab">État de conservation</span>
+      <p>La plaquette de vent est la pièce fragile de l’ensemble&nbsp;: transparent jauni, plusieurs fêlures traversantes, et des bandes d’adhésif — anciennes, elles-mêmes brunies — qui la maintiennent. Une partie des graduations passe sous l’adhésif. Toute manipulation de la coulisse la sollicite.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- GLOSSAIRE -->
+<section id="glossaire">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">V · Glossaire</div>
+      <h2>Les termes de la règle</h2>
+    </div>
+    <dl class="gloss reveal">
+      <div><dt>● Marboré II</dt><dd>Le turboréacteur d’origine du CM 170 R. Repéré par un point sur toute la règle. C’est le seul moteur que connaît le computeur de vol.</dd></div>
+      <div><dt>★ Marboré VI</dt><dd>Le turboréacteur plus puissant des versions tardives. Repéré par une étoile. Tient le même profil à régime plus bas, mais consomme davantage.</dd></div>
+      <div><dt>Gb</dt><dd>Gros bidons — la configuration de référence des tableaux gravés.</dd></div>
+      <div><dt>Pb</dt><dd>Petits bidons. Impose la correction de pied de tableau (− 200 t/m au Marboré II, − 500 t/m au Marboré VI ; − 0,5 l/m dans les deux cas).</dd></div>
+      <div><dt>t/m (T/m)</dt><dd>Tours-minute du réacteur — le régime moteur.</dd></div>
+      <div><dt>l/m</dt><dd>Litres par minute. La règle raisonne à la minute, quand le computeur affiche aussi l’heure.</dd></div>
+      <div><dt>FL</dt><dd>Niveau de vol, en centaines de pieds. FL 300 = 30 000 pieds.</dd></div>
+      <div><dt>VP</dt><dd>Vitesse propre — la vitesse vraie. Sert d’entrée à l’abaque de dérive (100 à 300).</dd></div>
+      <div><dt>Vent effectif</dt><dd>La composante du vent dans l’axe de la route : ce qui s’ajoute ou se retranche à la vitesse propre pour donner la vitesse sol.</dd></div>
+      <div><dt>Dérive</dt><dd>Écart angulaire entre le cap et la route, dû au vent.</dd></div>
+      <div><dt>A.F.</dt><dd>Aérofreins — sortis en percée, rentrés en descente économique.</dd></div>
+      <div><dt>Percée</dt><dd>Descente rapide, 230 kt aérofreins sortis : 1 Nm et 2,5 L par 1 000 pieds.</dd></div>
+      <div><dt>Éco</dt><dd>Descente économique, 200 kt gaz réduits : 2 Nm et 3 L par 1 000 pieds.</dd></div>
+      <div><dt>Vert / Jaune</dt><dd>Les deux seuils de sécurité carburant terrain : 250 L et 300 L.</dd></div>
+      <div><dt>Nm</dt><dd>Mille nautique (1 852 m). La règle mêle nautiques et kilomètres, avec conversion directe sur le bandeau « Vitesse propre ».</dd></div>
+      <div><dt>GE 00 315</dt><dd>L’unité d’origine portée au cartouche, aux côtés de la mention « Cognac 1980 » — la règle a été établie en groupement école, pour l’instruction.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photographie agrandie">
+  <button class="close" id="lbClose">Fermer ✕</button>
+  <img id="lbImg" alt="">
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="sig">Mode d’emploi illustré, reconstitué d’après les deux faces de l’instrument — Règle de navigation, Cne Claude Ph, GE 00 315, Cognac 1980 · Fouga CM 170 R « Magister » · Turboméca Marboré II & VI</p>
+  </div>
+</footer>
+
+<script>
+// ---- French typography (espaces insécables / fines + flèches monochromes) ----
+(function(){
+  var NBSP=" ", FINE=" ", VS="︎";
+  function frtext(t){
+    t=t.replace(/«\s*/g,"«"+FINE).replace(/\s*»/g,FINE+"»");
+    t=t.replace(/\s*([;!?])/g,FINE+"$1");
+    t=t.replace(/\s*:/g,NBSP+":");
+    t=t.replace(/([→↗↔])/g,"$1"+VS);
+    return t;
+  }
+  var SKIP={SCRIPT:1,STYLE:1,PRE:1,CODE:1};
+  function walk(n){
+    if(n.nodeType===3){ if(n.nodeValue && /\S/.test(n.nodeValue)) n.nodeValue=frtext(n.nodeValue); return; }
+    if(n.nodeType!==1||SKIP[n.tagName]) return;
+    for(var c=n.firstChild;c;c=c.nextSibling) walk(c);
+  }
+  walk(document.body);
+})();
+
+// ---- garde-fou : photo non déposée ----
+(function(){
+  function flag(img){
+    var f=img.closest('.frame'); if(!f) return;
+    f.classList.add('missing');
+    f.setAttribute('data-file',(img.getAttribute('src')||'').split('/').slice(-2).join('/'));
+  }
+  document.querySelectorAll('.frame img').forEach(function(img){
+    img.addEventListener('error',function(){flag(img);});
+    if(img.complete && img.naturalWidth===0) flag(img);
+  });
+})();
+
+// ---- courbes ----
+(function(){
+  var W=340,H=216,mL=52,mR=12,mT=14,mB=32, pw=W-mL-mR, ph=H-mT-mB;
+  function nf(v,dec){return dec?(Math.round(v*10)/10).toFixed(1).replace('.',','):String(Math.round(v));}
+  function marker(cx,cy,shape,color){
+    if(shape==='star'){
+      var pts=[],i,a,r;
+      for(i=0;i<10;i++){a=-Math.PI/2+i*Math.PI/5;r=(i%2?1.5:3.6);pts.push((cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1));}
+      return '<polygon points="'+pts.join(' ')+'" fill="'+color+'"/>';
+    }
+    return '<circle cx="'+cx+'" cy="'+cy+'" r="2.6" fill="'+color+'"/>';
+  }
+  function chart(cfg,q){
+    var vals=[];
+    cfg.series.forEach(function(s){s[q.k].forEach(function(v){if(v!=null)vals.push(v);});});
+    var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals);
+    var pad=(mx-mn)*0.10||1; mn-=pad; mx+=pad;
+    var x=function(a){return mL+(a-cfg.xmin)/(cfg.xmax-cfg.xmin)*pw;};
+    var y=function(v){return mT+(1-(v-mn)/(mx-mn))*ph;};
+    var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+q.title+' selon l\'altitude, Marboré II et Marboré VI">';
+    for(var t=0;t<4;t++){
+      var vv=mn+(mx-mn)*t/3, yy=y(vv).toFixed(1);
+      s+='<line x1="'+mL+'" y1="'+yy+'" x2="'+(W-mR)+'" y2="'+yy+'" stroke="#bcad86" stroke-width="'+(t===0?1:0.6)+'"'+(t>0?' stroke-dasharray="2 3"':'')+'/>'
+        +'<text x="'+(mL-6)+'" y="'+(y(vv)+3).toFixed(1)+'" text-anchor="end" font-family="Spline Sans Mono,monospace" font-size="9" fill="#7a7160">'+nf(vv,q.dec)+'</text>';
+    }
+    cfg.ticks.forEach(function(a){
+      s+='<text x="'+x(a).toFixed(1)+'" y="'+(H-12)+'" text-anchor="middle" font-family="Saira Semi Condensed,sans-serif" font-size="8.5" fill="#7a7160">'+a+'</text>';
+    });
+    s+='<text x="'+(mL+pw/2)+'" y="'+(H-1)+'" text-anchor="middle" font-family="Saira Semi Condensed,sans-serif" font-size="7.5" letter-spacing="1.2" fill="#9b8a62">ALTITUDE (×1000 ft)</text>';
+    cfg.series.forEach(function(r){
+      var pts=[],dots='';
+      r[q.k].forEach(function(v,i){
+        if(v==null)return;
+        var px=x(cfg.x[i]),py=y(v);
+        pts.push(px.toFixed(1)+','+py.toFixed(1));
+        dots+=marker(px,py,r.marker,r.color);
+      });
+      s+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+r.color+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'+dots;
+    });
+    return s+'</svg>';
+  }
+  function render(hostId,cfg){
+    var host=document.getElementById(hostId); if(!host) return;
+    var h='<div class="charts">';
+    cfg.quantities.forEach(function(q){
+      h+='<figure class="chartcard"><h4>'+q.title+'</h4><div class="unit">'+q.unit+'</div>'+chart(cfg,q)+'</figure>';
+    });
+    h+='</div><div class="legend">'+cfg.series.map(function(r){
+      return '<span><i style="background:'+r.color+'"></i>'+(r.marker==='star'?'★ ':'● ')+r.name+'</span>';
+    }).join('')+'</div>';
+    if(cfg.note) h+='<p class="note-mini">'+cfg.note+'</p>';
+    host.innerHTML=h;
+  }
+
+  render('dist-charts',{
+    x:[1,5,10,15,20,25,30], xmin:0, xmax:30, ticks:[1,5,10,15,20,25,30],
+    series:[
+      {name:'Marboré II',color:'#274d72',marker:'dot',
+       reg:[19200,19700,20200,20700,21000,21000,null], cons:[11.9,10.8,10.1,9,8.5,7.2,null]},
+      {name:'Marboré VI',color:'#9c3a2d',marker:'star',
+       reg:[17900,18500,19000,19500,20100,20600,21200], cons:[12.2,11.5,10.8,10.4,10.1,9.8,9.5]}
+    ],
+    quantities:[
+      {k:'reg', title:'Régime',       unit:'tours / minute', dec:0},
+      {k:'cons',title:'Consommation', unit:'litres / minute', dec:1}
+    ],
+    note:'Gros bidons. Le Marboré II sature à 21 000 t/m dès le FL 200 : sa courbe s’arrête au FL 250, faute de valeur gravée au FL 300.'
+  });
+
+  render('endu-charts',{
+    x:[5,10,15,20,25], xmin:0, xmax:30, ticks:[5,10,15,20,25,30],
+    series:[
+      {name:'Marboré II',color:'#274d72',marker:'dot',
+       reg:[17000,17500,18000,18500,19000], cons:[7.8,6.9,6.1,5.5,5.2]},
+      {name:'Marboré VI',color:'#9c3a2d',marker:'star',
+       reg:[15500,16000,16500,17100,17700], cons:[8.2,7.1,6.4,5.7,5.4]}
+    ],
+    quantities:[
+      {k:'reg', title:'Régime',       unit:'tours / minute', dec:0},
+      {k:'cons',title:'Consommation', unit:'litres / minute', dec:1}
+    ],
+    note:'À 140 / 150 kt. La règle s’arrête au niveau 25 ; l’axe est conservé jusqu’à 30 pour la comparaison avec le computeur.'
+  });
+})();
+
+// ---- bascule tableau / courbe ----
+document.querySelectorAll('.viewtoggle button').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v=b.dataset.view, t=b.dataset.target;
+    b.parentElement.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b);});
+    document.getElementById(t+'-table').hidden=(v!=='table');
+    document.getElementById(t+'-charts').hidden=(v!=='chart');
+  });
+});
+
+// ---- agrandissement des clichés ----
+(function(){
+  var lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg');
+  function open(src,alt){lbImg.src=src;lbImg.alt=alt||'';lb.classList.add('on');}
+  function close(){lb.classList.remove('on');lbImg.removeAttribute('src');}
+  document.querySelectorAll('img.zoomable').forEach(function(img){
+    img.addEventListener('click',function(){
+      if(img.closest('.frame').classList.contains('missing')) return;
+      open(img.currentSrc||img.src,img.alt);
+    });
+  });
+  lb.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+
+// ---- scroll reveal ----
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.14});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+// ---- nav active state ----
+var secs=[...document.querySelectorAll('section[id]')];
+var navlinks=[...document.querySelectorAll('nav.links a')];
+var io2=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.isIntersecting){var id=e.target.id;navlinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}
+})},{rootMargin:"-45% 0px -50% 0px"});
+secs.forEach(s=>io2.observe(s));
+</script>
+</body>
+</html>

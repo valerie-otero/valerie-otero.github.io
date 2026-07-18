@@ -230,5 +230,59 @@ Toujours `cantSplit:true` sur les lignes de tableau de données.
 
 ---
 
-*Dernière mise à jour du handoff : après achèvement des Sections III à VIII (toutes les sections du
-manuel sont transcrites). Restent le document maître et l'étude.*
+## 8. Site web (`SITE/Global/fouga`) — état et journal
+
+Le projet s'est étendu à un **site statique de restitution** (HTML/CSS/JS, sans dépendance) :
+
+| Page | Rôle |
+|---|---|
+| `index.html` | Présentation du CM.170 + bibliographie repliable |
+| `manuel.html` → `pages/manuel/*` | Manuel de l'équipage en HTML (pipeline `build/manuel/`) |
+| `computeur.html` → `pages/mode_emploi.html` | Mode d'emploi illustré du computeur (long-form, iframe) |
+| `computeur-virtuel.html` → `pages/computeur_virtuel.html` | Computeur virtuel interactif SVG (recto 131 / verso 336) |
+| `monographie.html` | Monographie PDF consultable + DOCX téléchargeable |
+
+**Charte** : crème/bleu Armée/laiton, définie dans `assets/css/site.css` (variables `--paper`,
+`--blue`, `--brass`…) ; les pages internes du computeur embarquent leur propre copie de la charte.
+
+### Journal des interventions
+
+**2026-06-11 — Page de présentation**
+- Nouveau texte de présentation (5 paragraphes) avec **appels de notes en exposant** ([1]…[15])
+  reliés à une **bibliographie repliable** (`<details class="biblio">`) ; styles dédiés dans `site.css`.
+- Correctif layout : `body` en `min-height:100%` (au lieu de `height:100%`) + `flex-shrink:0` sur
+  `.pied` — le pied de page suit désormais le contenu long au lieu de rester figé à mi-page.
+
+**2026-07-17 — Audit + correctifs du computeur**
+- **Contrôle croisé des données** : grilles de croisière du computeur virtuel (`D`) ≡ tableaux du
+  mode d'emploi (3 régimes sondés) ; rappels gravés cohérents ; formule TAS (`sigma`) validée (<1 %
+  d'écart avec les valeurs gravées).
+- **Logo** : le trois-vues base64 (`FOUGA`) était déclaré mais jamais injecté → `titleLogo.src=FOUGA`.
+- **Table 336** : barre diagonale tracée uniquement quand deux valeurs coexistent (Vi 140/150) ;
+  régimes uniques centrés. Harmonisations : « 140/150 kt » (sans s), conso « 5,0 » l/min à Z=30.
+- **Outil TAS verso** : altitude bornée à 30 000 ft (limite instrument), écrêtage dans `calcTAS`.
+- **Accessibilité clavier** : couronnes focusables (`tabindex`, `role=slider`, `aria-valuetext`),
+  flèches ←→ (Maj = réglage fin au verso), hints mis à jour.
+  ⚠️ **Piège rencontré** : ne jamais mettre d'`outline` de focus sur un groupe SVG tourné par
+  `transform:rotate()` — la boîte englobante tourne avec lui (grandes diagonales parasites à
+  l'écran). Solution retenue : `outline:none` sur les groupes, indicateur reporté sur le conteneur
+  via `svg.instr:has(.couronne:focus-visible){outline:…;border-radius:50%}`.
+- **Couronne recto** : des repères ▲ par altitude ont été ajoutés puis **retirés à la demande**
+  (confusion : sur l'original, le seul repère ▲ est l'**index fixe** en haut du cadran, déjà
+  présent en rouge). Le groupe SVG `#marks` reste volontairement vide.
+- **Textes du mode d'emploi** : « paliers de **45 à 55 L** » (710→665 = 45 L, l'ancien
+  « 50 à 55 » était inexact) ; lede reformulé (« …établi pour l'avion-école et ses réacteurs… »,
+  l'instrument n'ayant pas de réacteurs) ; footer interne réduit à un colophon d'une ligne
+  (suppression du double pied de page avec le bandeau du site).
+
+### Pistes non traitées (site)
+- Drag de la couronne directement depuis les étiquettes d'altitude ; molette souris.
+- Factorisation de la charte dupliquée dans les pages internes du computeur.
+- Recette mobile complète (le responsive est en place mais non testé sur appareil).
+
+---
+
+*Dernière mise à jour du handoff : 17/07/2026 — ajout du volet site web (§8) : journal des
+interventions sur la page de présentation (bibliographie, footer) et sur le computeur (audit des
+données, logo, table 336, accessibilité clavier, correctifs de textes). Volet transcription DOCX
+inchangé : restent le document maître et l'étude.*

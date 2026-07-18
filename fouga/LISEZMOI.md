@@ -9,10 +9,11 @@ Depuis la dernière révision, il fonctionne **entièrement hors-ligne**
 ## Architecture : sujet, sous-sujets, enveloppes
 
 Le **sujet** du site est l'avion **Fouga CM 170 R Magister** ; les
-**sous-sujets** (Computeur de vol, Manuel CM 170…) sont rangés dessous.
-La navigation est à **deux niveaux** : une nav principale dans le bandeau
-(Présentation · Computeur · Manuel CM 170) et, pour les sous-sujets à
-plusieurs pages, une **sous-barre** sous le bandeau (`.sous-nav`).
+**sous-sujets** (Computeur de vol, Manuel CM 170, Règle de navigation…) sont
+rangés dessous. La navigation est à **deux niveaux** : une nav principale dans
+le bandeau (Présentation · Manuel CM 170 · Computeur · Règle de navigation) et,
+pour les sous-sujets à plusieurs pages, une **sous-barre** sous le bandeau
+(`.sous-nav`).
 
 Chaque fichier à la racine est une **enveloppe** (bandeau + navigation +
 pied) affichant un **contenu** en cadre pleine page :
@@ -23,12 +24,28 @@ pied) affichant un **contenu** en cadre pleine page :
 | Computeur ▸ | `computeur.html` | Mode d'emploi | `pages/mode_emploi.html` (iframe) |
 | Computeur ▸ | `computeur-virtuel.html` | Computeur virtuel | `pages/computeur_virtuel.html` (iframe) |
 | Computeur ▸ | `monographie.html` | Monographie | `assets/docs/…pdf` (object) + lien `.docx` |
+| Règle de nav ▸ | `regle-navigation.html` | Mode d'emploi | `pages/regle_navigation.html` (iframe) |
+| Règle de nav ▸ | `regle-navigation-virtuelle.html` | Règle virtuelle | `pages/regle_navigation_virtuelle.html` (iframe) — instrument interactif (moteur II/VI, tables gravées, règle à calcul, abaque de vent, montée, rapporteur) |
 | Manuel | `manuel.html` | Manuel CM 170 | sommaire latéral + `pages/manuel/*.html` (iframe `lecteur`) + volet « Lecture comparée » (scans) |
 
 > Les trois pages du sous-sujet **Computeur** partagent la même sous-barre ;
 > l'onglet principal « Computeur » reste actif sur les trois, et la sous-barre
-> surligne la page courante. Pour ajouter un sous-sujet, dupliquer ce schéma
+> surligne la page courante. Le sous-sujet **Règle de navigation** applique le
+> même schéma sur deux pages. Pour ajouter un sous-sujet, dupliquer ce schéma
 > (onglet principal + éventuelle `.sous-nav`).
+>
+> **Liens entre sous-sujets.** Les pages de `pages/` étant affichées en iframe,
+> tout lien sortant vise l'**enveloppe** et porte `target="_top"`
+> (`<a href="../regle-navigation.html" target="_top">`) : sans cela, la
+> navigation se ferait dans le cadre et le bandeau surlignerait le mauvais
+> onglet. Les liens internes à une page (ancres `#…`) restent nus.
+>
+> **Attention** — l'onglet principal est répété dans **six** fichiers :
+> `index.html`, `computeur.html`, `computeur-virtuel.html`, `monographie.html`,
+> `regle-navigation.html`, `regle-navigation-virtuelle.html`… et
+> `manuel.html`, qui est **généré** : son bandeau vit dans
+> `build/manuel/build-sommaire.js`. Modifier la nav principale sans toucher au
+> script ferait disparaître l'onglet au prochain `build-manuel.sh`.
 
 ## Contenu
 
@@ -38,6 +55,9 @@ fouga/
 ├── computeur.html             Enveloppe — Computeur ▸ Mode d'emploi (faces 131 / 336)
 ├── computeur-virtuel.html     Enveloppe — Computeur ▸ Computeur virtuel (interactif)
 ├── monographie.html           Enveloppe — Computeur ▸ Monographie (PDF + .docx)
+├── regle-navigation.html      Enveloppe — Règle de nav ▸ Mode d'emploi (Marboré II & VI)
+├── regle-navigation-virtuelle.html
+│                              Enveloppe — Règle de nav ▸ Règle virtuelle (instrument interactif Marboré II & VI)
 ├── manuel.html                Enveloppe — Manuel CM 170 (liseur, GÉNÉRÉ, voir build/)
 ├── FOUGA CM.170 TEXTE.pdf          Scan original du manuel (lié page à page depuis le liseur)
 ├── FOUGA CM.170 ILLUSTRATIONS.pdf  Scan original des planches (onglet « Planches »)
@@ -54,10 +74,17 @@ fouga/
 │   │   └── recherche-index.js Index plein-texte (GÉNÉRÉ, voir build/)
 │   ├── fonts/                 Polices woff2 (Fraunces, Saira, Spectral, Spline)
 │   ├── img/
-│   │   ├── fouga_face.png     Dessin vue de face (accueil)
+│   │   ├── fouga_face.png     Dessin vue de face (accueil, haute déf.)
+│   │   ├── fouga_profil.png, fouga_dessus.png, fouga_dessous.png
+│   │   │                      Vues séparées du plan 3-vues (petite illustration accueil)
 │   │   ├── IMG_3549…3576.jpeg Photographies d'origine de l'instrument (source de référence)
-│   │   └── face131_*.jpg, couronne_*.jpg, abaque_*.jpg, face336_*.jpg
-│   │                          Illustrations du mode d'emploi (externalisées du HTML)
+│   │   ├── face131_*.jpg, couronne_*.jpg, abaque_*.jpg, face336_*.jpg
+│   │   │                      Illustrations du mode d'emploi (externalisées du HTML)
+│   │   └── regle_recto.jpg, regle_recto_coulisse.jpg, regle_verso.jpg,
+│   │       regle_verso_rapporteur.jpg
+│   │                          Clichés de la règle de navigation — À DÉPOSER
+│   │                          (la page affiche une pastille « photo à déposer »
+│   │                           tant qu'un fichier manque)
 │   └── docs/
 │       ├── Fouga_CM170R_computeur_de_vol.docx   (document de référence, pied ©)
 │       └── Fouga_CM170R_computeur_de_vol.pdf    (copie de consultation à jour)

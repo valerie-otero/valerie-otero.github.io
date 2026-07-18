@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Règle de navigation virtuelle — Fouga CM 170 R Magister</title>
+<link rel="stylesheet" href="../assets/css/fonts.css">
+<style>
+:root{
+  --paper:#efe7d5; --panel:#f7f1e4; --panel-2:#f1e9d8;
+  --ink:#211f19; --ink-soft:#4f4a3d; --muted:#7a7160;
+  --line:#cabd9f; --line-strong:#b3a586; --grid:#9b8a62;
+  --blue:#1d3a57; --blue-2:#274d72; --brass:#9a7320; --brass-2:#b78d31; --rouge:#9c3a2d;
+  --vert:#3f6b3a;
+  --disp:"Fraunces",Georgia,serif; --lab:"Saira Semi Condensed",system-ui,sans-serif;
+  --body:"Spectral",Georgia,serif; --mono:"Spline Sans Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:var(--body);background:var(--paper);
+  background-image:radial-gradient(circle at 15% 12%,rgba(255,255,255,.5),transparent 42%),
+    radial-gradient(circle at 85% 88%,rgba(154,115,32,.06),transparent 45%);}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.04;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* ---------- top bar ---------- */
+.top{border-bottom:1px solid var(--line);padding:15px 26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:rgba(247,241,228,.6)}
+.top .k{font-family:var(--lab);text-transform:uppercase;letter-spacing:.26em;font-size:.7rem;color:var(--brass);font-weight:600}
+.top h1{font-family:var(--disp);font-weight:600;font-size:1.28rem;margin:0;letter-spacing:-.01em}
+.top h1 em{font-style:italic;font-weight:400;color:var(--ink-soft)}
+.title-block{display:flex;flex-direction:column;gap:4px;min-width:0}
+.top-actions{margin-left:auto;display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.toggset{display:flex;flex-direction:column;gap:5px}
+.toggset .cap{font-family:var(--lab);text-transform:uppercase;letter-spacing:.14em;font-size:.6rem;color:var(--muted);font-weight:700}
+.togg{display:flex;gap:6px}
+.togg button{font-family:var(--lab);text-transform:uppercase;letter-spacing:.08em;font-size:.74rem;font-weight:700;
+  border:1px solid var(--line-strong);background:var(--panel);color:var(--ink-soft);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.18s;white-space:nowrap}
+.togg button:hover{border-color:var(--brass)}
+.togg button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.togg.eng button[data-eng="II"].on{background:var(--blue);border-color:var(--blue);color:#f3ead6}
+.togg.eng button[data-eng="VI"].on{background:var(--rouge);border-color:var(--rouge);color:#f7ece8}
+.togg.eng button .mk{font-size:.9em;margin-right:3px}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1240px;margin:0 auto;padding:24px 22px 64px}
+.stage{margin-bottom:8px}
+.flip{perspective:2600px}
+.flip-inner{position:relative;width:100%;transition:transform .85s cubic-bezier(.4,.05,.2,1);transform-style:preserve-3d}
+.flip.flipped .flip-inner{transform:rotateY(180deg)}
+.facecard{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.facecard.verso{position:absolute;inset:0;transform:rotateY(180deg)}
+svg.instr{width:100%;height:auto;display:block;user-select:none;filter:drop-shadow(0 22px 38px rgba(40,32,12,.32))}
+.coulisse{cursor:grab;touch-action:none}
+.coulisse.drag{cursor:grabbing}
+.lvlhit{cursor:pointer}
+.hint{margin:14px 0 26px;text-align:center;font-family:var(--lab);text-transform:uppercase;letter-spacing:.13em;font-size:.7rem;color:var(--muted)}
+.hint b{color:var(--blue)}
+
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media(max-width:880px){.controls{grid-template-columns:1fr}}
+.faceonly{display:none}
+.faceonly.show{display:grid}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 20px 22px;box-shadow:0 16px 40px -26px rgba(40,32,12,.5)}
+.panel h2{font-family:var(--lab);text-transform:uppercase;letter-spacing:.15em;font-size:.76rem;color:var(--muted);margin:0 0 14px;font-weight:700}
+.panel h2 .eng-name{color:var(--ink);margin-left:6px}
+.seg{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.seg.grow button{flex:1}
+.seg button{font-family:var(--lab);font-weight:700;letter-spacing:.03em;font-size:.92rem;padding:11px 10px;border:1px solid var(--line-strong);
+  background:var(--panel-2);color:var(--ink-soft);border-radius:10px;cursor:pointer;transition:.16s;line-height:1.15}
+.seg button small{display:block;font-size:.6rem;letter-spacing:.12em;color:var(--muted);font-weight:600}
+.seg button:hover{border-color:var(--brass)}
+.seg button.on{background:var(--blue);color:#f3ead6;border-color:var(--blue)}
+.seg button.on small{color:#cfe0ef}
+.seg button:disabled{opacity:.4;cursor:not-allowed}
+.seg.levels{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.seg.levels.endu{grid-template-columns:repeat(5,1fr)}
+.seg.levels button{padding:9px 2px;font-size:.82rem}
+.cap-row{font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;font-size:.64rem;color:var(--muted);font-weight:700;margin:2px 0 6px}
+
+.readout{margin-top:16px;border-top:1px dashed var(--line);padding-top:16px}
+.bigreads{display:flex;gap:12px;margin-bottom:14px}
+.bigread{flex:1;background:var(--panel-2);border:1px solid var(--line);border-top:3px solid var(--brass);border-radius:10px;padding:11px 13px}
+.bigread.eng-II{border-top-color:var(--blue)}
+.bigread.eng-VI{border-top-color:var(--rouge)}
+.bigread .k{font-family:var(--lab);text-transform:uppercase;letter-spacing:.11em;font-size:.62rem;color:var(--muted)}
+.bigread .v{font-family:var(--disp);font-weight:900;font-size:1.55rem;line-height:1.12}
+.bigread .v small{font-family:var(--mono);font-weight:500;font-size:.72rem;color:var(--ink-soft)}
+table.vals{width:100%;border-collapse:collapse;font-size:.92rem}
+table.vals td{padding:7px 6px;border-bottom:1px solid var(--line)}
+table.vals tr:last-child td{border-bottom:none}
+table.vals .lab{font-family:var(--lab);text-transform:uppercase;letter-spacing:.05em;font-size:.7rem;color:var(--ink-soft);font-weight:600}
+table.vals .val{font-family:var(--mono);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+table.vals .val span{color:var(--muted);font-weight:400;font-size:.84em}
+.note{margin-top:12px;font-size:.8rem;font-style:italic;color:var(--muted);line-height:1.5}
+
+.tool{margin-top:16px;border:1px solid var(--line);border-radius:12px;padding:15px 16px;background:var(--panel-2)}
+.tool:first-of-type{margin-top:0}
+.tool h3{font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;color:var(--blue);margin:0 0 4px;font-weight:700}
+.tool .sub{margin:0 0 12px;font-size:.83rem;color:var(--ink-soft)}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.calc.tri{grid-template-columns:1fr 1fr 1fr}
+.calc label{font-family:var(--lab);text-transform:uppercase;letter-spacing:.07em;font-size:.63rem;color:var(--muted);display:block;margin-bottom:3px}
+.calc .fld input,.calc .fld select{width:100%;font-family:var(--mono);font-size:1rem;padding:8px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;color:var(--ink)}
+.calc .res{grid-column:1/-1;background:var(--blue);color:#f3ead6;border-radius:8px;padding:10px 13px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.calc .res.two{background:linear-gradient(90deg,var(--blue),var(--blue-2))}
+.calc .res .k{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.64rem;color:#cfe0ef}
+.calc .res .v{font-family:var(--mono);font-weight:600;font-size:1.15rem}
+.calc .res .v small{font-size:.7rem;color:#cfe0ef;font-weight:400}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chips button{font-family:var(--lab);text-transform:uppercase;letter-spacing:.07em;font-size:.68rem;font-weight:700;
+  border:1px solid var(--line-strong);background:#fbf7ec;color:var(--ink-soft);padding:7px 12px;border-radius:999px;cursor:pointer}
+.chips button:hover{border-color:var(--brass);color:var(--brass)}
+.securite{display:flex;gap:10px;margin-top:12px}
+.securite .s{flex:1;text-align:center;border-radius:9px;padding:9px;border:1px solid var(--line)}
+.securite .s .k{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.6rem;color:var(--muted)}
+.securite .s .v{font-family:var(--disp);font-weight:900;font-size:1.25rem}
+.securite .s.vert{border-top:3px solid var(--vert)} .securite .s.jaune{border-top:3px solid var(--brass-2)}
+.reset{margin-top:16px;font-family:var(--lab);text-transform:uppercase;letter-spacing:.11em;font-size:.72rem;font-weight:700;
+  background:none;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:999px;padding:9px 16px;cursor:pointer}
+.reset:hover{border-color:var(--rouge);color:var(--rouge)}
+.calc-cmp{color:var(--brass)!important;font-weight:600!important;font-size:.84em;margin-left:6px}
+
+/* ---------- notes de bas de page (état, sources) ---------- */
+.foot{margin-top:34px;border-top:1px solid var(--line);padding-top:22px}
+.foot h2{font-family:var(--disp);font-size:1.35rem;margin:0 0 4px}
+.foot p{color:var(--ink-soft);font-size:.95rem;max-width:74ch;margin:.5em 0}
+.foot .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+@media(max-width:760px){.foot .cols{grid-template-columns:1fr}}
+.foot .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.foot .card.ok{border-left:3px solid var(--vert)} .foot .card.warn{border-left:3px solid var(--brass)}
+.foot .card h3{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;margin:0 0 6px;font-weight:700}
+.foot .card.ok h3{color:var(--vert)} .foot .card.warn h3{color:var(--brass)}
+.foot .card p{margin:0;font-size:.9rem}
+.foot .jump{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.foot .jump a{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;font-weight:700;text-decoration:none;
+  color:var(--ink-soft);background:var(--panel);border:1px solid var(--line-strong);border-radius:999px;padding:9px 16px;transition:.2s}
+.foot .jump a:hover{border-color:var(--brass);color:var(--brass)}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="title-block">
+    <span class="k">Prototype interactif · valeurs gravées + nomogrammes reconstitués</span>
+    <h1>Règle de navigation virtuelle — <em>Fouga CM 170 R Magister</em></h1>
+  </div>
+  <div class="top-actions">
+    <div class="toggset">
+      <span class="cap">Moteur</span>
+      <div class="togg eng" id="engToggle">
+        <button data-eng="II" class="on"><span class="mk">●</span>Marboré II</button>
+        <button data-eng="VI"><span class="mk">★</span>Marboré VI</button>
+      </div>
+    </div>
+    <div class="toggset">
+      <span class="cap">Face</span>
+      <div class="togg" id="faceToggle">
+        <button data-face="R" class="on">Recto · calcul</button>
+        <button data-face="V">Verso · montée</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="stage">
+    <div class="flip" id="flip">
+      <div class="flip-inner">
+        <!-- ================= RECTO ================= -->
+        <div class="facecard recto">
+          <svg class="instr" id="svgR" viewBox="0 0 1180 300" role="img" aria-label="Recto de la règle : tableau de distance maximum, règle à calcul, abaque de vent"></svg>
+        </div>
+        <!-- ================= VERSO ================= -->
+        <div class="facecard verso">
+          <svg class="instr" id="svgV" viewBox="0 0 1180 300" role="img" aria-label="Verso de la règle : abaque de montée, endurance maximum, rapporteur"></svg>
+        </div>
+      </div>
+    </div>
+    <div class="hint" id="hint">Choisissez un <b>moteur</b> et un <b>niveau</b> · glissez la <b>coulisse</b> (VITESSE PROPRE) pour la règle à calcul</div>
+  </div>
+
+  <!-- ============ CONTROLS RECTO ============ -->
+  <div class="controls faceonly show" id="ctrlR">
+    <div class="panel">
+      <h2>Lecture des tableaux gravés <span class="eng-name" id="engNameR"></span></h2>
+      <div class="seg grow" id="objSeg">
+        <button data-obj="dist" class="on">Distance max<small>FRANCHISSABLE</small></button>
+        <button data-obj="endu">Endurance max<small>140 / 150 KT</small></button>
+      </div>
+      <div id="bidonsRow">
+        <div class="cap-row">Bidons</div>
+        <div class="seg grow" id="bidSeg">
+          <button data-bid="Gb" class="on">Gros bidons<small>Gb — référence</small></button>
+          <button data-bid="Pb">Petits bidons<small>Pb — correction</small></button>
+        </div>
+      </div>
+      <div class="cap-row" id="lvlCap">Niveau de vol</div>
+      <div class="seg levels" id="lvlSeg"></div>
+
+      <div class="readout">
+        <div class="bigreads">
+          <div class="bigread" id="brReg"><div class="k">Régime</div><div class="v" id="b-reg">—</div></div>
+          <div class="bigread" id="brConso"><div class="k">Consommation</div><div class="v" id="b-conso">—<small> l/m</small></div></div>
+        </div>
+        <table class="vals">
+          <tr><td class="lab">Vitesse indiquée</td><td class="val" id="t-vi">—</td></tr>
+          <tr><td class="lab">Nbre de Mach</td><td class="val" id="t-mach">—</td></tr>
+          <tr><td class="lab" id="lab-extra">Correction bidons</td><td class="val" id="t-extra">—</td></tr>
+        </table>
+        <p class="note" id="noteR"></p>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:20px">
+        <h2>Règle à calcul · VITESSE PROPRE</h2>
+        <div class="tool" style="margin-top:0">
+          <h3>Temps · vitesse · distance</h3>
+          <p class="sub">Aligne la vitesse propre sur l’index <b>60</b> ; lis la distance au temps voulu. <b>d = V × t / 60</b>. <em>Reconstruction fonctionnelle de la règle à calcul gravée.</em></p>
+          <div class="calc tri">
+            <div class="fld"><label>Vitesse propre</label><input id="i-v" type="number" value="420" min="0" step="10"></div>
+            <div class="fld"><label>Temps (min)</label><input id="i-t" type="number" value="24" min="0" step="1"></div>
+            <div class="fld"><label>Distance (km)</label><input id="i-d" type="number" placeholder="—" min="0" step="1"></div>
+            <div class="res"><span class="k">Le champ vide se calcule</span><span class="v" id="vp-out">—</span></div>
+          </div>
+          <div class="chips">
+            <button data-vp="align">Afficher sur la règle</button>
+            <button data-vp="ex1">Exemple · 480 · 15′</button>
+            <button data-vp="ex2">Exemple · 300 · 40′</button>
+          </div>
+          <p class="note" id="noteVP" style="margin-top:10px"></p>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Abaque de vent</h2>
+        <div class="tool" style="margin-top:0">
+          <h3>Vent effectif & dérive</h3>
+          <p class="sub">Reconstruction du triangle des vitesses que résout l’abaque gravé (angle vent/route, force, VP).</p>
+          <div class="calc tri">
+            <div class="fld"><label>Angle vent / route (°)</label><input id="w-ang" type="number" value="40" min="0" max="90" step="5"></div>
+            <div class="fld"><label>Force du vent</label><input id="w-force" type="number" value="30" min="0" max="50" step="5"></div>
+            <div class="fld"><label>VP</label><input id="w-vp" type="number" value="250" min="100" max="300" step="10"></div>
+            <div class="res two">
+              <span><span class="k">Vent effectif</span> <span class="v" id="w-eff">—</span></span>
+              <span><span class="k">Dérive</span> <span class="v" id="w-drift">—</span></span>
+            </div>
+          </div>
+          <p class="note">Vent effectif = composante dans l’axe (＋ arrière, − face). Dérive = angle à corriger au cap. Plages de l’abaque : force lue sur 10–50, dérive jusqu’à 20°, VP 100–300.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONTROLS VERSO ============ -->
+  <div class="controls faceonly" id="ctrlV">
+    <div class="panel">
+      <h2>Abaque de montée <span class="eng-name" id="engNameV"></span></h2>
+      <div class="cap-row">Bidons</div>
+      <div class="seg grow" id="mBidSeg">
+        <button data-mbid="Gb" class="on">Gros bidons<small>Gb</small></button>
+        <button data-mbid="Pb">Petits bidons<small>Pb</small></button>
+      </div>
+      <div class="cap-row">Niveau atteint</div>
+      <div class="seg levels" id="mLvlSeg"></div>
+      <div class="readout">
+        <div class="bigreads">
+          <div class="bigread" id="brT"><div class="k">Temps de montée</div><div class="v" id="b-mt">—</div></div>
+          <div class="bigread" id="brF"><div class="k">Carburant restant</div><div class="v" id="b-mf">—<small> L</small></div></div>
+        </div>
+        <p class="note" id="noteM"></p>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:20px">
+        <h2>Descentes</h2>
+        <div class="tool" style="margin-top:0">
+          <h3>Retrancher la descente</h3>
+          <p class="sub">Chaque profil est gravé par tranche de 1 000 pieds.</p>
+          <div class="calc">
+            <div class="fld"><label>Profil</label>
+              <select id="d-prof"><option value="eco">ÉCO — 200 kt, gaz réduits</option><option value="percee">PERCÉE — 230 kt, A.F.</option></select></div>
+            <div class="fld"><label>Altitude à perdre (×1000 ft)</label><input id="d-alt" type="number" value="20" min="0" max="30" step="1"></div>
+            <div class="res two">
+              <span><span class="k">Distance</span> <span class="v" id="d-dist">—</span></span>
+              <span><span class="k">Carburant</span> <span class="v" id="d-fuel">—</span></span>
+            </div>
+          </div>
+          <p class="note" id="noteD"></p>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Sécurité carburant terrain</h2>
+        <div class="securite">
+          <div class="s vert"><div class="k">Vert</div><div class="v">250 L</div></div>
+          <div class="s jaune"><div class="k">Jaune</div><div class="v">300 L</div></div>
+        </div>
+        <p class="note">Le bilan n’est acceptable qu’en laissant 250 L au terrain (vert) ; il est à revoir sous 300 L (jaune). Ces deux seuils priment sur toute distance lue.</p>
+        <button class="reset" id="resetAll">Réinitialiser</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ÉTAT & SOURCES ============ -->
+  <div class="foot">
+    <h2>Fidélité à la règle d’origine</h2>
+    <p>Cet instrument affiche les <strong>valeurs gravées</strong> relevées photo par photo sur la règle de 1980 — jamais du recalculé présenté comme authentique. Les deux tableaux (distance et endurance) recoupent, au chiffre près, la face 336 du <a href="../computeur.html" target="_top">computeur</a>. La règle à calcul et l’abaque de vent sont des <strong>reconstructions fonctionnelles</strong> des nomogrammes gravés (le calcul, lui, est exact).</p>
+    <div class="cols">
+      <div class="card ok">
+        <h3>Relevé sur l’instrument</h3>
+        <p>Distance max Gb + correction Pb, endurance max (II &amp; VI), cotes de temps de montée aux paliers (4 courbes), descentes, sécurités, Mach 0,50.</p>
+      </div>
+      <div class="card warn">
+        <h3>Reconstruit ou approché</h3>
+        <p>Position fine des repères ●/★ dans les fenêtres (relevé approché) ; abaque de montée : cotes de temps gravées, tracé continu reconstruit (carburant restant gravé aux seuls sommets VI, 660/840 L) ; abaque de vent et règle à calcul rendus par leur fonction (triangle des vitesses, d = V·t/60) ; rapporteur COM Victor et réglettes d’échelle redessinés schématiquement.</p>
+      </div>
+    </div>
+    <div class="jump">
+      <a href="../regle-navigation.html" target="_top">← Mode d’emploi de la règle</a>
+      <a href="../computeur-virtuel.html" target="_top">Computeur virtuel (Marboré II)</a>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+const NS="http://www.w3.org/2000/svg";
+function el(t,a,txt){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e;}
+function T(p,t,x,y,o){o=o||{};const e=el("text",{x,y,"text-anchor":o.a||"middle","font-family":o.f||"Saira Semi Condensed","font-size":o.s||9,fill:o.c||"#2c2820"},t);if(o.w)e.setAttribute("font-weight",o.w);if(o.ls)e.setAttribute("letter-spacing",o.ls);if(o.rot)e.setAttribute("transform",`rotate(${o.rot} ${x} ${y})`);if(o.it)e.setAttribute("font-style","italic");p.appendChild(e);return e;}
+function L(p,x1,y1,x2,y2,st,sw){p.appendChild(el("line",{x1,y1,x2,y2,stroke:st||"#9b8a62","stroke-width":sw||.7}));}
+const nf=(x,d)=>{if(x==null)return"—";const v=(d?(Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d):String(Math.round(x)));return v.replace(".",",");};
+const fmtReg=r=>r==null?"—":String(r).replace(/\B(?=(\d{3})+(?!\d))/g," ");
+function fmtT(t){if(t==null)return"—";const m=Math.floor(t+1e-9),s=Math.round((t-m)*60);return s?m+"′"+(s<10?"0"+s:s):m+"′";}
+
+/* ============================ DONNÉES GRAVÉES ============================ */
+const ENG={II:{k:"II",mark:"●",name:"Marboré II",col:"#274d72"},VI:{k:"VI",mark:"★",name:"Marboré VI",col:"#9c3a2d"}};
+// Distance max Gb : z -> {II:[reg,conso]|null, VI:[reg,conso]} ; conso en nombre (l/m)
+const DIST_LV=[{z:300,fl:"FL 300"},{z:250,fl:"FL 250"},{z:200,fl:"FL 200"},{z:150,fl:"FL 150"},{z:100,fl:"FL 100"},{z:50,fl:"FL 50"},{z:10,fl:"1 000 ft"}];
+const DIST={
+  300:{II:null,       VI:[21200,9.5]},
+  250:{II:[21000,7.2],VI:[20600,9.8]},
+  200:{II:[21000,8.5],VI:[20100,10.1]},
+  150:{II:[20700,9],  VI:[19500,10.4]},
+  100:{II:[20200,10.1],VI:[19000,10.8]},
+  50: {II:[19700,10.8],VI:[18500,11.5]},
+  10: {II:[19200,11.9],VI:[17900,12.2]}
+};
+const DIST_PB={II:{reg:-200,conso:-0.5},VI:{reg:-500,conso:-0.5}};
+// Vit. indiquée (repère approx, kt) : z -> {II,VI} (null=illisible)
+const VI_IND={300:{II:null,VI:null},250:{II:195,VI:215},200:{II:195,VI:232},150:{II:200,VI:222},100:{II:210,VI:216},50:{II:null,VI:null},10:{II:null,VI:null}};
+const MACH={300:"0,50",250:"0,50"};
+// Endurance : z -> {II:[reg,conso],VI:[reg,conso]}
+const ENDU_LV=[5,10,15,20,25];
+const ENDU={5:{II:[17000,7.8],VI:[15500,8.2]},10:{II:[17500,6.9],VI:[16000,7.1]},15:{II:[18000,6.1],VI:[16500,6.4]},20:{II:[18500,5.5],VI:[17100,5.7]},25:{II:[19000,5.2],VI:[17700,5.4]}};
+// Montée : eng-bidons -> [{z(kft), t(min), fuel?}]
+const MONTEE={
+  "VI-Pb":[{z:50,t:3},{z:100,t:5},{z:150,t:7.5},{z:200,t:10},{z:250,t:13.5},{z:300,t:17,fuel:660}],
+  "VI-Gb":[{z:100,t:5.5},{z:150,t:8},{z:200,t:11.5},{z:250,t:15.5},{z:300,t:20,fuel:840}],
+  "II-Pb":[{z:100,t:7},{z:150,t:10},{z:200,t:14},{z:250,t:20}],
+  "II-Gb":[{z:100,t:8},{z:150,t:12},{z:200,t:17},{z:250,t:24}]
+};
+const DESC={eco:{v:"200 kt",reg:"Gaz réduits",dist:2,fuel:3},percee:{v:"230 kt · A.F.",dist:1,fuel:2.5,reg:{II:"19 000",VI:"17 500"}}};
+
+/* ============================ ÉTAT ============================ */
+let S={eng:"II",face:"R",obj:"dist",bid:"Gb",mbid:"Gb",mlvl:250,coff:0};
+const $=id=>document.getElementById(id);
+
+/* ============================ RECTO — SVG ============================ */
+// géométrie règle à calcul
+const VPX0=372, VPX1=812;                 // bornes X de la bande VITESSE PROPRE
+const TMIN=1, TMAX=140;                    // échelle temps (log), 1'..140
+const tx=t=>VPX0+(Math.log10(t)-Math.log10(TMIN))/(Math.log10(TMAX)-Math.log10(TMIN))*(VPX1-VPX0);
+// échelle vitesse/distance sur la coulisse : même décade log, valeur 50..500 (haut)
+const SPMIN=5, SPMAX=500;
+const spx=v=>VPX0+(Math.log10(v)-Math.log10(SPMIN))/(Math.log10(SPMAX)-Math.log10(SPMIN))*(VPX1-VPX0);
+
+function buildRecto(){
+  const svg=$("svgR"); svg.innerHTML="";
+  const defs=el("defs");
+  defs.appendChild(mkGrad("face",[["0","#f7f1e3"],[".7","#eee4cd"],["1","#e3d6b8"]]));
+  defs.appendChild(mkGrad("brassR",[["0","#e7c879"],[".5","#bd9436"],["1","#7c5a17"]]));
+  svg.appendChild(defs);
+  // corps
+  svg.appendChild(el("rect",{x:6,y:34,width:1168,height:232,rx:12,fill:"url(#brassR)"}));
+  svg.appendChild(el("rect",{x:10,y:38,width:1160,height:224,rx:10,fill:"url(#face)",stroke:"#15130e","stroke-width":1}));
+  // réglette carto haut 1/2.000.000
+  cartoStrip(svg,26,160,false,"echelle 1/2.000.000");
+  // ---- tableau distance/endurance (gauche) ----
+  svg.appendChild(el("g",{id:"r-table"}));
+  // ---- bloc calcul (centre) ----
+  buildCalcBlock(svg);
+  // ---- abaque de vent (droite) ----
+  buildWind(svg);
+  // réglette carto bas 1/1.000.000 (inverse), sous le bloc calcul uniquement
+  cartoStrip(svg,90,0,true,"echelle 1/1.000.000",980);
+  // cartouche (au-dessus de la réglette basse)
+  T(svg,"REGLE DE NAVIGATION · Cne CLAUDE Ph GE 00 315 · COGNAC 1980",372,224,{a:"start",s:8.5,c:"#6d5a34",w:600,ls:"0.4"});
+  renderTable();
+}
+function mkGrad(id,stops){const g=el("linearGradient",{id,x1:0,y1:0,x2:0,y2:1});stops.forEach(s=>g.appendChild(el("stop",{offset:s[0],"stop-color":s[1]})));return g;}
+
+function cartoStrip(svg,a,b,inv,label,xEnd){
+  const y=inv?254:32, x0=372, x1=xEnd||1150;
+  const map=v=>x0+(v-a)/(b-a)*(x1-x0);
+  L(svg,x0,y,x1,y,"#7a7160",.9);
+  for(let v=Math.min(a,b);v<=Math.max(a,b);v++){
+    const big=v%10===0, x=map(v);
+    L(svg,x,y,x,y+(inv?-1:1)*(big?7:3),"#8a7c58",big?.8:.5);
+    if(big)T(svg,String(v),x,y+(inv?-10:14),{s:7.5,c:"#7a7160",rot:inv?180:0});
+  }
+  T(svg,label,inv?(map(a)+40):(map(a)+map(b))/2,y+(inv?-10:23),{s:7.5,c:"#9b8a62",ls:"1",rot:inv?180:0,a:inv?"start":"middle"});
+}
+
+function buildCalcBlock(svg){
+  const g=el("g",{}); svg.appendChild(g);
+  // fenêtres Nbre de Mach
+  T(g,"Nbre de Mach",352,70,{a:"end",s:8.5,c:"#4f4a3d",w:600});
+  [["FL 300",372],["FL 250",470]].forEach(m=>{
+    g.appendChild(el("rect",{x:m[1],y:62,width:74,height:15,rx:2,fill:"#eef2f6",stroke:"#274d72","stroke-width":1}));
+    T(g,"0     0,50",m[1]+37,73,{s:8,c:"#274d72",f:"Spline Sans Mono"});
+    T(g,m[0],m[1]+37,58,{s:7,c:"#7a7160"});
+  });
+  // temps haut
+  const th=[[10,"10'",1],[15,"15'",0],[20,"20'",1],[25,"25'",0],[30,"30'",1],[35,"",0],[40,"40'",1],[45,"",0],[50,"50'",1],[55,"",0],[60,"60",1],[110,"110",1],[120,"",0],[130,"",0],[140,"140",1]];
+  const yTh=98;
+  th.forEach(d=>{const x=tx(d[0]);L(g,x,yTh,x,yTh+5,"#5b5340",d[2]?.8:.55);
+    if(d[0]===60){g.appendChild(el("circle",{cx:x,cy:yTh-7,r:7,fill:"none",stroke:"#9c3a2d","stroke-width":1.2}));T(g,"60",x,yTh-4,{s:8,c:"#9c3a2d",w:700});}
+    else if(d[1])T(g,d[1],x,yTh-3,{s:7.5,c:"#4f4a3d"});});
+  L(g,tx(TMIN),yTh,tx(TMAX),yTh,"#5b5340",.9);
+  // corps fixe VITESSE PROPRE : cadre + index fixe
+  g.appendChild(el("rect",{x:VPX0-4,y:112,width:(VPX1-VPX0)+8,height:52,rx:4,fill:"#f2ecdb",stroke:"#b3a586","stroke-width":1}));
+  T(g,"VITESSE PROPRE",VPX1-6,124,{a:"end",s:8.5,c:"#3a3427",w:700,ls:"1.5"});
+  // coulisse (glissante) : porte l'échelle vitesse propre (double décade)
+  const cou=el("g",{id:"coulisse","class":"coulisse"}); g.appendChild(cou);
+  cou.appendChild(el("rect",{x:VPX0-4,y:130,width:(VPX1-VPX0)+8,height:20,rx:3,fill:"#eadfc4",stroke:"#9a7320","stroke-width":1.4,opacity:".55"}));
+  // graduation vitesse propre (haut 50..500 Naut+métrique combinée en une décade log)
+  const sp=[5,6,7,8,9,10,15,20,25,30,40,50,60,70,80,90,100,150,200,250,300,400,500];
+  sp.forEach(v=>{const x=spx(v);const big=[5,10,50,100,500].includes(v);L(cou,x,132,x,148,big?"#8a6515":"#9a7320",big?1:.6);
+    if([5,10,50,100,200,300,500].includes(v))T(cou,String(v),x,159,{s:7.5,c:"#7c5a17",f:"Spline Sans Mono"});});
+  T(cou,"coulisse",VPX0+3,145,{a:"start",s:7,c:"#b08b3a",w:700,ls:".5",it:true});
+  // index fixe (flèche) au repère ~270
+  g.appendChild(el("path",{id:"vp-index",d:mkArrow(spx(270),150),fill:"#111",opacity:".8"}));
+  // temps bas
+  const tb=[[1,"1'"],[1.5,"1'30"],[2,"2'"],[2.5,"2'30"],[3,"3'"],[3.5,"3'30"],[4,"4'"],[4.5,"4'30"],[5,"5'"],[6,"6'"],[7,"7'"],[8,"8'"],[9,"9'"],[10,"10'"]];
+  const yTb=178; L(g,tx(1),yTb,tx(10),yTb,"#5b5340",.9);
+  tb.forEach(d=>{const x=tx(d[0]);L(g,x,yTb-5,x,yTb,"#5b5340",.7);T(g,d[1],x,yTb+9,{s:7,c:"#4f4a3d"});});
+  // fenêtre Cons.
+  T(g,"Cons.",VPX0-2,201,{a:"start",s:8.5,c:"#4f4a3d",w:600});
+  g.appendChild(el("rect",{x:VPX0+34,y:192,width:96,height:14,rx:2,fill:"#eef2f6",stroke:"#274d72","stroke-width":1}));
+  g.appendChild(el("path",{d:mkArrow(VPX0+82,192,-1),fill:"#274d72"}));
+  T(g,"l/minute",VPX0+150,201,{a:"start",s:8,c:"#7a7160",it:true});
+  // curseur mobile de lecture (règle à calcul)
+  g.appendChild(el("line",{id:"vp-cursor",x1:tx(24),y1:100,x2:tx(24),y2:186,stroke:"#9c3a2d","stroke-width":1.2,"stroke-dasharray":"3 2",opacity:".85"}));
+  // interaction coulisse
+  attachCoulisse();
+}
+function mkArrow(x,y,dir){dir=dir||1;const h=8*dir;return `M${x-6} ${y} L${x+6} ${y} L${x} ${y+h} Z`;}
+
+function buildWind(svg){
+  const g=el("g",{}); svg.appendChild(g);
+  const ox=1148, oy=232, R=150;   // centre en bas-droite, quart de cercle vers le haut-gauche
+  T(g,"angle direction du vent / route",ox-4,52,{a:"end",s:7.5,c:"#4f4a3d",w:600});
+  T(g,"vent effectif",858,150,{a:"middle",s:7.5,c:"#4f4a3d",w:600,rot:-90});
+  // arcs de force
+  [50,90,120,150].forEach((r,i)=>{const p=el("path",{d:arcQ(ox,oy,r),fill:"none",stroke:"#8a7c58","stroke-width":.7,opacity:.75});g.appendChild(p);
+    T(g,String([20,30,40,50][i]),ox-r*0.71,oy-r*0.71,{s:6.5,c:"#7a7160"});});
+  // rayons d'angle
+  for(let a=0;a<=90;a+=10){const rad=a*Math.PI/180;const x=ox-R*Math.sin(rad),y=oy-R*Math.cos(rad);
+    L(g,ox,oy,x,y,"#8a7c58",.6);T(g,String(a),ox-(R+9)*Math.sin(rad),oy-(R+9)*Math.cos(rad)+2,{s:6.5,c:"#7a7160"});}
+  // axe vent effectif (vertical gauche)
+  for(let v=10;v<=50;v+=10){const y=oy-v/50*R;L(g,ox-R,y,ox-R+5,y,"#8a7c58",.6);T(g,String(v),ox-R-8,y+2,{s:6.5,c:"#7a7160"});}
+  // base dérive
+  T(g,"dérive  1° → 20°",ox-R/2,oy+14,{s:7,c:"#7a7160"});
+  T(g,"VP 100–300",ox-R+6,oy+14,{a:"start",s:6.5,c:"#9b8a62"});
+  // plaquette jaunie
+  g.appendChild(el("rect",{x:ox-R-14,y:oy-R-6,width:R+26,height:R+22,rx:4,fill:"#c9bd7e",opacity:".16"}));
+}
+function arcQ(ox,oy,r){return `M${ox-r} ${oy} A ${r} ${r} 0 0 1 ${ox} ${oy-r}`;}
+
+/* ---- coulisse drag = décalage log de l'échelle vitesse ---- */
+function attachCoulisse(){
+  const cou=$("coulisse"); if(!cou)return;
+  let dr=false,sx=0,s0=0;
+  const px=e=>{const r=$("svgR").getBoundingClientRect();return (e.clientX-r.left)/r.width*1180;};
+  cou.addEventListener("pointerdown",e=>{dr=true;sx=px(e);s0=S.coff;cou.classList.add("drag");cou.setPointerCapture(e.pointerId);});
+  cou.addEventListener("pointermove",e=>{if(!dr)return;S.coff=Math.max(-260,Math.min(260,s0+(px(e)-sx)));applyCoulisse();});
+  const end=()=>{dr=false;cou.classList.remove("drag");};
+  cou.addEventListener("pointerup",end);cou.addEventListener("pointercancel",end);
+}
+function applyCoulisse(){
+  const cou=$("coulisse"); if(cou)cou.setAttribute("transform",`translate(${S.coff} 0)`);
+  // vitesse alignée sous l'index fixe (270) = valeur de l'échelle décalée
+  updateVPfromSlide();
+}
+
+/* ============================ RECTO — TABLEAU ============================ */
+function renderTable(){
+  const g=$("r-table"); if(!g)return; g.innerHTML="";
+  const isD=S.obj==="dist", LV=isD?DIST_LV:ENDU_LV.map(z=>({z,fl:"FL "+z+"0"}));
+  const x0=22,x1=302, colII=x0+92, colVI=x0+186, colW=94;
+  const cII=colII+colW/2, cVI=colVI+colW/2;
+  // titre + en-têtes de colonnes (deux lignes distinctes)
+  T(g,isD?"FOUGA · Distance max Gb":"FOUGA · Endurance max",x0+4,50,{a:"start",s:9,c:"#1d3a57",w:700,ls:".3"});
+  T(g,"● Marboré II",cII,50,{s:8,c:ENG.II.col,w:700});
+  T(g,"★ Marboré VI",cVI,50,{s:8,c:ENG.VI.col,w:700});
+  const top=58, bot=240, n=LV.length, rowH=(bot-top)/n;
+  LV.forEach((lv,i)=>{
+    const y0=top+i*rowH, cy=y0+rowH/2, sel=(isD?S.lvl_d:S.lvl_e)===lv.z;
+    // colonne moteur active
+    const activeX=S.eng==="II"?colII:colVI;
+    g.appendChild(el("rect",{x:activeX,y:y0+1,width:colW,height:rowH-2,fill:S.eng==="II"?"rgba(39,77,114,.09)":"rgba(156,58,45,.09)"}));
+    if(sel)g.appendChild(el("rect",{x:x0,y:y0+1,width:x1-x0,height:rowH-2,rx:3,fill:"#e9dfc4",opacity:".6",stroke:"#9a7320","stroke-width":1.2}));
+    L(g,x0,y0+rowH,x1,y0+rowH,"#d8cba8",.5);
+    T(g,lv.fl,x0+6,cy+3,{a:"start",s:8.5,c:"#211f19",w:sel?700:600});
+    const d=isD?DIST[lv.z]:ENDU[lv.z];
+    ["II","VI"].forEach(k=>{const cx=k==="II"?cII:cVI,cell=d[k];
+      if(cell){T(g,fmtReg(cell[0]),cx,cy-1,{s:8,c:ENG[k].col,f:"Spline Sans Mono",w:600});T(g,nf(cell[1],cell[1]%1?1:0)+" l/m",cx,cy+9,{s:7,c:"#7a7160",f:"Spline Sans Mono"});}
+      else T(g,"—",cx,cy+3,{s:9,c:"#b4a682"});});
+    const hit=el("rect",{x:x0,y:y0+1,width:x1-x0,height:rowH-2,fill:"transparent","class":"lvlhit"});
+    hit.addEventListener("click",()=>{isD?(S.lvl_d=lv.z):(S.lvl_e=lv.z);document.querySelectorAll("#lvlSeg button").forEach(x=>x.classList.toggle("on",+x.dataset.z===lv.z));renderReadoutR();renderTable();});
+    g.appendChild(hit);
+  });
+}
+
+/* ============================ VERSO — SVG ============================ */
+const M_X0=40,M_X1=470,M_Y0=232,M_Y1=54;      // abaque montée : X=temps, Y=altitude
+const MT_MAX=26;                               // minutes max axe
+const mx=t=>M_X0+t/MT_MAX*(M_X1-M_X0);
+const my=z=>M_Y0-(z-50)/(300-50)*(M_Y0-M_Y1);  // z en kft (FL50..FL300)
+function buildVerso(){
+  const svg=$("svgV"); svg.innerHTML="";
+  const defs=el("defs");defs.appendChild(mkGrad("faceV",[["0","#f7f1e3"],[".7","#eee4cd"],["1","#e3d6b8"]]));defs.appendChild(mkGrad("brassV",[["0","#e7c879"],[".5","#bd9436"],["1","#7c5a17"]]));svg.appendChild(defs);
+  svg.appendChild(el("rect",{x:6,y:34,width:1168,height:232,rx:12,fill:"url(#brassV)"}));
+  svg.appendChild(el("rect",{x:10,y:38,width:1160,height:224,rx:10,fill:"url(#faceV)",stroke:"#15130e","stroke-width":1}));
+  svg.appendChild(el("g",{id:"v-montee"}));
+  buildEndu(svg);
+  buildRapporteur(svg);
+  renderMontee();
+}
+function renderMontee(){
+  const g=$("v-montee"); if(!g)return; g.innerHTML="";
+  T(g,"Abaque de montée — temps",M_X0,50,{a:"start",s:9,c:"#1d3a57",w:700,ls:".3"});
+  // grille altitude
+  [50,100,150,200,250,300].forEach(z=>{const y=my(z);L(g,M_X0,y,M_X1,y,"#d8cba8",.6);T(g,"FL "+(z===10?"10":z),M_X0-4,y+3,{a:"end",s:7,c:"#7a7160"});});
+  // axe temps
+  L(g,M_X0,M_Y0,M_X1,M_Y0,"#7a7160",.9);
+  for(let t=0;t<=MT_MAX;t+=2){const x=mx(t);L(g,x,M_Y0,x,M_Y0+3,"#8a7c58",.6);T(g,t+"′",x,M_Y0+13,{s:6.5,c:"#7a7160"});}
+  // 4 courbes
+  const curves=[["VI-Pb",ENG.VI.col,"#c0685c"],["VI-Gb",ENG.VI.col,ENG.VI.col],["II-Pb",ENG.II.col,"#5b7ea3"],["II-Gb",ENG.II.col,ENG.II.col]];
+  curves.forEach(cv=>{
+    const key=cv[0],pts=MONTEE[key],dash=key.endsWith("Pb")?"4 3":null,active=(S.eng+"-"+S.mbid)===key;
+    const poly=pts.map(p=>mx(p.t)+","+my(p.z)).join(" ");
+    g.appendChild(el("polyline",{points:poly,fill:"none",stroke:cv[2],"stroke-width":active?2.6:1.3,opacity:active?1:.5,"stroke-dasharray":dash||"none","stroke-linejoin":"round"}));
+    pts.forEach(p=>{g.appendChild(el("circle",{cx:mx(p.t),cy:my(p.z),r:active?2.6:1.6,fill:cv[2],opacity:active?1:.5}));
+      if(active)T(g,fmtT(p.t),mx(p.t),my(p.z)-5,{s:6.5,c:cv[1],w:700});});
+    // étiquette
+    const last=pts[pts.length-1];T(g,key.replace("-"," "),mx(last.t)+6,my(last.z)+(key.endsWith("Gb")?9:-2),{a:"start",s:7,c:cv[2],w:active?700:600,opacity:active?1:.6});
+  });
+  // sélection courante (point)
+  const key=S.eng+"-"+S.mbid, pt=(MONTEE[key]||[]).find(p=>p.z===S.mlvl);
+  if(pt){g.appendChild(el("circle",{cx:mx(pt.t),cy:my(pt.z),r:5,fill:"none",stroke:"#111","stroke-width":1.5}));}
+  T(g,"cotes de temps gravées aux paliers · carburant restant gravé aux seuls sommets VI (660 / 840 L)",M_X0,M_Y0+24,{a:"start",s:7,c:"#9b8a62",it:true});
+}
+function buildEndu(svg){
+  const g=el("g",{}); svg.appendChild(g); const x0=498,y0=60,cw=54,rh=20;
+  T(g,"ENDURANCE MAX",x0,52,{a:"start",s:9,c:"#1d3a57",w:700,ls:".3"});
+  T(g,"Alt ×1000",x0+2,y0+13,{a:"start",s:7.5,c:"#4f4a3d",w:600});
+  ENDU_LV.forEach((z,i)=>T(g,String(z),x0+96+i*cw,y0+13,{s:8,c:"#211f19",w:700,f:"Spline Sans Mono"}));
+  [["II",ENG.II],["VI",ENG.VI]].forEach((e,r)=>{const eng=e[1],yb=y0+30+r*rh*2;
+    T(g,eng.mark+" Marboré "+e[0],x0+2,yb+8,{a:"start",s:7.5,c:eng.col,w:700});
+    ENDU_LV.forEach((z,i)=>{const cell=ENDU[z][e[0]];const cx=x0+96+i*cw;
+      T(g,fmtReg(cell[0]),cx,yb+3,{s:7.5,c:eng.col,f:"Spline Sans Mono",w:600});
+      T(g,nf(cell[1],1)+"",cx,yb+13,{s:7,c:"#7a7160",f:"Spline Sans Mono"});});});
+  T(g,"VITESSE 140 / 150 kt",x0+2,y0+118,{a:"start",s:8,c:"#4f4a3d",w:600});
+  // descentes
+  const yd=y0+140; T(g,"DESCENTES",x0,yd,{a:"start",s:8.5,c:"#1d3a57",w:700});
+  T(g,"ÉCO  200 kt · gaz réduits · 2 Nm/1000 · 3 L/1000",x0+2,yd+15,{a:"start",s:7.5,c:"#4f4a3d"});
+  T(g,"PERCÉE  230 kt · A.F. · 1 Nm/1000 · 2,5 L/1000  ·  19 000 (II) / 17 500 (VI)",x0+2,yd+28,{a:"start",s:7.5,c:"#4f4a3d"});
+  // sécurités
+  g.appendChild(el("rect",{x:x0,y:yd+38,width:70,height:18,rx:3,fill:"none",stroke:"#3f6b3a","stroke-width":1.2}));T(g,"VERT 250 L",x0+35,yd+50,{s:7.5,c:"#3f6b3a",w:700});
+  g.appendChild(el("rect",{x:x0+78,y:yd+38,width:70,height:18,rx:3,fill:"none",stroke:"#b78d31","stroke-width":1.2}));T(g,"JAUNE 300 L",x0+113,yd+50,{s:7.5,c:"#9a7320",w:700});
+}
+function buildRapporteur(svg){
+  const g=el("g",{}); svg.appendChild(g); const cx=1000,cy=150,R=98;
+  T(g,"EXECUTION DES VOLS COM TYPE VICTOR — TRES BASSE ALTITUDE",cx,44,{s:7.5,c:"#4f4a3d",w:600,ls:".3"});
+  g.appendChild(el("circle",{cx,cy,r:R,fill:"#fbf7ec",stroke:"#9b8a62","stroke-width":.9}));
+  g.appendChild(el("circle",{cx,cy,r:3,fill:"#4f4a3d"}));
+  for(let a=0;a<360;a+=5){const rad=(a-90)*Math.PI/180,big=a%10===0,r0=R,r1=R-(big?9:5);
+    L(g,cx+r0*Math.cos(rad),cy+r0*Math.sin(rad),cx+r1*Math.cos(rad),cy+r1*Math.sin(rad),"#8a7c58",big?.7:.4);
+    if(a%30===0){const rt=R-17;T(g,String(a),cx+rt*Math.cos(rad),cy+rt*Math.sin(rad)+2.5,{s:6.5,c:"#7a7160"});}}
+  // encadré jour/nuit
+  g.appendChild(el("rect",{x:cx+R+14,y:cy-24,width:44,height:20,rx:2,fill:"none",stroke:"#9b8a62"}));T(g,"JOUR",cx+R+36,cy-11,{s:7.5,c:"#4f4a3d",w:600});
+  g.appendChild(el("rect",{x:cx+R+14,y:cy+4,width:44,height:20,rx:2,fill:"none",stroke:"#9b8a62"}));T(g,"NUIT",cx+R+36,cy+17,{s:7.5,c:"#4f4a3d",w:600});
+  T(g,"Conditions",cx+R+36,cy-30,{s:7,c:"#7a7160",it:true});
+}
+
+/* ============================ INTERACTION / READOUT ============================ */
+S.lvl_d=200; S.lvl_e=15;
+
+function renderReadoutR(){
+  const e=S.eng,eng=ENG[e]; $("engNameR").textContent="· "+eng.mark+" "+eng.name;
+  document.querySelectorAll("#ctrlR .bigread").forEach(b=>b.classList.remove("eng-II","eng-VI"));
+  $("brReg").classList.add("eng-"+e); $("brConso").classList.add("eng-"+e);
+  const isD=S.obj==="dist";
+  $("bidonsRow").style.display=isD?"block":"none";
+  $("lab-extra").textContent=isD?"Correction bidons":"Régime de référence";
+  if(isD){
+    const z=S.lvl_d,cell=DIST[z][e];
+    if(!cell){$("b-reg").textContent="—";$("b-conso").innerHTML="—";$("t-vi").textContent="—";$("t-mach").textContent="—";$("t-extra").textContent="—";
+      $("noteR").textContent="Au FL 300, la colonne "+eng.mark+" "+eng.name+" n’est pas gravée : le Marboré "+e+" n’y a pas de régime de distance maximum."; return;}
+    let reg=cell[0],con=cell[1],cmp="";
+    if(S.bid==="Pb"){reg+=DIST_PB[e].reg;con=Math.round((con+DIST_PB[e].conso)*10)/10;cmp=" <span class='calc-cmp'>Pb</span>";}
+    $("b-reg").innerHTML=fmtReg(reg)+"<small> t/m</small>"+cmp;
+    $("b-conso").innerHTML=nf(con,con%1?1:0)+"<small> l/m</small>";
+    const vi=VI_IND[z][e]; $("t-vi").innerHTML=vi?("≈ "+vi+" kt <span>repère approx.</span>"):"— <span>illisible</span>";
+    $("t-mach").innerHTML=MACH[z]?MACH[z]:"— <span>non applicable</span>";
+    $("t-extra").innerHTML=S.bid==="Pb"?(DIST_PB[e].reg+" t/m · −0,5 l/m"):"aucune <span>(Gb)</span>";
+    $("noteR").textContent=S.bid==="Pb"
+      ? "Petits bidons : régime = valeur Gb gravée + correction Pb gravée ("+DIST_PB[e].reg+" t/m ; −0,5 l/m). Les deux composantes sont gravées, colonne "+eng.mark+" "+eng.name+"."
+      : "Distance maximum franchissable, gros bidons. Valeurs gravées, colonne "+eng.mark+" "+eng.name+".";
+  } else {
+    const z=S.lvl_e,cell=ENDU[z][e];
+    $("b-reg").innerHTML=fmtReg(cell[0])+"<small> t/m</small>";
+    $("b-conso").innerHTML=nf(cell[1],1)+"<small> l/m</small>";
+    $("t-vi").innerHTML="140 / 150 kt";
+    $("t-mach").innerHTML="— <span>non applicable</span>";
+    $("t-extra").innerHTML="endurance max <span>(pas de bidons)</span>";
+    $("noteR").textContent="Endurance maximum à "+z+" 000 ft — le régime qui tient le plus longtemps l’air, à 140/150 kt. Colonne "+eng.mark+" "+eng.name+"."+(e==="II"?" (Cette ligne recoupe la face 336 du computeur.)":"");
+  }
+}
+function rebuildLevels(){
+  const seg=$("lvlSeg"),isD=S.obj==="dist"; seg.className="seg levels"+(isD?"":" endu"); seg.innerHTML="";
+  const items=isD?DIST_LV.map(l=>({z:l.z,lab:l.fl.replace("FL ","").replace(" ft","")})):ENDU_LV.map(z=>({z,lab:String(z)}));
+  items.forEach(it=>{const b=document.createElement("button");b.textContent=it.lab;b.dataset.z=it.z;
+    if((isD?S.lvl_d:S.lvl_e)===it.z)b.classList.add("on");
+    b.addEventListener("click",()=>{isD?(S.lvl_d=it.z):(S.lvl_e=it.z);document.querySelectorAll("#lvlSeg button").forEach(x=>x.classList.toggle("on",x===b));renderReadoutR();renderTable();});
+    seg.appendChild(b);});
+  $("lvlCap").textContent=isD?"Niveau de vol (× 100 ft)":"Altitude (× 1000 ft)";
+}
+
+/* --- règle à calcul VITESSE PROPRE --- */
+function vpCompute(active){
+  const V=parseFloat($("i-v").value),t=parseFloat($("i-t").value),d=parseFloat($("i-d").value);
+  const ok=x=>!isNaN(x)&&x>0; let out;
+  if(!ok(d)&&ok(V)&&ok(t)){const D=V*t/60;$("i-d").value=Math.round(D);out="d = "+Math.round(D)+" km";}
+  else if(!ok(t)&&ok(V)&&ok(d)){const tt=d/V*60;$("i-t").value=Math.round(tt*10)/10;out="t = "+fmtT(tt);}
+  else if(!ok(V)&&ok(t)&&ok(d)){const vv=d/t*60;$("i-v").value=Math.round(vv);out="V = "+Math.round(vv)+" (km/h ou kt)";}
+  else if(ok(V)&&ok(t)){if(active!=="i-d")$("i-d").value=Math.round(V*t/60);out="d = "+Math.round(V*t/60)+" km";}
+  else out="Renseigne deux des trois champs";
+  $("vp-out").textContent=out;
+}
+function alignSlide(){ // place la vitesse V sous l'index fixe (270) : coff = spx(270)-spx(V)
+  const V=parseFloat($("i-v").value); if(isNaN(V)||V<=0)return;
+  const target=spx(270)-spx(Math.max(SPMIN,Math.min(SPMAX,V)));
+  S.coff=Math.max(-260,Math.min(260,target)); applyCoulisse();
+  // curseur au temps
+  const t=parseFloat($("i-t").value); if(!isNaN(t)&&t>0){const c=$("vp-cursor");if(c){c.setAttribute("x1",tx(Math.max(1,Math.min(140,t))));c.setAttribute("x2",tx(Math.max(1,Math.min(140,t))));}}
+}
+function updateVPfromSlide(){
+  // vitesse alignée sous l'index fixe = valeur telle que spx(v)+coff = spx(270)
+  const logv=Math.log10(270)-S.coff/((VPX1-VPX0)/(Math.log10(SPMAX)-Math.log10(SPMIN)));
+  const v=Math.pow(10,logv);
+  $("noteVP").textContent="À l’index 60 : vitesse propre ~ "+nf(v,0)+" (km/h ou kt selon l’échelle) ; 1 min parcourt "+nf(v/60,1)+" ; 10 min, "+nf(v/6,0)+".";
+}
+
+/* --- vent --- */
+function windCompute(){
+  const A=parseFloat($("w-ang").value)*Math.PI/180,W=parseFloat($("w-force").value),VP=parseFloat($("w-vp").value);
+  if([A,W,VP].some(isNaN)){return;}
+  const eff=W*Math.cos(A), cross=W*Math.sin(A), drift=Math.asin(Math.max(-1,Math.min(1,cross/VP)))*180/Math.PI;
+  $("w-eff").innerHTML=(eff>=0?"+":"−")+nf(Math.abs(eff),0)+" <small>"+(eff>=0?"arrière":"face")+"</small>";
+  $("w-drift").innerHTML=nf(Math.abs(drift),0)+"° <small>"+(cross>=0?"dr.":"g.")+"</small>";
+}
+/* --- montée --- */
+function renderMonteeReadout(){
+  const eng=ENG[S.eng]; $("engNameV").textContent="· "+eng.mark+" "+eng.name;
+  document.querySelectorAll("#ctrlV .bigread").forEach(b=>b.classList.remove("eng-II","eng-VI"));
+  $("brT").classList.add("eng-"+S.eng);$("brF").classList.add("eng-"+S.eng);
+  const key=S.eng+"-"+S.mbid,curve=MONTEE[key]||[];
+  const avail=curve.map(p=>p.z);
+  if(!avail.includes(S.mlvl))S.mlvl=avail[avail.length-1];
+  const pt=curve.find(p=>p.z===S.mlvl);
+  $("b-mt").textContent=pt?fmtT(pt.t):"—";
+  $("b-mf").innerHTML=pt&&pt.fuel?fmtReg(pt.fuel)+"<small> L</small>":"— <small>non gravé</small>";
+  const top=curve[curve.length-1];
+  $("noteM").textContent="Courbe "+eng.mark+" "+eng.name+" "+S.mbid+" — plafond de l’abaque : FL "+(top.z)+" en "+fmtT(top.t)+(top.fuel?" ("+top.fuel+" L restants)":"")+". "+(S.eng==="II"?"Le Marboré II plafonne au FL 250 sur cet abaque.":"Le Marboré VI monte jusqu’au FL 300.");
+  rebuildMLevels();
+}
+function rebuildMLevels(){
+  const seg=$("mLvlSeg"),key=S.eng+"-"+S.mbid,curve=MONTEE[key]||[]; seg.className="seg levels"; seg.style.gridTemplateColumns="repeat("+curve.length+",1fr)"; seg.innerHTML="";
+  curve.forEach(p=>{const b=document.createElement("button");b.textContent="FL "+p.z;b.dataset.z=p.z;if(p.z===S.mlvl)b.classList.add("on");
+    b.addEventListener("click",()=>{S.mlvl=p.z;renderMonteeReadout();renderMontee();});seg.appendChild(b);});
+}
+function descCompute(){
+  const prof=$("d-prof").value,alt=parseFloat($("d-alt").value),d=DESC[prof];
+  if(isNaN(alt)){return;}
+  $("d-dist").innerHTML=nf(d.dist*alt,0)+" <small>Nm</small>";
+  $("d-fuel").innerHTML=nf(d.fuel*alt,0)+" <small>L</small>";
+  $("noteD").textContent=(prof==="eco"?"ÉCO 200 kt, gaz réduits — 2 Nm et 3 L par 1000 ft.":"PERCÉE 230 kt aérofreins sortis — 1 Nm et 2,5 L par 1000 ft ; régime 19 000 (II) / 17 500 (VI).")+" Pour "+alt+" 000 ft.";
+}
+
+/* ============================ WIRING ============================ */
+function setEng(e){S.eng=e;document.querySelectorAll("#engToggle button").forEach(b=>b.classList.toggle("on",b.dataset.eng===e));
+  renderReadoutR();renderTable();renderMonteeReadout();renderMontee();}
+function setFace(f){S.face=f;$("flip").classList.toggle("flipped",f==="V");
+  document.querySelectorAll("#faceToggle button").forEach(b=>b.classList.toggle("on",b.dataset.face===f));
+  $("ctrlR").classList.toggle("show",f==="R");$("ctrlV").classList.toggle("show",f==="V");
+  $("hint").innerHTML=f==="R"?"Choisissez un <b>moteur</b> et un <b>niveau</b> · glissez la <b>coulisse</b> (VITESSE PROPRE) pour la règle à calcul":"Choisissez <b>bidons</b> et <b>niveau atteint</b> — la courbe active se surligne sur l’abaque";}
+
+document.querySelectorAll("#engToggle button").forEach(b=>b.addEventListener("click",()=>setEng(b.dataset.eng)));
+document.querySelectorAll("#faceToggle button").forEach(b=>b.addEventListener("click",()=>setFace(b.dataset.face)));
+document.querySelectorAll("#objSeg button").forEach(b=>b.addEventListener("click",()=>{S.obj=b.dataset.obj;document.querySelectorAll("#objSeg button").forEach(x=>x.classList.toggle("on",x===b));rebuildLevels();renderReadoutR();renderTable();}));
+document.querySelectorAll("#bidSeg button").forEach(b=>b.addEventListener("click",()=>{S.bid=b.dataset.bid;document.querySelectorAll("#bidSeg button").forEach(x=>x.classList.toggle("on",x===b));renderReadoutR();}));
+document.querySelectorAll("#mBidSeg button").forEach(b=>b.addEventListener("click",()=>{S.mbid=b.dataset.mbid;document.querySelectorAll("#mBidSeg button").forEach(x=>x.classList.toggle("on",x===b));renderMonteeReadout();renderMontee();}));
+["i-v","i-t","i-d"].forEach(id=>$(id).addEventListener("input",()=>vpCompute(id)));
+document.querySelectorAll("[data-vp]").forEach(b=>b.addEventListener("click",()=>{
+  if(b.dataset.vp==="ex1"){$("i-v").value=480;$("i-t").value=15;$("i-d").value="";}
+  else if(b.dataset.vp==="ex2"){$("i-v").value=300;$("i-t").value=40;$("i-d").value="";}
+  vpCompute();alignSlide();
+}));
+["w-ang","w-force","w-vp"].forEach(id=>$(id).addEventListener("input",windCompute));
+$("d-prof").addEventListener("change",descCompute);$("d-alt").addEventListener("input",descCompute);
+function syncSegments(){
+  document.querySelectorAll("#objSeg button").forEach(x=>x.classList.toggle("on",x.dataset.obj===S.obj));
+  document.querySelectorAll("#bidSeg button").forEach(x=>x.classList.toggle("on",x.dataset.bid===S.bid));
+  document.querySelectorAll("#mBidSeg button").forEach(x=>x.classList.toggle("on",x.dataset.mbid===S.mbid));
+}
+$("resetAll").addEventListener("click",()=>{S={eng:"II",face:"V",obj:"dist",bid:"Gb",mbid:"Gb",mlvl:250,coff:0,lvl_d:200,lvl_e:15};
+  syncSegments();setEng("II");rebuildLevels();renderReadoutR();renderTable();
+  $("i-v").value=420;$("i-t").value=24;$("i-d").value="";vpCompute();applyCoulisse();
+  const c=$("vp-cursor");if(c){c.setAttribute("x1",tx(24));c.setAttribute("x2",tx(24));}
+  $("d-alt").value=20;$("w-ang").value=40;$("w-force").value=30;$("w-vp").value=250;windCompute();descCompute();renderMonteeReadout();renderMontee();});
+
+/* French typography (hors SVG) */
+(function(){var NBSP=" ",FINE=" ";
+ function fr(t){t=t.replace(/«\s*/g,"«"+FINE).replace(/\s*»/g,FINE+"»");t=t.replace(/\s*([;!?])/g,FINE+"$1");t=t.replace(/\s*:/g,NBSP+":");return t;}
+ var SKIP={SCRIPT:1,STYLE:1,PRE:1,CODE:1,INPUT:1,TEXTAREA:1,SELECT:1,svg:1,SVG:1};
+ function walk(n){if(n.nodeType===3){if(n.nodeValue&&/\S/.test(n.nodeValue))n.nodeValue=fr(n.nodeValue);return;}
+   if(n.nodeType!==1||SKIP[n.tagName])return;if(n.namespaceURI===NS)return;for(var c=n.firstChild;c;c=c.nextSibling)walk(c);}
+ walk(document.body);})();
+
+/* init */
+buildRecto(); buildVerso(); rebuildLevels(); syncSegments(); setEng("II"); setFace("R");
+renderReadoutR(); renderMonteeReadout(); renderMontee(); vpCompute(); windCompute(); descCompute(); applyCoulisse();
+</script>
+</body>
+</html>

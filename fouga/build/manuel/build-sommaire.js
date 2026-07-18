@@ -150,6 +150,7 @@ const html = `<!DOCTYPE html>
     <a href="index.html">Présentation</a>
     <a href="manuel.html" class="actif" aria-current="page">Manuel CM 170</a>
     <a href="computeur.html">Computeur</a>
+    <a href="regle-navigation.html">Règle de navigation</a>
   </nav>
 </header>
 <main class="contenu">
