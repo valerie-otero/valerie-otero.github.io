@@ -163,6 +163,19 @@ body.lecture{
 .lecture-corps ol li{padding-left:4px}
 .lecture-corps ol li::before{content:none}
 
+/* Items à numérotation / lettre MANUELLE (« 1) », « a) », « A - »…) : le numéro
+   d'origine reste dans le texte (jamais renuméroté) ; retrait pendant pour que
+   les lignes suivantes s'alignent sous le texte, et non sous le numéro. */
+.lecture-corps .numitem{
+  margin:0 0 7px;
+  padding-left:1.7em;
+  text-indent:-1.7em;
+  text-align:justify;
+  color:var(--ink-soft);
+}
+.lecture-corps .note .numitem,
+.lecture-corps .encadre .numitem{text-align:left}
+
 /* Encadré ATTENTION */
 .lecture-corps .encadre{
   margin:16px 0;
@@ -198,6 +211,23 @@ body.lecture{
   letter-spacing:1px;
   color:var(--brass);
 }
+/* Note contenant une liste numérotée (« NOTA : 1) 2) 3) ») : label « NOTA : » en
+   saillie dans une colonne auto-dimensionnée (donc juste quel que soit le label —
+   NOTA, N.B., NOTA 1…), items alignés dessous, chacun en retrait pendant. */
+.lecture-corps .note-list{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  column-gap:.45em;
+  align-items:baseline;
+}
+.lecture-corps .note-list .nl-lbl{white-space:nowrap}
+.lecture-corps .note-list .nl-items .numitem{
+  margin:0 0 6px;
+  padding-left:1.7em;
+  text-indent:-1.7em;
+  text-align:left;
+}
+.lecture-corps .note-list .nl-items .numitem:last-child{margin-bottom:0}
 
 /* Tableaux de données */
 .lecture-corps table.data,

@@ -51,6 +51,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
 svg.instr{width:100%;height:auto;display:block;user-select:none;filter:drop-shadow(0 22px 38px rgba(40,32,12,.32))}
 .coulisse{cursor:grab;touch-action:none}
 .coulisse.drag{cursor:grabbing}
+.coulisse:focus,.coulisse:focus-visible{outline:none}
+svg.instr:has(.coulisse:focus-visible){outline:2px solid var(--blue);outline-offset:2px;border-radius:12px}
 .lvlhit{cursor:pointer}
 .hint{margin:14px 0 26px;text-align:center;font-family:var(--lab);text-transform:uppercase;letter-spacing:.13em;font-size:.7rem;color:var(--muted)}
 .hint b{color:var(--blue)}
@@ -175,7 +177,7 @@ table.vals .val span{color:var(--muted);font-weight:400;font-size:.84em}
         </div>
       </div>
     </div>
-    <div class="hint" id="hint">Choisissez un <b>moteur</b> et un <b>niveau</b> · glissez la <b>coulisse</b> (VITESSE PROPRE) pour la règle à calcul</div>
+    <div class="hint" id="hint">Choisissez un <b>moteur</b> et un <b>niveau</b> · glissez ou fléchez (<b>← →</b>) la <b>coulisse</b> (VITESSE PROPRE) pour la règle à calcul</div>
   </div>
 
   <!-- ============ CONTROLS RECTO ============ -->
@@ -215,11 +217,11 @@ table.vals .val span{color:var(--muted);font-weight:400;font-size:.84em}
         <h2>Règle à calcul · VITESSE PROPRE</h2>
         <div class="tool" style="margin-top:0">
           <h3>Temps · vitesse · distance</h3>
-          <p class="sub">Aligne la vitesse propre sur l’index <b>60</b> ; lis la distance au temps voulu. <b>d = V × t / 60</b>. <em>Reconstruction fonctionnelle de la règle à calcul gravée.</em></p>
+          <p class="sub">Glissez la coulisse pour amener la vitesse propre voulue sous l’<b>index fixe</b> ; la distance se calcule par <b>d = V × t / 60</b> (distance dans l’unité de la vitesse : Nm si nœuds, km si km/h). <em>Reconstruction fonctionnelle de la règle à calcul gravée.</em></p>
           <div class="calc tri">
             <div class="fld"><label>Vitesse propre</label><input id="i-v" type="number" value="420" min="0" step="10"></div>
             <div class="fld"><label>Temps (min)</label><input id="i-t" type="number" value="24" min="0" step="1"></div>
-            <div class="fld"><label>Distance (km)</label><input id="i-d" type="number" placeholder="—" min="0" step="1"></div>
+            <div class="fld"><label>Distance (Nm/km)</label><input id="i-d" type="number" placeholder="—" min="0" step="1"></div>
             <div class="res"><span class="k">Le champ vide se calcule</span><span class="v" id="vp-out">—</span></div>
           </div>
           <div class="chips">
@@ -244,7 +246,7 @@ table.vals .val span{color:var(--muted);font-weight:400;font-size:.84em}
               <span><span class="k">Dérive</span> <span class="v" id="w-drift">—</span></span>
             </div>
           </div>
-          <p class="note">Vent effectif = composante dans l’axe (＋ arrière, − face). Dérive = angle à corriger au cap. Plages de l’abaque : force lue sur 10–50, dérive jusqu’à 20°, VP 100–300.</p>
+          <p class="note">L’abaque physique est un <b>quart de cercle 0–90°</b> : il donne la <b>grandeur</b> de la composante de vent dans l’axe et l’angle de dérive. Ici l’angle est mesuré par rapport à l’arrière (0° = vent plein arrière, 90° = travers) — d’où « arrière » et « dr. » ; un vent venant de l’avant se lit par symétrie et se retranche. Dérive = angle à corriger au cap. Plages de l’abaque : force 10–50, dérive jusqu’à 20°, VP 100–300.</p>
         </div>
       </div>
     </div>
@@ -303,7 +305,7 @@ table.vals .val span{color:var(--muted);font-weight:400;font-size:.84em}
   <!-- ============ ÉTAT & SOURCES ============ -->
   <div class="foot">
     <h2>Fidélité à la règle d’origine</h2>
-    <p>Cet instrument affiche les <strong>valeurs gravées</strong> relevées photo par photo sur la règle de 1980 — jamais du recalculé présenté comme authentique. Les deux tableaux (distance et endurance) recoupent, au chiffre près, la face 336 du <a href="../computeur.html" target="_top">computeur</a>. La règle à calcul et l’abaque de vent sont des <strong>reconstructions fonctionnelles</strong> des nomogrammes gravés (le calcul, lui, est exact).</p>
+    <p>Cet instrument affiche les <strong>valeurs gravées</strong> relevées photo par photo sur la règle de 1980 — jamais du recalculé présenté comme authentique. La table d’<strong>endurance Marboré II</strong> recoupe, cellule par cellule, la face 336 du <a href="../computeur.html" target="_top">computeur</a> (mêmes régimes 17 000 → 19 000 t/m, mêmes consommations 7,8 → 5,2 l/m) : deux gravures indépendantes, un accord parfait. La règle à calcul et l’abaque de vent sont des <strong>reconstructions fonctionnelles</strong> des nomogrammes gravés (le calcul, lui, est exact).</p>
     <div class="cols">
       <div class="card ok">
         <h3>Relevé sur l’instrument</h3>
@@ -367,6 +369,7 @@ const $=id=>document.getElementById(id);
 /* ============================ RECTO — SVG ============================ */
 // géométrie règle à calcul
 const VPX0=372, VPX1=812;                 // bornes X de la bande VITESSE PROPRE
+const VPREF=270;                          // vitesse de référence sous l'index fixe de lecture
 const TMIN=1, TMAX=140;                    // échelle temps (log), 1'..140
 const tx=t=>VPX0+(Math.log10(t)-Math.log10(TMIN))/(Math.log10(TMAX)-Math.log10(TMIN))*(VPX1-VPX0);
 // échelle vitesse/distance sur la coulisse : même décade log, valeur 50..500 (haut)
@@ -437,8 +440,8 @@ function buildCalcBlock(svg){
   sp.forEach(v=>{const x=spx(v);const big=[5,10,50,100,500].includes(v);L(cou,x,132,x,148,big?"#8a6515":"#9a7320",big?1:.6);
     if([5,10,50,100,200,300,500].includes(v))T(cou,String(v),x,159,{s:7.5,c:"#7c5a17",f:"Spline Sans Mono"});});
   T(cou,"coulisse",VPX0+3,145,{a:"start",s:7,c:"#b08b3a",w:700,ls:".5",it:true});
-  // index fixe (flèche) au repère ~270
-  g.appendChild(el("path",{id:"vp-index",d:mkArrow(spx(270),150),fill:"#111",opacity:".8"}));
+  // index fixe (flèche) au repère de référence VPREF
+  g.appendChild(el("path",{id:"vp-index",d:mkArrow(spx(VPREF),150),fill:"#111",opacity:".8"}));
   // temps bas
   const tb=[[1,"1'"],[1.5,"1'30"],[2,"2'"],[2.5,"2'30"],[3,"3'"],[3.5,"3'30"],[4,"4'"],[4.5,"4'30"],[5,"5'"],[6,"6'"],[7,"7'"],[8,"8'"],[9,"9'"],[10,"10'"]];
   const yTb=178; L(g,tx(1),yTb,tx(10),yTb,"#5b5340",.9);
@@ -477,14 +480,31 @@ function buildWind(svg){
 function arcQ(ox,oy,r){return `M${ox-r} ${oy} A ${r} ${r} 0 0 1 ${ox} ${oy-r}`;}
 
 /* ---- coulisse drag = décalage log de l'échelle vitesse ---- */
+const COFF_MIN=-260, COFF_MAX=260;        // débattement de la coulisse (contenu schématique dans le cadre)
+const clampCoff=c=>Math.max(COFF_MIN,Math.min(COFF_MAX,c));
 function attachCoulisse(){
   const cou=$("coulisse"); if(!cou)return;
   let dr=false,sx=0,s0=0;
   const px=e=>{const r=$("svgR").getBoundingClientRect();return (e.clientX-r.left)/r.width*1180;};
   cou.addEventListener("pointerdown",e=>{dr=true;sx=px(e);s0=S.coff;cou.classList.add("drag");cou.setPointerCapture(e.pointerId);});
-  cou.addEventListener("pointermove",e=>{if(!dr)return;S.coff=Math.max(-260,Math.min(260,s0+(px(e)-sx)));applyCoulisse();});
+  cou.addEventListener("pointermove",e=>{if(!dr)return;S.coff=clampCoff(s0+(px(e)-sx));applyCoulisse();});
   const end=()=>{dr=false;cou.classList.remove("drag");};
   cou.addEventListener("pointerup",end);cou.addEventListener("pointercancel",end);
+  // accessibilité clavier (parité avec le computeur : role=slider, flèches)
+  cou.setAttribute("tabindex","0");
+  cou.setAttribute("role","slider");
+  cou.setAttribute("aria-label","Coulisse Vitesse propre : aligner une vitesse sous l’index fixe (flèches ← →, Maj = pas fin, Origine/Fin = 500/100)");
+  cou.setAttribute("aria-valuemin","0");
+  cou.setAttribute("aria-valuemax","100");
+  cou.addEventListener("keydown",e=>{
+    const step=e.shiftKey?6:22;
+    if(e.key==="ArrowRight"||e.key==="ArrowUp")S.coff=clampCoff(S.coff-step);       // + rapide
+    else if(e.key==="ArrowLeft"||e.key==="ArrowDown")S.coff=clampCoff(S.coff+step); // + lent
+    else if(e.key==="Home")S.coff=clampCoff(spx(VPREF)-spx(SPMAX));                 // ≈ 500
+    else if(e.key==="End")S.coff=clampCoff(spx(VPREF)-spx(100));                    // ≈ 100
+    else return;
+    e.preventDefault();applyCoulisse();
+  });
 }
 function applyCoulisse(){
   const cou=$("coulisse"); if(cou)cou.setAttribute("transform",`translate(${S.coff} 0)`);
@@ -610,12 +630,12 @@ function renderReadoutR(){
     let reg=cell[0],con=cell[1],cmp="";
     if(S.bid==="Pb"){reg+=DIST_PB[e].reg;con=Math.round((con+DIST_PB[e].conso)*10)/10;cmp=" <span class='calc-cmp'>Pb</span>";}
     $("b-reg").innerHTML=fmtReg(reg)+"<small> t/m</small>"+cmp;
-    $("b-conso").innerHTML=nf(con,con%1?1:0)+"<small> l/m</small>";
+    $("b-conso").innerHTML=nf(con,(S.bid==="Pb"||con%1)?1:0)+"<small> l/m</small>";
     const vi=VI_IND[z][e]; $("t-vi").innerHTML=vi?("≈ "+vi+" kt <span>repère approx.</span>"):"— <span>illisible</span>";
     $("t-mach").innerHTML=MACH[z]?MACH[z]:"— <span>non applicable</span>";
-    $("t-extra").innerHTML=S.bid==="Pb"?(DIST_PB[e].reg+" t/m · −0,5 l/m"):"aucune <span>(Gb)</span>";
+    $("t-extra").innerHTML=S.bid==="Pb"?("−"+Math.abs(DIST_PB[e].reg)+" t/m · −0,5 l/m"):"aucune <span>(Gb)</span>";
     $("noteR").textContent=S.bid==="Pb"
-      ? "Petits bidons : régime = valeur Gb gravée + correction Pb gravée ("+DIST_PB[e].reg+" t/m ; −0,5 l/m). Les deux composantes sont gravées, colonne "+eng.mark+" "+eng.name+"."
+      ? "Petits bidons : régime = valeur Gb gravée + correction Pb gravée (−"+Math.abs(DIST_PB[e].reg)+" t/m ; −0,5 l/m). Les deux composantes sont gravées, colonne "+eng.mark+" "+eng.name+"."
       : "Distance maximum franchissable, gros bidons. Valeurs gravées, colonne "+eng.mark+" "+eng.name+".";
   } else {
     const z=S.lvl_e,cell=ENDU[z][e];
@@ -641,25 +661,28 @@ function rebuildLevels(){
 function vpCompute(active){
   const V=parseFloat($("i-v").value),t=parseFloat($("i-t").value),d=parseFloat($("i-d").value);
   const ok=x=>!isNaN(x)&&x>0; let out;
-  if(!ok(d)&&ok(V)&&ok(t)){const D=V*t/60;$("i-d").value=Math.round(D);out="d = "+Math.round(D)+" km";}
+  if(!ok(d)&&ok(V)&&ok(t)){const D=V*t/60;$("i-d").value=Math.round(D);out="d = "+Math.round(D)+" Nm/km";}
   else if(!ok(t)&&ok(V)&&ok(d)){const tt=d/V*60;$("i-t").value=Math.round(tt*10)/10;out="t = "+fmtT(tt);}
   else if(!ok(V)&&ok(t)&&ok(d)){const vv=d/t*60;$("i-v").value=Math.round(vv);out="V = "+Math.round(vv)+" (km/h ou kt)";}
-  else if(ok(V)&&ok(t)){if(active!=="i-d")$("i-d").value=Math.round(V*t/60);out="d = "+Math.round(V*t/60)+" km";}
+  else if(ok(V)&&ok(t)){if(active!=="i-d")$("i-d").value=Math.round(V*t/60);out="d = "+Math.round(V*t/60)+" Nm/km";}
   else out="Renseigne deux des trois champs";
   $("vp-out").textContent=out;
 }
-function alignSlide(){ // place la vitesse V sous l'index fixe (270) : coff = spx(270)-spx(V)
+function alignSlide(){ // place la vitesse V sous l'index fixe (VPREF) : coff = spx(VPREF)-spx(V)
   const V=parseFloat($("i-v").value); if(isNaN(V)||V<=0)return;
-  const target=spx(270)-spx(Math.max(SPMIN,Math.min(SPMAX,V)));
-  S.coff=Math.max(-260,Math.min(260,target)); applyCoulisse();
+  const target=spx(VPREF)-spx(Math.max(SPMIN,Math.min(SPMAX,V)));
+  S.coff=clampCoff(target); applyCoulisse();
   // curseur au temps
   const t=parseFloat($("i-t").value); if(!isNaN(t)&&t>0){const c=$("vp-cursor");if(c){c.setAttribute("x1",tx(Math.max(1,Math.min(140,t))));c.setAttribute("x2",tx(Math.max(1,Math.min(140,t))));}}
 }
 function updateVPfromSlide(){
-  // vitesse alignée sous l'index fixe = valeur telle que spx(v)+coff = spx(270)
-  const logv=Math.log10(270)-S.coff/((VPX1-VPX0)/(Math.log10(SPMAX)-Math.log10(SPMIN)));
+  // vitesse alignée sous l'index fixe = valeur telle que spx(v)+coff = spx(VPREF)
+  const logv=Math.log10(VPREF)-S.coff/((VPX1-VPX0)/(Math.log10(SPMAX)-Math.log10(SPMIN)));
   const v=Math.pow(10,logv);
-  $("noteVP").textContent="À l’index 60 : vitesse propre ~ "+nf(v,0)+" (km/h ou kt selon l’échelle) ; 1 min parcourt "+nf(v/60,1)+" ; 10 min, "+nf(v/6,0)+".";
+  $("noteVP").textContent="Sous l’index fixe : vitesse propre ~ "+nf(v,0)+" (km/h ou kt selon l’échelle) ; 1 min parcourt "+nf(v/60,1)+" ; 10 min, "+nf(v/6,0)+".";
+  const cou=$("coulisse");
+  if(cou){cou.setAttribute("aria-valuenow",String(Math.round((COFF_MAX-S.coff)/(COFF_MAX-COFF_MIN)*100)));
+    cou.setAttribute("aria-valuetext","vitesse propre "+nf(v,0)+" (nœuds ou km/h)");}
 }
 
 /* --- vent --- */
@@ -691,10 +714,11 @@ function rebuildMLevels(){
     b.addEventListener("click",()=>{S.mlvl=p.z;renderMonteeReadout();renderMontee();});seg.appendChild(b);});
 }
 function descCompute(){
-  const prof=$("d-prof").value,alt=parseFloat($("d-alt").value),d=DESC[prof];
+  const prof=$("d-prof").value,d=DESC[prof];let alt=parseFloat($("d-alt").value);
   if(isNaN(alt)){return;}
+  alt=Math.max(0,Math.min(30,alt));
   $("d-dist").innerHTML=nf(d.dist*alt,0)+" <small>Nm</small>";
-  $("d-fuel").innerHTML=nf(d.fuel*alt,0)+" <small>L</small>";
+  $("d-fuel").innerHTML=nf(d.fuel*alt,(d.fuel*alt)%1?1:0)+" <small>L</small>";
   $("noteD").textContent=(prof==="eco"?"ÉCO 200 kt, gaz réduits — 2 Nm et 3 L par 1000 ft.":"PERCÉE 230 kt aérofreins sortis — 1 Nm et 2,5 L par 1000 ft ; régime 19 000 (II) / 17 500 (VI).")+" Pour "+alt+" 000 ft.";
 }
 
@@ -704,7 +728,7 @@ function setEng(e){S.eng=e;document.querySelectorAll("#engToggle button").forEac
 function setFace(f){S.face=f;$("flip").classList.toggle("flipped",f==="V");
   document.querySelectorAll("#faceToggle button").forEach(b=>b.classList.toggle("on",b.dataset.face===f));
   $("ctrlR").classList.toggle("show",f==="R");$("ctrlV").classList.toggle("show",f==="V");
-  $("hint").innerHTML=f==="R"?"Choisissez un <b>moteur</b> et un <b>niveau</b> · glissez la <b>coulisse</b> (VITESSE PROPRE) pour la règle à calcul":"Choisissez <b>bidons</b> et <b>niveau atteint</b> — la courbe active se surligne sur l’abaque";}
+  $("hint").innerHTML=f==="R"?"Choisissez un <b>moteur</b> et un <b>niveau</b> · glissez ou fléchez (<b>← →</b>) la <b>coulisse</b> (VITESSE PROPRE) pour la règle à calcul":"Choisissez <b>bidons</b> et <b>niveau atteint</b> — la courbe active se surligne sur l’abaque";}
 
 document.querySelectorAll("#engToggle button").forEach(b=>b.addEventListener("click",()=>setEng(b.dataset.eng)));
 document.querySelectorAll("#faceToggle button").forEach(b=>b.addEventListener("click",()=>setFace(b.dataset.face)));

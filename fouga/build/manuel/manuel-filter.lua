@@ -78,11 +78,71 @@ function Para(el)
     return pandoc.Header(lvl, el.content, pandoc.Attr(id))
   end
 
+  -- 7. items à numérotation / lettre manuelle (« 1) », « 2) », « a) », « b) »,
+  --    « A - », « 1 - »…) : le numéro d'origine est préservé tel quel (jamais
+  --    renuméroté), mais l'item reçoit un retrait pendant (les lignes suivantes
+  --    s'alignent sous le texte, pas sous le numéro). Détection sur l'amorce.
+  if text:match("^%d+%)%s")        -- 1) 2) 10)
+     or text:match("^%l%)%s")      -- a) b) c)
+     or text:match("^%u%)%s")      -- A) B)
+     or text:match("^%d+%s?%-%s%a")-- 1 - / 1-  (suivi d'une LETTRE : exclut les plages « 110 - 120 »)
+     or text:match("^%u%s?%-%s%a") -- A - / A-  (idem)
+  then
+    return pandoc.Div(pandoc.Plain(el.content), { class = "numitem" })
+  end
+
   return nil
 end
 
--- 5. corps en blockquote -> paragraphes normaux
+-- un bloc est-il un Div portant la classe c ?
+local function is_div_class(b, c)
+  return b and b.t == "Div" and b.attr.classes:includes(c)
+end
+
+-- 5 & 8. blockquote pandoc :
+--   - NOTE : le 1er bloc est un Div.note (produit par Para règle 4). On REGROUPE
+--     tout le blockquote dans un seul encadré. Si des items numérotés (numitem,
+--     règle 7) suivent, on construit une « note-list » : le label « NOTA : » est
+--     mis en saillie dans une colonne auto-dimensionnée (grille) et les items
+--     1) 2) 3)… sont alignés dessous, chacun en retrait pendant. Le 1er item,
+--     collé au label sur la même ligne d'origine, est détaché sans altérer le texte.
+--   - sinon (corps de texte rendu en blockquote par pandoc) : déballage en paragraphes.
 function BlockQuote(el)
+  local first = el.content[1]
+  if is_div_class(first, "note") then
+    local para = first.content[1]                 -- paragraphe amorce (Strong « NOTA : » + reste)
+    local rest = {}
+    for i = 2, #el.content do rest[#rest + 1] = el.content[i] end
+    local has_items = false
+    for _, b in ipairs(rest) do
+      if is_div_class(b, "numitem") then has_items = true break end
+    end
+
+    if has_items and para and para.t == "Para"
+       and para.content[1] and para.content[1].t == "Strong" then
+      local label = para.content[1]
+      -- 1er item = reste du paragraphe amorce (après le label et l'espace initial)
+      local item1 = {}
+      for i = 2, #para.content do
+        local inl = para.content[i]
+        if not (#item1 == 0 and inl.t == "Space") then item1[#item1 + 1] = inl end
+      end
+      local items = {}
+      if #item1 > 0 then
+        items[#items + 1] = pandoc.Div(pandoc.Plain(item1), { class = "numitem" })
+      end
+      for _, b in ipairs(rest) do items[#items + 1] = b end
+      return pandoc.Div({
+        pandoc.Div(pandoc.Plain({ label }), { class = "nl-lbl" }),
+        pandoc.Div(items, { class = "nl-items" }),
+      }, pandoc.Attr("", { "note", "note-list" }))
+    end
+
+    -- note multi-blocs sans items numérotés : tout regrouper dans un seul encadré
+    local blocks = { para }
+    for _, b in ipairs(rest) do blocks[#blocks + 1] = b end
+    return pandoc.Div(blocks, { class = "note" })
+  end
   return el.content
 end
 

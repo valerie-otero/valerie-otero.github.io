@@ -241,6 +241,8 @@ Le projet s'est étendu à un **site statique de restitution** (HTML/CSS/JS, san
 | `computeur.html` → `pages/mode_emploi.html` | Mode d'emploi illustré du computeur (long-form, iframe) |
 | `computeur-virtuel.html` → `pages/computeur_virtuel.html` | Computeur virtuel interactif SVG (recto 131 / verso 336) |
 | `monographie.html` | Monographie PDF consultable + DOCX téléchargeable |
+| `regle-navigation.html` → `pages/regle_navigation.html` | Mode d'emploi illustré de la règle de navigation (Marboré II & VI) |
+| `regle-navigation-virtuelle.html` → `pages/regle_navigation_virtuelle.html` | Règle de navigation virtuelle interactive SVG (recto calcul / verso montée) |
 
 **Charte** : crème/bleu Armée/laiton, définie dans `assets/css/site.css` (variables `--paper`,
 `--blue`, `--brass`…) ; les pages internes du computeur embarquent leur propre copie de la charte.
@@ -275,14 +277,192 @@ Le projet s'est étendu à un **site statique de restitution** (HTML/CSS/JS, san
   l'instrument n'ayant pas de réacteurs) ; footer interne réduit à un colophon d'une ligne
   (suppression du double pied de page avec le bandeau du site).
 
+**2026-07-17/18 — Nouveau sous-sujet « Règle de navigation » (Marboré II & VI)**
+- Sous-sujet ajouté à la nav principale + sous-barre à 2 pages, sur le schéma du sous-sujet Computeur.
+  ⚠️ **L'onglet principal est répété dans 6 fichiers**, dont `manuel.html` **généré** (bandeau dans
+  `build/manuel/build-sommaire.js`) : toute modif de nav doit aussi toucher le script, sinon l'onglet
+  disparaît au prochain `build-manuel.sh`. Liens sortants des pages `pages/` en `target="_top"`.
+- **Mode d'emploi** (`pages/regle_navigation.html`) : règle à calcul linéaire « Cne Claude Ph, GE 00 315,
+  Cognac 1980 », **seul instrument portant les deux moteurs** (● Marboré II / ★ Marboré VI). Tables
+  transcrites **d'après les photos** `../RegNavMVI/MVI1–4` : distance max Gb + correction Pb, endurance
+  max (II & VI), descentes, sécurités 250/300 L, montée. **Recoupement clé** : la ligne endurance
+  Marboré II ≡ à l'identique la face 336 du computeur (validation croisée).
+- Précision « Marboré II » ajoutée au computeur (il ne connaît que ce moteur ; renvoi croisé vers la règle).
+
+**2026-07-18 — Règle de navigation virtuelle (instrument interactif)**
+- `pages/regle_navigation_virtuelle.html` : frère du computeur virtuel. Recto = tableaux sélectables
+  (moteur / bidons / niveau ; cas **FL300-II vide** géré) + règle à calcul VITESSE PROPRE (coulisse
+  glissante, `d = V·t/60`) + abaque de vent (triangle des vitesses). Verso = abaque de montée
+  (4 courbes digitalisées), endurance, descentes, rapporteur 360°.
+- **Méthode** : workflow d'**extraction fidèle** (8 lecteurs sur les photos 4096 px → 0 divergence avec
+  la transcription et la face 336), puis workflow de **revue adversariale** (fidélité données =
+  0 erreur ; 9 findings code/UX/étiquetage corrigés).
+- **Principe respecté** : valeurs **gravées** par défaut ; reconstructions (règle à calcul, vent) et
+  approximations (repères ●/★, montée en temps, rapporteur/réglettes schématiques) **explicitement
+  étiquetées** (section « Fidélité à la règle d'origine »).
+- Photos déposées et découpées : `assets/img/regle_*.jpg` ; plan 3-vues `../magister_3v.jpg` séparé en
+  `fouga_profil / dessus / dessous.png` (PNG transparents, encre sépia).
+
+**2026-07-18 — Objectivation des notices (computeur + règle)**
+- Retrait de tout contenu de **conduite de vol** (préparer une navigation pas à pas, bilan carburant,
+  choix de l'avion, préparation du pilote) — hors sujet + hors compétence (**consigne Valérie**).
+  Computeur §IV « Préparer un vol » → objective **« La règle à calcul »** ; règle §V « Préparer une
+  navigation » **supprimée** (déjà couverte par §IV). Impératifs au pilote neutralisés. Les notices ne
+  gardent que la **description objective** de l'instrument (parties, échelles, tables, lecture).
+
+**2026-07-18 — Page de présentation**
+- **Bandeau d'avertissement** : prototype en cours de réalisation, usage privé (non diffusé), peut
+  comporter erreurs/approximations, **ne convient pas à un vol** (style `.avertissement` dans `site.css`).
+- **Illustrations** : dessin de face conservé (haute déf.) ; les 3 autres vues du plan 3-vues séparées,
+  en **rail vertical dans la marge gauche** (wrapper `.accueil-corps` = rail de vues + texte).
+
+**2026-07-18 — Bibliographies**
+- Biblio web **vérifiée** (workflow : recherche + `fetch` de chaque URL) → 12 sites web à URL confirmée
+  + 1 publication ([10] W. Dorn) ; **[7]/[9] invérifiables** → laissées sans lien, signalées. Erreurs
+  corrigées : titre [2] (traduction anglaise → vrai titre FR), nom [14] (Nationaal → **Nederlands**
+  Transport Museum). Liens cliquables ajoutés ; mentions « consultation du … » retirées. Bloc renommé
+  **« Notes et références numériques »**.
+- **« Bibliographie sélective »** ajoutée : 7 sections (I ouvrages … VII catalogues), **53 entrées**
+  fournies par Valérie, reproduites fidèlement (styles `.biblio-sel`).
+- **Typographie française** : petit script (même que le manuel) **limité aux `.biblio`** (insécables
+  avant `; : ! ?` et dans `«…»`), sans toucher au texte d'accueil ; police des biblios grossie.
+
+**2026-07-18 — Règle virtuelle : vérification + spec de transition**
+- **Contrôle et véracité** (workflow adversarial : 3 lecteurs *aveugles* par sous-table + 5 audits de
+  calcul + 2 chasses aux bugs + synthèse ; puis smoke test jsdom bout à bout, 0 exception) :
+  **données gravées fidèles à 100 %** (distance, endurance, montée, descentes, sécurités, Mach —
+  aucune divergence cellule par cellule) ; **calculs numériquement exacts** (d=V·t/60 et inverses,
+  correction Pb, descentes, vent, géométrie log de la coulisse). Recoupement **endurance Marboré II ≡
+  face 336** revérifié (Z 5→25, identité exacte).
+- **Correctifs appliqués** (aucun ne touche une valeur gravée) : sortie TVD étiquetée « Nm/km » (fin du
+  « km » trompeur) ; note du vent honnête (quart de cercle 0–90°, grandeur seule, plus de fausse
+  « − face ») ; footer recentré sur le recoupement **endurance** (le côté distance n'était pas une
+  identité) ; **accessibilité clavier de la coulisse** (`role=slider`/flèches, parité computeur) ;
+  robustesse (descente bornée 0–30, décimales & moins Unicode cohérents, constante `VPREF`).
+- **Points de lecture ouverts** (majorité respectée, à confirmer sur macro) : carburant au sommet des
+  courbes Marboré II (550/720 L ?) ; cotes FL50 médianes.
+- **Spec de transition** vers la **règle complète** écrite dans
+  `FOUGA_CM170_COLLECTE/REGLE_VIRTUELLE_transition.md` (clichés coulisse recto/verso à plat encore
+  **en attente** : voir §C–E — coulisse à 3 sous-échelles Pieds/Naut/métrique, fenêtres traversantes
+  en `<clipPath>`, échelles à rendre commensurables, verso inconnu).
+
+**2026-07-18 — Manuel HTML : retrait pendant des items numérotés / lettrés**
+- Bug d'affichage : les items à **numérotation manuelle** (« 1) 2) 3) », « a) b) c) », « A - »,
+  « 1 - ») étaient rendus par pandoc en `<p>` simples → les lignes suivantes revenaient à la marge
+  gauche (sous le numéro) au lieu de s'aligner sous le texte. Corrigé **dans le pipeline** (reproductible) :
+  - `build/manuel/manuel-filter.lua` : nouvelle règle (7) — un paragraphe dont l'amorce est un marqueur
+    d'item (`^%d+%)`, `^%l%)`, `^%u%)`, `^%d+ ?- `, `^%u ?- `) devient `<div class="numitem">`. **Le numéro
+    d'origine reste dans le texte (jamais renuméroté) ;** ordre : après NOTA et titres numérotés `x.y`.
+  - `assets/css/manuel.css` : `.numitem` = `padding-left:1.7em; text-indent:-1.7em` (retrait pendant),
+    justifié dans le corps, à gauche dans `.note`/`.encadre`.
+  - `assets/css/manuel.css` : `.numitem` = `padding-left:1.7em; text-indent:-1.7em` (retrait pendant).
+- **2e correctif (même jour) — regroupement des NOTA multi-paragraphes.** Bug relevé sur le scan (source de
+  vérité, PDF p.67 § 4.4.2) : une NOTA introduisant une liste « NOTA : 1) … 2) … 3) … » est **un seul**
+  blockquote dans le DOCX, mais le filtre ne mettait que le 1) dans l'encadré (barre + fond) et laissait 2)/3)
+  déborder dehors. Corrigé :
+  - `manuel-filter.lua` : `BlockQuote` regroupe désormais **tout** le blockquote-note dans un seul encadré ;
+    s'il contient des items numérotés → **`note-list`** : le label (« NOTA : », « N.B. : », « NOTA 1 : ») est
+    détaché dans une **grille `auto 1fr`** (colonne auto-dimensionnée, donc juste quel que soit le label) et
+    les items 1) 2) 3)… alignés dessous en retrait pendant. 1er item détaché du label **sans altérer le texte**.
+    Les notes multi-paragraphes **sans** items sont aussi regroupées (ex. § 4.3.1).
+  - `manuel.css` : styles `.note-list` (grille) + `.nl-lbl` / `.nl-items`.
+- **Vérifs** : `build-manuel.sh` relancé ; ~132 items en retrait pendant + **2 notes-listes** regroupées
+  (§ 4.4.2 voltige, 1 en section VI) ; **texte préservé au caractère près** (diff sans balises = vide sur les
+  9 pages) ; nav règle de `manuel.html` intacte ; refs planches + index recherche OK. Rendu de la **page réelle**
+  vérifié par capture Chrome headless (voltige = 1)/2)/3) dans un seul encadré, conforme au scan).
+  - ⚠️ **Toute modif du rendu passe par le filtre/CSS puis un rebuild**, jamais par les `pages/manuel/*.html`
+    générés (écrasés au prochain build).
+- **3e correctif — numérotation d'origine restaurée (DOCX + site).** Constat (scan = source de vérité,
+  PDF p. 22-23 § 1.6.2/1.6.3) : la transcription DOCX avait rendu deux **listes numérotées « 1) 2) 3) »**
+  d'origine en **puces tiret**. Corrigé **à la source (DOCX)** puis régénéré :
+  - Outil `scratchpad/docx_fix.py` (réutilisable, piloté par spec JSON) : chirurgie XML ciblée sur
+    `word/document.xml` — retire le `<w:numPr>` de l'item visé et préfixe le marqueur d'origine « N) » ;
+    sauvegarde `.orig` auto, écriture atomique, idempotent. `FOUGA_CM170_Section_I_Description.docx` corrigé
+    (§ 1.6.2 « bouton de test » 1-3 ; § 1.6.3 « Remarques freins » 1-3). Backup : `*.docx.orig`.
+  - Une fois le DOCX en « N) » texte, ma règle `numitem` fait le reste au rebuild (retrait pendant).
+  - **Audit complet des 8 sections** (workflow, un lecteur/section confrontant HTML ↔ pages scan) :
+    **aucune autre** liste `<ul>` à convertir — les 222 puces `<ul>` sont d'**authentiques tirets** de
+    l'original, et toutes les vraies listes numérotées/lettrées étaient déjà en `numitem`. **Le défaut
+    n'était pas systémique** (2 listes seulement).
+  - **Régression corrigée** (débusquée par l'audit) : ma règle `numitem` prenait « 110 - 120 nœuds » (§ 2.9)
+    pour un marqueur « 110 - » → motif tiret durci (doit être suivi d'une **lettre**, pas d'un chiffre).
+- **4e correctif — typographie des tirets (DOCX + site).** Le manuel d'origine est **dactylographié**
+  (machine à écrire = seulement le trait d'union « - ») ; confirmé sur le scan de la table des matières
+  (« 3.1. - Réacteurs », « 69 - Vitesses… - Petits bidons »). La transcription avait introduit **272**
+  tirets cadratins « — » / demi-cadratins « – ». Ramenés tous à « - » **dans le corps** (outil
+  `scratchpad/dash_fix.py`, backup `.predash`), en **excluant le bloc-titre** du transcripteur (« Manuel
+  de l'équipage — Partie Texte », « CHAPITRE… », stripé du HTML de toute façon). ~261 remplacements
+  (Section II 159, Liminaires 63). **Effet de bord bénéfique** : les marqueurs de checklists « 1 – Etat
+  de la calotte… » redeviennent « 1 - » et **repassent en items numérotés** (`numitem`, retrait pendant) —
+  Section II passe de ~20 à 159 `numitem`. **Vérifs** : rebuild OK ; **texte identique au caractère près**
+  (tirets normalisés, aucun mot perdu — seules diffs = les « 1) 2) 3) » du 3e correctif) ; le corps du
+  manuel ne contient **plus aucun** « – »/« — » (les tirets longs restants du HTML sont 100 % de la
+  **chrome du site** : en-têtes « Section I — Description », tooltips « Planche 47 — Poste… », colophon) ;
+  rendu réel vérifié par capture Chrome headless.
+  - **Point de design laissé tel quel** (à trancher) : la puce CSS de niveau 1 est un « – » (en-dash) —
+    `li::before{content:"–"}` — alors que l'original a « - ». C'est un **choix graphique du site**
+    (hiérarchie –/·/◦ documentée), distinct de la fidélité du texte ; passable à « - » en une ligne de CSS
+    si l'on veut coller au dactylographe.
+  - § 5.1.6 : `<ul>` dont le scan use des marqueurs « . » (points) — laissé en tiret (marqueur non standard,
+    hors typographie des tirets).
+
+**2026-07-18 — Bibliographie sélective : ajouts d'ouvrages & nouvelle rubrique articles**
+- **Ouvrages ajoutés** (détails vérifiés par recherche + fetch, comme le reste de la biblio) : *Le Fouga sous
+  toutes ses couleurs* (Rambeau ; Moreau ; Audouin — Addim, 1993) en **Section I** ; *CEAM… une histoire de
+  l'Armée de l'air* (Pena — Histoire & Collections, 2014) et *Planeurs et avions… Robert Castello… Éts Fouga*
+  (Castello — Le Lézard, 1993) en **Section II**.
+- **Nouvelle Section IV « Le Fouga dans la revue *Le Fana de l'Aviation* »** insérée après les Articles ; les
+  sections suivantes **renumérotées V→VIII**. 29 articles « consacrés au Fouga » (Magister/Zéphyr) + 6
+  « contexte » (sélection) sous un sous-libellé (`.bs-sub`, **nouveau style dans `site.css`**). Données
+  nettoyées des annotations de catalogage (Index, [1], notes ODS, descriptions A/B/C, « Maquette Heller »)
+  et **harmonisées au style maison** : « NOM, Prénom. », titres entre « … », revue en *italique*, **« no »**
+  (la biblio existante n'emploie pas « n° »), anonymes commençant par le titre ; insécables posées par le
+  script typo `.biblio`. Rendu vérifié (details ouvert temporairement puis refermé).
+  - Laissés en attente : **entrée C** (« renvoi apparenté » Super Magister CM 1070) **écartée** — vide de sens
+    une fois l'annotation Index retirée, et « non Fouga strict » ; le sous-groupe « contexte » ne contient que
+    les **6 exemples** fournis (les **51 références complètes sont dans les fichiers ODS de Valérie**, non
+    transmis). Soft points : ville de « Le Lézard » introuvable (entrée sans ville) ; pagination Castello
+    329 p. (catalogues).
+
+**2026-07-18 — Bandeau d'avertissement étendu aux instruments**
+- Le bandeau `.avertissement` (« prototype… peut comporter erreurs… ne convient pas à un vol ») apparaît
+  désormais aussi sur les **4 enveloppes** `computeur.html`, `computeur-virtuel.html`, `regle-navigation.html`,
+  `regle-navigation-virtuelle.html` — inséré entre la sous-nav et le `<main>`/iframe (même markup/style que
+  l'accueil, ces pages chargeant déjà `site.css`). ⚠️ Pages **maintenues à la main** → pas de rebuild, pas
+  d'écrasement. Non ajouté à `monographie.html` (document, pas prototype).
+
+**2026-07-18 — Contraste des heros (mode d'emploi computeur & règle)**
+- Titres crème peu lisibles sur les photos d'instruments argentés. Sur les heros de `pages/mode_emploi.html`
+  et `pages/regle_navigation.html` : photo assombrie (`filter … brightness(.8)`), voile dégradé plus dense
+  sous le titre (.76 à 60 %, .96 en bas), **ombre de titre resserrée** (`0 1px 2px .6` + halo, au lieu du halo
+  diffus `0 2px 30px .4`), lede en `weight:400` + ombre. Rendu vérifié par capture ; réglage identique sur les
+  deux pages (ajustable au `brightness` page par page si besoin).
+
 ### Pistes non traitées (site)
 - Drag de la couronne directement depuis les étiquettes d'altitude ; molette souris.
 - Factorisation de la charte dupliquée dans les pages internes du computeur.
 - Recette mobile complète (le responsive est en place mais non testé sur appareil).
+- **Règle virtuelle → règle complète** : dès réception des **clichés de la coulisse recto/verso à plat**
+  (perpendiculaires, avec réglet, + curseur non fissuré), appliquer le plan de
+  `REGLE_VIRTUELLE_transition.md`. Data & calculs déjà vérifiés (18/07/2026).
+- **Bibliographie** : trancher [1]/[5] (même page musée), [4] (site amateur de vol virtuel), [7]/[9]
+  (préciser ou retirer) ; numérotation sans [3].
 
 ---
 
-*Dernière mise à jour du handoff : 17/07/2026 — ajout du volet site web (§8) : journal des
-interventions sur la page de présentation (bibliographie, footer) et sur le computeur (audit des
-données, logo, table 336, accessibilité clavier, correctifs de textes). Volet transcription DOCX
-inchangé : restent le document maître et l'étude.*
+*Dernière mise à jour du handoff : 18/07/2026 — §8 étendu : nouveau sous-sujet « Règle de navigation »
+(mode d'emploi + règle virtuelle interactive, Marboré II & VI ; construits par extraction fidèle des
+photos + revue adversariale, 0 erreur de données), objectivation des notices (retrait de la conduite
+de vol), page de présentation (avertissement « prototype non diffusable » + illustrations 3-vues en
+marge), bibliographies (vérification web par fetch + « Bibliographie sélective » de 53 entrées +
+typographie insécable). Volet transcription DOCX inchangé : restent le document maître et l'étude.*
+
+*Compléments 18/07/2026 (suite) : (1) **règle virtuelle** vérifiée (données 100 % fidèles, calculs exacts)
+avec la spec de transition `REGLE_VIRTUELLE_transition.md` ; (2) **manuel HTML** — retrait pendant des items
+numérotés/lettrés, regroupement des NOTA multi-paragraphes, **restauration de la numérotation d'origine**
+de 2 listes (DOCX corrigés via `docx_fix.py`, backups `.orig`) après **audit des 8 sections** (défaut non
+systémique), et **typographie des tirets** ramenée au « - » du dactylographe (272 corrigés via `dash_fix.py`,
+backups `.predash`) — texte préservé au caractère près, rendus vérifiés par capture ; (3) **bibliographie
+sélective** — 3 ouvrages + nouvelle **Section IV** (articles du *Fana de l'Aviation*, renumérotation V→VIII) ;
+(4) **bandeau d'avertissement** étendu aux 4 pages computeur/règle ; (5) **contraste des heros** computeur &
+règle renforcé. Outils réutilisables dans `FOUGA_CM170_COLLECTE/` (scripts) et `scratchpad/`.*

@@ -50,17 +50,17 @@ nav.links a:hover,nav.links a.active{background:var(--blue);color:#f4ecd8}
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;overflow:hidden;color:#f3ead6}
-.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.9) contrast(1.02);
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.02) brightness(.8);
   transform:scale(1.06);animation:drift 26s ease-in-out infinite alternate}
 @keyframes drift{to{transform:scale(1.14) translateY(-2%)}}
 .hero::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(180deg,rgba(18,22,30,.55) 0%,rgba(18,22,30,.18) 38%,rgba(20,18,12,.62) 78%,rgba(16,14,10,.9) 100%)}
+  linear-gradient(180deg,rgba(16,20,28,.42) 0%,rgba(16,20,28,.32) 30%,rgba(16,14,10,.76) 60%,rgba(9,8,5,.96) 100%)}
 .hero-in{position:relative;z-index:2;padding:0 28px 8vh;max-width:1120px;margin:0 auto;width:100%}
 .hero .kicker{color:var(--brass-2)}
-.hero h1{font-size:clamp(2.6rem,7vw,5.7rem);font-weight:900;margin:.18em 0 .1em;color:#f6eedb;
-  text-shadow:0 2px 30px rgba(0,0,0,.4)}
+.hero h1{font-size:clamp(2.6rem,7vw,5.7rem);font-weight:900;margin:.18em 0 .1em;color:#f8f1e0;
+  text-shadow:0 1px 2px rgba(0,0,0,.6),0 2px 20px rgba(0,0,0,.72)}
 .hero h1 em{font-style:italic;font-weight:400}
-.hero .lede{font-size:clamp(1.05rem,2.2vw,1.4rem);max-width:46ch;color:#ece2cd;font-weight:300}
+.hero .lede{font-size:clamp(1.05rem,2.2vw,1.4rem);max-width:46ch;color:#f1e8d5;font-weight:400;text-shadow:0 1px 8px rgba(0,0,0,.65)}
 .hero .meta{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;font-family:var(--lab);text-transform:uppercase;
   letter-spacing:.16em;font-size:.74rem;color:#d9cdb1}
 .hero .meta span{border-left:2px solid var(--brass-2);padding-left:10px}
