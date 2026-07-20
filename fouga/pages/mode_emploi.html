@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computeur de vol — Fouga CM 170 R Magister · Mode d’emploi</title>
+<link rel="stylesheet" href="../assets/css/fonts.css">
+<style>
+:root{
+  --paper:#efe7d5; --paper-2:#e7ddc7; --panel:#f7f1e4; --panel-2:#f1e9d8;
+  --ink:#211f19; --ink-soft:#4f4a3d; --muted:#7a7160;
+  --line:#cabd9f; --line-strong:#b3a586; --grid:#9b8a62; --grid-soft:#bcad86;
+  --blue:#1d3a57; --blue-2:#274d72; --brass:#9a7320; --brass-2:#b78d31; --rouge:#9c3a2d;
+  --shadow:0 18px 40px -22px rgba(40,32,12,.55);
+  --disp:"Fraunces",Georgia,serif;
+  --lab:"Saira Semi Condensed",system-ui,sans-serif;
+  --body:"Spectral",Georgia,serif;
+  --mono:"Spline Sans Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);background:var(--paper);font-family:var(--body);
+  font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,.45), transparent 40%),
+    radial-gradient(circle at 88% 82%, rgba(154,115,32,.06), transparent 45%);
+}
+/* grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.kicker{font-family:var(--lab);text-transform:uppercase;letter-spacing:.28em;font-size:.78rem;font-weight:600;color:var(--brass)}
+h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.05;letter-spacing:-.01em}
+a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:2px}
+
+/* ---------- top nav ---------- */
+header.nav{position:sticky;top:0;z-index:100;background:rgba(239,231,213,.82);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:18px;height:58px;max-width:1120px;margin:0 auto;padding:0 28px}
+.brandmark{font-family:var(--lab);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.86rem;color:var(--ink);white-space:nowrap}
+.brandmark b{color:var(--rouge)}
+nav.links{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+nav.links a{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;font-weight:600;
+  color:var(--ink-soft);text-decoration:none;padding:7px 11px;border-radius:6px;transition:.2s}
+nav.links a:hover,nav.links a.active{background:var(--blue);color:#f4ecd8}
+@media(max-width:780px){nav.links{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;overflow:hidden;color:#f3ead6}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.02) brightness(.8);
+  transform:scale(1.06);animation:drift 26s ease-in-out infinite alternate}
+@keyframes drift{to{transform:scale(1.14) translateY(-2%)}}
+.hero::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(16,20,28,.42) 0%,rgba(16,20,28,.32) 30%,rgba(16,14,10,.76) 60%,rgba(9,8,5,.96) 100%)}
+.hero-in{position:relative;z-index:2;padding:0 28px 8vh;max-width:1120px;margin:0 auto;width:100%}
+.hero .kicker{color:var(--brass-2)}
+.hero h1{font-size:clamp(2.6rem,7vw,5.7rem);font-weight:900;margin:.18em 0 .1em;color:#f8f1e0;
+  text-shadow:0 1px 2px rgba(0,0,0,.6),0 2px 20px rgba(0,0,0,.72)}
+.hero h1 em{font-style:italic;font-weight:400}
+.hero .lede{font-size:clamp(1.05rem,2.2vw,1.4rem);max-width:46ch;color:#f1e8d5;font-weight:400;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+.hero .meta{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;font-family:var(--lab);text-transform:uppercase;
+  letter-spacing:.16em;font-size:.74rem;color:#d9cdb1}
+.hero .meta span{border-left:2px solid var(--brass-2);padding-left:10px}
+.scrollcue{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:3;font-family:var(--lab);
+  text-transform:uppercase;letter-spacing:.2em;font-size:.66rem;color:#e7dcc2;opacity:.85;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,6px)}}
+
+/* ---------- sections ---------- */
+section{padding:88px 0;border-top:1px solid var(--line);scroll-margin-top:64px}
+section:nth-of-type(even){background:linear-gradient(180deg,var(--panel),var(--panel-2))}
+.sec-head{max-width:760px;margin-bottom:42px}
+.sec-head h2{font-size:clamp(2rem,4.2vw,3.1rem);margin:.18em 0 .35em}
+.sec-head p{color:var(--ink-soft);font-size:1.12rem;margin:0}
+.lead-rule{width:64px;height:3px;background:var(--brass);border-radius:2px}
+
+/* feature rows */
+.feature{display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:center;margin:46px 0}
+.feature.rev{grid-template-columns:1fr 1.05fr}
+.feature.rev .figure{order:-1}
+@media(max-width:860px){.feature,.feature.rev{grid-template-columns:1fr}.feature.rev .figure{order:0}}
+.feature h3{font-size:1.5rem;margin:0 0 .4em;color:var(--blue)}
+.feature p{margin:.5em 0}
+.figure{margin:0}
+.figure .frame{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line-strong);
+  box-shadow:var(--shadow);background:#0d0c0a}
+.figure img{display:block;width:100%;height:auto;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.figure:hover img{transform:scale(1.04)}
+.figure figcaption{font-family:var(--lab);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;
+  color:var(--muted);margin-top:10px;display:flex;gap:8px;align-items:center}
+.figure figcaption::before{content:"";width:16px;height:2px;background:var(--brass)}
+.tag{position:absolute;top:12px;left:12px;font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;
+  font-size:.66rem;font-weight:700;color:#f2e8d2;background:rgba(29,58,87,.85);padding:5px 10px;border-radius:5px;backdrop-filter:blur(3px)}
+
+/* three-tool cards */
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}
+@media(max-width:780px){.tools{grid-template-columns:1fr}}
+.tool{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px;position:relative;overflow:hidden}
+.tool .n{font-family:var(--disp);font-weight:900;font-size:2.4rem;color:var(--brass);opacity:.5;line-height:1}
+.tool h4{font-family:var(--disp);font-size:1.18rem;margin:.3em 0 .35em;color:var(--ink)}
+.tool p{font-size:.98rem;color:var(--ink-soft);margin:0}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto;border:1.5px solid var(--grid);border-radius:10px;box-shadow:var(--shadow);background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:540px}
+caption{caption-side:top;text-align:left;font-family:var(--lab);text-transform:uppercase;letter-spacing:.14em;
+  font-size:.74rem;color:var(--muted);padding:14px 16px 0}
+th,td{padding:9px 13px;text-align:center;border:1px solid var(--grid-soft)}
+thead th{font-family:var(--lab);text-transform:uppercase;letter-spacing:.06em;font-size:.72rem;font-weight:700;
+  background:var(--blue);color:#f1e7d2;border:1px solid rgba(244,236,216,.28)}
+thead tr.sub th{background:var(--blue-2)}
+tbody th,td.rowh{font-family:var(--lab);font-weight:700;background:var(--panel-2);text-align:left;letter-spacing:.02em}
+tbody tr:nth-child(even) td:not(.void):not(.rowh){background:rgba(255,255,255,.45)}
+td.void{background-color:#b4a682;
+  background-image:repeating-linear-gradient(45deg,#2f2b22 0,#2f2b22 2px,transparent 2px,transparent 10px)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+td.arr{font-family:var(--mono);text-align:left;padding-left:18px;white-space:nowrap}
+
+/* tabs */
+.tabs{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}
+.tabs button{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.78rem;font-weight:600;
+  border:1px solid var(--line-strong);background:var(--panel);color:var(--ink-soft);padding:9px 16px;border-radius:999px;cursor:pointer;transition:.2s}
+.tabs button:hover{border-color:var(--brass)}
+.tabs button.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tabpane{display:none}
+.tabpane.active{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.note-mini{font-size:.86rem;color:var(--muted);font-style:italic;margin:10px 2px 0}
+
+/* table / chart view toggle */
+.viewtoggle{display:inline-flex;gap:4px;background:var(--panel-2);border:1px solid var(--line-strong);
+  border-radius:999px;padding:4px;margin:0 0 18px}
+.viewtoggle button{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;font-weight:600;
+  border:0;background:transparent;color:var(--ink-soft);padding:7px 18px;border-radius:999px;cursor:pointer;transition:.2s}
+.viewtoggle button:hover{color:var(--ink)}
+.viewtoggle button.active{background:var(--ink);color:var(--paper)}
+
+/* performance curves */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:2px}
+@media(max-width:760px){.charts{grid-template-columns:1fr}}
+.chartcard{background:var(--panel);border:1.5px solid var(--grid);border-radius:10px;box-shadow:var(--shadow);
+  padding:16px 16px 12px;margin:0}
+.chartcard h4{font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;font-weight:700;
+  color:var(--blue);margin:0}
+.chartcard .unit{font-family:var(--lab);text-transform:uppercase;letter-spacing:.1em;font-size:.66rem;color:var(--muted);margin:2px 0 8px}
+.chartcard svg{display:block;width:100%;height:auto}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin:14px 2px 0;font-family:var(--lab);text-transform:uppercase;
+  letter-spacing:.08em;font-size:.74rem;font-weight:600;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:18px;height:3px;border-radius:2px}
+
+/* steps */
+.steps{counter-reset:step;margin-top:18px;border-left:2px solid var(--line-strong);padding-left:0}
+.step{position:relative;padding:0 0 40px 78px;counter-increment:step}
+.step::before{content:counter(step,decimal-leading-zero);position:absolute;left:-1px;top:-6px;transform:translateX(-50%);
+  font-family:var(--disp);font-weight:900;font-size:1.05rem;color:#f3ead6;background:var(--blue);width:42px;height:42px;
+  border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 6px var(--paper)}
+section:nth-of-type(even) .step::before{box-shadow:0 0 0 6px var(--panel)}
+.step h3{font-size:1.32rem;margin:0 0 .25em;color:var(--ink)}
+.step p{margin:.35em 0}
+.step ul{margin:.4em 0;padding-left:1.1em}
+.step li{margin:.25em 0}
+
+/* callout */
+.callout{border-left:4px solid var(--blue);background:linear-gradient(180deg,#eef3f8,#e9eff6);
+  border-radius:0 10px 10px 0;padding:20px 24px;margin:22px 0;box-shadow:var(--shadow)}
+.callout .lab{font-family:var(--lab);text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;font-weight:700;color:var(--blue);display:block;margin-bottom:6px}
+.callout.warn{border-color:var(--rouge);background:linear-gradient(180deg,#f7ece8,#f3e4df)}
+.callout.warn .lab{color:var(--rouge)}
+
+/* example chip row */
+.example{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}
+.chip{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:.84rem;padding:7px 12px;border-radius:8px}
+.chip b{color:var(--brass-2)}
+
+/* glossary */
+.gloss{columns:2;column-gap:46px;margin-top:18px}
+@media(max-width:720px){.gloss{columns:1}}
+.gloss div{break-inside:avoid;margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.gloss dt{font-family:var(--lab);font-weight:700;letter-spacing:.04em;color:var(--blue);text-transform:uppercase;font-size:.84rem}
+.gloss dd{margin:3px 0 0;font-size:.96rem;color:var(--ink-soft)}
+
+/* limitations strip */
+.lims{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+@media(max-width:620px){.lims{grid-template-columns:1fr}}
+.lim{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--rouge);border-radius:8px;padding:18px 20px}
+.lim .v{font-family:var(--disp);font-weight:900;font-size:1.9rem;color:var(--ink)}
+.lim .k{font-family:var(--lab);text-transform:uppercase;letter-spacing:.12em;font-size:.74rem;color:var(--muted)}
+
+/* footer */
+footer{background:#191712;color:#cdbf9f;padding:26px 0 24px;border-top:3px solid var(--brass)}
+footer .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-end}
+footer h3{font-family:var(--disp);color:#f1e7cf;font-size:1.5rem;margin:0 0 .3em}
+footer p{margin:.2em 0;font-size:.92rem;color:#b7aa8c}
+footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;color:#8c8068}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero img{animation:none}}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.tabpane{display:block!important}</style></noscript>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <div class="brandmark">Fouga CM&nbsp;170&nbsp;R <b>·</b> Computeur de vol <b>·</b> Marboré&nbsp;II</div>
+    <nav class="links">
+      <a href="#presentation">Présentation</a>
+      <a href="#anatomie">Anatomie</a>
+      <a href="#abaques">Abaques</a>
+      <a href="#emploi">Règle à calcul</a>
+      <a href="#constantes">Constantes</a>
+      <a href="#glossaire">Glossaire</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top" style="border-top:none;padding:0">
+  <img src="../assets/img/face131_vue.jpg" alt="Face « 131 » du computeur de vol du Fouga CM 170 R Magister">
+  <div class="hero-in">
+    <h1>Computeur de vol<br><em>Fouga CM&nbsp;170&nbsp;R Magister</em></h1>
+    <p class="lede">Le mode d’emploi illustré de l’instrument de navigation recto-verso, établi pour l’avion-école et ses réacteurs Turboméca Marboré&nbsp;II.</p>
+    <div class="meta">
+      <span>Turboméca Marboré II</span>
+      <span>Abaques de performances</span>
+      <span>Règle à calcul circulaire</span>
+      <span>Réglette cartographique</span>
+    </div>
+  </div>
+  <div class="scrollcue">▼ Faire défiler</div>
+</section>
+
+<!-- PRESENTATION -->
+<section id="presentation">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">I · Présentation</div>
+      <h2>Un seul instrument, deux faces</h2>
+      <p>Le computeur du Fouga CM&nbsp;170&nbsp;R « Magister » est un instrument de planification recto-verso. Il réunit, sur ses deux faces, trois outils complémentaires propres à l’avion et à son moteur Marboré&nbsp;II.</p>
+    </div>
+
+    <div class="tools reveal">
+      <div class="tool"><div class="n">A</div><h4>Abaques de performances</h4><p>Régime moteur, consommation, vitesses, distance franchissable et temps — lus directement, sans calcul.</p></div>
+      <div class="tool"><div class="n">B</div><h4>Règle à calcul circulaire</h4><p>De la famille des « computers » E6B / CRP-5 : conversions d’unités et passage de la vitesse corrigée à la vitesse vraie.</p></div>
+      <div class="tool"><div class="n">C</div><h4>Réglette cartographique</h4><p>Graduée en kilomètres et en milles nautiques pour mesurer les distances sur la carte : au 1/1.000.000ᵉ sur la face « 131 », au 1/500.000ᵉ sur la face « 336 ».</p></div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:34px">
+      <span class="lab">À propos des marques « 131 » et « 336 »</span>
+      Ces deux nombres gravés sur l’instrument ne désignent pas deux modèles différents : ils correspondent vraisemblablement aux numéros des Fouga auxquels l’appareil a été rattaché. Les photographies présentées ici sont le recto et le verso d’un même computeur.
+    </div>
+
+    <div class="callout reveal">
+      <span class="lab">Un computeur pour le seul Marboré II</span>
+      Toutes les valeurs de cette page valent pour le <strong>Marboré&nbsp;II</strong> : c’est le moteur pour lequel le computeur a été gravé, et il n’en connaît pas d’autre. Le second moteur du Magister, le <strong>Marboré&nbsp;VI</strong>, relève d’un instrument distinct — la <a href="../regle-navigation.html" target="_top">règle de navigation de 1980</a>, qui porte les deux motorisations côte à côte. Sa table d’endurance maximum reproduit d’ailleurs, à l’identique, celle de la face « 336 » ci-dessous.
+    </div>
+  </div>
+</section>
+
+<!-- ANATOMIE -->
+<section id="anatomie">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">II · Anatomie</div>
+      <h2>Reconnaître chaque face</h2>
+      <p>Chaque face porte des outils distincts : la face « 131 » les abaques de performances de croisière ; la face « 336 » la table régime / consommation et la règle à calcul.</p>
+    </div>
+
+    <div class="feature reveal">
+      <div class="txt">
+        <h3>Face « 131 » — le disque à fenêtres</h3>
+        <p>Le disque tournant révèle, dans ses fenêtres de lecture, la série couplée <strong>régime → consommation → vitesses → distance → temps</strong> pour le calage choisi. Tout autour, la couronne associe chaque altitude à un carburant.</p>
+        <p>Cette face porte aussi la légende des hypothèses de calcul, les constantes et limitations, et la réglette kilométrique au 1/1.000.000ᵉ.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Recto · face 131</span><img src="../assets/img/face131_disque.jpg" alt="Disque à fenêtres de lecture de la face 131"></div>
+        <figcaption>Fenêtres de lecture et couronne tournante</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature rev reveal">
+      <div class="txt">
+        <h3>Face « 336 » — la table & la règle à calcul</h3>
+        <p>Cette face porte la table centrale <strong>régime / consommation</strong>, les règles d’affichage (distance et endurance maximales) et la règle à calcul circulaire (échelles « corrigées » et « vraies », échelle logarithmique, conversion milles).</p>
+        <p>Les rappels gravés indiquent, pour la distance et l’endurance maximales, le régime à afficher selon l’altitude et le carburant restant.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Verso · face 336</span><img src="../assets/img/face336_table.jpg" alt="Table centrale régime/consommation de la face 336"></div>
+        <figcaption>Table N° 336 et échelles de la règle à calcul</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature reveal">
+      <div class="txt">
+        <h3>La couronne altitude / litres</h3>
+        <p>Un repère ▲ associe chaque altitude à une quantité de carburant restant après montée, par paliers de 45 à 55&nbsp;L tous les 5.000 pieds. Le repère <strong>SOL</strong> (710&nbsp;L, pleins) marque le point de départ au niveau du sol.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Couronne · litres ▸ pieds</span><img src="../assets/img/couronne_litres.jpg" alt="Couronne altitude/litres, repère SOL et 710 litres"></div>
+        <figcaption>Repères SOL, 710 litres, échelle des pieds</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ABAQUES -->
+<section id="abaques">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">III · Les abaques de performances</div>
+      <h2>Lire les performances</h2>
+      <p>Pour chaque régime moteur et chaque altitude, l’instrument donne directement les performances de l’avion.</p>
+    </div>
+
+    <!-- Grille de croisière, tabs -->
+    <h3 style="font-family:var(--disp);color:var(--blue);font-size:1.5rem;margin:0 0 6px">Grille de croisière — 3 régimes × 7 altitudes</h3>
+    <p style="margin:.2em 0 18px;color:var(--ink-soft)">À régime constant, monter en altitude réduit la consommation et la vitesse indiquée mais conserve la vitesse vraie : d’où un meilleur rendement kilométrique en altitude.</p>
+    <div class="reveal">
+      <div class="viewtoggle" role="tablist" aria-label="Affichage de la grille de croisière">
+        <button class="active" data-view="table">Tableau</button>
+        <button data-view="chart">Courbe</button>
+      </div>
+
+      <div id="cruise-table">
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="r19">Régime 19.000 t/m</button>
+        <button class="tab-btn" data-tab="r20">Régime 20.000 t/m</button>
+        <button class="tab-btn" data-tab="r21">Régime 21.000 t/m</button>
+      </div>
+
+      <div class="tabpane active" id="r19">
+        <div class="tablewrap"><table>
+          <caption>Régime 19.000 t/m — face « 131 »</caption>
+          <thead><tr><th>Altitude / litres</th><th>Conso. l/h</th><th>Conso. l/min</th><th>IAS kt</th><th>CAS kt</th><th>TAS km/h</th><th>km/min</th><th>Dist. km</th><th>Temps</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">30.000 (400 L)</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td class="rowh">25.000 (455 L)</td><td class="num">310</td><td class="num">5,2</td><td class="num">160</td><td class="num">153</td><td class="num">416</td><td class="num">7,0</td><td class="num">710</td><td class="num">1 h 44</td></tr>
+            <tr><td class="rowh">20.000 (510 L)</td><td class="num">375</td><td class="num">6,3</td><td class="num">176</td><td class="num">170</td><td class="num">428</td><td class="num">7,1</td><td class="num">655</td><td class="num">1 h 33</td></tr>
+            <tr><td class="rowh">15.000 (560 L)</td><td class="num">440</td><td class="num">7,4</td><td class="num">192</td><td class="num">186</td><td class="num">430</td><td class="num">7,1</td><td class="num">597</td><td class="num">1 h 24</td></tr>
+            <tr><td class="rowh">10.000 (610 L)</td><td class="num">510</td><td class="num">8,5</td><td class="num">209</td><td class="num">202</td><td class="num">430</td><td class="num">7,1</td><td class="num">545</td><td class="num">1 h 17</td></tr>
+            <tr><td class="rowh">5.000 (665 L)</td><td class="num">600</td><td class="num">10,0</td><td class="num">222</td><td class="num">215</td><td class="num">426</td><td class="num">7,1</td><td class="num">486</td><td class="num">1 h 09</td></tr>
+            <tr><td class="rowh">SOL (710 L — pleins)</td><td class="num">670</td><td class="num">11,2</td><td class="num">233</td><td class="num">225</td><td class="num">422</td><td class="num">7,0</td><td class="num">446</td><td class="num">1 h 04</td></tr>
+          </tbody>
+        </table></div>
+        <p class="note-mini">Au régime 19.000 t/m, c’est le cas « 30.000′ » qui n’est pas gravé sur l’instrument (fenêtre vierge) : au-dessus de 30.000′, on affiche 20.000 t/m.</p>
+      </div>
+
+      <div class="tabpane" id="r20">
+        <div class="tablewrap"><table>
+          <caption>Régime 20.000 t/m — face « 131 »</caption>
+          <thead><tr><th>Altitude / litres</th><th>Conso. l/h</th><th>Conso. l/min</th><th>IAS kt</th><th>CAS kt</th><th>TAS km/h</th><th>km/min</th><th>Dist. km</th><th>Temps</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">30.000 (400 L)</td><td class="num">320</td><td class="num">5,4</td><td class="num">172</td><td class="num">162</td><td class="num">482</td><td class="num">8,0</td><td class="num">740</td><td class="num">1 h 37</td></tr>
+            <tr><td class="rowh">25.000 (455 L)</td><td class="num">380</td><td class="num">6,4</td><td class="num">190</td><td class="num">182</td><td class="num">495</td><td class="num">8,2</td><td class="num">696</td><td class="num">1 h 28</td></tr>
+            <tr><td class="rowh">20.000 (510 L)</td><td class="num">450</td><td class="num">7,5</td><td class="num">205</td><td class="num">197</td><td class="num">492</td><td class="num">8,2</td><td class="num">631</td><td class="num">1 h 20</td></tr>
+            <tr><td class="rowh">15.000 (560 L)</td><td class="num">525</td><td class="num">8,8</td><td class="num">220</td><td class="num">212</td><td class="num">491</td><td class="num">8,2</td><td class="num">573</td><td class="num">1 h 12</td></tr>
+            <tr><td class="rowh">10.000 (610 L)</td><td class="num">600</td><td class="num">10,0</td><td class="num">235</td><td class="num">227</td><td class="num">486</td><td class="num">8,1</td><td class="num">523</td><td class="num">1 h 06</td></tr>
+            <tr><td class="rowh">5.000 (665 L)</td><td class="num">695</td><td class="num">11,6</td><td class="num">260</td><td class="num">242</td><td class="num">482</td><td class="num">8,0</td><td class="num">474</td><td class="num">1 h 00</td></tr>
+            <tr><td class="rowh">SOL (710 L — pleins)</td><td class="num">775</td><td class="num">13,0</td><td class="num">264</td><td class="num">254</td><td class="num">477</td><td class="num">7,9</td><td class="num">436</td><td class="num">0 h 55</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="tabpane" id="r21">
+        <div class="tablewrap"><table>
+          <caption>Régime 21.000 t/m — face « 131 »</caption>
+          <thead><tr><th>Altitude / litres</th><th>Conso. l/h</th><th>Conso. l/min</th><th>IAS kt</th><th>CAS kt</th><th>TAS km/h</th><th>km/min</th><th>Dist. km</th><th>Temps</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">30.000 (400 L)</td><td class="num">390</td><td class="num">6,5</td><td class="num">190</td><td class="num">183</td><td class="num">546</td><td class="num">9,1</td><td class="num">698</td><td class="num">1 h 24</td></tr>
+            <tr><td class="rowh">25.000 (455 L)</td><td class="num">465</td><td class="num">7,8</td><td class="num">212</td><td class="num">203</td><td class="num">550</td><td class="num">9,2</td><td class="num">642</td><td class="num">1 h 15</td></tr>
+            <tr><td class="rowh">20.000 (510 L)</td><td class="num">550</td><td class="num">9,2</td><td class="num">229</td><td class="num">220</td><td class="num">552</td><td class="num">9,2</td><td class="num">586</td><td class="num">1 h 07</td></tr>
+            <tr><td class="rowh">15.000 (560 L)</td><td class="num">640</td><td class="num">10,7</td><td class="num">249</td><td class="num">238</td><td class="num">550</td><td class="num">9,1</td><td class="num">530</td><td class="num">1 h 01</td></tr>
+            <tr><td class="rowh">10.000 (610 L)</td><td class="num">740</td><td class="num">12,4</td><td class="num">266</td><td class="num">255</td><td class="num">547</td><td class="num">9,1</td><td class="num">480</td><td class="num">0 h 53</td></tr>
+            <tr><td class="rowh">5.000 (665 L)</td><td class="num">850</td><td class="num">14,2</td><td class="num">282</td><td class="num">272</td><td class="num">542</td><td class="num">9,0</td><td class="num">437</td><td class="num">0 h 48</td></tr>
+            <tr><td class="rowh">SOL (710 L — pleins)</td><td class="num">960</td><td class="num">16,0</td><td class="num">298</td><td class="num">286</td><td class="num">538</td><td class="num">8,9</td><td class="num">396</td><td class="num">0 h 45</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      </div><!-- /#cruise-table -->
+
+      <div id="cruise-charts" hidden></div>
+    </div>
+
+    <!-- Montée / Descente -->
+    <div class="feature reveal" style="margin-top:64px">
+      <div class="txt">
+        <h3>Montée / Descente</h3>
+        <p>Ces abaques servent à retrancher de la croisière le carburant, la distance et le temps des phases verticales. Montée plein gaz (22.600 t/m, 200 kt, M.0,42) ; descente IFR aérofreins sortis (18.000 t/m, 220 kt) ; descente VFR à régime réduit, aérofreins rentrés (200 kt).</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Plaque support</span><img src="../assets/img/abaque_montee_descente.jpg" alt="Table Montée / Descente IFR / VFR gravée sur la plaque"></div>
+        <figcaption>Abaque Montée / Descente IFR / VFR</figcaption>
+      </figure>
+    </div>
+    <div class="tablewrap reveal" style="margin-top:10px"><table>
+      <caption>Montée / Descente — pétrole (L), distance (km), temps (min′s)</caption>
+      <thead>
+        <tr><th rowspan="2">Z</th><th colspan="3">Montée · 22.600 T/m</th><th colspan="3">Desc. IFR · 18.000 T/m</th><th colspan="3">Desc. VFR · N. réduit</th></tr>
+        <tr class="sub"><th>Pétr.</th><th>Dist.</th><th>Temps</th><th>Pétr.</th><th>Dist.</th><th>Temps</th><th>Pétr.</th><th>Dist.</th><th>Temps</th></tr>
+      </thead>
+      <tbody>
+        <tr><th>5</th><td class="num">55</td><td class="num">14</td><td class="num">2′45</td><td class="num">15</td><td class="num">8</td><td class="num">1′15</td><td class="num">15</td><td class="num">17</td><td class="num">3′</td></tr>
+        <tr><th>10</th><td class="num">95</td><td class="num">30</td><td class="num">5′15</td><td class="num">25</td><td class="num">17</td><td class="num">2′20</td><td class="num">30</td><td class="num">40</td><td class="num">6′</td></tr>
+        <tr><th>15</th><td class="num">135</td><td class="num">50</td><td class="num">8′15</td><td class="num">35</td><td class="num">26</td><td class="num">3′20</td><td class="num">45</td><td class="num">67</td><td class="num">10′</td></tr>
+        <tr><th>20</th><td class="num">180</td><td class="num">75</td><td class="num">12′</td><td class="num">40</td><td class="num">36</td><td class="num">4′20</td><td class="num">60</td><td class="num">96</td><td class="num">14′</td></tr>
+        <tr><th>25</th><td class="num">230</td><td class="num">105</td><td class="num">16′30</td><td class="num">45</td><td class="num">45</td><td class="num">5′05</td><td class="num">75</td><td class="num">125</td><td class="num">18′</td></tr>
+        <tr><th>30</th><td class="num">285</td><td class="num">140</td><td class="num">22′30</td><td class="num">50</td><td class="num">53</td><td class="num">5′50</td><td class="num">90</td><td class="num">155</td><td class="num">21′</td></tr>
+      </tbody>
+    </table></div>
+
+    <!-- Table 336 -->
+    <div class="feature rev reveal" style="margin-top:64px">
+      <div class="txt">
+        <h3>Table régime / consommation</h3>
+        <p>Pour chaque altitude Z et les deux vitesses indiquées de référence (140 et 150 kt), la face « 336 » donne le régime à afficher et la consommation horaire puis par minute.</p>
+        <p style="font-size:.95rem;color:var(--ink-soft)"><strong>Rappels du cadran :</strong> distance maximale — 20.000 t/m à 30.000′, ou 19.000 t/m si Z &lt; 30.000′ ; endurance maximale — 19.000 t/m à 25.000′, ou le régime donnant 140/150 kt ; si carburant &lt; 350 L garder Z, si &gt; 350 L afficher 20.000′.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Face 336</span><img src="../assets/img/face336_table.jpg" alt="Table régime/consommation N°336"></div>
+        <figcaption>Table centrale & rappels d’affichage</figcaption>
+      </figure>
+    </div>
+    <div class="tablewrap reveal" style="margin-top:10px;max-width:680px"><table style="min-width:420px">
+      <caption>Régime / consommation — face « 336 »</caption>
+      <thead><tr><th>Z</th><th>Vi (kt)</th><th>Régime (T/m)</th><th>Cons. l/h</th><th>Cons. l/min</th></tr></thead>
+      <tbody>
+        <tr><th>5</th><td class="num">140 – 150</td><td class="num">17.000</td><td class="num">470</td><td class="num">7,8</td></tr>
+        <tr><th>10</th><td class="num">140 – 150</td><td class="num">17.500</td><td class="num">410</td><td class="num">6,9</td></tr>
+        <tr><th>15</th><td class="num">140 – 150</td><td class="num">18.000</td><td class="num">365</td><td class="num">6,1</td></tr>
+        <tr><th>20</th><td class="num">140 – 150</td><td class="num">18.500</td><td class="num">325</td><td class="num">5,5</td></tr>
+        <tr><th>25</th><td class="num">140 – 150</td><td class="num">19.000</td><td class="num">310</td><td class="num">5,2</td></tr>
+        <tr><th>30</th><td class="num">140 – 150</td><td class="num">19.700</td><td class="num">300</td><td class="num">5,0</td></tr>
+      </tbody>
+    </table></div>
+
+    <!-- Distance max -->
+    <div class="feature reveal" style="margin-top:64px">
+      <div class="txt">
+        <h3>Distance maximale à 19.000 t/m</h3>
+        <p>Descente IFR comprise (150&nbsp;L conservés après la descente), cette table donne la distance franchissable « d » selon l’altitude Z et le carburant restant, pour des étapes de 100 à 400 km. Le symbole → indique un vol en palier ; ↗ une montée au niveau indiqué. Les cases hachurées sont sans objet.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Plaque support</span><img src="../assets/img/abaque_distance_max.jpg" alt="Table Distance maximale à 19.000 t/m"></div>
+        <figcaption>Abaque Distance maximale (régime 19.000 t/m)</figcaption>
+      </figure>
+    </div>
+    <div class="tablewrap reveal" style="margin-top:10px"><table>
+      <caption>Distance maximale « d » (km) — palier → · montée ↗</caption>
+      <thead><tr><th>Z</th><th>Pétrole restant</th><th>100 km</th><th>200 km</th><th>300 km</th><th>400 km</th></tr></thead>
+      <tbody>
+        <tr><th rowspan="3">1</th><td class="rowh">300</td><td class="arr">d&nbsp;: 93 →</td><td class="void"></td><td class="void"></td><td class="void"></td></tr>
+        <tr><td class="rowh">400</td><td class="arr">d&nbsp;: 156 →</td><td class="void"></td><td class="void"></td><td class="void"></td></tr>
+        <tr><td class="rowh">500</td><td class="void"></td><td class="arr">d&nbsp;: 220 →</td><td class="arr">↗ 20.000′ d&nbsp;: 257</td><td class="void"></td></tr>
+
+        <tr><th rowspan="3">5</th><td class="rowh">300</td><td class="arr">d&nbsp;: 103 →</td><td class="void"></td><td class="void"></td><td class="void"></td></tr>
+        <tr><td class="rowh">400</td><td class="arr">d&nbsp;: 174 →</td><td class="arr">↗ 20.000′ d&nbsp;: 191</td><td class="void"></td><td class="void"></td></tr>
+        <tr><td class="rowh">500</td><td class="void"></td><td class="arr">d&nbsp;: 246 →</td><td class="arr">↗ 20.000′ d&nbsp;: 307</td><td class="void"></td></tr>
+
+        <tr><th rowspan="3">10</th><td class="rowh">300</td><td class="arr">d&nbsp;: 120 →</td><td class="void"></td><td class="void"></td><td class="void"></td></tr>
+        <tr><td class="rowh">400</td><td class="void"></td><td class="arr">d&nbsp;: 205 →</td><td class="arr">↗ 20.000′ d&nbsp;: 223</td><td class="void"></td></tr>
+        <tr><td class="rowh">500</td><td class="void"></td><td class="void"></td><td class="arr">d&nbsp;: 287 →</td><td class="arr">↗ 25.000′ d&nbsp;: 346</td></tr>
+
+        <tr><th rowspan="3">15</th><td class="rowh">300</td><td class="arr">d&nbsp;: 137 →</td><td class="void"></td><td class="void"></td><td class="void"></td></tr>
+        <tr><td class="rowh">400</td><td class="void"></td><td class="arr">d&nbsp;: 234 →</td><td class="arr">↗ 20.000′ d&nbsp;: 249</td><td class="void"></td></tr>
+        <tr><td class="rowh">500</td><td class="void"></td><td class="void"></td><td class="arr">d&nbsp;: 330 →</td><td class="arr">↗ 25.000′ d&nbsp;: 380</td></tr>
+
+        <tr><th rowspan="3">20</th><td class="rowh">300</td><td class="arr">d&nbsp;: 159 →</td><td class="void"></td><td class="void"></td><td class="void"></td></tr>
+        <tr><td class="rowh">400</td><td class="void"></td><td class="arr">d&nbsp;: 274 →</td><td class="arr">↗ 25.000′ d&nbsp;: 282</td><td class="void"></td></tr>
+        <tr><td class="rowh">500</td><td class="void"></td><td class="void"></td><td class="arr">d&nbsp;: 386 →</td><td class="arr">↗ 25.000′ d&nbsp;: 415</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- REGLE A CALCUL -->
+<section id="emploi">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">IV · La règle à calcul</div>
+      <h2>Opérations de la règle à calcul</h2>
+      <p>La face « 336 » porte une règle à calcul circulaire de la famille E6B / CRP-5. Ses échelles logarithmiques exécutent les conversions ci-dessous.</p>
+    </div>
+    <div class="tablewrap reveal" style="max-width:720px"><table style="min-width:440px">
+      <caption>Échelles de la règle à calcul circulaire</caption>
+      <thead><tr><th>Grandeur</th><th>Réglage sur l’instrument</th></tr></thead>
+      <tbody>
+        <tr><td class="rowh">Vitesse vraie (TAS)</td><td style="text-align:left">Aligner la vitesse corrigée (CAS) sur l’altitude pression ; la vitesse vraie se lit en regard.</td></tr>
+        <tr><td class="rowh">Conversion milles</td><td style="text-align:left">Aligner ST&nbsp;MILES sur NAUT. ; le rapport gravé est d’environ 1,15.</td></tr>
+        <tr><td class="rowh">Calculs proportionnels</td><td style="text-align:left">Échelle logarithmique commune : temps – vitesse – distance et consommation.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout reveal">
+      <span class="lab">Ce qu’intègrent les valeurs des fenêtres</span>
+      Les distances et temps lus dans les fenêtres de la face « 131 » intègrent déjà la montée, la descente IFR et les réserves M/R (40&nbsp;L) et après-descente (180&nbsp;L) : ce ne sont pas de simples rapports distance / TAS.
+    </div>
+  </div>
+</section>
+
+<!-- CONSTANTES -->
+<section id="constantes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">V · Constantes & limitations</div>
+      <h2>À provisionner avant tout calcul</h2>
+      <p>Constantes de carburant gravées sur le cadran, à retrancher des pleins avant tout calcul d’endurance ou de distance.</p>
+    </div>
+    <div class="tablewrap reveal" style="max-width:560px"><table style="min-width:380px">
+      <caption>Réserves & servitudes</caption>
+      <thead><tr><th>Poste</th><th>Litres</th></tr></thead>
+      <tbody>
+        <tr><td class="rowh">G.C.A</td><td class="num">50</td></tr>
+        <tr><td class="rowh">M/R (roulage)</td><td class="num">40</td></tr>
+        <tr><td class="rowh">Rem. gaz + circuit normal</td><td class="num">100</td></tr>
+        <tr><td class="rowh">Rem. gaz + circuit rapide</td><td class="num">60</td></tr>
+        <tr><td class="rowh">Réserve après descente (IFR)</td><td class="num">180</td></tr>
+      </tbody>
+    </table></div>
+    <div class="lims reveal">
+      <div class="lim"><div class="k">VI turbulence</div><div class="v">210 kt</div></div>
+      <div class="lim"><div class="k">VI givrage (minimum)</div><div class="v">200 kt</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSAIRE -->
+<section id="glossaire">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">VI · Glossaire</div>
+      <h2>Les termes du cadran</h2>
+    </div>
+    <dl class="gloss reveal">
+      <div><dt>Z</dt><dd>Altitude, en milliers de pieds (sauf mention contraire).</dd></div>
+      <div><dt>t/m (T/m)</dt><dd>Tours-minute du réacteur — le régime moteur.</dd></div>
+      <div><dt>Vi</dt><dd>Vitesse indiquée de référence (140 ou 150 kt sur la table « 336 »).</dd></div>
+      <div><dt>IAS / CAS / TAS</dt><dd>Vitesse indiquée / corrigée / vraie. La TAS (vitesse propre) est donnée en km/h et km/min.</dd></div>
+      <div><dt>Distance franchissable</dt><dd>Distance couvrable avec le carburant considéré, montée et descente comprises.</dd></div>
+      <div><dt>AF</dt><dd>Aérofreins (sortis en descente IFR, rentrés en VFR).</dd></div>
+      <div><dt>M/R</dt><dd>Mise en route (et roulage).</dd></div>
+      <div><dt>G.C.A</dt><dd>Ground Controlled Approach : approche guidée au radar (réserve 50 L).</dd></div>
+      <div><dt>SOL</dt><dd>Repère du niveau du sol, pleins faits (710 L) — point de départ.</dd></div>
+      <div><dt>→ / ↗</dt><dd>Vol en palier / montée au niveau indiqué.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="sig">Mode d’emploi illustré, reconstitué d’après les deux faces de l’instrument — Fouga CM 170 R « Magister » · Turboméca Marboré II</p>
+  </div>
+</footer>
+
+<script>
+// ---- French typography (espaces insécables / fines + flèches monochromes) ----
+(function(){
+  var NBSP="\u00A0", FINE="\u202F", VS="\uFE0E";
+  function frtext(t){
+    t=t.replace(/\u00AB\s*/g,"\u00AB"+FINE).replace(/\s*\u00BB/g,FINE+"\u00BB");
+    t=t.replace(/\s*([;!?])/g,FINE+"$1");
+    t=t.replace(/\s*:/g,NBSP+":");
+    t=t.replace(/([\u2192\u2197\u2194])/g,"$1"+VS);
+    return t;
+  }
+  var SKIP={SCRIPT:1,STYLE:1,PRE:1,CODE:1};
+  function walk(n){
+    if(n.nodeType===3){ if(n.nodeValue && /\S/.test(n.nodeValue)) n.nodeValue=frtext(n.nodeValue); return; }
+    if(n.nodeType!==1||SKIP[n.tagName]) return;
+    for(var c=n.firstChild;c;c=c.nextSibling) walk(c);
+  }
+  walk(document.body);
+})();
+
+// ---- tabs ----
+document.querySelectorAll('.tab-btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    var pane=b.dataset.tab;
+    b.parentElement.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.querySelectorAll('.tabpane').forEach(p=>p.classList.toggle('active',p.id===pane));
+  });
+});
+
+// ---- courbes de performances (grille de croisière) ----
+(function(){
+  var host=document.getElementById('cruise-charts');
+  if(!host) return;
+  var ALT=[0,5,10,15,20,25,30];
+  var XL =['SOL','5','10','15','20','25','30'];
+  var REG=[
+    {name:'19.000 t/m',color:'#9a7320',
+     conso:[670,600,510,440,375,310,null],dist:[446,486,545,597,655,710,null],tas:[422,426,430,430,428,416,null],rdt:[7.0,7.1,7.1,7.1,7.1,7.0,null]},
+    {name:'20.000 t/m',color:'#274d72',
+     conso:[775,695,600,525,450,380,320],dist:[436,474,523,573,631,696,740],tas:[477,482,486,491,492,495,482],rdt:[7.9,8.0,8.1,8.2,8.2,8.2,8.0]},
+    {name:'21.000 t/m',color:'#9c3a2d',
+     conso:[960,850,740,640,550,465,390],dist:[396,437,480,530,586,642,698],tas:[538,542,547,550,552,550,546],rdt:[8.9,9.0,9.1,9.1,9.2,9.2,9.1]}
+  ];
+  var Q=[
+    {k:'conso',title:'Consommation',unit:'litres / heure',dec:0},
+    {k:'dist', title:'Distance franchissable',unit:'kilomètres',dec:0},
+    {k:'tas',  title:'Vitesse vraie (TAS)',unit:'km/h',dec:0},
+    {k:'rdt',  title:'Rendement',unit:'km / minute',dec:1}
+  ];
+  var W=340,H=216,mL=46,mR=12,mT=14,mB=32, pw=W-mL-mR, ph=H-mT-mB;
+  function nf(v,dec){return dec?(Math.round(v*10)/10).toFixed(1).replace('.',','):String(Math.round(v));}
+  // pas de graduation « rond » (1 / 2 / 2,5 / 5 × 10ⁿ)
+  function niceStep(range,count){
+    var raw=range/count, mag=Math.pow(10,Math.floor(Math.log(raw)/Math.LN10)), n=raw/mag;
+    return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*mag;
+  }
+  // échelle ancrée à zéro quand l'écart le justifie, sinon resserrée sur les valeurs utiles
+  function scale(mn,mx){
+    if(mn/mx<0.6){ var st=niceStep(mx,4); return {lo:0,hi:Math.ceil(mx/st)*st,step:st}; }
+    var lo=mn-(mx-mn)*0.15, hi=mx+(mx-mn)*0.08, s=niceStep(hi-lo,4);
+    return {lo:Math.floor(lo/s)*s,hi:Math.ceil(hi/s)*s,step:s};
+  }
+  function chart(q){
+    var vals=[]; REG.forEach(function(r){r[q.k].forEach(function(v){if(v!=null)vals.push(v);});});
+    var sc=scale(Math.min.apply(null,vals),Math.max.apply(null,vals));
+    var mn=sc.lo, mx=sc.hi;
+    var x=function(i){return mL+ALT[i]/30*pw;};
+    var y=function(v){return mT+(1-(v-mn)/(mx-mn))*ph;};
+    var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+q.title+' selon l\'altitude, par régime moteur">';
+    for(var vv=mn;vv<=mx+sc.step/1000;vv+=sc.step){
+      // trait plein réservé au véritable zéro : ailleurs, pointillé, pour ne pas simuler une ligne de base
+      var zero=Math.abs(vv)<1e-9, yy=y(vv).toFixed(1);
+      s+='<line x1="'+mL+'" y1="'+yy+'" x2="'+(W-mR)+'" y2="'+yy+'" stroke="#bcad86" stroke-width="'+(zero?1:0.6)+'"'+(zero?'':' stroke-dasharray="2 3"')+'/>'
+        +'<text x="'+(mL-6)+'" y="'+(y(vv)+3).toFixed(1)+'" text-anchor="end" font-family="Spline Sans Mono,monospace" font-size="9" fill="#7a7160">'+nf(vv,q.dec)+'</text>';
+    }
+    ALT.forEach(function(a,i){
+      s+='<text x="'+x(i).toFixed(1)+'" y="'+(H-12)+'" text-anchor="middle" font-family="Saira Semi Condensed,sans-serif" font-size="8.5" fill="#7a7160">'+XL[i]+'</text>';
+    });
+    s+='<text x="'+(mL+pw/2)+'" y="'+(H-1)+'" text-anchor="middle" font-family="Saira Semi Condensed,sans-serif" font-size="7.5" letter-spacing="1.2" fill="#9b8a62">ALTITUDE (×1000 ft)</text>';
+    REG.forEach(function(r){
+      var pts=[],dots='';
+      r[q.k].forEach(function(v,i){ if(v==null)return; var px=x(i).toFixed(1),py=y(v).toFixed(1); pts.push(px+','+py); dots+='<circle cx="'+px+'" cy="'+py+'" r="2.4" fill="'+r.color+'"/>'; });
+      s+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+r.color+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'+dots;
+    });
+    return s+'</svg>';
+  }
+  var h='<div class="charts">';
+  Q.forEach(function(q){ h+='<figure class="chartcard"><h4>'+q.title+'</h4><div class="unit">'+q.unit+'</div>'+chart(q)+'</figure>'; });
+  h+='</div><div class="legend">'+REG.map(function(r){return '<span><i style="background:'+r.color+'"></i>'+r.name+'</span>';}).join('')+'</div>';
+  h+='<p class="note-mini">Abscisse : altitude SOL → 30 000 ft. Le régime 19.000 t/m n’est pas gravé à 30 000′ (courbe interrompue). Consommation et distance sont graduées à partir de zéro : les écarts entre régimes se lisent à l’échelle. Vitesse vraie et rendement, dont l’amplitude est faible, sont resserrés sur les valeurs utiles — leur graduation basse n’est pas un zéro.</p>';
+  host.innerHTML=h;
+})();
+
+// ---- bascule tableau / courbe ----
+document.querySelectorAll('.viewtoggle button').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v=b.dataset.view;
+    b.parentElement.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b);});
+    document.getElementById('cruise-table').hidden=(v!=='table');
+    document.getElementById('cruise-charts').hidden=(v!=='chart');
+  });
+});
+
+// ---- scroll reveal ----
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.14});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+// ---- nav active state ----
+var secs=[...document.querySelectorAll('section[id]')];
+var navlinks=[...document.querySelectorAll('nav.links a')];
+var io2=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.isIntersecting){var id=e.target.id;navlinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}
+})},{rootMargin:"-45% 0px -50% 0px"});
+secs.forEach(s=>io2.observe(s));
+</script>
+</body>
+</html>
