@@ -1,0 +1,729 @@
+/* ============================================================
+   Manuel CM 170 — liseur des transcriptions OCR
+   - Habillage des pages de section (affichées dans le volet de lecture)
+   - Mise en page du liseur (sommaire latéral + volet) dans l'enveloppe
+   Charte reprise du site : crème, bleu Armée #1d3a57, laiton #9a7320.
+   Ce fichier est autonome (vars redéfinies) pour fonctionner aussi
+   dans l'iframe, qui ne charge pas site.css.
+   ============================================================ */
+:root{
+  --paper:#efe7d5;
+  --panel:#f7f1e4;
+  --ink:#211f19;
+  --ink-soft:#3f3a30;
+  --muted:#7a7160;
+  --blue:#1d3a57;
+  --blue-titre:#1F3864;     /* Heading1 d'origine */
+  --bleu-sous:#2E5496;      /* Heading2/3 d'origine */
+  --brass:#9a7320;
+  --rouge:#9c3a2d;
+  --line:#cabd9f;
+  --line-strong:#b3a586;
+  --grey-th:#e3dcc8;
+  --disp:"Fraunces",Georgia,serif;
+  --body:"Spectral",Georgia,serif;
+  --lab:"Saira Semi Condensed",system-ui,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,monospace;
+}
+
+/* ============================================================
+   A. PAGE DE SECTION  (body.lecture, dans le volet de lecture)
+   ============================================================ */
+body.lecture{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.55;
+}
+
+/* En-tête du liseur (titre de section + actions) */
+.lecture-tete{
+  position:sticky;
+  top:0;
+  z-index:5;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+  padding:16px 30px 13px;
+  background:var(--panel);
+  border-bottom:3px solid var(--brass);
+  box-shadow:0 2px 8px rgba(33,31,25,.12);
+}
+.lecture-chapitre{
+  font-family:var(--lab);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.lecture-titre{
+  font-family:var(--disp);
+  font-weight:600;
+  font-size:23px;
+  line-height:1.1;
+  color:var(--blue);
+  margin:2px 0 1px;
+}
+.lecture-pages{
+  font-family:var(--lab);
+  font-size:12.5px;
+  letter-spacing:.4px;
+  color:var(--muted);
+}
+.lecture-actions{display:flex;align-items:center;gap:10px}
+.btn-scan{
+  font-family:var(--lab);
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  text-decoration:none;
+  white-space:nowrap;
+  border-radius:3px;
+  transition:background .18s,color .18s,border-color .18s;
+  font-size:12.5px;
+  color:#f7f1e4;
+  background:var(--blue);
+  padding:9px 15px;
+  border:1px solid var(--blue);
+}
+.btn-scan:hover{background:#16293d}
+
+/* Corps de la transcription : colonne de lecture */
+.lecture-corps{
+  max-width:820px;
+  margin:0 auto;
+  padding:26px 34px 60px;
+}
+.lecture-corps h2,
+.lecture-corps h3,
+.lecture-corps h4,
+.lecture-corps h5{font-family:var(--body)}
+
+/* Titres x.x  (Heading1 d'origine : 15 pt, gras, 1F3864) */
+.lecture-corps h2{
+  font-size:19px;
+  font-weight:700;
+  color:var(--blue-titre);
+  margin:30px 0 10px;
+  padding-bottom:5px;
+  border-bottom:1px solid var(--line);
+  scroll-margin-top:90px;
+}
+.lecture-corps h2:first-child{margin-top:4px}
+/* Titres x.x.x  (Heading2 : 12 pt, gras, souligné, 2E5496) */
+.lecture-corps h3{
+  font-size:16px;
+  font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  color:var(--bleu-sous);
+  margin:22px 0 7px;
+  scroll-margin-top:90px;
+}
+/* Titres x.x.x.x  (Heading3 : 11 pt, gras, italique, 2E5496) */
+.lecture-corps h4,
+.lecture-corps h5{
+  font-size:15px;
+  font-weight:700;
+  font-style:italic;
+  color:var(--bleu-sous);
+  margin:16px 0 5px;
+  scroll-margin-top:90px;
+}
+
+.lecture-corps p{
+  margin:0 0 10px;
+  text-align:justify;
+  color:var(--ink-soft);
+}
+.lecture-corps a{color:var(--brass)}
+
+/* Texte souligné / italique préservés depuis le DOCX */
+.lecture-corps .underline{text-decoration:underline;text-underline-offset:2px}
+
+/* Listes à puces : 3 niveaux (–  ·  ◦) façon « tirets » d'origine */
+.lecture-corps ul{list-style:none;margin:4px 0 12px;padding-left:22px}
+.lecture-corps li{position:relative;margin:3px 0;padding-left:18px}
+.lecture-corps li::before{
+  content:"–";
+  position:absolute;left:0;top:0;
+  color:var(--brass);font-weight:700;
+}
+.lecture-corps li li::before{content:"·"}
+.lecture-corps li li li::before{content:"◦";font-weight:400}
+.lecture-corps li p{margin:0 0 4px;text-align:left}
+
+/* Listes ordonnées éventuelles */
+.lecture-corps ol{margin:4px 0 12px;padding-left:30px}
+.lecture-corps ol li{padding-left:4px}
+.lecture-corps ol li::before{content:none}
+
+/* Items à numérotation / lettre MANUELLE (« 1) », « a) », « A - »…) : le numéro
+   d'origine reste dans le texte (jamais renuméroté) ; retrait pendant pour que
+   les lignes suivantes s'alignent sous le texte, et non sous le numéro. */
+.lecture-corps .numitem{
+  margin:0 0 7px;
+  padding-left:1.7em;
+  text-indent:-1.7em;
+  text-align:justify;
+  color:var(--ink-soft);
+}
+.lecture-corps .note .numitem,
+.lecture-corps .encadre .numitem{text-align:left}
+
+/* Encadré ATTENTION */
+.lecture-corps .encadre{
+  margin:16px 0;
+  background:var(--panel);
+  border:1px solid var(--line-strong);
+  border-top:3px solid var(--rouge);
+  padding:14px 20px 6px;
+}
+.lecture-corps .encadre-titre{margin-bottom:6px}
+.lecture-corps .encadre-titre p,
+.lecture-corps .encadre p strong:only-child{
+  text-align:center;
+}
+.lecture-corps .encadre-titre strong{
+  font-family:var(--lab);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--rouge);
+  font-size:14px;
+}
+.lecture-corps .encadre ul{margin-top:4px}
+
+/* Note NOTA / N.B. / IMPORTANT / REMARQUE */
+.lecture-corps .note{
+  margin:12px 0;
+  background:#f1ecdd;
+  border-left:3px solid var(--brass);
+  padding:9px 16px;
+}
+.lecture-corps .note p{margin:0;text-align:left;color:var(--ink)}
+.lecture-corps .note strong:first-child{
+  font-family:var(--lab);
+  letter-spacing:1px;
+  color:var(--brass);
+}
+/* Note contenant une liste numérotée (« NOTA : 1) 2) 3) ») : label « NOTA : » en
+   saillie dans une colonne auto-dimensionnée (donc juste quel que soit le label —
+   NOTA, N.B., NOTA 1…), items alignés dessous, chacun en retrait pendant. */
+.lecture-corps .note-list{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  column-gap:.45em;
+  align-items:baseline;
+}
+.lecture-corps .note-list .nl-lbl{white-space:nowrap}
+.lecture-corps .note-list .nl-items .numitem{
+  margin:0 0 6px;
+  padding-left:1.7em;
+  text-indent:-1.7em;
+  text-align:left;
+}
+.lecture-corps .note-list .nl-items .numitem:last-child{margin-bottom:0}
+
+/* Tableaux de données */
+.lecture-corps table.data,
+.lecture-corps table{
+  border-collapse:collapse;
+  width:100%;
+  margin:14px 0;
+  font-size:14.5px;
+}
+.lecture-corps th,
+.lecture-corps td{
+  border:1px solid var(--line-strong);
+  padding:6px 9px;
+  vertical-align:top;
+  text-align:left;
+}
+.lecture-corps thead th{
+  background:var(--grey-th);
+  font-family:var(--lab);
+  font-weight:700;
+  text-align:center;
+}
+.lecture-corps td p{margin:0 0 3px;text-align:left}
+
+.lecture-pied{
+  margin-top:30px;
+  padding:14px 34px;
+  border-top:1px solid var(--line);
+  font-family:var(--lab);
+  font-size:11px;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-align:center;
+}
+
+/* Renvois cliquables vers les documents originaux (build-refs.js)
+   - .ref-planche : « (planche 47) » -> PDF illustrations, bonne page
+   - .ref-scan    : folio de la table des matières -> PDF texte
+   - .ref-section : entrée de TdM -> transcription de la sous-section   */
+.lecture-corps a.ref-planche,
+.lecture-corps a.ref-scan{
+  color:var(--brass);
+  font-weight:600;
+  text-decoration:underline dotted;
+  text-decoration-thickness:1px;
+  text-underline-offset:3px;
+}
+.lecture-corps a.ref-planche:hover,
+.lecture-corps a.ref-scan:hover{
+  color:#7e5d18;
+  text-decoration-style:solid;
+}
+.lecture-corps a.ref-section{
+  color:inherit;
+  text-decoration:none;
+}
+.lecture-corps a.ref-section:hover{color:var(--blue);text-decoration:underline}
+
+/* Repère « scan p. N » en fin de titre x.x : ouvre le scan à la page
+   où commence la sous-section (lecture comparée dans le liseur). */
+.lecture-corps a.h2-scan{
+  float:right;
+  margin:2px 0 0 12px;
+  padding:2px 8px 1px;
+  font-family:var(--lab);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  text-decoration:none;
+  white-space:nowrap;
+  color:var(--muted);
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+}
+.lecture-corps a.h2-scan:hover{
+  color:#f7f1e4;
+  background:var(--brass);
+  border-color:var(--brass);
+}
+
+/* Index des planches (pages/manuel/planches.html) */
+.lecture-corps table.planches-table td:first-child{
+  text-align:center;
+  font-family:var(--lab);
+  font-weight:600;
+  white-space:nowrap;
+}
+
+/* Occurrences surlignées à l'arrivée depuis la recherche (?q=…) */
+.lecture-corps mark.surligne{
+  background:#f2d98c;
+  color:var(--ink);
+  padding:0 1px;
+  border-radius:2px;
+  box-shadow:0 0 0 1px #e3c266;
+}
+
+/* ============================================================
+   B. LISEUR  (enveloppe manuel.html : sommaire + volet)
+   ============================================================ */
+.manuel-shell{
+  flex:1;
+  min-height:0;
+  display:flex;
+}
+.sommaire{
+  width:288px;
+  flex-shrink:0;
+  background:var(--panel);
+  border-right:1px solid var(--line-strong);
+  overflow-y:auto;
+  font-family:var(--lab);
+}
+.sommaire-tete{
+  position:sticky;top:0;
+  padding:13px 18px 11px;
+  background:var(--blue);
+  color:#e7dcc2;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  border-bottom:2px solid var(--brass);
+}
+.sommaire nav{padding:6px 0 22px}
+
+/* ---------- Recherche (barre simple + options avancées) ---------- */
+.recherche{padding:10px 14px 4px;border-bottom:1px solid var(--line)}
+.recherche[hidden]{display:none}
+.recherche-form{display:flex;gap:6px}
+.recherche-champ{
+  flex:1;
+  min-width:0;
+  padding:7px 10px;
+  font-family:var(--lab);
+  font-size:13px;
+  color:var(--ink);
+  background:#fdfaf2;
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+}
+.recherche-champ:focus{outline:2px solid var(--brass);outline-offset:0;border-color:var(--brass)}
+.recherche-go{
+  flex-shrink:0;
+  width:34px;
+  cursor:pointer;
+  font-size:16px;
+  color:#f7f1e4;
+  background:var(--blue);
+  border:1px solid var(--blue);
+  border-radius:3px;
+  transition:background .15s;
+}
+.recherche-go:hover{background:#16293d}
+.recherche-avancee{margin-top:6px}
+.recherche-avancee > summary{
+  list-style:none;
+  cursor:pointer;
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding:3px 0;
+}
+.recherche-avancee > summary::-webkit-details-marker{display:none}
+.recherche-avancee > summary::before{
+  content:"▸ ";
+  color:var(--brass);
+  font-size:10px;
+}
+.recherche-avancee[open] > summary::before{content:"▾ "}
+.recherche-avancee > summary:hover{color:var(--blue)}
+.recherche-options{padding:4px 2px 8px}
+.recherche-options label{
+  display:block;
+  font-size:12.5px;
+  color:var(--ink-soft);
+  padding:2.5px 0;
+  cursor:pointer;
+}
+.recherche-options input{accent-color:var(--brass);margin-right:6px}
+.recherche-options hr{
+  border:0;
+  border-top:1px solid var(--line);
+  margin:6px 0;
+}
+.recherche-porte select{
+  display:block;
+  width:100%;
+  margin-top:4px;
+  padding:5px 6px;
+  font-family:var(--lab);
+  font-size:12.5px;
+  color:var(--ink);
+  background:#fdfaf2;
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+}
+.recherche-astuce{
+  margin:8px 0 0;
+  font-size:11.5px;
+  font-style:italic;
+  color:var(--muted);
+}
+
+/* Résultats de recherche : remplacent le sommaire tant qu'ils sont ouverts */
+.sommaire.recherche-active .grp,
+.sommaire.recherche-active a.planches,
+.sommaire.recherche-active button.comparer{display:none}
+.recherche-resultats[hidden]{display:none}
+.recherche-resultats{margin:8px -14px 0}
+.recherche-bilan{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:7px 14px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  color:var(--blue);
+  background:#e9ddbf;
+  border-top:1px solid var(--line);
+}
+.recherche-effacer{
+  cursor:pointer;
+  padding:3px 8px;
+  font-family:var(--lab);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  color:var(--muted);
+  background:transparent;
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+}
+.recherche-effacer:hover{color:#f7f1e4;background:var(--brass);border-color:var(--brass)}
+.res-sec{
+  padding:8px 14px 4px;
+  font-size:11.5px;
+  font-weight:700;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  color:var(--brass);
+  border-bottom:1px solid var(--line);
+}
+.res-sec span{color:var(--muted);font-weight:600}
+.recherche-resultats a.res-item{
+  display:block;
+  padding:7px 14px 8px;
+  text-decoration:none;
+  border-bottom:1px solid var(--line);
+  border-left:3px solid transparent;
+}
+.recherche-resultats a.res-item:hover{background:#efe4c8}
+.recherche-resultats a.res-item.actif{background:#e9ddbf;border-left-color:var(--brass)}
+.res-titre{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  color:var(--blue);
+  line-height:1.3;
+  margin-bottom:2px;
+}
+.res-extrait{
+  display:block;
+  font-family:var(--body);
+  font-size:12.5px;
+  font-weight:400;     /* ne pas hériter du demi-gras de .sommaire a.actif */
+  line-height:1.45;
+  color:var(--ink-soft);
+}
+.res-extrait mark{
+  background:#f2d98c;
+  color:var(--ink);
+  padding:0 1px;
+  border-radius:2px;
+}
+.res-tronque{
+  margin:0;
+  padding:10px 14px;
+  font-size:12px;
+  font-style:italic;
+  color:var(--muted);
+}
+/* Bilan pour lecteurs d'écran (role=status) : masqué visuellement,
+   le bilan visible est déjà dans .recherche-bilan */
+.recherche-statut{
+  position:absolute;
+  width:1px;height:1px;
+  overflow:hidden;
+  clip:rect(0 0 0 0);
+  clip-path:inset(50%);
+  margin:0;
+  white-space:nowrap;
+}
+
+.sommaire .grp{border-bottom:1px solid var(--line)}
+.sommaire .grp > summary{
+  list-style:none;
+  cursor:pointer;
+  padding:9px 16px;
+  font-size:13.5px;
+  font-weight:700;
+  letter-spacing:.4px;
+  color:var(--blue);
+  display:flex;align-items:center;gap:8px;
+  transition:background .15s;
+}
+.sommaire .grp > summary::-webkit-details-marker{display:none}
+.sommaire .grp > summary::before{
+  content:"▸";
+  color:var(--brass);
+  font-size:11px;
+  transition:transform .15s;
+}
+.sommaire .grp[open] > summary::before{transform:rotate(90deg)}
+.sommaire .grp > summary:hover{background:#efe4c8}
+.sommaire .sous{padding:2px 0 8px}
+.sommaire a{
+  display:block;
+  text-decoration:none;
+  color:var(--ink-soft);
+  font-size:12.5px;
+  line-height:1.3;
+  padding:5px 16px 5px 38px;
+  border-left:3px solid transparent;
+  transition:background .12s,border-color .12s,color .12s;
+}
+.sommaire a:hover{background:#efe4c8;color:var(--blue)}
+.sommaire a.actif{
+  background:#e9ddbf;
+  border-left-color:var(--brass);
+  color:var(--blue);
+  font-weight:600;
+}
+.sommaire a.lien-sec{
+  color:var(--brass);
+  font-weight:700;
+  letter-spacing:.6px;
+  padding-left:38px;
+}
+.sommaire a.planches{
+  margin:14px 14px 0;
+  padding:10px 14px;
+  text-align:center;
+  color:#f7f1e4;
+  background:var(--brass);
+  border-radius:3px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-size:12px;
+  border-left:0;
+}
+.sommaire a.planches:hover{background:#7e5d18;color:#fff}
+
+/* Bouton « Lecture comparée » (affiché par JS ; masqué sans JS) */
+.sommaire button.comparer{
+  display:block;
+  width:calc(100% - 28px);
+  margin:16px 14px 0;
+  padding:10px 14px;
+  cursor:pointer;
+  color:var(--blue);
+  background:transparent;
+  border:1px solid var(--blue);
+  border-radius:3px;
+  font-family:var(--lab);
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-size:12px;
+  transition:background .18s,color .18s;
+}
+.sommaire button.comparer:hover{background:var(--blue);color:#f7f1e4}
+.sommaire button.comparer.ouvert{background:var(--blue);color:#f7f1e4}
+.sommaire button.comparer[hidden]{display:none}
+
+.lecteur{
+  flex:1;
+  min-width:0;
+  border:0;
+  background:var(--paper);
+}
+
+/* ---------- Volet « Lecture comparée » : scan côte à côte ---------- */
+.comparateur{display:none}
+.manuel-shell.compare .comparateur{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  min-width:0;
+  background:var(--paper);
+}
+.manuel-shell.compare .lecteur{min-width:280px}
+.comparateur-barre{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 12px;
+  background:var(--blue);
+  border-bottom:2px solid var(--brass);
+}
+.comparateur-label{
+  font-family:var(--lab);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  color:#e7dcc2;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.comparateur-outils{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.comparateur-fermer{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  cursor:pointer;
+  color:#e7dcc2;
+  background:transparent;
+  border:1px solid rgba(231,220,194,.45);
+  border-radius:3px;
+  font-family:var(--lab);
+  font-size:13px;
+  text-decoration:none;
+  transition:background .15s,color .15s;
+}
+.comparateur-fermer:hover{background:var(--brass);border-color:var(--brass);color:#fff}
+.comparateur-corps{flex:1;min-height:0;display:flex}
+.comparateur-pdf{flex:1;min-width:0;border:0;background:#4a4640}
+
+/* ---------- Poignée de partage texte / scan ---------- */
+.comparateur-poignee{display:none}
+.manuel-shell.compare .comparateur-poignee{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 9px;
+  cursor:col-resize;
+  touch-action:none;
+  background:var(--panel);
+  border-left:1px solid var(--line-strong);
+  border-right:1px solid var(--line-strong);
+}
+.manuel-shell.compare .comparateur-poignee::before{
+  content:"";
+  width:2px;
+  height:44px;
+  border-radius:1px;
+  background:var(--line-strong);
+}
+.manuel-shell.compare .comparateur-poignee:hover,
+.manuel-shell.reglage .comparateur-poignee{background:#e9ddbf}
+.manuel-shell.compare .comparateur-poignee:hover::before,
+.manuel-shell.reglage .comparateur-poignee::before{background:var(--brass)}
+.manuel-shell.compare .comparateur-poignee:focus-visible{
+  outline:2px solid var(--brass);
+  outline-offset:-2px;
+}
+/* Pendant le glissement : les iframes ne doivent pas capturer la souris */
+.manuel-shell.reglage{cursor:col-resize;user-select:none}
+.manuel-shell.reglage iframe{pointer-events:none}
+
+/* ---------- Écrans étroits : sommaire en bandeau dépliable ---------- */
+@media (max-width:780px){
+  .manuel-shell{flex-direction:column}
+  .sommaire{
+    width:100%;
+    max-height:42vh;
+    border-right:0;
+    border-bottom:2px solid var(--brass);
+  }
+  /* dimensionnement flexible : les minima en vh additionnés dépasseraient
+     la hauteur restante (bandeau + pied déduits) et feraient déborder
+     le lecteur sous le pied de page */
+  .lecteur{min-height:0;flex:1 1 58vh}
+  .manuel-shell.compare .lecteur{flex-basis:34vh;min-width:0}
+  .manuel-shell.compare .comparateur{
+    min-height:0;
+    /* !important : prime sur le réglage de la poignée (style en ligne),
+       sans objet dans la mise en page en colonne */
+    flex:1 1 40vh !important;
+    border-top:2px solid var(--brass);
+  }
+  .manuel-shell.compare .comparateur-poignee{display:none}
+  .lecture-tete{padding:12px 16px 10px}
+  .lecture-corps{padding:18px 18px 50px}
+  .lecture-corps a.h2-scan{float:none;display:inline-block;margin:4px 0 0}
+}
