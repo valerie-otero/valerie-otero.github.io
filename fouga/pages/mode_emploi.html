@@ -248,7 +248,7 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
     <div class="tools reveal">
       <div class="tool"><div class="n">A</div><h4>Abaques de performances</h4><p>Régime moteur, consommation, vitesses, distance franchissable et temps — lus directement, sans calcul.</p></div>
       <div class="tool"><div class="n">B</div><h4>Règle à calcul circulaire</h4><p>De la famille des « computers » E6B / CRP-5 : conversions d’unités et passage de la vitesse corrigée à la vitesse vraie.</p></div>
-      <div class="tool"><div class="n">C</div><h4>Réglette cartographique</h4><p>Graduée en kilomètres et en milles nautiques au 1/1.000.000ᵉ pour mesurer les distances sur la carte.</p></div>
+      <div class="tool"><div class="n">C</div><h4>Réglette cartographique</h4><p>Graduée en kilomètres et en milles nautiques pour mesurer les distances sur la carte : au 1/1.000.000ᵉ sur la face « 131 », au 1/500.000ᵉ sur la face « 336 ».</p></div>
     </div>
 
     <div class="callout reveal" style="margin-top:34px">
@@ -613,16 +613,28 @@ document.querySelectorAll('.tab-btn').forEach(function(b){
   ];
   var W=340,H=216,mL=46,mR=12,mT=14,mB=32, pw=W-mL-mR, ph=H-mT-mB;
   function nf(v,dec){return dec?(Math.round(v*10)/10).toFixed(1).replace('.',','):String(Math.round(v));}
+  // pas de graduation « rond » (1 / 2 / 2,5 / 5 × 10ⁿ)
+  function niceStep(range,count){
+    var raw=range/count, mag=Math.pow(10,Math.floor(Math.log(raw)/Math.LN10)), n=raw/mag;
+    return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*mag;
+  }
+  // échelle ancrée à zéro quand l'écart le justifie, sinon resserrée sur les valeurs utiles
+  function scale(mn,mx){
+    if(mn/mx<0.6){ var st=niceStep(mx,4); return {lo:0,hi:Math.ceil(mx/st)*st,step:st}; }
+    var lo=mn-(mx-mn)*0.15, hi=mx+(mx-mn)*0.08, s=niceStep(hi-lo,4);
+    return {lo:Math.floor(lo/s)*s,hi:Math.ceil(hi/s)*s,step:s};
+  }
   function chart(q){
     var vals=[]; REG.forEach(function(r){r[q.k].forEach(function(v){if(v!=null)vals.push(v);});});
-    var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals);
-    var pad=(mx-mn)*0.10||1; mn-=pad; mx+=pad;
+    var sc=scale(Math.min.apply(null,vals),Math.max.apply(null,vals));
+    var mn=sc.lo, mx=sc.hi;
     var x=function(i){return mL+ALT[i]/30*pw;};
     var y=function(v){return mT+(1-(v-mn)/(mx-mn))*ph;};
     var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+q.title+' selon l\'altitude, par régime moteur">';
-    for(var t=0;t<4;t++){
-      var vv=mn+(mx-mn)*t/3, yy=y(vv).toFixed(1);
-      s+='<line x1="'+mL+'" y1="'+yy+'" x2="'+(W-mR)+'" y2="'+yy+'" stroke="#bcad86" stroke-width="'+(t===0?1:0.6)+'"'+(t>0?' stroke-dasharray="2 3"':'')+'/>'
+    for(var vv=mn;vv<=mx+sc.step/1000;vv+=sc.step){
+      // trait plein réservé au véritable zéro : ailleurs, pointillé, pour ne pas simuler une ligne de base
+      var zero=Math.abs(vv)<1e-9, yy=y(vv).toFixed(1);
+      s+='<line x1="'+mL+'" y1="'+yy+'" x2="'+(W-mR)+'" y2="'+yy+'" stroke="#bcad86" stroke-width="'+(zero?1:0.6)+'"'+(zero?'':' stroke-dasharray="2 3"')+'/>'
         +'<text x="'+(mL-6)+'" y="'+(y(vv)+3).toFixed(1)+'" text-anchor="end" font-family="Spline Sans Mono,monospace" font-size="9" fill="#7a7160">'+nf(vv,q.dec)+'</text>';
     }
     ALT.forEach(function(a,i){
@@ -639,7 +651,7 @@ document.querySelectorAll('.tab-btn').forEach(function(b){
   var h='<div class="charts">';
   Q.forEach(function(q){ h+='<figure class="chartcard"><h4>'+q.title+'</h4><div class="unit">'+q.unit+'</div>'+chart(q)+'</figure>'; });
   h+='</div><div class="legend">'+REG.map(function(r){return '<span><i style="background:'+r.color+'"></i>'+r.name+'</span>';}).join('')+'</div>';
-  h+='<p class="note-mini">Abscisse : altitude SOL → 30 000 ft. Le régime 19.000 t/m n’est pas gravé à 30 000′ (courbe interrompue).</p>';
+  h+='<p class="note-mini">Abscisse : altitude SOL → 30 000 ft. Le régime 19.000 t/m n’est pas gravé à 30 000′ (courbe interrompue). Consommation et distance sont graduées à partir de zéro : les écarts entre régimes se lisent à l’échelle. Vitesse vraie et rendement, dont l’amplitude est faible, sont resserrés sur les valeurs utiles — leur graduation basse n’est pas un zéro.</p>';
   host.innerHTML=h;
 })();
 

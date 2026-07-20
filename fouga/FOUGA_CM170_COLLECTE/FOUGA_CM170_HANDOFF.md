@@ -240,7 +240,7 @@ Le projet s'est étendu à un **site statique de restitution** (HTML/CSS/JS, san
 | `manuel.html` → `pages/manuel/*` | Manuel de l'équipage en HTML (pipeline `build/manuel/`) |
 | `computeur.html` → `pages/mode_emploi.html` | Mode d'emploi illustré du computeur (long-form, iframe) |
 | `computeur-virtuel.html` → `pages/computeur_virtuel.html` | Computeur virtuel interactif SVG (recto 131 / verso 336) |
-| `monographie.html` | Monographie PDF consultable + DOCX téléchargeable |
+| `monographie.html` | Monographie PDF **illustrée** (6 photos + date de version) consultable + DOCX téléchargeable |
 | `regle-navigation.html` → `pages/regle_navigation.html` | Mode d'emploi illustré de la règle de navigation (Marboré II & VI) |
 | `regle-navigation-virtuelle.html` → `pages/regle_navigation_virtuelle.html` | Règle de navigation virtuelle interactive SVG (recto calcul / verso montée) |
 
@@ -438,6 +438,66 @@ Le projet s'est étendu à un **site statique de restitution** (HTML/CSS/JS, san
   diffus `0 2px 30px .4`), lede en `weight:400` + ombre. Rendu vérifié par capture ; réglage identique sur les
   deux pages (ajustable au `brightness` page par page si besoin).
 
+**2026-07-20 — Mode d'emploi computeur : échelles des courbes de croisière**
+- Bug de présentation (pas de données) dans les 4 courbes SVG de la grille de croisière
+  (`pages/mode_emploi.html`, IIFE `cruise-charts`) : axe Y tronqué à min−10 % avec **ligne du bas
+  pleine** → lue comme un zéro (distance ×1,6 perçue ×4 ; conso ÷2,2 perçue ÷6,5), graduations
+  non rondes (245/505/765/1025). Corrigé : graduations rondes (`niceStep` 1/2/2,5/5×10ⁿ),
+  **ancrage à zéro si min/max < 0,6** (Conso, Distance), resserré sinon (TAS, Rendement — un axe
+  zéro les écraserait) ; trait plein réservé au vrai zéro ; note d'axes sous la légende.
+  Données des courbes revérifiées ≡ tableaux ≡ computeur virtuel (aucune erreur).
+- ⚠️ Relevés au passage (non corrigés, à trancher) : le panneau « Rendement » est exactement
+  TAS/60 (redondant, et il est **plat** alors que le chapô promet un « meilleur rendement en
+  altitude » — le vrai rendement km/L n'est pas gravé sur l'instrument) ; IAS 260 kt à
+  20.000 t/m / 5.000′ (écart IAS−CAS de 18 kt, partout ailleurs 6–12 kt).
+
+**2026-07-20 — Vérification de la grille de croisière contre les photos (workflow, 77 agents)**
+- **Triptyque cohérent** : site ≡ monographie DOCX ≡ monographie PDF, cellule par cellule (3×7×8).
+- **La fiche de relevé brute `SITE/computeur_131_grille (1).docx` est fausse** sur le régime
+  19.000 t/m : altitudes décalées d'un cran (affectation avouée « par ordre de consommation
+  croissante », heuristique) et temps 1 h 26 à 20.000 t/m / 20.000′ (calcul et photos ⇒ 1 h 20).
+  La monographie avait déjà redressé — **ne pas « corriger » le site d'après cette fiche**.
+- **Photos = arbitre** (32 clichés `SITE/IMG_3549–3599.jpeg`, 20 vues de fenêtres, chaque lecture
+  contre-vérifiée par 2 relecteurs adverses dont un dédié au cran de couronne) : affectations
+  confirmées, dont le point litigieux 30.000′/400 L au régime 20.000 (verrouillé par TAS/CAS =
+  1,60 ⇒ σ≈0,39 ⇒ ~30.000 ft) ; fenêtre vierge attendue à 19.000 t/m / 30.000′ (gravure 336 :
+  « Si Z<30.000′ afficher 19.000 T/m »). Détail par cliché : sortie du workflow
+  (`tasks/wkqkz4v2o.output` du scratchpad de session). Compte-rendu de couverture cellule par
+  cellule **encore à rédiger/publier** (notes sur la page).
+
+**2026-07-20 — Réglette cartographique : échelle de la face 336 (photo à l'appui)**
+- La face 336 porte, gravé sur les deux bords de la plaque : « Km. Echelle **1/500.000ᵉ** » et
+  « MILES NAUTIQUE Echelle 1/500.000ᵉ » (photo fournie par Valérie ; la fiche brute le disait déjà).
+  La monographie et le site ne connaissaient que le 1/1.000.000ᵉ (face 131).
+- Corrigés : cadre C de `pages/mode_emploi.html` (les deux échelles par face) ; monographie DOCX
+  en 3 passages (§ I, § III.3, § IV synthèse) par remplacement XML garde-fou « occurrence unique »
+  (script `scratchpad/fix_mono.py`) ; PDF régénéré.
+
+**2026-07-20 — Monographie illustrée + date de version (DOCX & PDF)**
+- **6 photos de l'instrument insérées** dans le DOCX (script `scratchpad/add_images.py` : gabarit
+  `<w:drawing>` cloné, rels + `[Content_Types]` jpg, légendes italique gris) : face 131 (§ I),
+  fenêtres 131 (§ II.1), abaque Montée/Descente (§ II.2), face 336 (§ II.3), Distance max (§ II.4),
+  couronne litres (§ III.1). **Date de version** en page de titre (« Dernière mise à jour —
+  20 juillet 2026 » — à tenir à jour à chaque édition). 12 → 17 pages.
+- ⚠️ **Orientation volontaire** : les 3 photos portrait sont dans l'orientation d'**usage**
+  (fenêtres/valeurs à l'endroit, bandeau « COMPUTEUR » tête-bêche) — identique au site. Ne pas
+  les « redresser » : cela retournerait les données.
+- **Chaîne PDF** : LibreOffice headless (`soffice --headless --convert-to pdf`) reproduit la mise
+  en page à l'identique **mais n'y recompresse pas les JPEG** (14,9 Mo) → Ghostscript
+  `-dPDFSETTINGS=/ebook -dColorImageResolution=150` ⇒ **647 Ko**, petits chiffres vérifiés
+  lisibles. Recette complète pour les prochaines éditions : modifier le DOCX → soffice → gs.
+- Backups (DOCX/PDF d'origine + pré-images) déplacés **hors du dossier publié**, dans le
+  scratchpad de session (`backups_docs/`).
+
+**2026-07-21 — Accueil : vue de dessus du rail 3-vues corrigée**
+- `assets/img/fouga_dessus.png` était **amputée du bord d'attaque à l'emplanture droite**
+  (effacement collatéral du dessin voisin lors de la découpe du plan `../magister_3v.jpg`, dont la
+  vue de dessous mord sur cette zone) + pointe d'antenne de queue écrêtée + fragment de roue de la
+  vue de profil flottant en haut à droite. **Regénérée depuis l'original** (script PIL : découpe
+  large, masques d'effacement des voisins, encre RGB 51/45/28, rampe alpha calée pour conserver les
+  verrières grisées — gris 223 → alpha ≈ 41 comme l'ancien). Vue de dessous contrôlée : saine.
+  Ancienne image dans `backups_docs/` (scratchpad de session).
+
 ### Pistes non traitées (site)
 - Drag de la couronne directement depuis les étiquettes d'altitude ; molette souris.
 - Factorisation de la charte dupliquée dans les pages internes du computeur.
@@ -456,6 +516,15 @@ photos + revue adversariale, 0 erreur de données), objectivation des notices (r
 de vol), page de présentation (avertissement « prototype non diffusable » + illustrations 3-vues en
 marge), bibliographies (vérification web par fetch + « Bibliographie sélective » de 53 entrées +
 typographie insécable). Volet transcription DOCX inchangé : restent le document maître et l'étude.*
+
+*Mise à jour 20/07/2026 : (1) **courbes de croisière** du mode d'emploi — échelles corrigées (axes
+zéro/graduations rondes ; données déjà exactes) ; (2) **vérification photo de la grille** (workflow
+77 agents) — site ≡ monographie confirmés par les clichés, **fiche brute `computeur_131_grille (1).docx`
+invalidée** (décalage d'altitudes au 19.000 t/m) ; (3) **échelle 1/500.000ᵉ de la face 336** (gravée sur
+la plaque, photo à l'appui) reportée dans le cadre C du mode d'emploi + monographie (3 passages) ;
+(4) **monographie illustrée** — 6 photos + date de version dans le DOCX, chaîne PDF
+soffice → ghostscript (647 Ko). En suspens : notes à publier (couverture cellule par cellule,
+IAS 260/242, panneau « Rendement » = TAS/60).*
 
 *Compléments 18/07/2026 (suite) : (1) **règle virtuelle** vérifiée (données 100 % fidèles, calculs exacts)
 avec la spec de transition `REGLE_VIRTUELLE_transition.md` ; (2) **manuel HTML** — retrait pendant des items
