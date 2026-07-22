@@ -60,7 +60,7 @@ nav.links a:hover,nav.links a.active{background:var(--blue);color:#f4ecd8}
 .hero h1{font-size:clamp(2.4rem,6.4vw,5.2rem);font-weight:900;margin:.18em 0 .1em;color:#f8f1e0;
   text-shadow:0 1px 2px rgba(0,0,0,.6),0 2px 20px rgba(0,0,0,.72)}
 .hero h1 em{font-style:italic;font-weight:400}
-.hero .lede{font-size:clamp(1.05rem,2.2vw,1.35rem);max-width:50ch;color:#f1e8d5;font-weight:400;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+.hero .lede{font-size:clamp(1.05rem,2.2vw,1.35rem);max-width:52ch;color:#f1e8d5;font-weight:400;text-shadow:0 1px 8px rgba(0,0,0,.65)}
 .hero .meta{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;font-family:var(--lab);text-transform:uppercase;
   letter-spacing:.16em;font-size:.74rem;color:#d9cdb1}
 .hero .meta span{border-left:2px solid var(--brass-2);padding-left:10px}
@@ -88,7 +88,7 @@ p.sub-p{margin:.2em 0 18px;color:var(--ink-soft)}
 .figure{margin:0}
 .figure .frame{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line-strong);
   box-shadow:var(--shadow);background:#0d0c0a}
-.figure img{display:block;width:100%;height:auto;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.figure img{display:block;width:auto;max-width:100%;max-height:320px;margin:0 auto;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
 .figure:hover img{transform:scale(1.04)}
 .figure figcaption{font-family:var(--lab);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;
   color:var(--muted);margin-top:10px;display:flex;gap:8px;align-items:center}
@@ -100,7 +100,7 @@ p.sub-p{margin:.2em 0 18px;color:var(--ink-soft)}
 .plate{margin:0 0 34px}
 .plate .frame{position:relative;border-radius:10px;border:1px solid var(--line-strong);box-shadow:var(--shadow);
   background:#0d0c0a;padding:10px;overflow:hidden}
-.plate img{display:block;width:100%;height:auto}
+.plate img{display:block;width:auto;max-width:100%;max-height:300px;margin:0 auto}
 .plate:hover img{transform:none}
 .zoomable{cursor:zoom-in}
 
@@ -253,6 +253,8 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
       <a href="#anatomie">Anatomie</a>
       <a href="#abaques">Abaques</a>
       <a href="#calcul">Règle à calcul</a>
+      <a href="#emploi">Mode d’emploi</a>
+      <a href="#victor">Verso Victor</a>
       <a href="#glossaire">Glossaire</a>
     </nav>
   </div>
@@ -263,7 +265,7 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
   <img src="../assets/img/regle_recto.jpg" alt="Recto de la règle de navigation du Fouga CM 170 R Magister">
   <div class="hero-in">
     <h1>Règle de navigation<br><em>Fouga CM&nbsp;170&nbsp;R Magister</em></h1>
-    <p class="lede">Le mode d’emploi illustré de la règle à calcul linéaire établie à Cognac en 1980 — la seule pièce de l’instrumentation à porter, côte à côte, le <strong>Marboré&nbsp;II</strong> et le <strong>Marboré&nbsp;VI</strong>.</p>
+    <p class="lede">Le mode d’emploi illustré de la règle à calcul linéaire du <strong>Capitaine Claude</strong>, établie à Cognac en 1980 — documentée ici d’après l’instrument démonté, ses scans à l’échelle et sa <strong>notice d’époque</strong>.</p>
     <div class="meta">
       <span>Marboré II <b>·</b> Marboré VI</span>
       <span>Cne Claude Ph — GE 00 315</span>
@@ -280,14 +282,14 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
       <div class="lead-rule"></div>
       <div class="kicker" style="margin-top:14px">I · Présentation</div>
       <h2>Une règle, deux moteurs</h2>
-      <p>Là où le computeur de vol est un disque tournant dédié au seul Marboré&nbsp;II, la règle de navigation est une <strong>règle à calcul linéaire</strong> — un corps gravé, une coulisse mobile — qui traite dans un même geste les deux motorisations du Magister.</p>
+      <p>Là où le computeur de vol est un disque tournant dédié au seul Marboré&nbsp;II, la règle de navigation est une <strong>règle à calcul linéaire</strong> — «&nbsp;une partie fixe formant le corps&nbsp;» et «&nbsp;une réglette coulissante&nbsp;», dit sa notice — qui traite dans un même geste les deux motorisations du Magister.</p>
     </div>
 
     <div class="tools reveal">
       <div class="tool"><div class="n">A</div><h4>Abaques de performances</h4><p>Distance maximum franchissable, endurance maximum, montée et descentes — pour le Marboré II comme pour le Marboré VI.</p></div>
-      <div class="tool"><div class="n">B</div><h4>Règle à calcul linéaire</h4><p>Vitesse propre, temps, distance, nombre de Mach et consommation, lus sur des échelles logarithmiques glissantes.</p></div>
-      <div class="tool"><div class="n">C</div><h4>Échelles cartographiques</h4><p>Deux réglettes gravées sur les bords du corps : 1/2.000.000ᵉ en haut, 1/1.000.000ᵉ en bas.</p></div>
-      <div class="tool"><div class="n">D</div><h4>Vent & rapporteur</h4><p>Un abaque de vent transparent (dérive, vent effectif) au recto ; un rapporteur 360° au verso.</p></div>
+      <div class="tool"><div class="n">B</div><h4>Règle à calcul linéaire</h4><p>Vitesse propre, temps, distance, nombre de Mach et consommation, lus dans des fenêtres ouvertes sur la réglette coulissante.</p></div>
+      <div class="tool"><div class="n">C</div><h4>Échelles cartographiques</h4><p>Quatre réglettes gravées : 1/2.000.000ᵉ et 1/1.000.000ᵉ sur le corps, 1/500.000ᵉ et 1/100.000ᵉ au verso de la réglette.</p></div>
+      <div class="tool"><div class="n">D</div><h4>Vent &amp; rapporteur</h4><p>Le «&nbsp;calcul K&nbsp;» — l’abaque de vent — au recto du corps&nbsp;; un rapporteur de déroutement au verso de la réglette.</p></div>
     </div>
 
     <div class="callout reveal" style="margin-top:34px">
@@ -296,13 +298,14 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
     </div>
 
     <div class="callout reveal">
-      <span class="lab">Provenance</span>
-      <p>Le cartouche central porte&nbsp;: «&nbsp;<strong>REGLE DE NAVIGATION — Etablie par Cne CLAUDE Ph — GE 00 315</strong>&nbsp;» et, en regard, «&nbsp;<strong>COGNAC 1980</strong>&nbsp;». Il s’agit donc d’une règle établie au sein du groupement école de la base de Cognac, où le Magister assurait la formation des pilotes — un outil de série d’unité, et non une fourniture du constructeur.</p>
+      <span class="lab">Provenance — «&nbsp;la règle de navigation du Capitaine Claude&nbsp;»</span>
+      <p>Le cartouche central porte&nbsp;: «&nbsp;<strong>REGLE DE NAVIGATION — Etablie par Cne CLAUDE Ph — GE 00 315</strong>&nbsp;» et, en regard, «&nbsp;<strong>COGNAC 1980</strong>&nbsp;». Sa notice d’époque — le chapitre&nbsp;4 d’un cours d’escadron dactylographié — la nomme en toutes lettres «&nbsp;<em>la règle de navigation du Capitaine CLAUDE</em>&nbsp;»&nbsp;: un outil conçu <em>dans</em> l’unité, enseigné aux équipages du groupement école de Cognac, et non une fourniture du constructeur.</p>
+      <p>Le but affiché par la notice tient en une ligne&nbsp;: «&nbsp;<em>Avoir un moyen simple et peu encombrant pour calculer les différents paramètres de vol</em>&nbsp;» — en précisant aussitôt que la règle «&nbsp;ne dispense pas [le pilote] de connaître parfaitement certains paramètres&nbsp;».</p>
     </div>
 
     <div class="callout warn reveal">
-      <span class="lab">Ce que dit la photo, ce que dit la page</span>
-      <p>Toutes les valeurs ci-dessous sont relevées <strong>sur les clichés de l’instrument</strong>, seule source de référence. Les tableaux gravés (distance maximum, endurance maximum, descentes, sécurités) sont lisibles et transcrits intégralement. En revanche l’<strong>abaque de montée</strong> est un faisceau de courbes dont la lecture fine dépasse la résolution des clichés actuels&nbsp;: il est ici présenté en fac-similé, non tabulé. Chaque incertitude est signalée à sa place.</p>
+      <span class="lab">Ce que disent les sources</span>
+      <p>Cette page est établie sur trois sources qui se recoupent&nbsp;: les <strong>photographies de l’instrument démonté</strong> (corps et réglette à plat, recto et verso), des <strong>scans à l’échelle</strong> (réglet dans le cadre, sans parallaxe) et la <strong>notice d’époque</strong>. Les valeurs gravées sont transcrites intégralement — l’abaque de montée compris, désormais tabulé. Les rares lectures encore incertaines sont signalées à leur place.</p>
     </div>
   </div>
 </section>
@@ -313,79 +316,90 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
     <div class="sec-head reveal">
       <div class="lead-rule"></div>
       <div class="kicker" style="margin-top:14px">II · Anatomie</div>
-      <h2>Reconnaître les deux faces</h2>
-      <p>La règle se lit dans le sens de la longueur. Chaque face juxtapose trois blocs&nbsp;: un tableau de performances, un bloc de calcul, et un instrument graphique en bout de règle.</p>
+      <h2>Deux pièces, quatre faces</h2>
+      <p>La notice décrit la règle en une phrase&nbsp;: deux éléments, «&nbsp;une partie fixe formant le corps&nbsp;» et «&nbsp;une réglette coulissante&nbsp;». Chaque pièce a deux faces gravées — l’instrument se lit donc sur quatre plans, présentés ici à plat.</p>
     </div>
 
     <figure class="plate reveal">
-      <div class="frame"><span class="tag">Recto · au repos</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Recto complet de la règle de navigation : tableau de distance maximum franchissable, bloc de calcul central, abaque de vent"></div>
-      <figcaption>Recto — distance maximum franchissable, règle à calcul, abaque de vent</figcaption>
+      <div class="frame"><span class="tag">Corps · recto · à plat</span><img class="zoomable" src="../assets/img/regle_corps_recto.jpg" alt="Recto du corps de la règle, réglette retirée : tableau de distance maximum franchissable, fenêtres de lecture vides, abaque de vent"></div>
+      <figcaption>Le corps seul, réglette retirée — les fenêtres sont vides</figcaption>
     </figure>
 
     <div class="feature reveal">
       <div class="txt">
-        <h3>Recto, panneau gauche — la distance franchissable</h3>
-        <p>Sous l’en-tête <strong>FOUGA</strong>, trois colonnes&nbsp;: <em>Marboré&nbsp;II</em>, <em>Marboré&nbsp;VI</em>, <em>Vit. indiquée</em>. Sept lignes de niveau, du FL&nbsp;300 en haut au palier de 1&nbsp;000&nbsp;pieds en bas. Chaque case donne le <strong>régime à afficher</strong> et la <strong>consommation en litres par minute</strong>.</p>
-        <p>Le titre est gravé verticalement sur le champ&nbsp;: «&nbsp;Distance Maximum Franchissable <strong>Gb</strong>&nbsp;». Le tableau vaut donc pour les <strong>gros bidons</strong> ; une ligne de correction en pied, repérée par un <strong>Pb</strong> cerclé, ramène les valeurs aux <strong>petits bidons</strong>.</p>
+        <h3>Corps, panneau gauche — la distance franchissable</h3>
+        <p>Sous l’en-tête <strong>FOUGA</strong>, trois colonnes&nbsp;: <em>Marboré&nbsp;II</em>, <em>Marboré&nbsp;VI</em>, <em>Vit. indiquée</em>. Sept lignes de niveau, du FL&nbsp;300 en haut au palier de 1&nbsp;000&nbsp;pieds en bas. Chaque case donne le <strong>régime à afficher</strong> et la <strong>consommation en litres par minute</strong>&nbsp;; une flèche noire renvoie, ligne par ligne, à la fenêtre de vitesse indiquée correspondante.</p>
+        <p>Le titre est gravé verticalement sur le champ&nbsp;: «&nbsp;Distance Maximum Franchissable <strong>Gb</strong>&nbsp;». Le tableau vaut donc pour les <strong>gros bidons</strong>&nbsp;; une ligne de correction en pied, repérée par un <strong>Pb</strong> cerclé, ramène les valeurs aux <strong>petits bidons</strong>.</p>
       </div>
       <figure class="figure">
-        <div class="frame"><span class="tag">Recto · panneau gauche</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Tableau de distance maximum franchissable, colonnes Marboré II et Marboré VI"></div>
+        <div class="frame"><span class="tag">Corps · panneau gauche</span><img class="zoomable" src="../assets/img/regle_zoom_dmf.jpg" alt="Tableau de distance maximum franchissable, colonnes Marboré II et Marboré VI"></div>
         <figcaption>Tableau « Distance Maximum Franchissable Gb »</figcaption>
       </figure>
     </div>
 
     <div class="feature rev reveal">
       <div class="txt">
-        <h3>Recto, bloc central — le calcul</h3>
-        <p>Le cœur de la règle empile, du haut vers le bas&nbsp;: la <strong>réglette 1/2.000.000ᵉ</strong>, les deux fenêtres <strong>Nbre de Mach</strong> (FL&nbsp;300 et FL&nbsp;250), la double échelle <strong>VITESSE PROPRE</strong> encadrée de ses échelles de temps, la fenêtre <strong>Cons. — l/minute</strong>, et la <strong>réglette 1/1.000.000ᵉ</strong> en pied.</p>
-        <p>C’est là que se lit le cartouche de provenance, et le repère <strong>VP</strong> qui accroche l’échelle des vitesses propres (100 à 300) au calculateur de vent voisin.</p>
+        <h3>Corps, bloc central — les fenêtres de lecture</h3>
+        <p>Le cœur de la règle empile, du haut vers le bas&nbsp;: la <strong>réglette 1/2.000.000ᵉ</strong>, les deux fenêtres <strong>Nbre de Mach</strong> (FL&nbsp;300 et FL&nbsp;250), la longue fenêtre <strong>VITESSE PROPRE</strong> encadrée de ses deux échelles de temps, la fenêtre <strong>Cons. — l/minute</strong>, et la <strong>réglette 1/1.000.000ᵉ</strong> en pied.</p>
+        <p>Les échelles de temps sont l’<em>échelle fixe</em> de la notice&nbsp;: en haut, de <strong>10′ à 60′</strong> — le 60 est cerclé, c’est l’index de l’heure — puis, de cinq en cinq minutes, jusqu’aux étiquettes <strong>1¹⁰, 1²⁰, 1³⁰, 1⁴⁰</strong>&nbsp;: une heure quarante. En bas, la même échelle divisée par dix, de <strong>1′ à 10′</strong>. C’est là aussi que se lit le cartouche de provenance.</p>
       </div>
       <figure class="figure">
-        <div class="frame"><span class="tag">Recto · bloc central</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Bloc central : échelles 1/2.000.000, Mach, vitesse propre, consommation, 1/1.000.000"></div>
-        <figcaption>Échelles glissantes et fenêtres de lecture</figcaption>
+        <div class="frame"><span class="tag">Corps · bloc central</span><img class="zoomable" src="../assets/img/regle_zoom_fenetres.jpg" alt="Bloc central du corps : fenêtres Mach, vitesse propre, consommation, échelles de temps"></div>
+        <figcaption>Fenêtres de lecture et échelles de temps</figcaption>
       </figure>
     </div>
 
     <div class="feature reveal">
       <div class="txt">
-        <h3>La coulisse — ce qui bouge</h3>
-        <p>Les cases «&nbsp;Vit. indiquée&nbsp;», «&nbsp;Nbre de Mach&nbsp;» et «&nbsp;Cons.&nbsp;» ne sont pas des cartouches gravés&nbsp;: ce sont des <strong>fenêtres</strong> ouvertes sur une bande mobile. Ce second cliché, coulisse tirée, le démontre — les fenêtres de gauche se vident, celles du Mach affichent une graduation étrangère, et l’extrémité droite du corps découvre des échelles jusque-là masquées (50 à 150, 500 à 1&nbsp;500).</p>
-        <p>Au repos (cliché précédent), les lectures redeviennent cohérentes entre elles&nbsp;: Mach 0,50 au FL&nbsp;300 et au FL&nbsp;250, et des vitesses indiquées qui s’accordent avec ce Mach.</p>
-        <div class="callout todo" style="margin-top:14px">
-          <span class="lab">À confirmer sur l’objet</span>
-          <p>Le nombre exact de pièces mobiles (une coulisse unique portant l’abaque de vent, ou une coulisse plus un curseur transparent indépendant) et la position de référence des fenêtres ne se laissent pas trancher sur quatre clichés. C’est la première mesure à faire pour la <a href="../regle-navigation-virtuelle.html" target="_top">règle virtuelle</a>.</p>
+        <h3>La réglette coulissante, recto — ce qui bouge</h3>
+        <p>Sortie du corps, la réglette révèle ce que les fenêtres laissaient deviner&nbsp;: <strong>sept bandes «&nbsp;Vit. indiquée&nbsp;»</strong> graduées de 100 à 350&nbsp;kt — une par niveau, chacune décalée pour matérialiser la conversion propre à son altitude —, <strong>deux bandes Mach</strong> graduées de 0,40 à 0,80, la <strong>double échelle logarithmique VITESSE PROPRE</strong> (10 → 1&nbsp;500 en haut, 1 → 150 en bas) avec ses flèches de conversion <em>Pieds</em>, <em>Naut</em> et <em>Unités métriques</em>, et la bande <strong>Cons.</strong> graduée de 4 à 20&nbsp;l/mn.</p>
+        <p>Toutes ces bandes partagent le <strong>même module logarithmique</strong> — environ 104,5&nbsp;mm par décade, mesuré sur les scans&nbsp;: c’est ce qui permet à une seule translation de résoudre à la fois vitesse, temps, distance et consommation.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Réglette · recto · à plat</span><img class="zoomable" src="../assets/img/regle_coulisse_recto.jpg" alt="Recto de la réglette coulissante à plat : bandes de vitesse indiquée, bandes Mach, double échelle logarithmique, bande consommation"></div>
+        <figcaption>La réglette coulissante sortie du corps</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature rev reveal">
+      <div class="txt">
+        <h3>En mouvement — les fenêtres se vident</h3>
+        <p>Sur l’instrument assemblé, tirer la réglette décale toutes les bandes d’un même mouvement&nbsp;: les fenêtres de gauche se vident, celles du Mach affichent une autre portion de leur bande, et l’extrémité droite du corps découvre la fin des échelles logarithmiques (500 à 1&nbsp;500). Il n’y a <strong>pas de position de repos</strong>&nbsp;: chaque calcul commence par une translation qui règle l’instrument.</p>
+        <div class="callout" style="margin-top:14px">
+          <span class="lab">Tranché par la notice et les scans</span>
+          <p>Le doute affiché ici auparavant — coulisse unique ou coulisse plus curseur transparent&nbsp;? — est levé&nbsp;: la règle est faite de <strong>deux pièces exactement</strong> (notice 4.3.1), et l’abaque de vent appartient au corps. La vitre transparente qui le recouvre n’est pas une pièce mobile.</p>
         </div>
       </div>
       <figure class="figure">
-        <div class="frame"><span class="tag">Recto · coulisse tirée</span><img class="zoomable" src="../assets/img/regle_recto_coulisse.jpg" alt="Recto de la règle, coulisse tirée : les fenêtres se vident et les échelles de droite apparaissent"></div>
-        <figcaption>La coulisse en extension</figcaption>
+        <div class="frame"><span class="tag">Recto · réglette tirée</span><img class="zoomable" src="../assets/img/regle_recto_coulisse.jpg" alt="Recto de la règle assemblée, réglette tirée : les fenêtres se vident et les échelles de droite apparaissent"></div>
+        <figcaption>L’instrument assemblé, réglette en extension</figcaption>
       </figure>
     </div>
 
     <figure class="plate reveal" style="margin-top:20px">
-      <div class="frame"><span class="tag">Verso</span><img class="zoomable" src="../assets/img/regle_verso.jpg" alt="Verso complet de la règle de navigation : abaque de montée, table endurance maximum, rapporteur"></div>
-      <figcaption>Verso — abaque de montée, endurance maximum et descentes, rapporteur 360°</figcaption>
+      <div class="frame"><span class="tag">Corps · verso · à plat</span><img class="zoomable" src="../assets/img/regle_corps_verso.jpg" alt="Verso du corps de la règle : abaque de montée, table endurance maximum, descentes et sécurités"></div>
+      <figcaption>Verso du corps — abaque de montée, endurance maximum, descentes et sécurités</figcaption>
     </figure>
 
-    <div class="feature rev reveal">
+    <div class="feature reveal">
       <div class="txt">
-        <h3>Verso, panneau gauche — l’abaque de montée</h3>
-        <p>Un faisceau de <strong>quatre courbes</strong> monte du coin inférieur gauche vers le FL&nbsp;300&nbsp;: le Marboré&nbsp;VI à gauche (montée plus courte, plus rapide), le Marboré&nbsp;II à droite, chacun dédoublé en <strong>Pb</strong> et <strong>Gb</strong>. Le long de chaque courbe, des points cotés donnent le <strong>temps de montée</strong> (de 3′ à 24′) ; en marge, des lignes de rappel donnent le <strong>carburant restant</strong> au passage de chaque niveau.</p>
+        <h3>Corps, verso — l’abaque de montée</h3>
+        <p>Un faisceau de <strong>quatre courbes</strong> monte du coin inférieur gauche vers la droite&nbsp;: le Marboré&nbsp;VI jusqu’au FL&nbsp;300, le Marboré&nbsp;II jusqu’au FL&nbsp;250, chacun dédoublé en <strong>Pb</strong> et <strong>Gb</strong>. L’axe horizontal est une <strong>distance en nautiques</strong>, gradué sur les deux bords — celui du haut sert au Marboré&nbsp;VI, celui du bas au Marboré&nbsp;II — et chaque bord porte son axe «&nbsp;<strong>CARBURANT RESTANT</strong>&nbsp;»&nbsp;: à chaque niveau croisé, une cote verticale donne les litres restants, petits et gros bidons interlacés. Le tout est tabulé plus bas.</p>
       </div>
       <figure class="figure">
-        <div class="frame"><span class="tag">Verso · abaque de montée</span><img class="zoomable" src="../assets/img/regle_verso.jpg" alt="Abaque de montée : quatre courbes Marboré VI / Marboré II en petits et gros bidons"></div>
+        <div class="frame"><span class="tag">Verso · abaque de montée</span><img class="zoomable" src="../assets/img/regle_zoom_montee.jpg" alt="Abaque de montée : quatre courbes Marboré VI / Marboré II en petits et gros bidons, cotes de temps, distance et carburant"></div>
         <figcaption>Quatre courbes : VI et II, Pb et Gb</figcaption>
       </figure>
     </div>
 
-    <div class="feature reveal">
+    <div class="feature rev reveal">
       <div class="txt">
-        <h3>Verso, bout de règle — le rapporteur</h3>
-        <p>L’extrémité arrondie porte un <strong>rapporteur 360°</strong> à rose complète, titré «&nbsp;<strong>EXECUTION DES VOLS COM TYPE VICTOR EN TRES BASSE ALTITUDE</strong>&nbsp;» — de quoi relever un cap sur la carte sans quitter la règle des mains. À côté, un encadré <strong>JOUR / NUIT</strong> et un bloc «&nbsp;Conditions…&nbsp;», partiellement masqué par la coulisse sur tous les clichés disponibles.</p>
+        <h3>La réglette, verso — la face Victor</h3>
+        <p>Le verso de la réglette est un instrument à lui seul&nbsp;: un <strong>rapporteur</strong> à l’extrémité arrondie — celle qui dépasse toujours du corps —, deux <strong>réglettes de tracé et de minutage</strong> (1/500.000ᵉ et 1/100.000ᵉ) sur les chants, et, au centre, les <strong>consignes des vols COM type Victor en très basse altitude</strong>&nbsp;: minima météo, transpondeur, carte des niveaux refuge, procédure d’urgence. Cette face fait l’objet de la section <a href="#victor">VI</a>.</p>
       </div>
       <figure class="figure">
-        <div class="frame"><span class="tag">Verso · rapporteur</span><img class="zoomable" src="../assets/img/regle_verso_rapporteur.jpg" alt="Rapporteur 360° du verso, encadré jour/nuit"></div>
-        <figcaption>Rose des caps et encadré jour / nuit</figcaption>
+        <div class="frame"><span class="tag">Réglette · verso · à plat</span><img class="zoomable" src="../assets/img/regle_coulisse_verso.jpg" alt="Verso de la réglette coulissante : rapporteur, réglettes cartographiques, consignes des vols Victor très basse altitude"></div>
+        <figcaption>Le verso de la réglette coulissante</figcaption>
       </figure>
     </div>
   </div>
@@ -398,12 +412,12 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
       <div class="lead-rule"></div>
       <div class="kicker" style="margin-top:14px">III · Les abaques</div>
       <h2>Ce que la règle donne sans calcul</h2>
-      <p>Quatre tableaux gravés couvrent les deux régimes de croisière qui comptent — aller le plus loin, ou rester le plus longtemps — puis la descente et les sécurités.</p>
+      <p>Les tableaux gravés couvrent les deux régimes de croisière qui comptent — aller le plus loin, ou rester le plus longtemps —, la montée, la descente et les sécurités.</p>
     </div>
 
     <!-- Distance max -->
     <h3 class="sub">Distance maximum franchissable — gros bidons</h3>
-    <p class="sub-p">À chaque niveau, le régime qui procure la plus grande distance et la consommation qui l’accompagne. Le Marboré&nbsp;VI, plus puissant, tient le même profil <strong>500 à 1&nbsp;300&nbsp;t/m plus bas</strong> que le Marboré&nbsp;II — mais consomme davantage à tous les niveaux.</p>
+    <p class="sub-p">À chaque niveau, le régime qui procure la plus grande distance et la consommation qui l’accompagne. Le Marboré&nbsp;VI, plus puissant, tient le même profil <strong>400 à 1&nbsp;300&nbsp;t/m plus bas</strong> que le Marboré&nbsp;II — mais consomme davantage à tous les niveaux.</p>
 
     <div class="reveal">
       <div class="viewtoggle" role="tablist" aria-label="Affichage de la distance maximum franchissable">
@@ -413,7 +427,7 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
 
       <div id="dist-table">
         <div class="tablewrap"><table>
-          <caption>Distance maximum franchissable, gros bidons (Gb) — recto</caption>
+          <caption>Distance maximum franchissable, gros bidons (Gb) — corps, recto</caption>
           <thead>
             <tr><th rowspan="2">Niveau</th><th colspan="2" class="m2">● Marboré II</th><th colspan="2" class="m6">★ Marboré VI</th></tr>
             <tr class="sub"><th class="m2">Régime</th><th>Cons.</th><th class="m6">Régime</th><th>Cons.</th></tr>
@@ -429,7 +443,7 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
             <tr class="corr"><td class="rowh">Correction Pb <span style="font-weight:400;color:var(--muted)">(petits bidons)</span></td><td class="num m2">− 200 t/m</td><td class="num">− 0,5 l/m</td><td class="num m6">− 500 t/m</td><td class="num">− 0,5 l/m</td></tr>
           </tbody>
         </table></div>
-        <p class="note-mini">Case hachurée : le Marboré II n’a pas de valeur gravée au FL 300. Sa colonne sature à 21 000 t/m dès le FL 200 — le régime nécessaire pour tenir le FL 300 sortirait de la plage utilisable. Le Marboré VI, lui, poursuit jusqu’à 21 200 t/m.</p>
+        <p class="note-mini">Case hachurée : le Marboré II n’a pas de valeur gravée au FL 300 — ses courbes de montée s’arrêtent d’ailleurs au FL 250 au verso. Au FL 150, la consommation Marboré II se lit « 9 l/m » ; une éventuelle décimale est masquée par la fissure qui traverse le tableau.</p>
       </div>
 
       <div id="dist-charts" hidden></div>
@@ -437,23 +451,72 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
 
     <div class="callout reveal">
       <span class="lab">Lire les deux colonnes ensemble</span>
-      <p>Les deux séries sont régulières et se répondent&nbsp;: le régime monte avec le niveau, la consommation baisse. Une seule irrégularité, et elle est logique&nbsp;— du FL&nbsp;200 au FL&nbsp;250, le Marboré&nbsp;II garde le <strong>même régime (21 000 t/m)</strong> ; la consommation chute alors franchement (8,5 → 7,2 l/m) au lieu de la baisse douce observée ailleurs, puisque rien ne vient plus compenser la raréfaction de l’air.</p>
+      <p>Les deux séries se répondent&nbsp;: le régime monte avec le niveau, la consommation baisse. Le palier du Marboré&nbsp;II — <strong>21&nbsp;000&nbsp;t/m</strong> du FL&nbsp;200 au FL&nbsp;250 — n’est pas une irrégularité&nbsp;: la notice précise que 21&nbsp;000&nbsp;t/m est le <strong>régime maximum «&nbsp;maxi continu&nbsp;»</strong> (le régime de base étant 20&nbsp;700). Arrivé en butée, le moteur ne peut plus compenser l’altitude par le régime&nbsp;; au-delà du FL&nbsp;250, il n’y a plus de valeur gravée.</p>
     </div>
 
     <!-- Vitesse indiquée & Mach -->
     <div class="feature reveal" style="margin-top:56px">
       <div class="txt">
         <h3>La colonne « Vit. indiquée » et les fenêtres Mach</h3>
-        <p>À droite du tableau, une fenêtre par niveau montre l’<strong>échelle des vitesses indiquées</strong>, où les repères <span class="mk m2">●</span> et <span class="mk m6">★</span> pointent la valeur à tenir pour chaque moteur. La vitesse croît en descendant&nbsp;: de l’ordre de 150–200&nbsp;kt aux niveaux hauts, 200–250&nbsp;kt vers le FL&nbsp;150–100, 250–300&nbsp;kt en bas.</p>
-        <p>Au-dessus, deux fenêtres <strong>Nbre de Mach</strong> couvrent les seuls niveaux où le Mach compte, FL&nbsp;300 et FL&nbsp;250. Les deux affichent, au repos, <strong>0,50</strong>&nbsp;: la croisière de plus grande distance se tient à Mach constant en altitude — et ce Mach 0,50 recoupe bien les vitesses indiquées lues en regard.</p>
-        <div class="callout todo" style="margin-top:14px">
-          <span class="lab">Relevé partiel</span>
-          <p>Les repères <span class="mk m2">●</span>/<span class="mk m6">★</span> se lisent dans les fenêtres, mais leur position exacte sur la graduation demande un cliché macro. Seules les <strong>plages</strong> sont données ci-dessus, pas de valeur au nœud près.</p>
-        </div>
+        <p>À droite du tableau, une fenêtre par niveau montre l’échelle des vitesses indiquées, où les repères <span class="mk m2">●</span> et <span class="mk m6">★</span> pointent la valeur à tenir pour chaque moteur. La lecture à plat de la réglette donne, à ±&nbsp;2&nbsp;kt&nbsp;:</p>
+        <div class="tablewrap" style="margin-top:10px"><table style="min-width:420px">
+          <caption>Repères gravés des fenêtres « Vit. indiquée » (kt)</caption>
+          <thead><tr><th>Niveau</th><th class="m2">● Marboré II</th><th class="m6">★ Marboré VI</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">FL 300</td><td class="void m2"></td><td class="num m6">≈ 220</td></tr>
+            <tr><td class="rowh">FL 250</td><td class="num m2">≈ 185</td><td class="num m6">≈ 220</td></tr>
+            <tr><td class="rowh">FL 200</td><td class="num m2">≈ 195</td><td class="num m6">≈ 220</td></tr>
+            <tr><td class="rowh">FL 150</td><td class="num m2">≈ 200</td><td class="num m6">≈ 220</td></tr>
+            <tr><td class="rowh">FL 100</td><td class="num m2">≈ 210</td><td class="num m6">≈ 220</td></tr>
+            <tr><td class="rowh">FL 50</td><td class="num m2">≈ 220</td><td class="num m6">≈ 220</td></tr>
+            <tr><td class="rowh">1 000 ft</td><td class="num m2">≈ 220</td><td class="num m6">≈ 220</td></tr>
+          </tbody>
+        </table></div>
+        <p class="note-mini">La logique saute aux yeux : le ★ Marboré VI tient ≈ 220 kt indiqués à tous les niveaux ; le ● Marboré II décroît avec l’altitude et disparaît au FL 300. Aux deux niveaux les plus bas, les repères se superposent. Le ● au FL 200 (≈ 195 kt) recoupe l’exemple i) de la notice : « la Vi est de 195 Kts ».</p>
+        <p style="margin-top:14px">Au-dessus, deux fenêtres <strong>Nbre de Mach</strong> couvrent les seuls niveaux où le Mach compte&nbsp;: FL&nbsp;300 et FL&nbsp;250. Leurs bandes sont graduées de <strong>0,40 à 0,80</strong>, au centième. La notice s’en sert dès son premier exemple&nbsp;: au FL&nbsp;250, afficher M&nbsp;0,45 et lire 272&nbsp;kt de vitesse propre.</p>
       </div>
       <figure class="figure">
-        <div class="frame"><span class="tag">Recto · fenêtres</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Colonne Vit. indiquée et fenêtres Nbre de Mach"></div>
-        <figcaption>Vitesses indiquées et nombre de Mach</figcaption>
+        <div class="frame"><span class="tag">Réglette · bandes</span><img class="zoomable" src="../assets/img/regle_zoom_bandes_vi.jpg" alt="Bandes de vitesse indiquée et bandes Mach sur la réglette à plat"></div>
+        <figcaption>Bandes « Vit. indiquée » et « Nbre de Mach » sur la réglette</figcaption>
+      </figure>
+    </div>
+
+    <!-- Montée -->
+    <h3 class="sub" style="margin-top:64px">Abaque de montée — désormais tabulé</h3>
+    <p class="sub-p">Les photos à plat du verso permettent enfin de lire l’abaque en entier&nbsp;: temps de montée, distance parcourue et carburant restant à chaque niveau, pour les quatre configurations.</p>
+
+    <div class="tablewrap reveal"><table style="min-width:640px">
+      <caption>Temps de montée (et distance parcourue) — verso du corps</caption>
+      <thead><tr><th>Courbe</th><th>FL 50</th><th>FL 100</th><th>FL 150</th><th>FL 200</th><th>FL 250</th><th>FL 300</th></tr></thead>
+      <tbody>
+        <tr><td class="rowh"><span class="mk m6">★</span> VI — Pb</td><td class="num">3′ · 6 Nm</td><td class="num">5′ · 14</td><td class="num">7′30 · 25</td><td class="num">10′ · 36</td><td class="num">13′30 · 50</td><td class="num"><strong>17′ · 65</strong></td></tr>
+        <tr><td class="rowh"><span class="mk m6">★</span> VI — Gb</td><td class="num">—</td><td class="num">5′30 · 16</td><td class="num">8′ · 27</td><td class="num">11′30 · 40</td><td class="num">15′30 · 60</td><td class="num"><strong>20′ · 80</strong></td></tr>
+        <tr><td class="rowh"><span class="mk m2">●</span> II — Pb</td><td class="num">4′ · ≈ 10</td><td class="num">7′ · 20</td><td class="num">10′ · 34</td><td class="num">14′ · 48</td><td class="num"><strong>20′ · ≈ 70</strong></td><td class="void"></td></tr>
+        <tr><td class="rowh"><span class="mk m2">●</span> II — Gb</td><td class="num">—</td><td class="num">8′ · 24</td><td class="num">12′ · 40</td><td class="num">17′ · 62</td><td class="num"><strong>24′ · 90</strong></td><td class="void"></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note-mini">En gras, le sommet de chaque courbe. À FL 50, l’abaque ne porte que deux cercles cotés : 3′ appartient à VI-Pb (sa cote de distance « 6 Nm » le prouve) ; 4′ est attribué à II-Pb par la géométrie du faisceau — attribution vraisemblable mais serrée.</p>
+
+    <div class="tablewrap reveal" style="margin-top:18px"><table style="min-width:640px">
+      <caption>Carburant restant (litres) au passage de chaque niveau — axes « Carburant restant »</caption>
+      <thead><tr><th>Courbe</th><th>FL 100</th><th>FL 150</th><th>FL 200</th><th>FL 250</th><th>FL 300</th></tr></thead>
+      <tbody>
+        <tr><td class="rowh"><span class="mk m6">★</span> VI — Pb</td><td class="num">800</td><td class="num">760</td><td class="num">720</td><td class="num">690</td><td class="num"><strong>660</strong></td></tr>
+        <tr><td class="rowh"><span class="mk m6">★</span> VI — Gb</td><td class="num">1 010</td><td class="num">970</td><td class="num">920</td><td class="num">880</td><td class="num"><strong>840</strong></td></tr>
+        <tr><td class="rowh"><span class="mk m2">●</span> II — Pb</td><td class="num">780</td><td class="num">720</td><td class="num">650</td><td class="num"><strong>550</strong></td><td class="void"></td></tr>
+        <tr><td class="rowh"><span class="mk m2">●</span> II — Gb</td><td class="num">990</td><td class="num">920</td><td class="num">840</td><td class="num"><strong>720</strong></td><td class="void"></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note-mini">Recoupement avec la notice (§ 4.2) : le « pétrole forfaitaire restant en fin de montée » du Marboré II au FL 200 — 650 L en petits bidons, 840 L en gros bidons — tombe exactement sur les cotes gravées de l’abaque. Deux documents, une même gravure de référence.</p>
+
+    <div class="feature reveal" style="margin-top:34px">
+      <div class="txt">
+        <h3>Ce que raconte le faisceau</h3>
+        <p>À bidons égaux, le Marboré&nbsp;VI grimpe plus vite que le Marboré&nbsp;II&nbsp;; à moteur égal, les petits bidons grimpent plus vite que les gros. Le VI atteint le FL&nbsp;300 en <strong>17 à 20 minutes</strong>&nbsp;; le II plafonne au FL&nbsp;250, atteint en <strong>20 à 24 minutes</strong> — cohérent avec sa case vide au FL&nbsp;300 du recto.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Verso · montée</span><img class="zoomable" src="../assets/img/regle_zoom_montee.jpg" alt="Abaque de montée du verso, quatre courbes cotées en temps, distance et carburant"></div>
+        <figcaption>L’abaque de montée sur le corps</figcaption>
       </figure>
     </div>
 
@@ -469,7 +532,7 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
 
       <div id="endu-table">
         <div class="tablewrap"><table>
-          <caption>Endurance maximum — verso</caption>
+          <caption>Endurance maximum — corps, verso</caption>
           <thead><tr><th colspan="2">Altitude × 1 000</th><th>5</th><th>10</th><th>15</th><th>20</th><th>25</th></tr></thead>
           <tbody>
             <tr><th rowspan="2" class="m2">● Marboré II</th><td class="rowh">Régime</td><td class="num">17 000</td><td class="num">17 500</td><td class="num">18 000</td><td class="num">18 500</td><td class="num">19 000</td></tr>
@@ -488,14 +551,14 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
     <div class="callout reveal">
       <span class="lab">Recoupement : la règle et le computeur disent la même chose</span>
       <p>La ligne <strong>Marboré II</strong> de cette table reproduit <strong>exactement</strong>, cellule par cellule, la table «&nbsp;régime / consommation&nbsp;» gravée sur la face 336 du <a href="../computeur.html" target="_top">computeur de vol</a> — mêmes régimes (17 000 → 19 000 t/m), mêmes consommations (7,8 → 5,2 l/m), même vitesse de référence (140–150 kt). Deux instruments distincts, deux gravures indépendantes, un accord parfait.</p>
-      <p>Ce recoupement est la meilleure garantie de lecture dont on dispose sur cette page&nbsp;: il valide la transcription du tableau, et il donne son sens à la seconde ligne — la colonne <strong>Marboré VI</strong> prolonge au second moteur une table que le computeur ne connaissait que pour le premier.</p>
+      <p>Ce recoupement est la meilleure garantie de lecture dont on dispose&nbsp;: il valide la transcription du tableau, et il donne son sens à la seconde ligne — la colonne <strong>Marboré VI</strong> prolonge au second moteur une table que le computeur ne connaissait que pour le premier.</p>
     </div>
 
     <!-- Descentes -->
     <h3 class="sub" style="margin-top:64px">Descentes</h3>
     <p class="sub-p">Deux profils gravés sous la table d’endurance, chacun exprimé en <strong>milles nautiques et litres par 1 000 pieds perdus</strong> — de quoi retrancher la descente d’un coup d’œil.</p>
     <div class="tablewrap reveal"><table style="min-width:600px">
-      <caption>Descentes — verso</caption>
+      <caption>Descentes — corps, verso</caption>
       <thead><tr><th>Profil</th><th>Vitesse</th><th>Régime</th><th>Distance</th><th>Carburant</th></tr></thead>
       <tbody>
         <tr><td class="rowh">ÉCO</td><td class="num">200 kt</td><td>Gaz réduits</td><td class="num">2 Nm / 1 000 ft</td><td class="num">3 L / 1 000 ft</td></tr>
@@ -511,29 +574,7 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
       <div class="lim vert"><div class="k">Vert</div><div class="v">250 L</div></div>
       <div class="lim jaune"><div class="k">Jaune</div><div class="v">300 L</div></div>
     </div>
-
-    <!-- Montée -->
-    <div class="feature reveal" style="margin-top:64px">
-      <div class="txt">
-        <h3>Abaque de montée</h3>
-        <p>Quatre courbes, du sol au FL&nbsp;300&nbsp;: <span class="mk m6">★</span> <strong>Marboré VI</strong> à gauche en <em>Pb</em> puis <em>Gb</em>, <span class="mk m2">●</span> <strong>Marboré II</strong> à droite de même. On y lit le temps de montée (points cotés de 3′ à 24′) et, en marge, le carburant restant à chaque niveau.</p>
-        <p>L’ordre des courbes raconte l’essentiel&nbsp;: à bidons égaux, le Marboré&nbsp;VI grimpe plus vite que le Marboré&nbsp;II ; à moteur égal, les petits bidons grimpent plus vite que les gros. Atteindre le FL&nbsp;300 demande de l’ordre de <strong>17 minutes au mieux, 24 au pire</strong>.</p>
-      </div>
-      <figure class="figure">
-        <div class="frame"><span class="tag">Verso · montée</span><img class="zoomable" src="../assets/img/regle_verso.jpg" alt="Abaque de montée du verso, quatre courbes cotées en temps"></div>
-        <figcaption>Fac-similé — abaque de montée</figcaption>
-      </figure>
-    </div>
-    <div class="callout todo reveal">
-      <span class="lab">Non tabulé — à relever</span>
-      <p>Cet abaque est le seul élément de la règle que cette page ne transcrit pas en tableau, et c’est délibéré. Trois points restent indécidables sur les clichés actuels&nbsp;:</p>
-      <ul>
-        <li>la <strong>nature exacte des deux échelles horizontales</strong> (haut et bas), qui ne se superposent pas&nbsp;;</li>
-        <li>l’<strong>appariement des étiquettes Pb / Gb</strong> à leurs courbes, ambigu pour le Marboré II&nbsp;;</li>
-        <li>la <strong>valeur des points cotés intermédiaires</strong>, illisibles au-delà des extrémités.</li>
-      </ul>
-      <p>Plutôt qu’un tableau plausible mais invérifiable, la page s’en tient au fac-similé. Le relevé demande un cliché à plat, éclairage rasant, de la seule zone de l’abaque — et il conditionne la <a href="../regle-navigation-virtuelle.html" target="_top">règle virtuelle</a>.</p>
-    </div>
+    <p class="note-mini">La notice, elle, raisonne sur trois catégories : à côté des terrains vert (250 L) et jaune (300 L), son exemple de déroutement mentionne un « terrain bleu » — rejoint en consommant jusqu’à ne conserver que 50 L à l’atterrissage. Cette troisième catégorie n’est pas gravée sur la règle.</p>
   </div>
 </section>
 
@@ -543,94 +584,307 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
     <div class="sec-head reveal">
       <div class="lead-rule"></div>
       <div class="kicker" style="margin-top:14px">IV · Règle à calcul & vent</div>
-      <h2>Le bloc central et l’abaque de vent</h2>
-      <p>Passé les tableaux, la règle redevient ce qu’elle est&nbsp;: une règle à calcul. Deux réglettes cartographiques, un jeu d’échelles logarithmiques, un abaque de vent.</p>
+      <h2>Le bloc central et le calcul « K »</h2>
+      <p>Passé les tableaux, la règle redevient ce qu’elle est&nbsp;: «&nbsp;une règle à calcul spécialement adaptée aux problèmes de navigation à l’estime&nbsp;» (notice, 4.3.1). Deux réglettes cartographiques, un jeu d’échelles logarithmiques, un abaque de vent.</p>
     </div>
 
     <div class="feature reveal">
       <div class="txt">
-        <h3>Les deux réglettes cartographiques</h3>
-        <p>Elles occupent les deux bords du corps et se lisent directement sur la carte&nbsp;:</p>
+        <h3>Les deux réglettes cartographiques du corps</h3>
+        <p>Elles occupent les deux bords et se lisent directement sur la carte&nbsp;:</p>
         <ul>
-          <li><strong>Bord supérieur — 1/2.000.000ᵉ</strong>, graduée de 0 à plus de 160.</li>
-          <li><strong>Bord inférieur — 1/1.000.000ᵉ</strong>, graduée de 0 à 90, <strong>en sens inverse</strong> — les chiffres croissent de la droite vers la gauche.</li>
+          <li><strong>Bord supérieur — 1/2.000.000ᵉ</strong>, graduée de 0 à 170 nautiques, au mille près.</li>
+          <li><strong>Bord inférieur — 1/1.000.000ᵉ</strong>, graduée de 0 à 85, <strong>tête-bêche</strong> — les chiffres croissent de la droite vers la gauche.</li>
         </ul>
-        <p>Deux échelles opposées sur un même objet, c’est un choix d’ergonomie&nbsp;: on retourne la règle bout pour bout selon la carte utilisée, sans jamais avoir à lire à l’envers.</p>
+        <p>Deux échelles opposées sur un même objet, c’est un choix d’ergonomie&nbsp;: on retourne la règle bout pour bout selon la carte utilisée, sans jamais avoir à lire à l’envers. Le verso de la réglette ajoute deux échelles plus fines, 1/500.000ᵉ et 1/100.000ᵉ (section <a href="#victor">VI</a>).</p>
       </div>
       <figure class="figure">
-        <div class="frame"><span class="tag">Recto · bords</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Réglettes cartographiques 1/2.000.000 en haut et 1/1.000.000 en bas"></div>
-        <figcaption>1/2.000.000ᵉ en haut, 1/1.000.000ᵉ en bas</figcaption>
+        <div class="frame"><span class="tag">Corps · chants</span><img class="zoomable" src="../assets/img/regle_zoom_chants.jpg" alt="Réglettes cartographiques 1/2.000.000 en haut et 1/1.000.000 en bas du corps"></div>
+        <figcaption>1/2.000.000ᵉ en haut, 1/1.000.000ᵉ en bas, tête-bêche</figcaption>
       </figure>
     </div>
 
     <div class="feature rev reveal">
       <div class="txt">
         <h3>Vitesse propre, temps, distance</h3>
-        <p>Le bandeau <strong>VITESSE PROPRE</strong> superpose deux règles logarithmiques glissantes, chacune graduée deux fois — en <strong>nautiques</strong> et en <strong>unités métriques</strong> — et encadrée par deux échelles de temps&nbsp;:</p>
+        <p>La fenêtre <strong>VITESSE PROPRE</strong> révèle la double échelle logarithmique de la réglette — l’<em>échelle mobile</em> de la notice — encadrée par les deux échelles de temps du corps — l’<em>échelle fixe</em>&nbsp;:</p>
         <ul>
-          <li><strong>Échelle haute</strong> — de 10′ à 60′ (le 60 est cerclé, c’est l’index de l’heure) puis 110 à 140.</li>
-          <li><strong>Échelle basse</strong> — de 1′ à 10′, pour les temps courts.</li>
-          <li><strong>Rangée du haut</strong> — 50 à 500 ; <strong>rangée du bas</strong> — 5 à 50 : le même rapport, deux décades.</li>
+          <li><strong>Échelle fixe haute</strong> — de 10′ à 60′ (le 60 cerclé est l’index de l’heure), puis 1¹⁰ à 1⁴⁰&nbsp;: <strong>une heure quarante</strong>.</li>
+          <li><strong>Échelle fixe basse</strong> — de 1′ à 10′&nbsp;: la même, divisée par dix, pour les temps courts.</li>
+          <li><strong>Échelle mobile</strong> — deux bandes au même module&nbsp;: 10 → 1&nbsp;500 en haut, 1 → 150 en bas.</li>
+          <li><strong>Flèches de conversion</strong> — <em>Pieds</em> (32,8), <em>Naut</em> (54), <em>Unités métriques</em> (100)&nbsp;: les équivalences du kilomètre (1&nbsp;km = 3&nbsp;280&nbsp;ft = 0,54&nbsp;NM).</li>
         </ul>
-        <p>Le principe est celui de tous les computeurs de vol&nbsp;: on aligne une vitesse sur l’index 60, et l’on lit en regard n’importe quel couple temps ↔ distance. La fenêtre <strong>Cons. — l/minute</strong> attelle la consommation au même mouvement.</p>
+        <p>Le principe est celui de tous les computeurs de vol&nbsp;: on aligne une vitesse sur l’index 60, et l’on lit en regard n’importe quel couple temps ↔ distance. La fenêtre <strong>Cons. — l/minute</strong> (bande 4 → 20) attelle la consommation au même mouvement.</p>
       </div>
       <figure class="figure">
-        <div class="frame"><span class="tag">Recto · vitesse propre</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Échelles de vitesse propre, temps et consommation"></div>
-        <figcaption>Échelles logarithmiques et index 60</figcaption>
+        <div class="frame"><span class="tag">Réglette · échelle mobile</span><img class="zoomable" src="../assets/img/regle_zoom_echelle_mobile.jpg" alt="Double échelle logarithmique de vitesse propre et flèches de conversion, sur la réglette à plat"></div>
+        <figcaption>L’échelle mobile et ses flèches de conversion</figcaption>
       </figure>
     </div>
 
     <div class="feature reveal">
       <div class="txt">
-        <h3>L’abaque de vent</h3>
-        <p>En bout de recto, une plaquette transparente — jaunie, fendue, recollée d’adhésif — porte un réseau de courbes. Ses quatre entrées sont gravées en clair&nbsp;:</p>
+        <h3>Le calcul « K » — l’abaque de vent</h3>
+        <p>En bout de recto, le corps porte «&nbsp;une représentation graphique du calcul “K”&nbsp;» (notice)&nbsp;: en fonction de l’<strong>angle entre la route vraie et le vent</strong>, de sa <strong>direction</strong> et de sa <strong>force</strong>, on en déduit le <strong>vent effectif</strong> et la <strong>dérive</strong>. Ses entrées gravées&nbsp;:</p>
         <ul>
-          <li><strong>angle direction du vent / route à suivre</strong> — le faisceau radial, de 0° à 90°&nbsp;;</li>
-          <li><strong>force</strong> — l’intensité du vent&nbsp;;</li>
-          <li><strong>vent effectif</strong> — en ordonnée, de 10 à 50&nbsp;: la composante utile, celle qui s’ajoute ou se retranche à la vitesse propre&nbsp;;</li>
-          <li><strong>dérive</strong> — en abscisse, de 1° à 10°, prolongée par des repères 12°, 15° et 20°, à croiser avec l’échelle <strong>VP</strong> (100 à 300).</li>
+          <li>le faisceau radial de l’angle vent/route, de 0° à 90°, de 10 en 10&nbsp;;</li>
+          <li>les arcs de <strong>force du vent</strong>, de 10 à 50 kt&nbsp;;</li>
+          <li>l’axe vertical <strong>vent effectif</strong>, de 10 à 50&nbsp;: la composante qui s’ajoute ou se retranche à la vitesse propre&nbsp;;</li>
+          <li>la <strong>dérive</strong> en abscisse, de 1° à 10°, prolongée par 12°, 15° et 20°, à croiser avec l’échelle <strong>VP</strong> (300 → 100).</li>
         </ul>
-        <p>C’est un abaque du triangle des vitesses&nbsp;: on entre avec l’angle vent/route et la force, on ressort avec le vent effectif et la dérive — sans tracé, sans rapporteur.</p>
+        <p>C’est un abaque du triangle des vitesses&nbsp;: on entre avec l’angle et la force, on ressort avec le vent effectif et la dérive — sans tracé, sans rapporteur. La procédure complète est au mode d’emploi (<a href="#emploi">étapes 06 et 07</a>).</p>
       </div>
       <figure class="figure">
-        <div class="frame"><span class="tag">Recto · vent</span><img class="zoomable" src="../assets/img/regle_recto.jpg" alt="Abaque de vent transparent : dérive, vent effectif, angle vent/route"></div>
-        <figcaption>Dérive et vent effectif</figcaption>
+        <div class="frame"><span class="tag">Corps · calcul K</span><img class="zoomable" src="../assets/img/regle_zoom_calculK.jpg" alt="Abaque de vent gravé sur le corps : angle vent-route, force, vent effectif, dérive"></div>
+        <figcaption>Le calcul « K » : dérive et vent effectif</figcaption>
       </figure>
     </div>
 
     <div class="callout warn reveal">
       <span class="lab">État de conservation</span>
-      <p>La plaquette de vent est la pièce fragile de l’ensemble&nbsp;: transparent jauni, plusieurs fêlures traversantes, et des bandes d’adhésif — anciennes, elles-mêmes brunies — qui la maintiennent. Une partie des graduations passe sous l’adhésif. Toute manipulation de la coulisse la sollicite.</p>
+      <p>La zone du calcul K est la partie la plus marquée de l’instrument&nbsp;: la vitre transparente du corps y est jaunie et fêlée, maintenue par d’anciennes bandes d’adhésif brunies, et le titre gravé de l’abaque a été raturé à l’encre — les vestiges, recoupés par la notice, donnent «&nbsp;angle direction du vent et route à suivre&nbsp;». Une partie des graduations passe sous l’adhésif.</p>
     </div>
   </div>
 </section>
 
+<!-- MODE D'EMPLOI -->
+<section id="emploi">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">V · Mode d’emploi</div>
+      <h2>Les onze gestes de la notice</h2>
+      <p>La notice d’époque (§ 4.3.2, «&nbsp;Utilisation&nbsp;») déroule onze procédures, chacune assortie d’un exemple chiffré. Les voici dans l’ordre du document, avec leurs valeurs d’origine — la <a href="../assets/docs/Fouga_CM170R_regle_notice_1980.pdf" target="_blank" rel="noopener">notice d’origine (PDF, 13&nbsp;pages)</a> est consultable en fac-similé.</p>
+    </div>
+
+    <div class="steps reveal">
+
+      <div class="step">
+        <h3>Vitesse propre à partir de la vitesse indiquée</h3>
+        <p>En atmosphère standard&nbsp;: dans la <strong>fenêtre du niveau de vol</strong>, afficher la vitesse indiquée — en nœuds ou en nombre de Mach — et lire la vitesse propre <strong>en regard du repère «&nbsp;60&nbsp;» (1 heure)</strong>. Pour un niveau intermédiaire, extrapoler ou prendre le niveau le plus proche.</p>
+        <div class="example">
+          <span class="chip">FL 250 · M 0,45 → <b>VP 272 kt</b></span>
+          <span class="chip">FL 150 · Vi 190 kt → <b>VP 240 kt</b></span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Calcul du temps</h3>
+        <p>Amener la <strong>division de la vitesse</strong> (échelle mobile) en regard du repère 60 de l’échelle fixe&nbsp;; en face de la distance, lue sur l’échelle mobile, lire le temps sur l’échelle fixe. Si l’on part de la vitesse indiquée, passer d’abord par la fenêtre du niveau (étape 01).</p>
+        <div class="example">
+          <span class="chip">VP 250 kt · 155 Nm → <b>≈ 37 min</b></span>
+          <span class="chip">Vi 250 kt · FL 100 (VP 290) · 54 Nm → <b>11 min</b></span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Calcul de la distance</h3>
+        <p>Même alignement, lecture inverse&nbsp;: la vitesse sur le repère 60, puis, en regard du temps lu sur l’échelle fixe, la distance sur l’échelle mobile.</p>
+        <div class="example">
+          <span class="chip">VP 280 kt · 25 min → <b>116 Nm</b></span>
+          <span class="chip">Vi 190 kt · FL 150 (VP 240) · 15 min → <b>61 Nm</b></span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Calcul de la consommation</h3>
+        <p>Amener dans la <strong>fenêtre consommation/minute</strong> le débit donné par les tableaux (régime et niveau)&nbsp;; en regard du temps de vol, lire les litres consommés sur l’échelle mobile.</p>
+        <div class="example">
+          <span class="chip">FL 200 · 21 000 t/m (●) · 8,5 l/mn · 25 min → <b>213 L</b></span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Contrôle de la consommation</h3>
+        <p>Le geste réciproque, en vol&nbsp;: amener par translation les <strong>litres consommés</strong> en regard du <strong>temps écoulé</strong>, et lire le débit réel dans la fenêtre consommation. «&nbsp;Vérifier la concordance en fonction de l’altitude et du régime&nbsp;» — c’est le contrôle de croisière.</p>
+        <div class="example">
+          <span class="chip">200 L · 22 min → <b>9,1 l/mn</b></span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Temps de vol, vent connu</h3>
+        <p>La procédure complète&nbsp;: vitesse propre par la fenêtre du niveau (01)&nbsp;; puis, au calcul K, l’angle route/vent et la force donnent le <strong>vent effectif</strong> et la <strong>dérive</strong>&nbsp;; la vitesse sol s’obtient par <strong>Vs = VP ± Ve</strong>&nbsp;; enfin, la vitesse sol sur le repère 60 et la distance donnent le temps (02).</p>
+        <div class="example">
+          <span class="chip">FL 200 · Vi 190 → <b>VP 262 kt</b></span>
+          <span class="chip">RV 040 · vent 080/50 → <b>Ve 37 kt · dérive 7°</b></span>
+          <span class="chip">Vs 262 − 37 = 225 kt · 90 Nm → <b>24 min</b></span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Retrouver le vent en vol</h3>
+        <p>Le calcul K à rebours&nbsp;: de la distance parcourue et du temps mis, tirer la vitesse sol (repère 60)&nbsp;; l’écart avec la vitesse propre donne le vent effectif&nbsp;; l’entrée de l’abaque par le vent effectif et la dérive constatée restitue l’<strong>angle du vent et sa force</strong> — donc le vent météorologique.</p>
+        <div class="example">
+          <span class="chip">Vi 210 · FL 100 → VP 245 kt</span>
+          <span class="chip">60 Nm en 16 min → Vs 225 kt</span>
+          <span class="chip">Ve 20 kt · X −8° → <b>vent du 150° / 43 kt</b> (RV 090)</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Temps d’attente avant la sécurité carburant</h3>
+        <p>Afficher le <strong>régime d’endurance maximum</strong> du niveau tenu (table du verso), donc son débit&nbsp;; le carburant utilisable est le restant moins la sécurité du terrain&nbsp;; amener le débit dans la fenêtre consommation et lire, en regard des litres utilisables, le <strong>temps d’attente</strong>.</p>
+        <div class="example">
+          <span class="chip">Terrain vert · 350 L · FL 100</span>
+          <span class="chip">● 17 500 t/m · 6,9 l/mn · 100 L utiles → <b>14 min 30</b></span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Distance franchissable en déroutement</h3>
+        <p>Du carburant restant, retrancher la sécurité du terrain visé&nbsp;: le solde, converti en minutes par le débit du niveau, puis en nautiques par la <strong>vitesse propre</strong> lue dans la fenêtre du niveau, donne le <strong>rayon d’action</strong>. L’exemple de la notice, au FL&nbsp;200 et 21&nbsp;000&nbsp;t/m (Vi 195&nbsp;kt, soit VP ≈&nbsp;270&nbsp;kt&nbsp;; 8,5&nbsp;l/mn), avec 450&nbsp;L restants&nbsp;:</p>
+        <div class="example">
+          <span class="chip">Terrain jaune · 150 L utiles · 17′30 → <b>79 Nm</b></span>
+          <span class="chip">Terrain vert · 200 L utiles · 23′30 → <b>107 Nm</b></span>
+          <span class="chip">Terrain bleu · 400 L utiles · 47′ → <b>210 Nm</b></span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Se présenter à heure précise</h3>
+        <p>L’élégante inversion de l’instrument&nbsp;: amener la <strong>distance restante</strong> (échelle mobile) en regard du <strong>temps imparti</strong> (échelle fixe) — et lire directement, dans la fenêtre du niveau, la <strong>vitesse indiquée à adopter</strong> pour être à la verticale de la balise à l’heure dite.</p>
+        <div class="example">
+          <span class="chip">FL 100 · 40 Nm · 11 min → <b>Vi 186 kt</b></span>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Changement d’unités</h3>
+        <p>Amener la <strong>flèche de l’unité à convertir</strong> — NAUT ou PIED, sur l’échelle mobile — en regard de la valeur à convertir sur l’échelle fixe&nbsp;; lire l’équivalent métrique en regard de la flèche <em>Unités métriques</em>. Et inversement pour repasser aux «&nbsp;unités étrangères&nbsp;», comme dit la notice.</p>
+        <div class="example">
+          <span class="chip">30 Nm → <b>56 km</b></span>
+          <span class="chip">1 500 pieds → <b>460 m</b></span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout todo reveal">
+      <span class="lab">Les coquilles de la notice</span>
+      <p>Le document de 1980 n’a jamais été corrigé, et cinq menues coquilles y subsistent — signalées ici pour que ses exemples restent utilisables tels quels&nbsp;:</p>
+      <ul>
+        <li>étape 02&nbsp;: le résultat imprimé «&nbsp;37 minutes 20 secondes&nbsp;» est la lecture décimale 37,2 min prise pour des secondes — la valeur exacte est <strong>37′12″</strong>&nbsp;;</li>
+        <li>étape 07&nbsp;: le texte entre «&nbsp;la valeur 15 du Ve&nbsp;» dans l’abaque alors qu’il vient d’établir <strong>Ve = 20 kt</strong>&nbsp;;</li>
+        <li>même étape&nbsp;: «&nbsp;direction du vent 150° pour une force 43 Kts de 43 Kts&nbsp;» — bégaiement d’impression&nbsp;;</li>
+        <li>le § 4.2 annonce Vi 200 kt au FL 200 quand la gravure ● porte ≈ 195 kt — l’arrondi pédagogique du cours&nbsp;;</li>
+        <li>la description (4.3.1) donne l’astérisque pour «&nbsp;vitesse correspondante (théorique)&nbsp;», alors que sur l’objet ★ repère le <strong>Marboré VI</strong> (rappel ✱ à chaque ligne du tableau).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- VERSO VICTOR -->
+<section id="victor">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-rule"></div>
+      <div class="kicker" style="margin-top:14px">VI · Verso de la réglette</div>
+      <h2>La face Victor — très basse altitude</h2>
+      <p>Longtemps masqué par le corps sur les clichés assemblés, le verso de la réglette est dédié à un tout autre régime de vol&nbsp;: les liaisons «&nbsp;COM type Victor&nbsp;» en très basse altitude, avec leurs consignes de 1980 gravées dans le plastique.</p>
+    </div>
+
+    <figure class="plate reveal">
+      <div class="frame"><span class="tag">Réglette · verso · à plat</span><img class="zoomable" src="../assets/img/regle_coulisse_verso.jpg" alt="Verso de la réglette : rapporteur, réglettes 1/500 000 et 1/100 000, consignes des vols Victor, carte des niveaux refuge"></div>
+      <figcaption>Le verso complet de la réglette coulissante</figcaption>
+    </figure>
+
+    <div class="feature reveal">
+      <div class="txt">
+        <h3>Le rapporteur de déroutement</h3>
+        <p>L’extrémité arrondie — celle qui dépasse toujours du corps — porte un rapporteur en <strong>demi-limbe d’environ 185°</strong>, rayons tous les 10°, tirets tous les 5°, percé en son centre. Sa <strong>double numérotation</strong> — 10 à 180 sur la couronne intérieure, les réciproques 190 à 360 sur l’extérieure — en fait un rapporteur complet&nbsp;: posé sur la carte, il donne un cap et son inverse d’une seule lecture.</p>
+        <p>Sa fonction, selon la notice&nbsp;: «&nbsp;calculer le cap géographique d’une route à suivre — préparation d’un déroutement&nbsp;».</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Verso · rapporteur</span><img class="zoomable" src="../assets/img/regle_verso_rapporteur.jpg" alt="Rapporteur du verso de la réglette, sur l'instrument assemblé"></div>
+        <figcaption>Le rapporteur, vu sur l’instrument assemblé</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature rev reveal">
+      <div class="txt">
+        <h3>Tracé et minutage : 1/500.000ᵉ et 1/100.000ᵉ</h3>
+        <p>Les deux chants du verso portent les échelles des cartes à grande échelle, chacune <strong>doublée d’une échelle de temps</strong> — «&nbsp;le tracé et le minutage de la navigation&nbsp;» (notice)&nbsp;:</p>
+        <ul>
+          <li><strong>1/500.000ᵉ</strong> — 0 à 50 Nm au mille près, surmontée d’une graduation 0 à 12 minutes par quarts de minute, calée sur <strong>240 kt</strong> (12 min = 48 Nm).</li>
+          <li><strong>1/100.000ᵉ</strong> — tête-bêche, 0 à 10 Nm au quart de mille, avec sa graduation en secondes (0′15, 0′30…) calée sur <strong>280 kt</strong>.</li>
+        </ul>
+        <p>Le pilote trace sa branche sur la carte, la mesure et la minute d’un même geste, sans passer par la règle à calcul.</p>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Réglette · chants</span><img class="zoomable" src="../assets/img/regle_zoom_reglettes_verso.jpg" alt="Réglettes 1/500 000 et 1/100 000 avec leurs échelles de temps, verso de la réglette"></div>
+        <figcaption>Distance et temps sur une même graduation</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature reveal">
+      <div class="txt">
+        <h3>Les consignes Victor gravées</h3>
+        <p>Le centre de la face, titré verticalement «&nbsp;<strong>EXECUTION DES VOLS COM TYPE VICTOR EN TRES BASSE ALTITUDE</strong>&nbsp;», rassemble ce qu’un équipage devait avoir sous les yeux&nbsp;:</p>
+        <ul>
+          <li><strong>Conditions météorologiques minimales</strong> — jour&nbsp;: base des nuages 500&nbsp;m au-dessus du sol, visibilité ≥ 5&nbsp;km&nbsp;; nuit&nbsp;: 800&nbsp;m et ≥ 10&nbsp;km.</li>
+          <li><strong>Consignes permanentes</strong> — «&nbsp;IFF en fonctionnement mode 3/A 13-77&nbsp;», «&nbsp;feux de navigation branchés&nbsp;», «&nbsp;procédure AUTO INFO obligatoire&nbsp;».</li>
+          <li><strong>Procédure d’urgence</strong> — «&nbsp;monter au niveau refuge&nbsp;; mettre l’IFF sur EMERGENCY&nbsp;; prendre un cap vers une zone de détection&nbsp;; contacter sur channel GARDE&nbsp;».</li>
+        </ul>
+      </div>
+      <figure class="figure">
+        <div class="frame"><span class="tag">Verso · consignes</span><img class="zoomable" src="../assets/img/regle_zoom_victor.jpg" alt="Consignes des vols Victor : minima météo, IFF, procédure d'urgence"></div>
+        <figcaption>Minima météo, IFF et procédure d’urgence</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="sub" style="margin-top:44px">La carte des niveaux refuge</h3>
+    <p class="sub-p">Une France en six secteurs, chacun avec son <strong>niveau refuge</strong> — l’altitude de sauvegarde à rejoindre en cas de panne ou de perte de références — et sa <strong>fréquence UHF</strong> de contact&nbsp;: un instantané de l’organisation de la défense aérienne en 1980.</p>
+    <div class="tablewrap reveal"><table style="min-width:520px">
+      <caption>Niveaux refuge et fréquences — carte gravée au verso de la réglette</caption>
+      <thead><tr><th>Secteur</th><th>Niveau refuge</th><th>Fréquence UHF</th></tr></thead>
+      <tbody>
+        <tr><td class="rowh">Nord (Bassin parisien)</td><td class="num">FL 55</td><td class="num">384,5</td></tr>
+        <tr><td class="rowh">Nord-Est (Champagne – Lorraine)</td><td class="num">FL 55</td><td class="num">384,7</td></tr>
+        <tr><td class="rowh">Est (Alsace – Franche-Comté)</td><td class="num">FL 115</td><td class="num">383,7</td></tr>
+        <tr><td class="rowh">Ouest (Bretagne – Poitou)</td><td class="num">FL 55</td><td class="num">383,7</td></tr>
+        <tr><td class="rowh">Centre (Auvergne – Languedoc)</td><td class="num">FL 115</td><td class="num">384,7</td></tr>
+        <tr><td class="rowh">Sud-Est (Alpes – Provence)</td><td class="num">FL 115</td><td class="num">384,5</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note-mini">La logique du découpage se lit d’elle-même : FL 55 sur les plaines du nord et de l’ouest, FL 115 au-dessus des massifs — et chaque fréquence dessert deux secteurs non contigus.</p>
+  </div>
+</section>
 
 <!-- GLOSSAIRE -->
 <section id="glossaire">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="lead-rule"></div>
-      <div class="kicker" style="margin-top:14px">V · Glossaire</div>
+      <div class="kicker" style="margin-top:14px">VII · Glossaire</div>
       <h2>Les termes de la règle</h2>
     </div>
     <dl class="gloss reveal">
       <div><dt>● Marboré II</dt><dd>Le turboréacteur d’origine du CM 170 R. Repéré par un point sur toute la règle. C’est le seul moteur que connaît le computeur de vol.</dd></div>
-      <div><dt>★ Marboré VI</dt><dd>Le turboréacteur plus puissant des versions tardives. Repéré par une étoile. Tient le même profil à régime plus bas, mais consomme davantage.</dd></div>
+      <div><dt>★ Marboré VI</dt><dd>Le turboréacteur plus puissant des versions tardives. Repéré par une étoile — rappelée par un astérisque ✱ à chaque ligne du tableau. Tient le même profil à régime plus bas, mais consomme davantage.</dd></div>
+      <div><dt>DMF</dt><dd>Distance maximum franchissable — le régime de croisière qui porte le plus loin. C’est le tableau du recto.</dd></div>
       <div><dt>Gb</dt><dd>Gros bidons — la configuration de référence des tableaux gravés.</dd></div>
       <div><dt>Pb</dt><dd>Petits bidons. Impose la correction de pied de tableau (− 200 t/m au Marboré II, − 500 t/m au Marboré VI ; − 0,5 l/m dans les deux cas).</dd></div>
       <div><dt>t/m (T/m)</dt><dd>Tours-minute du réacteur — le régime moteur.</dd></div>
+      <div><dt>Maxi continu</dt><dd>Le régime maximum utilisable en continu : 21 000 t/m au Marboré II (régime de base 20 700). Explique le palier du tableau de distance.</dd></div>
       <div><dt>l/m</dt><dd>Litres par minute. La règle raisonne à la minute, quand le computeur affiche aussi l’heure.</dd></div>
       <div><dt>FL</dt><dd>Niveau de vol, en centaines de pieds. FL 300 = 30 000 pieds.</dd></div>
-      <div><dt>VP</dt><dd>Vitesse propre — la vitesse vraie. Sert d’entrée à l’abaque de dérive (100 à 300).</dd></div>
-      <div><dt>Vent effectif</dt><dd>La composante du vent dans l’axe de la route : ce qui s’ajoute ou se retranche à la vitesse propre pour donner la vitesse sol.</dd></div>
-      <div><dt>Dérive</dt><dd>Écart angulaire entre le cap et la route, dû au vent.</dd></div>
+      <div><dt>VP · Vi · Vs</dt><dd>Vitesse propre (vraie), vitesse indiquée, vitesse sol. Le cœur de la règle est leur conversion : Vi → VP par les fenêtres, VP ± vent effectif = Vs.</dd></div>
+      <div><dt>Calcul « K »</dt><dd>Le nom que la notice donne à l’abaque de vent du corps : de l’angle route/vent et de la force, il tire le vent effectif et la dérive.</dd></div>
+      <div><dt>Vent effectif (Ve)</dt><dd>La composante du vent dans l’axe de la route : ce qui s’ajoute ou se retranche à la vitesse propre pour donner la vitesse sol.</dd></div>
+      <div><dt>Dérive (X)</dt><dd>Écart angulaire entre le cap et la route, dû au vent.</dd></div>
+      <div><dt>RV</dt><dd>Route vraie — la route mesurée sur la carte, entrée du calcul K.</dd></div>
+      <div><dt>Navigation à l’estime</dt><dd>Naviguer au cap, à la vitesse et à la montre, sans moyen radioélectrique : la raison d’être de la règle.</dd></div>
+      <div><dt>Repère « 60 »</dt><dd>Le 60 cerclé de l’échelle fixe : l’index de l’heure, sur lequel on aligne la vitesse pour lire temps ↔ distance.</dd></div>
+      <div><dt>Pétrole forfaitaire</dt><dd>Le carburant restant conventionnel en fin de montée (notice : 650 L en Pb, 840 L en Gb au FL 200) — le point de départ de tous les calculs d’autonomie.</dd></div>
+      <div><dt>Point bidons vides</dt><dd>Le contrôle de consommation de la notice : les bidons doivent être vides 22 min (Pb) ou 54 min (Gb) après le lâcher des freins.</dd></div>
       <div><dt>A.F.</dt><dd>Aérofreins — sortis en percée, rentrés en descente économique.</dd></div>
       <div><dt>Percée</dt><dd>Descente rapide, 230 kt aérofreins sortis : 1 Nm et 2,5 L par 1 000 pieds.</dd></div>
       <div><dt>Éco</dt><dd>Descente économique, 200 kt gaz réduits : 2 Nm et 3 L par 1 000 pieds.</dd></div>
-      <div><dt>Vert / Jaune</dt><dd>Les deux seuils de sécurité carburant terrain : 250 L et 300 L.</dd></div>
-      <div><dt>Nm</dt><dd>Mille nautique (1 852 m). La règle mêle nautiques et kilomètres, avec conversion directe sur le bandeau « Vitesse propre ».</dd></div>
-      <div><dt>GE 00 315</dt><dd>L’unité d’origine portée au cartouche, aux côtés de la mention « Cognac 1980 » — la règle a été établie en groupement école, pour l’instruction.</dd></div>
+      <div><dt>Vert / Jaune / Bleu</dt><dd>Les catégories de terrain de la sécurité carburant : 250 L et 300 L gravés sur la règle ; la notice ajoute le terrain bleu, rejoint en conservant 50 L à l’atterrissage.</dd></div>
+      <div><dt>Niveau refuge</dt><dd>L’altitude de sauvegarde à rejoindre en urgence depuis la très basse altitude — FL 55 ou FL 115 selon le secteur, sur la carte du verso.</dd></div>
+      <div><dt>Nm</dt><dd>Mille nautique (1 852 m). La règle mêle nautiques et kilomètres, avec conversion directe par les flèches NAUT / PIED / Unités métriques.</dd></div>
+      <div><dt>GE 00 315</dt><dd>L’unité d’origine portée au cartouche, aux côtés de la mention « Cognac 1980 » — le groupement école où la règle a été établie et enseignée.</dd></div>
     </dl>
   </div>
 </section>
@@ -642,14 +896,14 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
 
 <footer>
   <div class="wrap">
-    <p class="sig">Mode d’emploi illustré, reconstitué d’après les deux faces de l’instrument — Règle de navigation, Cne Claude Ph, GE 00 315, Cognac 1980 · Fouga CM 170 R « Magister » · Turboméca Marboré II & VI</p>
+    <p class="sig">Mode d’emploi illustré, établi d’après l’instrument démonté, ses scans à l’échelle et sa notice d’époque — Règle de navigation, Cne Claude Ph, GE 00 315, Cognac 1980 · Fouga CM 170 R « Magister » · Turboméca Marboré II & VI</p>
   </div>
 </footer>
 
 <script>
 // ---- French typography (espaces insécables / fines + flèches monochromes) ----
 (function(){
-  var NBSP=" ", FINE=" ", VS="︎";
+  var NBSP=" ", FINE=" ", VS="︎";
   function frtext(t){
     t=t.replace(/«\s*/g,"«"+FINE).replace(/\s*»/g,FINE+"»");
     t=t.replace(/\s*([;!?])/g,FINE+"$1");
@@ -745,7 +999,7 @@ footer .sig{font-family:var(--lab);text-transform:uppercase;letter-spacing:.18em
       {k:'reg', title:'Régime',       unit:'tours / minute', dec:0},
       {k:'cons',title:'Consommation', unit:'litres / minute', dec:1}
     ],
-    note:'Gros bidons. Le Marboré II sature à 21 000 t/m dès le FL 200 : sa courbe s’arrête au FL 250, faute de valeur gravée au FL 300.'
+    note:'Gros bidons. Le Marboré II atteint son maxi continu (21 000 t/m) dès le FL 200 : sa courbe s’arrête au FL 250, faute de valeur gravée au FL 300.'
   });
 
   render('endu-charts',{

@@ -25,13 +25,15 @@ pied) affichant un **contenu** en cadre pleine page :
 | Computeur ▸ | `computeur-virtuel.html` | Computeur virtuel | `pages/computeur_virtuel.html` (iframe) |
 | Computeur ▸ | `monographie.html` | Monographie | `assets/docs/…pdf` (object) + lien `.docx` |
 | Règle de nav ▸ | `regle-navigation.html` | Mode d'emploi | `pages/regle_navigation.html` (iframe) |
-| Règle de nav ▸ | `regle-navigation-virtuelle.html` | Règle virtuelle | `pages/regle_navigation_virtuelle.html` (iframe) — instrument interactif (moteur II/VI, tables gravées, règle à calcul, abaque de vent, montée, rapporteur) |
+| Règle de nav ▸ | `regle-navigation-virtuelle.html` | Règle virtuelle | `pages/regle_navigation_virtuelle.html` (iframe) — instrument interactif (moteur II/VI, tables gravées, échelle mobile réelle et fenêtres traversantes, abaque de vent, montée, rapporteur) |
+| Règle de nav ▸ | `regle-navigation-monographie.html` | Monographie | `assets/docs/Fouga_CM170R_regle_de_navigation.pdf` (object) + lien `.docx` |
 | Manuel | `manuel.html` | Manuel CM 170 | sommaire latéral + `pages/manuel/*.html` (iframe `lecteur`) + volet « Lecture comparée » (scans) |
 
 > Les trois pages du sous-sujet **Computeur** partagent la même sous-barre ;
 > l'onglet principal « Computeur » reste actif sur les trois, et la sous-barre
 > surligne la page courante. Le sous-sujet **Règle de navigation** applique le
-> même schéma sur deux pages. Pour ajouter un sous-sujet, dupliquer ce schéma
+> même schéma sur trois pages (Mode d'emploi · Règle virtuelle · Monographie).
+> Pour ajouter un sous-sujet, dupliquer ce schéma
 > (onglet principal + éventuelle `.sous-nav`).
 >
 > **Liens entre sous-sujets.** Les pages de `pages/` étant affichées en iframe,
@@ -40,9 +42,10 @@ pied) affichant un **contenu** en cadre pleine page :
 > navigation se ferait dans le cadre et le bandeau surlignerait le mauvais
 > onglet. Les liens internes à une page (ancres `#…`) restent nus.
 >
-> **Attention** — l'onglet principal est répété dans **six** fichiers :
+> **Attention** — l'onglet principal est répété dans **sept** fichiers :
 > `index.html`, `computeur.html`, `computeur-virtuel.html`, `monographie.html`,
-> `regle-navigation.html`, `regle-navigation-virtuelle.html`… et
+> `regle-navigation.html`, `regle-navigation-virtuelle.html`,
+> `regle-navigation-monographie.html`… et
 > `manuel.html`, qui est **généré** : son bandeau vit dans
 > `build/manuel/build-sommaire.js`. Modifier la nav principale sans toucher au
 > script ferait disparaître l'onglet au prochain `build-manuel.sh`.
@@ -81,16 +84,32 @@ fouga/
 │   │   ├── face131_*.jpg, couronne_*.jpg, abaque_*.jpg, face336_*.jpg
 │   │   │                      Illustrations du mode d'emploi (externalisées du HTML)
 │   │   └── regle_recto.jpg, regle_recto_coulisse.jpg, regle_verso.jpg,
-│   │       regle_verso_rapporteur.jpg
-│   │                          Clichés de la règle de navigation — À DÉPOSER
-│   │                          (la page affiche une pastille « photo à déposer »
-│   │                           tant qu'un fichier manque)
+│   │       regle_verso_rapporteur.jpg, regle_corps_recto.jpg,
+│   │       regle_corps_verso.jpg, regle_coulisse_recto.jpg,
+│   │       regle_coulisse_verso.jpg, regle_zoom_*.jpg (9)
+│   │                          Clichés de la règle de navigation : instrument
+│   │                          assemblé (4) + corps et réglette à plat (4,
+│   │                          source RdN_Cne_Claude, 22/07/2026) + zooms de
+│   │                          zone pour les figures de détail. ⚠ Générés via
+│   │                          Pillow SANS tag EXIF orientation (les HEIC
+│   │                          portent un tag orientation=6 mensonger que sips
+│   │                          recopie → les navigateurs pivotaient les photos
+│   │                          en bandes verticales géantes)
 │   └── docs/
 │       ├── Fouga_CM170R_computeur_de_vol.docx   (document de référence, pied ©)
-│       └── Fouga_CM170R_computeur_de_vol.pdf    (copie de consultation à jour)
+│       ├── Fouga_CM170R_computeur_de_vol.pdf    (copie de consultation à jour)
+│       ├── Fouga_CM170R_regle_de_navigation.docx (monographie règle — référence)
+│       ├── Fouga_CM170R_regle_de_navigation.pdf  (copie de consultation, ghostscript)
+│       └── Fouga_CM170R_regle_notice_1980.pdf    (notice d'époque de la règle, 13 p.)
 ├── pages/
-│   ├── mode_emploi.html       Contenu — mode d'emploi illustré
+│   ├── mode_emploi.html       Contenu — mode d'emploi illustré (computeur)
 │   ├── computeur_virtuel.html Contenu — instrument interactif (faces 131 / 336)
+│   ├── regle_navigation.html  Contenu — mode d'emploi illustré (règle, I–VII :
+│   │                          anatomie, abaques tabulés, procédures a–k de la
+│   │                          notice, face Victor, glossaire)
+│   ├── regle_navigation_virtuelle.html
+│   │                          Contenu — règle virtuelle « complète » (échelle
+│   │                          mobile réelle, fenêtres traversantes clipPath)
 │   └── manuel/                Contenu — 9 pages de transcription + planches.html
 │                              (index cliquable des planches) (GÉNÉRÉ, voir build/)
 ├── build/manuel/              Pipeline reproductible (non publié) :

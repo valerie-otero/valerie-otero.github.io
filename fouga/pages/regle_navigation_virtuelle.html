@@ -305,15 +305,15 @@ table.vals .val span{color:var(--muted);font-weight:400;font-size:.84em}
   <!-- ============ ÉTAT & SOURCES ============ -->
   <div class="foot">
     <h2>Fidélité à la règle d’origine</h2>
-    <p>Cet instrument affiche les <strong>valeurs gravées</strong> relevées photo par photo sur la règle de 1980 — jamais du recalculé présenté comme authentique. La table d’<strong>endurance Marboré II</strong> recoupe, cellule par cellule, la face 336 du <a href="../computeur.html" target="_top">computeur</a> (mêmes régimes 17 000 → 19 000 t/m, mêmes consommations 7,8 → 5,2 l/m) : deux gravures indépendantes, un accord parfait. La règle à calcul et l’abaque de vent sont des <strong>reconstructions fonctionnelles</strong> des nomogrammes gravés (le calcul, lui, est exact).</p>
+    <p>Cet instrument affiche les <strong>valeurs gravées</strong> relevées sur la règle de 1980 — depuis juillet 2026, sur l’<strong>instrument démonté</strong> (corps et réglette photographiés et scannés à plat, réglet dans le cadre) — jamais du recalculé présenté comme authentique. La table d’<strong>endurance Marboré II</strong> recoupe, cellule par cellule, la face 336 du <a href="../computeur.html" target="_top">computeur</a> (mêmes régimes 17 000 → 19 000 t/m, mêmes consommations 7,8 → 5,2 l/m) : deux gravures indépendantes, un accord parfait. La règle à calcul et l’abaque de vent sont des <strong>reconstructions fonctionnelles</strong> des nomogrammes gravés (le calcul, lui, est exact).</p>
     <div class="cols">
       <div class="card ok">
         <h3>Relevé sur l’instrument</h3>
-        <p>Distance max Gb + correction Pb, endurance max (II &amp; VI), cotes de temps de montée aux paliers (4 courbes), descentes, sécurités, Mach 0,50.</p>
+        <p>Distance max Gb + correction Pb, endurance max (II &amp; VI), repères ●/★ des sept fenêtres « Vit. indiquée » (±2 kt), abaque de montée complet — temps, distance (axe gravé) et carburant restant des 4 courbes —, bandes Mach 0,40 → 0,80, descentes, sécurités, échelle de temps 10′ → 1 h 40, échelle mobile réelle 10 → 1 500 / 1 → 150 avec ses flèches de conversion (Pieds 32,8 · Naut 54 · Unités métriques 100), fenêtres traversantes lues par translation unique.</p>
       </div>
       <div class="card warn">
         <h3>Reconstruit ou approché</h3>
-        <p>Position fine des repères ●/★ dans les fenêtres (relevé approché) ; abaque de montée : cotes de temps gravées, tracé continu reconstruit (carburant restant gravé aux seuls sommets VI, 660/840 L) ; abaque de vent et règle à calcul rendus par leur fonction (triangle des vitesses, d = V·t/60) ; rapporteur COM Victor et réglettes d’échelle redessinés schématiquement.</p>
+        <p>Tracé continu de la montée entre les paliers cotés, et attribution de la cote 4′ à FL 50 (II-Pb, lecture serrée) ; décalages des bandes Vi et Mach reconstitués par l’atmosphère standard, calée sur les exemples de la notice (FL 100 : 250→290 ; FL 150 : 190→240 ; FL 200 : 190→262 ; FL 250 : M 0,45→272) — les offsets gravés n’ont pas été mesurés au dixième de millimètre ; abaque de vent rendu par sa fonction (grandeurs exactes, signes hors instrument) ; rapporteur et blocs Victor du verso schématiques (verso complet de la réglette : mode d’emploi, § VI).</p>
       </div>
     </div>
     <div class="jump">
@@ -347,18 +347,20 @@ const DIST={
   10: {II:[19200,11.9],VI:[17900,12.2]}
 };
 const DIST_PB={II:{reg:-200,conso:-0.5},VI:{reg:-500,conso:-0.5}};
-// Vit. indiquée (repère approx, kt) : z -> {II,VI} (null=illisible)
-const VI_IND={300:{II:null,VI:null},250:{II:195,VI:215},200:{II:195,VI:232},150:{II:200,VI:222},100:{II:210,VI:216},50:{II:null,VI:null},10:{II:null,VI:null}};
-const MACH={300:"0,50",250:"0,50"};
+// Vit. indiquée (repères gravés, kt, ±2) — relevés sur la coulisse à plat (07/2026) ; null = non gravé (II au FL300)
+const VI_IND={300:{II:null,VI:220},250:{II:185,VI:220},200:{II:195,VI:220},150:{II:200,VI:220},100:{II:210,VI:220},50:{II:220,VI:220},10:{II:220,VI:220}};
+// Fenêtres Mach : bandes gravées 0,40 → 0,80 (pas de position de repos — la valeur dépend de la coulisse)
+const MACH={300:"0,40 → 0,80",250:"0,40 → 0,80"};
 // Endurance : z -> {II:[reg,conso],VI:[reg,conso]}
 const ENDU_LV=[5,10,15,20,25];
 const ENDU={5:{II:[17000,7.8],VI:[15500,8.2]},10:{II:[17500,6.9],VI:[16000,7.1]},15:{II:[18000,6.1],VI:[16500,6.4]},20:{II:[18500,5.5],VI:[17100,5.7]},25:{II:[19000,5.2],VI:[17700,5.4]}};
-// Montée : eng-bidons -> [{z(kft), t(min), fuel?}]
+// Montée : eng-bidons -> [{z(kft), t(min), d(Nm), fuel(L)?}] — cotes complètes relevées à plat (07/2026)
+// (axe gravé = distance Nm, bord haut VI / bord bas II ; fuel = axes « CARBURANT RESTANT », Pb/Gb interlacés)
 const MONTEE={
-  "VI-Pb":[{z:50,t:3},{z:100,t:5},{z:150,t:7.5},{z:200,t:10},{z:250,t:13.5},{z:300,t:17,fuel:660}],
-  "VI-Gb":[{z:100,t:5.5},{z:150,t:8},{z:200,t:11.5},{z:250,t:15.5},{z:300,t:20,fuel:840}],
-  "II-Pb":[{z:100,t:7},{z:150,t:10},{z:200,t:14},{z:250,t:20}],
-  "II-Gb":[{z:100,t:8},{z:150,t:12},{z:200,t:17},{z:250,t:24}]
+  "VI-Pb":[{z:50,t:3,d:6},{z:100,t:5,d:14,fuel:800},{z:150,t:7.5,d:25,fuel:760},{z:200,t:10,d:36,fuel:720},{z:250,t:13.5,d:50,fuel:690},{z:300,t:17,d:65,fuel:660}],
+  "VI-Gb":[{z:100,t:5.5,d:16,fuel:1010},{z:150,t:8,d:27,fuel:970},{z:200,t:11.5,d:40,fuel:920},{z:250,t:15.5,d:60,fuel:880},{z:300,t:20,d:80,fuel:840}],
+  "II-Pb":[{z:50,t:4,d:10,approx:true},{z:100,t:7,d:20,fuel:780},{z:150,t:10,d:34,fuel:720},{z:200,t:14,d:48,fuel:650},{z:250,t:20,d:70,fuel:550}],
+  "II-Gb":[{z:100,t:8,d:24,fuel:990},{z:150,t:12,d:40,fuel:920},{z:200,t:17,d:62,fuel:840},{z:250,t:24,d:90,fuel:720}]
 };
 const DESC={eco:{v:"200 kt",reg:"Gaz réduits",dist:2,fuel:3},percee:{v:"230 kt · A.F.",dist:1,fuel:2.5,reg:{II:"19 000",VI:"17 500"}}};
 
@@ -368,13 +370,20 @@ const $=id=>document.getElementById(id);
 
 /* ============================ RECTO — SVG ============================ */
 // géométrie règle à calcul
-const VPX0=372, VPX1=812;                 // bornes X de la bande VITESSE PROPRE
-const VPREF=270;                          // vitesse de référence sous l'index fixe de lecture
-const TMIN=1, TMAX=140;                    // échelle temps (log), 1'..140
-const tx=t=>VPX0+(Math.log10(t)-Math.log10(TMIN))/(Math.log10(TMAX)-Math.log10(TMIN))*(VPX1-VPX0);
-// échelle vitesse/distance sur la coulisse : même décade log, valeur 50..500 (haut)
-const SPMIN=5, SPMAX=500;
-const spx=v=>VPX0+(Math.log10(v)-Math.log10(SPMIN))/(Math.log10(SPMAX)-Math.log10(SPMIN))*(VPX1-VPX0);
+const VPX0=372, VPX1=812;                 // fenêtre VITESSE PROPRE du corps
+const VPREF=270;                          // vitesse par défaut sous le repère 60 quand coff = 0
+const TMIN=1, TMAX=100;                    // échelle temps (log), 1'..1 h 40 (100 min — gravure 1¹⁰…1⁴⁰)
+const MOD=(VPX1-VPX0)/Math.log10(TMAX/TMIN); // 220 px/décade — module COMMUN à toutes les bandes (≈ 104,5 mm/décade sur l'instrument)
+const tx=t=>VPX0+Math.log10(t/TMIN)*MOD;
+const IDX60=tx(60);                        // le 60 cerclé (1 heure) = l'index de lecture réel de l'échelle fixe
+// échelle mobile réelle : bande haute chiffrée 10→1500 (ticks →2000), bande basse = ÷10 (1→150, ticks →200)
+const SPMIN=10, SPMAX=1500;
+const topX=v=>IDX60+Math.log10(v/VPREF)*MOD;
+const spx=topX;                            // alias historique — spx(VPREF) === IDX60
+// offsets des bandes de fenêtres : conversion Vi→VP par niveau (atmosphère standard, calée sur les
+// exemples de la notice : FL100 250→290, FL150 190→240, FL200 190→262) et Mach→VP (FL250 : 0,45→272)
+const FL_F={300:1.65,250:1.507,200:1.379,150:1.263,100:1.160,50:1.077,10:1.015};
+const MACH_A={300:589,250:604};
 
 function buildRecto(){
   const svg=$("svgR"); svg.innerHTML="";
@@ -415,48 +424,110 @@ function cartoStrip(svg,a,b,inv,label,xEnd){
 
 function buildCalcBlock(svg){
   const g=el("g",{}); svg.appendChild(g);
-  // fenêtres Nbre de Mach
-  T(g,"Nbre de Mach",352,70,{a:"end",s:8.5,c:"#4f4a3d",w:600});
-  [["FL 300",372],["FL 250",470]].forEach(m=>{
-    g.appendChild(el("rect",{x:m[1],y:62,width:74,height:15,rx:2,fill:"#eef2f6",stroke:"#274d72","stroke-width":1}));
-    T(g,"0     0,50",m[1]+37,73,{s:8,c:"#274d72",f:"Spline Sans Mono"});
-    T(g,m[0],m[1]+37,58,{s:7,c:"#7a7160"});
-  });
-  // temps haut
-  const th=[[10,"10'",1],[15,"15'",0],[20,"20'",1],[25,"25'",0],[30,"30'",1],[35,"",0],[40,"40'",1],[45,"",0],[50,"50'",1],[55,"",0],[60,"60",1],[110,"110",1],[120,"",0],[130,"",0],[140,"140",1]];
+  /* géométrie des fenêtres du corps */
+  const VI_W={x:304,w:62,h:18}, VI_IDX=VI_W.x+VI_W.w/2;
+  const VI_ROWS=DIST_LV.map((lv,i)=>({z:lv.z,y:62+i*26}));
+  const MACH_WIN=[{z:300,x:372,lab:"FL 300"},{z:250,x:470,lab:"FL 250"}], MW=74, MH=15, MY=62;
+  const CONS={x:VPX0+34,y:192,w:96,h:14,idx:VPX0+82};
+
+  /* ---- fenêtres traversantes : un clip PAR fenêtre — chaque bande n'apparaît que dans la sienne ---- */
+  let clipN=0;
+  const mkWin=(x,y,w,h)=>{ // clipPath + wrapper fixe + groupe translatable (.cou-part)
+    const id="couClip"+(clipN++);
+    const cp=el("clipPath",{id}); cp.appendChild(el("rect",{x,y,width:w,height:h})); g.appendChild(cp);
+    const wr=el("g",{"clip-path":"url(#"+id+")"}); g.appendChild(wr);
+    const part=el("g",{"class":"cou-part"}); wr.appendChild(part);
+    return part;
+  };
+
+  /* ---- échelle fixe du corps : temps haut (10'→1 h 40) et bas (1'→10') ---- */
+  const th=[[10,"10'",1],[15,"15'",0],[20,"20'",1],[25,"25'",0],[30,"30'",1],[35,"",0],[40,"40'",1],[45,"",0],[50,"50'",1],[55,"",0],[60,"60",1],[65,"",0],[70,"1¹⁰",1],[75,"",0],[80,"1²⁰",1],[85,"",0],[90,"1³⁰",1],[95,"",0],[100,"1⁴⁰",1]];
   const yTh=98;
   th.forEach(d=>{const x=tx(d[0]);L(g,x,yTh,x,yTh+5,"#5b5340",d[2]?.8:.55);
     if(d[0]===60){g.appendChild(el("circle",{cx:x,cy:yTh-7,r:7,fill:"none",stroke:"#9c3a2d","stroke-width":1.2}));T(g,"60",x,yTh-4,{s:8,c:"#9c3a2d",w:700});}
     else if(d[1])T(g,d[1],x,yTh-3,{s:7.5,c:"#4f4a3d"});});
-  L(g,tx(TMIN),yTh,tx(TMAX),yTh,"#5b5340",.9);
-  // corps fixe VITESSE PROPRE : cadre + index fixe
-  g.appendChild(el("rect",{x:VPX0-4,y:112,width:(VPX1-VPX0)+8,height:52,rx:4,fill:"#f2ecdb",stroke:"#b3a586","stroke-width":1}));
-  T(g,"VITESSE PROPRE",VPX1-6,124,{a:"end",s:8.5,c:"#3a3427",w:700,ls:"1.5"});
-  // coulisse (glissante) : porte l'échelle vitesse propre (double décade)
-  const cou=el("g",{id:"coulisse","class":"coulisse"}); g.appendChild(cou);
-  cou.appendChild(el("rect",{x:VPX0-4,y:130,width:(VPX1-VPX0)+8,height:20,rx:3,fill:"#eadfc4",stroke:"#9a7320","stroke-width":1.4,opacity:".55"}));
-  // graduation vitesse propre (haut 50..500 Naut+métrique combinée en une décade log)
-  const sp=[5,6,7,8,9,10,15,20,25,30,40,50,60,70,80,90,100,150,200,250,300,400,500];
-  sp.forEach(v=>{const x=spx(v);const big=[5,10,50,100,500].includes(v);L(cou,x,132,x,148,big?"#8a6515":"#9a7320",big?1:.6);
-    if([5,10,50,100,200,300,500].includes(v))T(cou,String(v),x,159,{s:7.5,c:"#7c5a17",f:"Spline Sans Mono"});});
-  T(cou,"coulisse",VPX0+3,145,{a:"start",s:7,c:"#b08b3a",w:700,ls:".5",it:true});
-  // index fixe (flèche) au repère de référence VPREF
-  g.appendChild(el("path",{id:"vp-index",d:mkArrow(spx(VPREF),150),fill:"#111",opacity:".8"}));
-  // temps bas
+  L(g,tx(10),yTh,tx(TMAX),yTh,"#5b5340",.9);
   const tb=[[1,"1'"],[1.5,"1'30"],[2,"2'"],[2.5,"2'30"],[3,"3'"],[3.5,"3'30"],[4,"4'"],[4.5,"4'30"],[5,"5'"],[6,"6'"],[7,"7'"],[8,"8'"],[9,"9'"],[10,"10'"]];
   const yTb=178; L(g,tx(1),yTb,tx(10),yTb,"#5b5340",.9);
   tb.forEach(d=>{const x=tx(d[0]);L(g,x,yTb-5,x,yTb,"#5b5340",.7);T(g,d[1],x,yTb+9,{s:7,c:"#4f4a3d"});});
-  // fenêtre Cons.
+
+  /* ---- la réglette coulissante : bandes réelles, une seule translation (.cou-part) ---- */
+  const bandBg=(p,x0b,y0b,wb,hb)=>p.appendChild(el("rect",{x:x0b,y:y0b,width:wb,height:hb,fill:"#f7f2e3",stroke:"#cbbb90","stroke-width":.5}));
+  const steps=(a,b,s)=>{const o=[];for(let v=a;v<=b+1e-9;v+=s)o.push(Math.round(v*1000)/1000);return o;};
+
+  // — fenêtre VITESSE PROPRE : bande haute 10→1500 (ticks →2000), bande basse = ÷10 — groupe pilote (drag/clavier)
+  const cou=mkWin(VPX0-4,124,(VPX1-VPX0)+8,38);
+  cou.setAttribute("id","coulisse"); cou.setAttribute("class","coulisse cou-part");
+  const MINT=[...steps(10,20,1),...steps(22,50,2),...steps(55,100,5),...steps(110,200,10),...steps(220,500,20),...steps(550,1000,50),...steps(1100,2000,100)];
+  const MAJT=[10,15,20,30,40,50,60,80,100,150,200,300,400,500,700,1000,1500];
+  bandBg(cou,topX(9.5),126,topX(2100)-topX(9.5),32);
+  MINT.forEach(v=>{const x=topX(v),maj=MAJT.includes(v);L(cou,x,127,x,maj?135:132,"#8a6515",maj?.9:.45);});
+  MAJT.forEach(v=>T(cou,String(v),topX(v),141,{s:6,c:"#7c5a17",f:"Spline Sans Mono"}));
+  MINT.forEach(v=>{const x=topX(v),maj=MAJT.includes(v);L(cou,x,maj?149:152,x,157,"#8a6515",maj?.9:.45);});
+  MAJT.forEach(v=>T(cou,String(v/10).replace(".",","),topX(v),148,{s:6,c:"#7c5a17",f:"Spline Sans Mono"}));
+  // flèches de conversion gravées (équivalences du kilomètre) : repère traversant, légende fixe sous la fenêtre
+  [32.8,54,100].forEach(cv=>{const x=topX(cv);
+    L(cou,x,127,x,157,"#3a3427",.9);
+    cou.appendChild(el("path",{d:`M${x-2.6} 133 L${x+2.6} 133 L${x} 127.5 Z`,fill:"#3a3427"}));
+    cou.appendChild(el("path",{d:`M${x-2.6} 151 L${x+2.6} 151 L${x} 156.5 Z`,fill:"#3a3427"}));});
+
+  // — 7 bandes « Vit. indiquée » (100→350, log, offset Vi→VP propre au niveau) —
+  VI_ROWS.forEach(r=>{
+    const part=mkWin(VI_W.x,r.y,VI_W.w,VI_W.h);
+    const off=VI_IDX-IDX60, bx=v=>topX(v*FL_F[r.z])+off;
+    bandBg(part,bx(97),r.y+2,bx(362)-bx(97),VI_W.h-4);
+    for(let v=100;v<=350;v+=10){const x=bx(v);L(part,x,r.y+3,x,v%50===0?r.y+10:r.y+7,"#5b5340",v%50===0?.8:.45);}
+    for(let v=100;v<=350;v+=50)T(part,String(v),bx(v),r.y+16,{s:5.5,c:"#4f4a3d",f:"Spline Sans Mono"});
+    const d=VI_IND[r.z];
+    if(d.VI)T(part,"★",bx(d.VI),r.y+9,{s:6.5,c:ENG.VI.col});
+    if(d.II)part.appendChild(el("circle",{cx:bx(d.II),cy:r.y+12,r:1.7,fill:ENG.II.col}));
+  });
+
+  // — 2 bandes « Nbre de Mach » (0,40→0,80, log, offset Mach→VP du niveau) —
+  MACH_WIN.forEach(m=>{
+    const part=mkWin(m.x,MY,MW,MH);
+    const off=(m.x+MW/2)-IDX60, bx=mm=>topX(mm*MACH_A[m.z])+off;
+    bandBg(part,bx(0.39),MY+1,bx(0.815)-bx(0.39),MH-2);
+    steps(0.40,0.80,0.02).forEach(mm=>{const x=bx(mm),maj=Math.round(mm*100)%10===0;L(part,x,MY+2,x,maj?MY+8:MY+5,"#274d72",maj?.8:.45);});
+    [0.4,0.5,0.6,0.7,0.8].forEach(mm=>T(part,"0,"+Math.round(mm*100)/10+"0",bx(mm),MY+13,{s:5.5,c:"#274d72",f:"Spline Sans Mono"}));
+  });
+
+  // — bande « Cons. » 4→20 l/mn (alignée : c dans la fenêtre ⇔ 60·c sous le 60 cerclé) —
+  {
+    const part=mkWin(CONS.x,CONS.y,CONS.w,CONS.h);
+    const off=CONS.idx-IDX60, bx=c=>topX(60*c)+off;
+    bandBg(part,bx(3.9),CONS.y+1,bx(20.6)-bx(3.9),CONS.h-2);
+    [...steps(4,10,0.5),...steps(11,20,1)].forEach(c=>{const x=bx(c),maj=c%1===0;L(part,x,CONS.y+2,x,maj?CONS.y+7:CONS.y+5,"#274d72",maj?.8:.45);});
+    [4,5,6,8,10,12,15,20].forEach(c=>T(part,String(c),bx(c),CONS.y+12,{s:5.5,c:"#274d72",f:"Spline Sans Mono"}));
+  }
+
+  /* ---- habillage fixe du corps, par-dessus les fenêtres ---- */
+  T(g,"Vit. indiquée",VI_IDX,56,{s:6.5,c:"#7a7160"});
+  VI_ROWS.forEach(r=>{
+    g.appendChild(el("rect",{x:VI_W.x,y:r.y,width:VI_W.w,height:VI_W.h,rx:2,fill:"none",stroke:"#274d72","stroke-width":1}));
+    L(g,VI_IDX,r.y-2,VI_IDX,r.y+VI_W.h+2,"#111",.8);
+  });
+  T(g,"Nbre de Mach",550,73,{a:"start",s:7.5,c:"#4f4a3d",w:600});
+  MACH_WIN.forEach(m=>{
+    g.appendChild(el("rect",{x:m.x,y:MY,width:MW,height:MH,rx:2,fill:"none",stroke:"#274d72","stroke-width":1}));
+    L(g,m.x+MW/2,MY-2,m.x+MW/2,MY+MH+2,"#111",.8);
+    T(g,m.lab,m.x+37,58,{s:7,c:"#7a7160"});
+  });
+  g.appendChild(el("rect",{x:VPX0-4,y:112,width:(VPX1-VPX0)+8,height:52,rx:4,fill:"none",stroke:"#b3a586","stroke-width":1}));
+  T(g,"VITESSE PROPRE",VPX1-6,122,{a:"end",s:8.5,c:"#3a3427",w:700,ls:"1.5"});
+  // l'index de lecture est le 60 cerclé : trait traversant la fenêtre au droit du 60
+  g.appendChild(el("line",{id:"vp-index",x1:IDX60,y1:104,x2:IDX60,y2:164,stroke:"#9c3a2d","stroke-width":1,opacity:".8"}));
   T(g,"Cons.",VPX0-2,201,{a:"start",s:8.5,c:"#4f4a3d",w:600});
-  g.appendChild(el("rect",{x:VPX0+34,y:192,width:96,height:14,rx:2,fill:"#eef2f6",stroke:"#274d72","stroke-width":1}));
-  g.appendChild(el("path",{d:mkArrow(VPX0+82,192,-1),fill:"#274d72"}));
+  g.appendChild(el("rect",{x:CONS.x,y:CONS.y,width:CONS.w,height:CONS.h,rx:2,fill:"none",stroke:"#274d72","stroke-width":1}));
+  L(g,CONS.idx,CONS.y-2,CONS.idx,CONS.y+CONS.h+2,"#111",.8);
   T(g,"l/minute",VPX0+150,201,{a:"start",s:8,c:"#7a7160",it:true});
-  // curseur mobile de lecture (règle à calcul)
+  // légende fixe des flèches de conversion (les repères eux-mêmes glissent avec la réglette)
+  T(g,"repères de conversion : Pieds 32,8 · Naut 54 · Unités métriques 100",VPX1-6,172,{a:"end",s:6,c:"#7a7160",it:true});
+  // curseur mobile de lecture (aide : temps t sur l'échelle fixe)
   g.appendChild(el("line",{id:"vp-cursor",x1:tx(24),y1:100,x2:tx(24),y2:186,stroke:"#9c3a2d","stroke-width":1.2,"stroke-dasharray":"3 2",opacity:".85"}));
   // interaction coulisse
   attachCoulisse();
 }
-function mkArrow(x,y,dir){dir=dir||1;const h=8*dir;return `M${x-6} ${y} L${x+6} ${y} L${x} ${y+h} Z`;}
 
 function buildWind(svg){
   const g=el("g",{}); svg.appendChild(g);
@@ -479,8 +550,8 @@ function buildWind(svg){
 }
 function arcQ(ox,oy,r){return `M${ox-r} ${oy} A ${r} ${r} 0 0 1 ${ox} ${oy-r}`;}
 
-/* ---- coulisse drag = décalage log de l'échelle vitesse ---- */
-const COFF_MIN=-260, COFF_MAX=260;        // débattement de la coulisse (contenu schématique dans le cadre)
+/* ---- coulisse drag = décalage log de toutes les bandes ---- */
+const COFF_MIN=IDX60-topX(1200), COFF_MAX=IDX60-topX(15); // course réelle : le repère 60 lit ≈ 15 → 1200
 const clampCoff=c=>Math.max(COFF_MIN,Math.min(COFF_MAX,c));
 function attachCoulisse(){
   const cou=$("coulisse"); if(!cou)return;
@@ -493,22 +564,22 @@ function attachCoulisse(){
   // accessibilité clavier (parité avec le computeur : role=slider, flèches)
   cou.setAttribute("tabindex","0");
   cou.setAttribute("role","slider");
-  cou.setAttribute("aria-label","Coulisse Vitesse propre : aligner une vitesse sous l’index fixe (flèches ← →, Maj = pas fin, Origine/Fin = 500/100)");
+  cou.setAttribute("aria-label","Réglette coulissante : aligner une vitesse sous le repère 60 (flèches ← →, Maj = pas fin, Origine/Fin = 1000/100)");
   cou.setAttribute("aria-valuemin","0");
   cou.setAttribute("aria-valuemax","100");
   cou.addEventListener("keydown",e=>{
     const step=e.shiftKey?6:22;
     if(e.key==="ArrowRight"||e.key==="ArrowUp")S.coff=clampCoff(S.coff-step);       // + rapide
     else if(e.key==="ArrowLeft"||e.key==="ArrowDown")S.coff=clampCoff(S.coff+step); // + lent
-    else if(e.key==="Home")S.coff=clampCoff(spx(VPREF)-spx(SPMAX));                 // ≈ 500
-    else if(e.key==="End")S.coff=clampCoff(spx(VPREF)-spx(100));                    // ≈ 100
+    else if(e.key==="Home")S.coff=clampCoff(IDX60-topX(1000));                      // 1000 sous le 60
+    else if(e.key==="End")S.coff=clampCoff(IDX60-topX(100));                        // 100 sous le 60
     else return;
     e.preventDefault();applyCoulisse();
   });
 }
 function applyCoulisse(){
-  const cou=$("coulisse"); if(cou)cou.setAttribute("transform",`translate(${S.coff} 0)`);
-  // vitesse alignée sous l'index fixe (270) = valeur de l'échelle décalée
+  // toutes les bandes de la réglette (une par fenêtre) reçoivent la même translation
+  document.querySelectorAll("#svgR .cou-part").forEach(p=>p.setAttribute("transform",`translate(${S.coff} 0)`));
   updateVPfromSlide();
 }
 
@@ -516,7 +587,7 @@ function applyCoulisse(){
 function renderTable(){
   const g=$("r-table"); if(!g)return; g.innerHTML="";
   const isD=S.obj==="dist", LV=isD?DIST_LV:ENDU_LV.map(z=>({z,fl:"FL "+z+"0"}));
-  const x0=22,x1=302, colII=x0+92, colVI=x0+186, colW=94;
+  const x0=22,x1=296, colII=x0+88, colVI=x0+180, colW=90;
   const cII=colII+colW/2, cVI=colVI+colW/2;
   // titre + en-têtes de colonnes (deux lignes distinctes)
   T(g,isD?"FOUGA · Distance max Gb":"FOUGA · Endurance max",x0+4,50,{a:"start",s:9,c:"#1d3a57",w:700,ls:".3"});
@@ -542,9 +613,9 @@ function renderTable(){
 }
 
 /* ============================ VERSO — SVG ============================ */
-const M_X0=40,M_X1=470,M_Y0=232,M_Y1=54;      // abaque montée : X=temps, Y=altitude
-const MT_MAX=26;                               // minutes max axe
-const mx=t=>M_X0+t/MT_MAX*(M_X1-M_X0);
+const M_X0=40,M_X1=470,M_Y0=232,M_Y1=54;      // abaque montée : X=distance en Nm (l'axe gravé), Y=altitude
+const MD_MAX=95;                               // Nm max de l'axe (le sommet II-Gb est coté 90 Nm)
+const mx=d=>M_X0+d/MD_MAX*(M_X1-M_X0);
 const my=z=>M_Y0-(z-50)/(300-50)*(M_Y0-M_Y1);  // z en kft (FL50..FL300)
 function buildVerso(){
   const svg=$("svgV"); svg.innerHTML="";
@@ -558,27 +629,29 @@ function buildVerso(){
 }
 function renderMontee(){
   const g=$("v-montee"); if(!g)return; g.innerHTML="";
-  T(g,"Abaque de montée — temps",M_X0,50,{a:"start",s:9,c:"#1d3a57",w:700,ls:".3"});
+  T(g,"Abaque de montée — cotes gravées",M_X0,50,{a:"start",s:9,c:"#1d3a57",w:700,ls:".3"});
   // grille altitude
-  [50,100,150,200,250,300].forEach(z=>{const y=my(z);L(g,M_X0,y,M_X1,y,"#d8cba8",.6);T(g,"FL "+(z===10?"10":z),M_X0-4,y+3,{a:"end",s:7,c:"#7a7160"});});
-  // axe temps
+  [50,100,150,200,250,300].forEach(z=>{const y=my(z);L(g,M_X0,y,M_X1,y,"#d8cba8",.6);T(g,"FL "+z,M_X0-4,y+3,{a:"end",s:7,c:"#7a7160"});});
+  // axe distance (Nm) — comme gravé (bord haut VI, bord bas II sur l'instrument)
   L(g,M_X0,M_Y0,M_X1,M_Y0,"#7a7160",.9);
-  for(let t=0;t<=MT_MAX;t+=2){const x=mx(t);L(g,x,M_Y0,x,M_Y0+3,"#8a7c58",.6);T(g,t+"′",x,M_Y0+13,{s:6.5,c:"#7a7160"});}
+  for(let d=0;d<=90;d+=10){const x=mx(d);L(g,x,M_Y0,x,M_Y0+3,"#8a7c58",.6);T(g,String(d),x,M_Y0+13,{s:6.5,c:"#7a7160"});}
+  T(g,"Nm",mx(93)+8,M_Y0+13,{s:6.5,c:"#9b8a62",it:true});
   // 4 courbes
   const curves=[["VI-Pb",ENG.VI.col,"#c0685c"],["VI-Gb",ENG.VI.col,ENG.VI.col],["II-Pb",ENG.II.col,"#5b7ea3"],["II-Gb",ENG.II.col,ENG.II.col]];
   curves.forEach(cv=>{
     const key=cv[0],pts=MONTEE[key],dash=key.endsWith("Pb")?"4 3":null,active=(S.eng+"-"+S.mbid)===key;
-    const poly=pts.map(p=>mx(p.t)+","+my(p.z)).join(" ");
+    const poly=pts.map(p=>mx(p.d)+","+my(p.z)).join(" ");
     g.appendChild(el("polyline",{points:poly,fill:"none",stroke:cv[2],"stroke-width":active?2.6:1.3,opacity:active?1:.5,"stroke-dasharray":dash||"none","stroke-linejoin":"round"}));
-    pts.forEach(p=>{g.appendChild(el("circle",{cx:mx(p.t),cy:my(p.z),r:active?2.6:1.6,fill:cv[2],opacity:active?1:.5}));
-      if(active)T(g,fmtT(p.t),mx(p.t),my(p.z)-5,{s:6.5,c:cv[1],w:700});});
+    pts.forEach(p=>{g.appendChild(el("circle",{cx:mx(p.d),cy:my(p.z),r:active?2.6:1.6,fill:cv[2],opacity:active?1:.5}));
+      if(active){T(g,fmtT(p.t),mx(p.d),my(p.z)-5,{s:6.5,c:cv[1],w:700});
+        if(p.fuel)T(g,p.fuel+" L",mx(p.d)+2,my(p.z)+10,{a:"start",s:5.5,c:"#7a7160"});}});
     // étiquette
-    const last=pts[pts.length-1];T(g,key.replace("-"," "),mx(last.t)+6,my(last.z)+(key.endsWith("Gb")?9:-2),{a:"start",s:7,c:cv[2],w:active?700:600,opacity:active?1:.6});
+    const last=pts[pts.length-1];T(g,key.replace("-"," "),mx(last.d)+6,my(last.z)+(key.endsWith("Gb")?9:-2),{a:"start",s:7,c:cv[2],w:active?700:600,opacity:active?1:.6});
   });
   // sélection courante (point)
   const key=S.eng+"-"+S.mbid, pt=(MONTEE[key]||[]).find(p=>p.z===S.mlvl);
-  if(pt){g.appendChild(el("circle",{cx:mx(pt.t),cy:my(pt.z),r:5,fill:"none",stroke:"#111","stroke-width":1.5}));}
-  T(g,"cotes de temps gravées aux paliers · carburant restant gravé aux seuls sommets VI (660 / 840 L)",M_X0,M_Y0+24,{a:"start",s:7,c:"#9b8a62",it:true});
+  if(pt){g.appendChild(el("circle",{cx:mx(pt.d),cy:my(pt.z),r:5,fill:"none",stroke:"#111","stroke-width":1.5}));}
+  T(g,"axe gravé : distance (Nm) — cotes de temps, distance et carburant restant relevées à plat · tracé continu entre paliers reconstruit",M_X0,M_Y0+24,{a:"start",s:7,c:"#9b8a62",it:true});
 }
 function buildEndu(svg){
   const g=el("g",{}); svg.appendChild(g); const x0=498,y0=60,cw=54,rh=20;
@@ -600,17 +673,28 @@ function buildEndu(svg){
   g.appendChild(el("rect",{x:x0+78,y:yd+38,width:70,height:18,rx:3,fill:"none",stroke:"#b78d31","stroke-width":1.2}));T(g,"JAUNE 300 L",x0+113,yd+50,{s:7.5,c:"#9a7320",w:700});
 }
 function buildRapporteur(svg){
-  const g=el("g",{}); svg.appendChild(g); const cx=1000,cy=150,R=98;
-  T(g,"EXECUTION DES VOLS COM TYPE VICTOR — TRES BASSE ALTITUDE",cx,44,{s:7.5,c:"#4f4a3d",w:600,ls:".3"});
-  g.appendChild(el("circle",{cx,cy,r:R,fill:"#fbf7ec",stroke:"#9b8a62","stroke-width":.9}));
-  g.appendChild(el("circle",{cx,cy,r:3,fill:"#4f4a3d"}));
-  for(let a=0;a<360;a+=5){const rad=(a-90)*Math.PI/180,big=a%10===0,r0=R,r1=R-(big?9:5);
-    L(g,cx+r0*Math.cos(rad),cy+r0*Math.sin(rad),cx+r1*Math.cos(rad),cy+r1*Math.sin(rad),"#8a7c58",big?.7:.4);
-    if(a%30===0){const rt=R-17;T(g,String(a),cx+rt*Math.cos(rad),cy+rt*Math.sin(rad)+2.5,{s:6.5,c:"#7a7160"});}}
+  const g=el("g",{}); svg.appendChild(g); const cx=1010,cy=150,R=98;
+  T(g,"EXECUTION DES VOLS COM TYPE VICTOR — TRES BASSE ALTITUDE",cx-30,44,{s:7.5,c:"#4f4a3d",w:600,ls:".3"});
+  // extrémité arrondie de la réglette (dépasse du corps) : demi-limbe réel à DOUBLE numérotation
+  // (10→180 couronne intérieure, réciproques 190→360 à l'extérieur, tirets tous les 5°)
+  g.appendChild(el("path",{d:`M${cx} ${cy-R} A ${R} ${R} 0 0 0 ${cx} ${cy+R} Z`,fill:"#fbf7ec",stroke:"#9b8a62","stroke-width":.9}));
+  g.appendChild(el("circle",{cx,cy,r:3,fill:"none",stroke:"#4f4a3d","stroke-width":1.2}));
+  for(let a=0;a<=180;a+=5){
+    const rad=(90+a)*Math.PI/180, big=a%10===0;
+    const x0=cx+R*Math.cos(rad),y0=cy+R*Math.sin(rad),x1=cx+(R-(big?9:5))*Math.cos(rad),y1=cy+(R-(big?9:5))*Math.sin(rad);
+    L(g,x0,y0,x1,y1,"#8a7c58",big?.7:.4);
+    if(big)L(g,cx+14*Math.cos(rad),cy+14*Math.sin(rad),cx+(R-26)*Math.cos(rad),cy+(R-26)*Math.sin(rad),"#8a7c58",.35);
+    if(a%30===0&&a>0){
+      const ri=R-34, ro=R-16;
+      T(g,String(a),cx+ri*Math.cos(rad),cy+ri*Math.sin(rad)+2.5,{s:6,c:"#7a7160"});
+      T(g,String(a+180),cx+ro*Math.cos(rad),cy+ro*Math.sin(rad)+2.5,{s:6,c:"#9b8a62"});
+    }
+  }
+  T(g,"demi-limbe à double numérotation — verso complet de la réglette : voir le mode d’emploi (§ VI)",cx-30,cy+R+16,{s:6.5,c:"#9b8a62",it:true});
   // encadré jour/nuit
-  g.appendChild(el("rect",{x:cx+R+14,y:cy-24,width:44,height:20,rx:2,fill:"none",stroke:"#9b8a62"}));T(g,"JOUR",cx+R+36,cy-11,{s:7.5,c:"#4f4a3d",w:600});
-  g.appendChild(el("rect",{x:cx+R+14,y:cy+4,width:44,height:20,rx:2,fill:"none",stroke:"#9b8a62"}));T(g,"NUIT",cx+R+36,cy+17,{s:7.5,c:"#4f4a3d",w:600});
-  T(g,"Conditions",cx+R+36,cy-30,{s:7,c:"#7a7160",it:true});
+  g.appendChild(el("rect",{x:cx+R-56,y:cy-24,width:44,height:20,rx:2,fill:"none",stroke:"#9b8a62"}));T(g,"JOUR",cx+R-34,cy-11,{s:7.5,c:"#4f4a3d",w:600});
+  g.appendChild(el("rect",{x:cx+R-56,y:cy+4,width:44,height:20,rx:2,fill:"none",stroke:"#9b8a62"}));T(g,"NUIT",cx+R-34,cy+17,{s:7.5,c:"#4f4a3d",w:600});
+  T(g,"Conditions",cx+R-34,cy-30,{s:7,c:"#7a7160",it:true});
 }
 
 /* ============================ INTERACTION / READOUT ============================ */
@@ -631,7 +715,7 @@ function renderReadoutR(){
     if(S.bid==="Pb"){reg+=DIST_PB[e].reg;con=Math.round((con+DIST_PB[e].conso)*10)/10;cmp=" <span class='calc-cmp'>Pb</span>";}
     $("b-reg").innerHTML=fmtReg(reg)+"<small> t/m</small>"+cmp;
     $("b-conso").innerHTML=nf(con,(S.bid==="Pb"||con%1)?1:0)+"<small> l/m</small>";
-    const vi=VI_IND[z][e]; $("t-vi").innerHTML=vi?("≈ "+vi+" kt <span>repère approx.</span>"):"— <span>illisible</span>";
+    const vi=VI_IND[z][e]; $("t-vi").innerHTML=vi?("≈ "+vi+" kt <span>repère gravé ±2</span>"):"— <span>non gravé</span>";
     $("t-mach").innerHTML=MACH[z]?MACH[z]:"— <span>non applicable</span>";
     $("t-extra").innerHTML=S.bid==="Pb"?("−"+Math.abs(DIST_PB[e].reg)+" t/m · −0,5 l/m"):"aucune <span>(Gb)</span>";
     $("noteR").textContent=S.bid==="Pb"
@@ -664,7 +748,10 @@ function vpCompute(active){
   if(!ok(d)&&ok(V)&&ok(t)){const D=V*t/60;$("i-d").value=Math.round(D);out="d = "+Math.round(D)+" Nm/km";}
   else if(!ok(t)&&ok(V)&&ok(d)){const tt=d/V*60;$("i-t").value=Math.round(tt*10)/10;out="t = "+fmtT(tt);}
   else if(!ok(V)&&ok(t)&&ok(d)){const vv=d/t*60;$("i-v").value=Math.round(vv);out="V = "+Math.round(vv)+" (km/h ou kt)";}
-  else if(ok(V)&&ok(t)){if(active!=="i-d")$("i-d").value=Math.round(V*t/60);out="d = "+Math.round(V*t/60)+" Nm/km";}
+  else if(ok(V)&&ok(t)){
+    if(active==="i-d"&&ok(d)){const tt=d/V*60;$("i-t").value=Math.round(tt*10)/10;out="t = "+fmtT(tt);}
+    else{$("i-d").value=Math.round(V*t/60);out="d = "+Math.round(V*t/60)+" Nm/km";}
+  }
   else out="Renseigne deux des trois champs";
   $("vp-out").textContent=out;
 }
@@ -673,22 +760,24 @@ function alignSlide(){ // place la vitesse V sous l'index fixe (VPREF) : coff = 
   const target=spx(VPREF)-spx(Math.max(SPMIN,Math.min(SPMAX,V)));
   S.coff=clampCoff(target); applyCoulisse();
   // curseur au temps
-  const t=parseFloat($("i-t").value); if(!isNaN(t)&&t>0){const c=$("vp-cursor");if(c){c.setAttribute("x1",tx(Math.max(1,Math.min(140,t))));c.setAttribute("x2",tx(Math.max(1,Math.min(140,t))));}}
+  const t=parseFloat($("i-t").value); if(!isNaN(t)&&t>0){const c=$("vp-cursor");if(c){c.setAttribute("x1",tx(Math.max(TMIN,Math.min(TMAX,t))));c.setAttribute("x2",tx(Math.max(TMIN,Math.min(TMAX,t))));}}
 }
 function updateVPfromSlide(){
-  // vitesse alignée sous l'index fixe = valeur telle que spx(v)+coff = spx(VPREF)
-  const logv=Math.log10(VPREF)-S.coff/((VPX1-VPX0)/(Math.log10(SPMAX)-Math.log10(SPMIN)));
+  // vitesse alignée sous le repère 60 (1 heure) : topX(v)+coff = IDX60
+  const logv=Math.log10(VPREF)-S.coff/MOD;
   const v=Math.pow(10,logv);
-  $("noteVP").textContent="Sous l’index fixe : vitesse propre ~ "+nf(v,0)+" (km/h ou kt selon l’échelle) ; 1 min parcourt "+nf(v/60,1)+" ; 10 min, "+nf(v/6,0)+".";
+  $("noteVP").textContent="Sous le repère 60 (1 heure) : vitesse propre ~ "+nf(v,0)+" (kt ou km/h selon l’unité) ; en regard de chaque temps de l’échelle fixe, la distance se lit sur l’échelle mobile — et les fenêtres Vi, Mach et Cons. suivent la même translation.";
   const cou=$("coulisse");
   if(cou){cou.setAttribute("aria-valuenow",String(Math.round((COFF_MAX-S.coff)/(COFF_MAX-COFF_MIN)*100)));
     cou.setAttribute("aria-valuetext","vitesse propre "+nf(v,0)+" (nœuds ou km/h)");}
 }
 
-/* --- vent --- */
+/* --- vent (entrées bornées : l'abaque gravé est un quart de cercle 0–90°, force ≥ 0, VP > 0) --- */
 function windCompute(){
-  const A=parseFloat($("w-ang").value)*Math.PI/180,W=parseFloat($("w-force").value),VP=parseFloat($("w-vp").value);
-  if([A,W,VP].some(isNaN)){return;}
+  let Ad=parseFloat($("w-ang").value),W=parseFloat($("w-force").value),VP=parseFloat($("w-vp").value);
+  if([Ad,W,VP].some(isNaN)){return;}
+  Ad=Math.max(0,Math.min(90,Ad)); W=Math.max(0,Math.min(50,W)); VP=Math.max(100,Math.min(300,VP));
+  const A=Ad*Math.PI/180;
   const eff=W*Math.cos(A), cross=W*Math.sin(A), drift=Math.asin(Math.max(-1,Math.min(1,cross/VP)))*180/Math.PI;
   $("w-eff").innerHTML=(eff>=0?"+":"−")+nf(Math.abs(eff),0)+" <small>"+(eff>=0?"arrière":"face")+"</small>";
   $("w-drift").innerHTML=nf(Math.abs(drift),0)+"° <small>"+(cross>=0?"dr.":"g.")+"</small>";
@@ -705,7 +794,11 @@ function renderMonteeReadout(){
   $("b-mt").textContent=pt?fmtT(pt.t):"—";
   $("b-mf").innerHTML=pt&&pt.fuel?fmtReg(pt.fuel)+"<small> L</small>":"— <small>non gravé</small>";
   const top=curve[curve.length-1];
-  $("noteM").textContent="Courbe "+eng.mark+" "+eng.name+" "+S.mbid+" — plafond de l’abaque : FL "+(top.z)+" en "+fmtT(top.t)+(top.fuel?" ("+top.fuel+" L restants)":"")+". "+(S.eng==="II"?"Le Marboré II plafonne au FL 250 sur cet abaque.":"Le Marboré VI monte jusqu’au FL 300.");
+  $("noteM").textContent="Courbe "+eng.mark+" "+eng.name+" "+S.mbid
+    +(pt?" — FL "+pt.z+" atteint en "+fmtT(pt.t)+(pt.d?" ("+pt.d+" Nm parcourus"+(pt.fuel?", "+fmtReg(pt.fuel)+" L restants":"")+")":"")
+      +(pt.approx?" · cote 4′ attribuée à cette courbe par la géométrie (lecture serrée à FL 50)":""):"")
+    +". Plafond : FL "+top.z+" en "+fmtT(top.t)+(top.fuel?" ("+fmtReg(top.fuel)+" L restants)":"")+". "
+    +(S.eng==="II"?"Le Marboré II plafonne au FL 250.":"Le Marboré VI monte jusqu’au FL 300.");
   rebuildMLevels();
 }
 function rebuildMLevels(){
@@ -728,7 +821,7 @@ function setEng(e){S.eng=e;document.querySelectorAll("#engToggle button").forEac
 function setFace(f){S.face=f;$("flip").classList.toggle("flipped",f==="V");
   document.querySelectorAll("#faceToggle button").forEach(b=>b.classList.toggle("on",b.dataset.face===f));
   $("ctrlR").classList.toggle("show",f==="R");$("ctrlV").classList.toggle("show",f==="V");
-  $("hint").innerHTML=f==="R"?"Choisissez un <b>moteur</b> et un <b>niveau</b> · glissez ou fléchez (<b>← →</b>) la <b>coulisse</b> (VITESSE PROPRE) pour la règle à calcul":"Choisissez <b>bidons</b> et <b>niveau atteint</b> — la courbe active se surligne sur l’abaque";}
+  $("hint").innerHTML=f==="R"?"Choisissez un <b>moteur</b> et un <b>niveau</b> · glissez ou fléchez (<b>← →</b>) la <b>réglette</b> : la vitesse s’aligne sous le <b>repère 60</b> et toutes les fenêtres suivent la même translation":"Choisissez <b>bidons</b> et <b>niveau atteint</b> — la courbe active se surligne sur l’abaque";}
 
 document.querySelectorAll("#engToggle button").forEach(b=>b.addEventListener("click",()=>setEng(b.dataset.eng)));
 document.querySelectorAll("#faceToggle button").forEach(b=>b.addEventListener("click",()=>setFace(b.dataset.face)));
@@ -752,7 +845,7 @@ $("resetAll").addEventListener("click",()=>{S={eng:"II",face:"V",obj:"dist",bid:
   syncSegments();setEng("II");rebuildLevels();renderReadoutR();renderTable();
   $("i-v").value=420;$("i-t").value=24;$("i-d").value="";vpCompute();applyCoulisse();
   const c=$("vp-cursor");if(c){c.setAttribute("x1",tx(24));c.setAttribute("x2",tx(24));}
-  $("d-alt").value=20;$("w-ang").value=40;$("w-force").value=30;$("w-vp").value=250;windCompute();descCompute();renderMonteeReadout();renderMontee();});
+  $("d-prof").value="eco";$("d-alt").value=20;$("w-ang").value=40;$("w-force").value=30;$("w-vp").value=250;windCompute();descCompute();renderMonteeReadout();renderMontee();});
 
 /* French typography (hors SVG) */
 (function(){var NBSP=" ",FINE=" ";
