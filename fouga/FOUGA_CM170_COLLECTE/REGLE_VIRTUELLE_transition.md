@@ -1,5 +1,17 @@
 # Règle de navigation virtuelle — Vérification & plan de transition vers la « règle complète »
 
+> **⚑ TRANSITION RÉALISÉE le 22/07/2026.** Les clichés attendus (§C) sont arrivés dans
+> `../RdN_Cne_Claude/` (scans A4 300 dpi avec réglet = coulisse & corps à plat, recto/verso,
+> + 4 photos HD + **notice d'origine 13 p.**) et le refactoring §E est appliqué :
+> échelle mobile réelle 10→1500 / 1→150 avec flèches de conversion, fenêtres traversantes
+> `<clipPath>` (7 Vi + 2 Mach + Cons.) lues par translation unique, échelles commensurables
+> (TMAX=100 min → tx = spx = 220 px/décade), lecture au repère 60, montée sur l'axe distance
+> gravé avec carburant complet, rapporteur demi-limbe à double numérotation.
+> Les deux points ouverts du §A sont **clos** (sommets II gravés 550/720 L ; FL50 = 2 cercles,
+> 3′ VI-Pb prouvé / 4′ attribué II-Pb). Voir `REGLE_REFONTE_plan.md` (données tranchées,
+> arbitrages 280 kts / fréquences 38x,x / Pb −0,5 confirmé) — ce fichier est conservé
+> comme trace de l'état du 18/07/2026.
+
 *Fichier concerné : `pages/regle_navigation_virtuelle.html`. Établi le 18/07/2026 après vérification adversariale (relectures aveugles des photos + audit des calculs + chasse aux bugs + smoke test jsdom). Sources = les 4 clichés `assets/img/regle_*.jpg`.*
 
 ---

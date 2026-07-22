@@ -499,6 +499,14 @@ Le projet s'est étendu à un **site statique de restitution** (HTML/CSS/JS, san
   Ancienne image dans `backups_docs/` (scratchpad de session).
 
 ### Pistes non traitées (site)
+- **Computeur — suites de la vérification photo (20/07)** : rédiger/publier les notes sur la page
+  (couverture cellule par cellule de la grille : quelles cases sont attestées par un cliché lisible) ;
+  trancher l'**IAS 260 kt** à 20.000 t/m / 5.000′ (écart IAS−CAS de 18 kt, ailleurs 6–12 — chercher le
+  cliché de cette fenêtre) ; panneau « **Rendement** » des courbes = TAS/60 (redondant et contredit le
+  chapô) → renommer « Distance parcourue par minute » ou supprimer. Détail des relevés :
+  `tasks/wkqkz4v2o.output` (scratchpad de session).
+- **Monographie** : date de version en page de titre (« Dernière mise à jour — 20 juillet 2026 ») à
+  tenir à jour à chaque édition ; recette PDF = soffice --headless puis ghostscript /ebook 150 dpi.
 - Drag de la couronne directement depuis les étiquettes d'altitude ; molette souris.
 - Factorisation de la charte dupliquée dans les pages internes du computeur.
 - Recette mobile complète (le responsive est en place mais non testé sur appareil).
@@ -510,21 +518,12 @@ Le projet s'est étendu à un **site statique de restitution** (HTML/CSS/JS, san
 
 ---
 
-*Dernière mise à jour du handoff : 18/07/2026 — §8 étendu : nouveau sous-sujet « Règle de navigation »
+*Mise à jour 18/07/2026 — §8 étendu : nouveau sous-sujet « Règle de navigation »
 (mode d'emploi + règle virtuelle interactive, Marboré II & VI ; construits par extraction fidèle des
 photos + revue adversariale, 0 erreur de données), objectivation des notices (retrait de la conduite
 de vol), page de présentation (avertissement « prototype non diffusable » + illustrations 3-vues en
 marge), bibliographies (vérification web par fetch + « Bibliographie sélective » de 53 entrées +
 typographie insécable). Volet transcription DOCX inchangé : restent le document maître et l'étude.*
-
-*Mise à jour 20/07/2026 : (1) **courbes de croisière** du mode d'emploi — échelles corrigées (axes
-zéro/graduations rondes ; données déjà exactes) ; (2) **vérification photo de la grille** (workflow
-77 agents) — site ≡ monographie confirmés par les clichés, **fiche brute `computeur_131_grille (1).docx`
-invalidée** (décalage d'altitudes au 19.000 t/m) ; (3) **échelle 1/500.000ᵉ de la face 336** (gravée sur
-la plaque, photo à l'appui) reportée dans le cadre C du mode d'emploi + monographie (3 passages) ;
-(4) **monographie illustrée** — 6 photos + date de version dans le DOCX, chaîne PDF
-soffice → ghostscript (647 Ko). En suspens : notes à publier (couverture cellule par cellule,
-IAS 260/242, panneau « Rendement » = TAS/60).*
 
 *Compléments 18/07/2026 (suite) : (1) **règle virtuelle** vérifiée (données 100 % fidèles, calculs exacts)
 avec la spec de transition `REGLE_VIRTUELLE_transition.md` ; (2) **manuel HTML** — retrait pendant des items
@@ -535,3 +534,70 @@ backups `.predash`) — texte préservé au caractère près, rendus vérifiés 
 sélective** — 3 ouvrages + nouvelle **Section IV** (articles du *Fana de l'Aviation*, renumérotation V→VIII) ;
 (4) **bandeau d'avertissement** étendu aux 4 pages computeur/règle ; (5) **contraste des heros** computeur &
 règle renforcé. Outils réutilisables dans `FOUGA_CM170_COLLECTE/` (scripts) et `scratchpad/`.*
+
+*Mise à jour 20/07/2026 : (1) **courbes de croisière** du mode d'emploi — échelles corrigées (axes
+zéro/graduations rondes ; données déjà exactes) ; (2) **vérification photo de la grille** (workflow
+77 agents) — site ≡ monographie confirmés par les clichés, **fiche brute `computeur_131_grille (1).docx`
+invalidée** (décalage d'altitudes au 19.000 t/m) ; (3) **échelle 1/500.000ᵉ de la face 336** (gravée sur
+la plaque, photo à l'appui) reportée dans le cadre C du mode d'emploi + monographie (3 passages) ;
+(4) **monographie illustrée** — 6 photos + date de version dans le DOCX, chaîne PDF
+soffice → ghostscript (647 Ko).*
+
+*Mise à jour 21/07/2026 : vue de dessus du rail 3-vues de l'accueil regénérée depuis
+`../magister_3v.jpg` (bord d'attaque d'emplanture droite restauré, antenne complète, fragments
+voisins effacés) — voir l'entrée du journal §8.*
+
+*Mise à jour 22/07/2026 — **règle de navigation, refonte complète** (sources primaires arrivées
+dans `../RdN_Cne_Claude/` : notice d'époque 13 p. « la règle de navigation du Capitaine CLAUDE »
+= chap. 4 d'un cours d'escadron, scans A4 300 dpi avec réglet, 4 photos HD corps/réglette à plat ;
+dépouillement par workflow 9 agents + recoupement adversarial + 3 contre-vérifications macro,
+plan dans `REGLE_REFONTE_plan.md`) : (1) **`pages/regle_navigation.html` réécrite** en 7 sections —
+anatomie corrigée (2 pièces, pas de curseur ni de « position de repos »), **abaque de montée
+tabulé** (temps/distance/carburant, axe gravé = distance Nm), repères ●/★ des 7 fenêtres relevés
+(★ ≈ 220 constant), **mode d'emploi officiel a)–k)** avec exemples d'origine et coquilles
+signalées, **face « Victor »** du verso de la réglette (rapporteur demi-limbe double numérotation,
+réglettes 240/280 kts, IFF 3/A 13-77, carte refuge FL 55/115, fréquences 383,7/384,5/384,7) ;
+(2) **règle virtuelle « complète »** (`REGLE_VIRTUELLE_transition.md` §E réalisé) : échelle mobile
+réelle 10→1500 / 1→150 + flèches de conversion, **fenêtres traversantes `<clipPath>`** lues par
+translation unique, échelles commensurables (TMAX = 100 min = gravure 1⁴⁰ → 220 px/décade partout),
+lecture au **repère 60** (les exemples de la notice tombent juste : 262→Vi 190 au FL 200 ;
+272→M 0,45 au FL 250), montée sur axe distance + carburant, débattement réel, vent borné 0–90° ;
+smoke tests jsdom 20/20 ; (3) **monographie de la règle** : `Fouga_CM170R_regle_de_navigation.docx`
+(généré par script npm `docx`, gabarit computeur : Lettre, DejaVu Sans, en-tête petites capitales,
+12 p., 5 photos) + PDF ghostscript 358 Ko + enveloppe `regle-navigation-monographie.html` +
+**sous-nav règle à 3 entrées** (3 fichiers) ; (4) **notice d'époque hébergée**
+(`assets/docs/Fouga_CM170R_regle_notice_1980.pdf`, 1,65 Mo, liée depuis la page mode d'emploi) ;
+(5) 4 nouveaux clichés à plat dans `assets/img/` (`regle_corps_*`, `regle_coulisse_*`).
+Arbitrages de données consignés dans le plan : réglette 1/100 000 = **280 kts** (géométrie 1′30 = 7 NM),
+fréquences carte = **38x,x** (scan tranche), correction Pb VI = **− 0,5 confirmé** (la lecture − 0,8
+sur IMG_3703 était un artefact de la zone abîmée).*
+
+*Complément 22/07/2026 (soir) — **photos de la page règle** : les 4 clichés à plat étaient servis avec
+un **tag EXIF orientation=6 mensonger** recopié des HEIC par sips → les navigateurs les pivotaient en
+bandes verticales de ~3 000 px (« images immenses » signalées par Valérie). Régénérés via **Pillow**
+(décodage brut + rotation +90, zéro EXIF — recette : scratchpad session `venv` + script dans le journal) ;
+ajout de **9 zooms de zone** `regle_zoom_*.jpg` (façon face131_*/face336_* du computeur) utilisés par les
+figures de détail de `pages/regle_navigation.html`, et **plafond de hauteur CSS** (`.plate img` 300 px,
+`.figure img` 320 px, largeur auto centrée). Les 4 vues d'ensemble restent en pleine page plafonnée.*
+
+*Complément 22/07/2026 (océrisation notice) — **transcription DOCX fidèle de la notice 13 p.**
+→ `../RdN_Cne_Claude/mode emploi règle Fouga - transcription.docx` (à côté du PDF source).
+Méthode : lecture visuelle page à page du PDF (aucune couche texte), **python-docx** (venv scratchpad
+session, `build_docx.py`), Courier New 10, **pagination 1:1** avec l'original (13 p. + 1 p. de notes ;
+⚠️ sauts de page via `page_break_before` sur le 1ᵉʳ paragraphe de chaque page — un paragraphe de saut
+dédié crée une page blanche après les pages pleines). **19 figures** découpées du scan et réinsérées à
+leur place (`crop_manual.py` : pdftoppm 150 dpi + bandes y manuelles + rognage auto PIL — la détection
+automatique par longueur de traits ou densité de gris **échoue** sur cette photocopie pointillée/pâle).
+Fidélité : coquilles **conservées** avec appels de note en exposant ; **12 notes de transcription** en
+fin de document, alignées sur §1.13 du plan (en soit, Vi 200 vs ● 195, dittographie DMF, astérisque=VI,
+37′20″→37′12″, « est » manquant, sol225, valeur 15→20, « 43 Kts » dupliqué, consommablessoit, ave→avec,
+scories). Non signalés à dessein : « 1/100000 · 280 Kts » (conforme à l'objet, cf. arbitrages) et
+« vertical une balise » (jargon aéro normal). Typo : **91 insécables** posés (après « , avant » , devant
+: ; ! ?) à la demande de Valérie. Contrôle : conversion LibreOffice → PDF, 14 pages, aucune blanche,
+relecture visuelle intégrale.*
+
+*Dernière mise à jour du handoff : 22/07/2026. En suspens (computeur) : notes à publier —
+couverture cellule par cellule de la grille, IAS 260/242, panneau « Rendement » = TAS/60 ;
+voir « Pistes non traitées ». En suspens (règle) : macro dédiée du titre raturé de l'abaque de
+vent (lecture retenue « angle direction du vent et route à suivre ») ; attribution du cercle 4′
+à FL 50 (II-Pb, géométrie) ; décimale éventuelle du « 9 l/m » FL 150 sous la fissure.*
