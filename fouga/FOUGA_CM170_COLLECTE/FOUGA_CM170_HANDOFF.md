@@ -510,9 +510,11 @@ Le projet s'est étendu à un **site statique de restitution** (HTML/CSS/JS, san
 - Drag de la couronne directement depuis les étiquettes d'altitude ; molette souris.
 - Factorisation de la charte dupliquée dans les pages internes du computeur.
 - Recette mobile complète (le responsive est en place mais non testé sur appareil).
-- **Règle virtuelle → règle complète** : dès réception des **clichés de la coulisse recto/verso à plat**
-  (perpendiculaires, avec réglet, + curseur non fissuré), appliquer le plan de
-  `REGLE_VIRTUELLE_transition.md`. Data & calculs déjà vérifiés (18/07/2026).
+- ~~Règle virtuelle → règle complète~~ **FAIT** : transition réalisée le 22/07 (clichés reçus) puis
+  **fidélité pixel le 23/07** (recto, verso, réglette Victor — voir mise à jour 23/07 et
+  `REGLE_VIRTUELLE_transition.md` points 1–7). Restes éventuels : verso de la coulisse recto
+  (bandes VP) sans macro dédiée du curseur sain ; polices (Spline Sans Mono vs grotesque gravée)
+  assumées comme choix du site.
 - **Bibliographie** : trancher [1]/[5] (même page musée), [4] (site amateur de vol virtuel), [7]/[9]
   (préciser ou retirer) ; numérotation sans [3].
 
@@ -596,8 +598,170 @@ scories). Non signalés à dessein : « 1/100000 · 280 Kts » (conforme à l'ob
 : ; ! ?) à la demande de Valérie. Contrôle : conversion LibreOffice → PDF, 14 pages, aucune blanche,
 relecture visuelle intégrale.*
 
-*Dernière mise à jour du handoff : 22/07/2026. En suspens (computeur) : notes à publier —
+*Mise à jour 23/07/2026 — **règle virtuelle : fidélité pixel de l'instrument** (journée de passes
+successives sur retours de Valérie, tout mesuré par **analyse d'image des scans 400 dpi à plat**
+`../RdN_Cne_Claude/règle Fouga.pdf`, chaque passe vérifiée par **rendu Chrome headless** comparé au
+scan ; détail complet en tête de `REGLE_VIRTUELLE_transition.md`, points 1–7) :
+(1) **zone centrale recto** — échelles des minutes PARALLÈLES pleine fenêtre (1′ sous 10′, 6′ sous
+le 60 cerclé, module unique ≈ 105 mm/décade, `tx` piecewise), graduations réelles (½′/1′/5′ en haut,
+5″/15″/30″ en bas, chiffres alternés grands/petits), **double lumière** à barrette
+« — VITESSE —— PROPRE — » finissant en **flèche-index** sous le 60 (trait rouge ET curseur pointillé
+supprimés — notice 4.3.1 : pas de curseur), bandes re-gravées **trait par trait** (rail haut/bas,
+chiffres mêmes stations ×1/÷10, flèches Pieds 32,8 / Naut 54 / Unités métriques gravées sur la
+coulisse à queues courtes ; piège : le « 16 » lu sur photo = **10** usé, prouvé par le pas log) ;
+(2) **hauteur & partie gauche** — viewBox 1180×430, face aux **proportions réelles ≈ 3,2:1**
+(module 510 px/décade), tableau resserré aligné sur les 7 fenêtres Vi (entraxes réels, FL150 à
+l'aplomb de la barrette), **grosses flèches pleines**, ligne-index continue, **grande accolade**,
+légende tournée « Distance Maximum Franchissable Gb », bloc **Pb →** gravé, **Mach empilées**
+FL300/FL250 à index commun (0,01/0,05/0,10), **Cons. graduée fine** (0,1/0,25, tous entiers
+chiffrés) ; **arbitrage ferme** : la colonne des FL est une gravure FIXE (7 rangées FL300→1 000 ft
+dans TOUS les modes, l'endurance ne substitue que les cellules) et ne jamais réduire les titres ;
+(3) **abaque de vent refait** — origine en BAS-GAUCHE, grille perpendiculaire pas de 5 bornée au
+limbe, force 20→50 chiffrée **au centre des angles**, rangée « dérive → » 1°→10°, **verticales
+communes** vers l'abaque VP 300→100 (rayons 1°→10° + 12°/15°/20°), textes exacts (« angle direction
+du vent et route à suivre », « V P » devant l'accolade) ; (4) **verso refait** — montée à double
+réglet Nm au ras des chants (VI haut / II bas, cotes de paliers, « CARBURANT RESTANT » et litres en
+écriture tournée sur pointillés, temps Pb dessus / Gb dessous), tableau **ENDURANCE MAX encadré à
+l'identique** (cartouche à cheval, Régime/Conso l/m, VITESSE, SECURITE à accolade, DESCENTES
+ECO/PERCEE) ; (5) **réglette sortie = image virtuelle À PART** (`svgC` sous le flip) — face
+« EXECUTION DES VOLS COM TYPE VICTOR / EN TRES BASSE ALTITUDE » complète : **rapporteur concentrique
+au chant** (moyeu au centre de la courbure, couronne 5°/10° strictement 180→360, chiffres radiaux
+rot 90−a, **demi-rose gauche 0→180 à un rayon par 10°** — jamais de rose 360°), réglettes
+**1/500 000 · 240 kts** (quarts/demies/minutes + rangée NM) et **1/100 000 · 280 kts** inversée
+(NM/demi-NM + chant aux 5″), JOUR/NUIT (500 m/5 km, 800 m/10 km), IFF mode 3/A 13-77, **carte de
+France au contour géographique** (598→766 × 126→298 mesurés, ligne mixte débordante, FL 55/FL 115 +
+383,7/384,5/384,7), procédure d'urgence — textes grossis aux tailles du scan ; (6) **aide au geste**
+(choix Valérie « main + amorce ») : main 👆⟷ oscillante + aller-retour réel de la coulisse au
+chargement, disparition au premier geste ou 6,5 s, `prefers-reduced-motion` respecté.
+⚠️ Méthode qui a fait ses preuves : **jamais à l'œil** — mesurer sur le scan (détection de traits
+par script), rendre, **comparer côte à côte à échelle identique**, itérer. Harnais de test
+**pérennisé** dans `FOUGA_CM170_COLLECTE/outils_regle_virtuelle/` (domstub.js + render.js +
+LISEZMOI avec la recette complète : extraction du script, smoke test node, rendu Chrome headless,
+facteur scan→SVG ≈ 0,302).*
+
+*Complément 23/07/2026 (soir) — **règle virtuelle : re-contrôle des tables & calculs + refonte de la
+section « Fidélité »** : (1) **re-contrôle indépendant** (demande Valérie) — constantes JS de
+`pages/regle_navigation_virtuelle.html` recoupées contre la transcription du mode d'emploi ET la
+face 336 du computeur virtuel : **conformes cellule par cellule** (distance Gb + correction Pb
+−200/−500 & −0,5, endurance II/VI 5→25 ≡ face 336 pour II, montée 4 courbes temps/distance/carburant
+avec recoupement notice §4.2 à FL 200, descentes, sécurités) ; **calculs numériquement exacts** —
+d = V·t/60 et inverses redémontrés sur la géométrie log de bout en bout (module commun, bande basse
+÷10 juste pour 1′→10′), correction Pb soustractive arrondie au dixième, vent W·cos A / asin(W·sin A/VP),
+descentes taux × altitude bornée 0–30, facteurs `FL_F` retombant sur les 4 exemples de calage de la
+notice + atmosphère standard, `MACH_A` 589/604 kt = vitesse du son FL 300/250. Micro-remarques
+laissées en l'état : « +0 arrière » affiché à 90° (grandeur nulle), « ≈ » des distances II-Pb
+(≈ 10 / ≈ 70 Nm du mode d'emploi) non signalés dans le readout montée (seule la cote 4′ l'est),
+deux gardes `vp-cursor` mortes (inoffensives depuis la suppression du curseur). Au passage :
+« ENDURANCE MAX » = terme de la gravure elle-même (cartouche verso + face 336), objectif
+complémentaire de la DMF — minutes par litre à 140/150 kt, contre milles par litre. (2) **Section
+« Fidélité à la règle d'origine » restructurée** (retour Valérie : pavé illisible) : les deux cartes
+passent en **pleine largeur** ; l'inventaire « Relevé sur l'instrument » éclaté en **5 groupes
+titrés par zone** (`.fzones`/`.fz` : Recto · tableaux & fenêtres, Règle à calcul · corps & coulisse,
+Abaque de vent · curseur, Verso du corps, Réglette sortie · face Victor) en grille responsive
+(minmax 320 px) ; « Reconstruit ou approché » en **liste 2 colonnes** (`.flist`). Contenu factuel
+**conservé à l'identique** (aucun fait perdu ni reformulé), paragraphe d'introduction inchangé ;
+le script de typographie française couvre les nouveaux nœuds. Balisage vérifié équilibré ;
+⚠️ capture Chrome headless **non réalisée** dans la session (lancement bloqué, Chrome de bureau
+ouvert) → un contrôle visuel au rechargement reste à faire.*
+
+*Dernière mise à jour du handoff : 23/07/2026. En suspens (computeur) : notes à publier —
 couverture cellule par cellule de la grille, IAS 260/242, panneau « Rendement » = TAS/60 ;
 voir « Pistes non traitées ». En suspens (règle) : macro dédiée du titre raturé de l'abaque de
 vent (lecture retenue « angle direction du vent et route à suivre ») ; attribution du cercle 4′
-à FL 50 (II-Pb, géométrie) ; décimale éventuelle du « 9 l/m » FL 150 sous la fissure.*
+à FL 50 (II-Pb, géométrie) ; décimale éventuelle du « 9 l/m » FL 150 sous la fissure ; verso de la
+coulisse recto (bandes VP) si un curseur sain est photographié un jour ; contrôle visuel de la
+nouvelle section « Fidélité » (capture headless non réalisée le 23/07 au soir).*
+
+**2026-07-24 — Mode d'emploi computeur : couronnes de conversion de la face 336**
+Section IV (« La règle à calcul ») de `pages/mode_emploi.html` enrichie d'après IMG_3593.jpeg
+(vue d'ensemble face 336, photos font foi) : (1) nouveau bloc « Les couronnes de la face 336 »
+avec l'organisation concentrique — pourtour fixe NAUT. ↔ ST. MILES (cartouche « 60 » à encoche)
+en haut, couronne ALTITUDE VRAIE, couronne intérieure VITESSE CORRIGÉE (libellés vers la
+graduation 45), échelle mobile au bord du disque ; (2) tableau « Repères de conversion gravés
+sur le pourtour » : UNITÉS MÉTRIQUES (« 10 », à droite), PIEDS (à gauche, entre 30 et 35 ≈ 32,8),
+PSI (≈ 14,2) puis VITESSE PROPRE (libellé 15–17) en bas, GAL. U.K. (≈ 22) et GAL. U.S. (≈ 26,4) ;
+(3) encart « règle de trois gravée » (1 NM ≈ 1,15 SM ; 10 m = 32,8 pieds ; 100 L = 22 gal UK
+= 26,4 gal US ; 1 kg/cm² ≈ 14,2 PSI) ; (4) ligne TAS du tableau des opérations précisée
+(couronnes VITESSE CORRIGÉE / ALTITUDE VRAIE, lecture au repère VITESSE PROPRE). Nouvel asset
+`assets/img/face336_couronnes.jpg` (recadrage IMG_3593 redressé, Pillow sans EXIF, 1561×1600).
+Rapports cohérents relevés : 100 km = 54 NM = 62 SM (sur la photo, couronne calée 60 sous
+ST. MILES, pas au neutre). **À venir (demande Valérie)** : passe de corrections sur
+`pages/computeur_virtuel.html` pour une **réplique exacte des deux faces** — écarts déjà notés
+au verso virtuel : NAUT. à 52 / ST MILES à 60 (à confronter au couple 54/62), repères PSI,
+VITESSE PROPRE, GAL. U.K./U.S. absents, double couronne ALTITUDE VRAIE + VITESSE CORRIGÉE
+non modélisée.
+
+**2026-07-24 (soir) — Computeur virtuel : réplique exacte des deux faces**
+Refonte de `pages/computeur_virtuel.html` sur relevés photographiques (workflow 6 agents, ~1,1 M
+tokens : triage des 33 photos, structure des anneaux par déroulé polaire, positions d'index au
+comptage de graduations, motif des pas, fidélité recto, transcription verso signe à signe).
+MODÈLE ÉTABLI (verso 336) : deux pièces seulement — plaque fixe (échelle haute noire sur clair,
+noms gravés VITESSE PROPRE et ALTITUDE VRAIE, TOUS les cartouches/index) et disque central mobile
+(couronne noire = échelle basse VITESSE CORRIGÉE, solidaire de la table ; pastille 10 ovale,
+fenêtre 60 à chevron). Index mesurés : UNITÉS MÉTRIQUES 10,00 · P.S.I. 14,2 · GAL. U.K. 22,0 ·
+GAL. U.S. 26,4 · PIEDS 32,8 · NAUT. 54,0 (52,2 exclu) · fanion 60 = repère minutes · taquet
+ST MILES mesuré ≈62 (mesure complémentaire 61,9 ±0,2 sur IMG_3593/3595), rapport exact 62,14
+retenu (54 × 1,151). VITESSE PROPRE n'est PAS une flèche-index : c'est le nom de l'échelle
+(chiffre 16 enchâssé). Toutes les photos verso sont en coïncidence neutre 10/10.
+IMPLÉMENTATION : échelles génératives fidèles (pas 0,1/0,2/0,5/1, la couronne garde 0,5
+jusqu'à 60, chiffres coupés par leur trait « 1|4 », demi-décades), cartouches aux formes relevées,
+mentions gravées exactes (« .DISTANCE. Max. », « .30.000′ _ 20.000 T/m. », fractions verticales
+Vi 5/10, Régime partagé sans trait avec « — » à droite du rivet, « Si<350ℓ garder Z », Nº 336
+« au feutre »), rotation du disque entier (drag/clavier, aria-slider complet), outils : lecture
+sous chaque index, conversions par paires d'index, repère 60 (V sous le fanion, d = V·t/60),
+calage CAS→TAS (σ standard). Recto : graphies exactes (VI Turbulence = 210Kts, REACTEURS MARBORE II,
+.ETABLI PAR LA B.A 709. .COGNAC., légende ▲ 3 lignes, bloc accolade avec « roulagé). » d'époque,
+4 lignes Rem.gaz/G.C.A), couronne à cartouches en arc « ▲455Litres .25.000 pieds. » + pavés,
+« 131 » et tampon-logo PNG retirés du disque, silhouette gravée ajoutée. Mode d'emploi mis en
+cohérence (taquet ST MILES, fanion 60, VITESSE PROPRE nom d'échelle, graphies ST MILES/P.S.I.,
+« échelle haute/basse », tirets d'incise purgés de la page). VÉRIFICATION : workflow adversarial
+4 agents → 30 constats, tous traités sauf 2 rejetés motivés (suppression du taquet : réfutée par
+mesure directe ; double logo : faux positif) et 1 différé (réglettes des bords de plaque, hors
+cadre circulaire du virtuel). Banc d'essai headless : 11/11 tests verts (conversions, repère 60,
+TAS, reset, recto). Captures : recette Chrome headless QUI MARCHE malgré Chrome de bureau ouvert :
+profil neuf + --no-sandbox --disable-dev-shm-usage --timeout=20000 --virtual-time-budget + attente
+par polling (le lancement direct pend sinon). Nouveau : paramètre d'URL `?face=verso` à l'init.
+Assumé (réinterprétations affichées comme telles) : fenêtre de lecture moderne au recto (pas de
+secteur en éventail à fenêtres biseautées), lunette laiton décorative, pas de plaque rectangulaire.
+
+**2026-07-24 (nuit) — Recto 131 : secteur en éventail mécanique (demande Valérie)**
+La « fenêtre de lecture » moderne (tableau rectangulaire central) est REMPLACÉE par le mécanisme
+réel relevé sur face131_vue.jpg / face131_disque.jpg : secteur en éventail au bas de la plaque
+fixe (7 bandes RÉGIME → TEMPS DE VOYAGE, noms des grandeurs gravés à gauche de la fenêtre, unités
+à droite — TOURS/MINUTE, Litres Heure·Minute, NOEUDS à cheval sur Vi/Vc, KM Heure·Minute, KM.,
+Heures et minutes), fenêtre en coin biseautée (clipPath, technique de la règle virtuelle) et zone
+hachurée adjacente. Les valeurs de la grille `D` sont gravées sur un disque solidaire de la
+couronne : 21 colonnes (3 régimes × 7 calages, pas 360/21 ≈ 17,14°), colonne 19.000 t/m / 30.000′
+vierge comme sur l'instrument. Sélection MÉCANIQUE conforme aux photos : le cartouche choisi vient
+face à la fenêtre EN BAS (plus d'alignement en haut), cartouches regravés « orientés fenêtre »
+(tête-bêche en haut de face, à l'endroit près de la fenêtre — identique aux photos), index rouge
+déplacé sur la lunette en bas, glisser possible sur la couronne ET sur la fenêtre, encliquetage
+sur la colonne la plus proche, flèches = cran par cran (aria-slider 21 crans), boutons de régime
+du panneau = rotation d'un cran. Le panneau latéral (table, grands cadrans, comparer au calcul,
+note fenêtre vierge) est conservé et reste synchrone. Interprétations nouvelles, non tranchables
+sur les 2 photos : ordre 19/20/21 autour du cartouche (19.000 côté anti-horaire), zone hachurée
+purement décorative, bandeau COMPUTEUR maintenu à l'endroit (l'original est tête-bêche par rapport
+à l'éventail). Vérifié par captures headless : défaut 20.000/20.000′ (450·7,5/205/197/492·8,2/
+631/1h20), 21.000/SOL (960·16,0/298/286), 19.000/30.000′ (fenêtre vierge + note), verso intact.
+IMPORTANT capture : l'URL file:// doit être ENCODÉE (espaces + apostrophe de « Fouga z'elles »,
+via `urllib.parse.quote`), sinon Chrome sort en exit 0 SANS écrire le PNG ; harnais d'interaction
+= page iframe (src encodé) + `--allow-file-access-from-files`, appel de `selectCol(z, reg, false)`
+dans la frame.
+
+**2026-07-24 (nuit, 2ᵉ passe) — Recto 131 : éventail relevé EN HAUT (arbitrage lisibilité, demande Valérie)**
+Sur retour immédiat de Valérie (« textes dans l'autre sens et volet en haut »), l'orientation
+« fenêtre basse » de l'original est ABANDONNÉE au profit de la lisibilité : le secteur en éventail
+est relevé au haut de la face (fenêtre en coin sous l'index rouge, revenu en haut), disposition
+en miroir vertical (noms des grandeurs toujours à gauche, unités à droite, hachures entre fenêtre
+et unités), et TOUTES les gravures du recto repassent « à l'endroit en haut » (cartouches de la
+couronne, libellés de l'éventail, colonnes de valeurs du disque : sélection = cartouche sous
+l'index, comme avant la refonte). Conséquence : le bandeau d'identité COMPUTEUR / silhouette /
+FOUGA CM 170 R / REACTEURS MARBORE II / .ETABLI… descend au bas de la face (translation +206,
+aucune collision avec les légendes ni la couronne). Le mécanisme (21 colonnes solidaires de la
+couronne, crans, fenêtre vierge 19.000/30.000′, panneau synchrone) est inchangé ; seuls le sens
+des arcs (`arcTextB` sweep 1), les constantes `FAN` (win [−8,8], names [314,352], units [15.5,48],
+hatch [9.5,15.5]), les rayons de baseline (−0,35·fs) et les cibles de rotation (−ang au lieu de
+180−ang) changent. Vérifié par captures : défaut 20.000/20.000′, 21.000/SOL, 19.000/30.000′
+vierge. Fidélité : l'original grave l'éventail « orienté bas » avec bandeau tête-bêche ;
+c'est désormais une réinterprétation assumée de plus (l'anatomie de l'éventail, elle, reste
+conforme aux photos).
