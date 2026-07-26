@@ -664,7 +664,7 @@ le script de typographie française couvre les nouveaux nœuds. Balisage vérifi
 ⚠️ capture Chrome headless **non réalisée** dans la session (lancement bloqué, Chrome de bureau
 ouvert) → un contrôle visuel au rechargement reste à faire.*
 
-*Dernière mise à jour du handoff : 23/07/2026. En suspens (computeur) : notes à publier —
+*Point d'étape du 23/07/2026. En suspens (computeur) : notes à publier —
 couverture cellule par cellule de la grille, IAS 260/242, panneau « Rendement » = TAS/60 ;
 voir « Pistes non traitées ». En suspens (règle) : macro dédiée du titre raturé de l'abaque de
 vent (lecture retenue « angle direction du vent et route à suivre ») ; attribution du cercle 4′
@@ -765,3 +765,61 @@ hatch [9.5,15.5]), les rayons de baseline (−0,35·fs) et les cibles de rotatio
 vierge. Fidélité : l'original grave l'éventail « orienté bas » avec bandeau tête-bêche ;
 c'est désormais une réinterprétation assumée de plus (l'anatomie de l'éventail, elle, reste
 conforme aux photos).
+
+**2026-07-26 — Recto 131 : le hachurage était mal interprété (correction, demande Valérie)**
+Valérie signale (photo IMG_3576 à l'appui) une erreur d'interprétation du hachurage : la réplique
+le dessinait en COIN FIXE DE LA PLAQUE, à côté de la fenêtre (`FAN.hatch=[9.5,15.5]`). Relevé
+systématique par workflow (24 lecteurs, un par cliché IMG_3555–3576 + face131_vue/disque,
+mesures angulaires autour du rivet) : le hachurage est GRAVÉ SUR LE DISQUE MOBILE ; c'est la
+CASE SANS OBJET 19.000 t/m / 30.000′ (rendue « vierge » jusqu'ici), remplie d'un motif en
+arête de poisson, seule case hachurée des 21 (IMG_3555/3576 : fenêtre pleine, cartouches
+455/25.000 et 400/30.000 de part et d'autre ; IMG_3556 : lisière contre la colonne 20.000/30.000′ ;
+IMG_3575 : liseré au bord horaire de la colonne 21.000/25.000′ = bord du même secteur ; AUCUN
+hachurage sur la plaque ni ailleurs sur le disque, unanimité des 24 lecteurs). Même convention
+« sans objet » que les cases hachurées de la table Distance max (§ mode d'emploi).
+CORRIGÉ dans `computeur_virtuel.html` : coin de plaque supprimé, secteur hachuré gravé sur le
+disque (zigzag CONTINU par bande de ligne : les chevrons plient sur les arcs, ≈45° du rayon en
+haut, raidis vers le pivot, pas 2,3°, cf. photos) et il tourne avec la couronne.
+Le relevé a aussi livré la STRUCTURE DES CELLULES, implémentée dans la foulée :
+chaque colonne = caisson gravé (bords radiaux, arcs de bande SAUF entre Vi et Vc), paires
+heure/minute et Vi/Vc décalées haut-gauche / bas-droite et séparées par un RENVOI COURBE
+(apex vers le pivot ; celui de Vi/Vc enjambe deux bandes) ; « ,0 » final non gravé (« 7 »,
+« 13 », « 16 » — IMG_3558/3559/3560) ; TEMPS gravé « H,MM » d'un bloc (« 1,33 » net sur
+IMG_3570, virgule souvent estompée ailleurs) ; fenêtre portée à 16,8° (mesures 16,5–19°,
+bords radiaux, pas de décrochement) ; caissons 13° (marges 1–2° constatées). Sur la plaque :
+libellés « Litres/KM Heure · Minute » décalés + renvoi courbe entre eux (relevé photo).
+Notes mises à jour (panneau virtuel + note-mini du mode d'emploi : « fenêtre vierge » →
+« case hachurée sans objet »). Vérifs : syntaxe Node, captures headless côte à côte à échelle
+comparable avec IMG_3555 (hachures) et IMG_3558 (caisson 19.000/SOL) — densité, chevrons,
+empilement 670⟍11,2 / 233⟍225 / 422⟍7 / 446 / 1,04 conformes ; états 20.000/20.000′ et
+19.000/30.000′ recontrôlés. Harnais de capture recréé (scratchpad session `harnais/capture.py`,
+recette URL encodée du 24/07).
+
+**2026-07-26 (suite) — Recto 131 : fenêtre redessinée, valeurs grossies, vraie vue de face (demande Valérie)**
+(1) La fenêtre de lecture n'est plus un cadre doré rapporté : DÉCOUPE biseautée conforme aux
+photos (trait de coupe sombre extérieur, tranche métallique claire `#ddd3b6`/`#efe8d2`,
+filet d'ombre portée sur le disque). (2) Valeurs de la fenêtre grossies (RÉGIME 11,
+valeurs 9,5, petites valeurs de paire 8, temps 8,5 — tiennent dans le caisson de 13°).
+(3) La silhouette filaire du bandeau d'identité est remplacée par la VUE DE FACE du site
+(`<image>` SVG → `../assets/img/fouga_face.png`, 150×35, opacité .92 ; la page référence
+donc désormais un asset externe, comme les pages règle) ; bandeau desserré en conséquence
+(FOUGA CM 170 R à y=447, REACTEURS/MARBORE II 461, ETABLI 475). Vérifié par captures
+headless (bandeau sans collision, fenêtre 20.000/20.000′ et cas hachuré intacts).
+(4) Symétrie des deux zones de libellés (retour Valérie) : la zone des unités démarrait à
++15,5° (héritage de l'ancien coin hachuré supprimé) contre −8° côté noms ; `FAN.units`
+ramené à `[8,46]`, les deux zones sont au ras de la fenêtre, en miroir, comme sur l'original.
+
+---
+
+*Dernière mise à jour du handoff : 26/07/2026 — recto 131 : correction du HACHURAGE
+(case sans objet 19.000 t/m / 30.000′ gravée sur le disque, relevé workflow 24 lecteurs,
+plus aucun hachurage sur la plaque) + structure des cellules (caissons, renvois courbes,
+paires décalées, « ,0 » non gravé, temps « H,MM »), fenêtre redessinée en découpe biseautée,
+valeurs grossies, vue de face du site dans le bandeau d'identité, zones de libellés
+symétriques au ras de la fenêtre. En suspens (computeur) : notes à publier — couverture
+cellule par cellule de la grille, IAS 260/242, panneau « Rendement » = TAS/60 ; réglettes
+des bords de plaque non modélisées ; décrochement éventuel du coin haut-droit de la fenêtre
+(lecture minoritaire IMG_3556, bords radiaux francs retenus). En suspens (règle) : macro du
+titre raturé de l'abaque de vent ; cercle 4′ à FL 50 ; décimale du « 9 l/m » FL 150 ; verso
+de la coulisse recto si un curseur sain est photographié. Volet transcription : restent le
+document maître assemblé et l'étude.*
