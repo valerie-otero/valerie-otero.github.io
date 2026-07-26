@@ -316,18 +316,17 @@ document.getElementById("titleLogo").src=FOUGA;
 /* bandeau d'identité déplacé au bas de la face : la place du haut revient au secteur en
    éventail (arbitrage lisibilité ; l'original le grave tête-bêche par rapport à l'éventail) */
 fe.appendChild(eng(320,396,15,"COMPUTEUR",{weight:700,ls:"3"}));
-const sil=el("g",{stroke:"#3b362a","stroke-width":"1.1",fill:"none","stroke-linecap":"round"});
-[["line",{x1:288,y1:413,x2:352,y2:413}],
- ["ellipse",{cx:285,cy:413,rx:3.4,ry:1.9}],
- ["ellipse",{cx:355,cy:413,rx:3.4,ry:1.9}],
- ["circle",{cx:320,cy:412,r:2.2}],
- ["line",{x1:320,y1:410.5,x2:314.5,y2:405.5}],
- ["line",{x1:320,y1:410.5,x2:325.5,y2:405.5}]].forEach(([t,a])=>sil.appendChild(el(t,a)));
+/* vue de face du site (assets/img/fouga_face.png, encre sépia sur fond transparent)
+   à la place du schéma filaire (demande Valérie) */
+const sil=el("image",{x:245,y:400,width:150,height:35,opacity:".92",
+  preserveAspectRatio:"xMidYMid meet"});
+sil.setAttribute("href","../assets/img/fouga_face.png");
+sil.setAttributeNS("http://www.w3.org/1999/xlink","href","../assets/img/fouga_face.png");
 fe.appendChild(sil);
-fe.appendChild(eng(320,428,11.5,"FOUGA CM 170 R",{fill:"#4a4436",ls:"2"}));
-fe.appendChild(eng(266,444,9.5,"REACTEURS",{fill:"#5b5340",ls:"1.5"}));
-fe.appendChild(eng(382,444,9.5,"MARBORE II",{fill:"#5b5340",ls:"1.5"}));
-fe.appendChild(eng(320,460,8,".ETABLI PAR LA B.A 709.  .COGNAC.",{fill:"#5b5340",ls:"1"}));
+fe.appendChild(eng(320,447,11.5,"FOUGA CM 170 R",{fill:"#4a4436",ls:"2"}));
+fe.appendChild(eng(266,461,9.5,"REACTEURS",{fill:"#5b5340",ls:"1.5"}));
+fe.appendChild(eng(382,461,9.5,"MARBORE II",{fill:"#5b5340",ls:"1.5"}));
+fe.appendChild(eng(320,475,8,".ETABLI PAR LA B.A 709.  .COGNAC.",{fill:"#5b5340",ls:"1"}));
 fe.appendChild(eng(150,296,8.5,"VI Turbulence = 210Kts",{anchor:"start",fill:"#7a2018",font:"Spline Sans Mono",ls:"0"}));
 fe.appendChild(eng(150,309,8.5,"VI GIVRAGE = 200Kts/mini",{anchor:"start",fill:"#7a2018",font:"Spline Sans Mono",ls:"0"}));
 fe.appendChild(eng(400,294,7.5,"▲=Carburant utilisable en palier",{anchor:"start",fill:"#4f4a3d",font:"Spectral",ls:"0"}));
@@ -350,21 +349,19 @@ fe.appendChild(eng(520,395,7,"Rem.gaz+cir.rap = 60L.",{anchor:"end",fill:"#4f4a3
 fe.appendChild(eng(520,406,7,"M/R+Roulage = 40L.",{anchor:"end",fill:"#4f4a3d",font:"Spline Sans Mono",ls:"0"}));
 fe.appendChild(eng(520,417,7,"G.C.A = 50L.",{anchor:"end",fill:"#4f4a3d",font:"Spline Sans Mono",ls:"0"}));
 
-/* --- secteur en éventail à fenêtre de lecture (structure des photos face131_vue / face131_disque,
-   RELEVÉE EN HAUT de la plaque pour la lisibilité, demande Valérie) : sept bandes annulaires
-   RÉGIME → TEMPS DE VOYAGE, noms des grandeurs gravés à gauche de la fenêtre, unités à droite,
-   fenêtre en coin biseautée + zone hachurée adjacente ; les valeurs sont gravées sur le disque
-   solidaire de la couronne et défilent mécaniquement sous la fenêtre --- */
-const FAN={r0:68,r1:224,n:7,win:[-8,8],hatch:[9.5,15.5],names:[314,352],units:[15.5,48]};
+/* --- secteur en éventail à fenêtre de lecture (structure des photos face131_vue / face131_disque
+   et campagne IMG_3555–3576, RELEVÉE EN HAUT de la plaque pour la lisibilité, demande Valérie) :
+   sept bandes annulaires RÉGIME → TEMPS DE VOYAGE, noms des grandeurs gravés à gauche de la
+   fenêtre, unités à droite, fenêtre en coin biseautée ; les valeurs sont gravées sur le disque
+   solidaire de la couronne (caissons à bords radiaux, arcs de bande, diagonales des paires
+   heure/minute) et défilent mécaniquement sous la fenêtre. Le hachurage n'est PAS sur la
+   plaque : c'est la case sans objet du disque (19.000 t/m / 30.000′), cf. plus bas --- */
+const FAN={r0:68,r1:224,n:7,win:[-8.4,8.4],names:[314,352],units:[8,46]};   /* zones symétriques au ras de la fenêtre */
 const bw=(FAN.r1-FAN.r0)/FAN.n, bandC=k=>FAN.r1-(k+.5)*bw, bandB=(k,fs)=>bandC(k)-fs*0.35;
 function wedgePath(a0,a1,r0,r1){const [x0,y0]=pol(a0,r0),[x1,y1]=pol(a1,r0),[x2,y2]=pol(a1,r1),[x3,y3]=pol(a0,r1);
   return `M${x0} ${y0} A ${r0} ${r0} 0 0 1 ${x1} ${y1} L${x2} ${y2} A ${r1} ${r1} 0 0 0 ${x3} ${y3} Z`;}
 function arcPath(a0,a1,r){const [x0,y0]=pol(a0,r),[x1,y1]=pol(a1,r);return `M${x0} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y1}`;}
 const wG=document.getElementById("windowG"), defsR=document.querySelector("#svgR defs");
-const hp=el("pattern",{id:"hatchP",patternUnits:"userSpaceOnUse",width:"5",height:"5",patternTransform:"rotate(45)"});
-hp.appendChild(el("rect",{width:"5",height:"5",fill:"#e8ddc4"}));
-hp.appendChild(el("line",{x1:"0",y1:"0",x2:"0",y2:"5",stroke:"#6f6757","stroke-width":"1.5"}));
-defsR.appendChild(hp);
 const clip=el("clipPath",{id:"winClip"});
 clip.appendChild(el("path",{d:wedgePath(FAN.win[0],FAN.win[1],64,226)}));
 defsR.appendChild(clip);
@@ -382,50 +379,111 @@ const NAZ=(FAN.names[0]+FAN.names[1])/2, UAZ=(FAN.units[0]+FAN.units[1])/2, G="#
 const serif={font:"Spectral",italic:1,weight:"500",ls:"0",fill:G};
 arcTextB(fan,"· R E G I M E ·",bandB(0,8),NAZ,{fs:8,ls:"1.5",fill:G});
 arcTextB(fan,"· CONSOMMATION ·",bandB(1,7.5),NAZ,{fs:7.5,fill:G});
-arcTextB(fan,"Vitesse indiquée",bandB(2,7.5),NAZ,{fs:7.5,...serif});
-arcTextB(fan,"Vitesse corrigée",bandB(3,7.5),NAZ,{fs:7.5,...serif});
+arcTextB(fan,"Vitesse indiquée",bandB(2,7.5),NAZ-2.5,{fs:7.5,...serif});
+arcTextB(fan,"Vitesse corrigée",bandB(3,7.5),NAZ+2.5,{fs:7.5,...serif});
 arcTextB(fan,"VITESSE PROPRE.",bandB(4,7.5),NAZ,{fs:7.5,fill:G});
 arcTextB(fan,"DISTANCE",bandC(5)+2,NAZ,{fs:6.8,fill:G});
 arcTextB(fan,"FRANCHISSABLE.",bandC(5)-9,NAZ,{fs:6.8,fill:G});
 arcTextB(fan,"TEMPS",bandC(6)+2,NAZ,{fs:6.8,fill:G});
 arcTextB(fan,"de voyage.",bandC(6)-9,NAZ,{fs:6.8,...serif});
 arcTextB(fan,"· TOURS / MINUTE ·",bandB(0,8),UAZ,{fs:8,fill:G});
-arcTextB(fan,"Litres Heure",bandC(1)+2,UAZ,{fs:7,font:"Spectral",weight:"500",ls:"0",fill:G});
-arcTextB(fan,"· Litres Minute.",bandC(1)-9,UAZ,{fs:7,font:"Spectral",weight:"500",ls:"0",fill:G});
+/* paires heure/minute de la plaque : libellé « heure » décalé haut-gauche, « minute »
+   bas-droite, séparés par un trait diagonal gravé (relevé IMG_3558 et vues d'ensemble) */
+const unitDiag=k=>{const [xa,ya]=pol(UAZ-8,bandC(k)-5),[xb,yb]=pol(UAZ+8,bandC(k)+5),
+  [xc,yc]=pol(UAZ,bandC(k)-3.5);                 /* renvoi courbe, comme sur le disque */
+  fan.appendChild(el("path",{d:`M${xa} ${ya} Q ${xc} ${yc} ${xb} ${yb}`,fill:"none",stroke:"#3b362a","stroke-width":".7",opacity:".85"}));};
+arcTextB(fan,"Litres Heure",bandC(1)+2,UAZ-4.5,{fs:7,font:"Spectral",weight:"500",ls:"0",fill:G});
+arcTextB(fan,"· Litres Minute.",bandC(1)-9,UAZ+4.5,{fs:7,font:"Spectral",weight:"500",ls:"0",fill:G});
+unitDiag(1);
 arcTextB(fan,"· NOEUDS ·",FAN.r1-3*bw-2.8,UAZ,{fs:8,fill:G});
-arcTextB(fan,"KM Heure",bandC(4)+2,UAZ,{fs:7,font:"Spectral",weight:"500",ls:"0",fill:G});
-arcTextB(fan,"· KM Minute.",bandC(4)-9,UAZ,{fs:7,font:"Spectral",weight:"500",ls:"0",fill:G});
+arcTextB(fan,"KM Heure",bandC(4)+2,UAZ-4.5,{fs:7,font:"Spectral",weight:"500",ls:"0",fill:G});
+arcTextB(fan,"· KM Minute.",bandC(4)-9,UAZ+4.5,{fs:7,font:"Spectral",weight:"500",ls:"0",fill:G});
+unitDiag(4);
 arcTextB(fan,"· KM. ·",bandB(5,8),UAZ,{fs:8,fill:G});
 arcTextB(fan,"Heures",bandC(6)+2,UAZ,{fs:6.5,font:"Spectral",weight:"500",ls:"0",fill:G});
 arcTextB(fan,"et minutes.",bandC(6)-9,UAZ,{fs:6.5,font:"Spectral",weight:"500",ls:"0",fill:G});
-fan.appendChild(el("path",{d:wedgePath(FAN.hatch[0],FAN.hatch[1],FAN.r0,FAN.r1),fill:"url(#hatchP)",stroke:"#3b362a","stroke-width":".8"}));
 /* disque des valeurs : 21 colonnes gravées (3 régimes × 7 calages), solidaire de la couronne ;
-   ordre retenu autour de chaque cartouche : 19.000 côté anti-horaire, 20.000 au droit du
-   cartouche, 21.000 côté horaire (interprétation, pas de 360° complet en photo) ;
-   la colonne 19.000 t/m / 30.000′ est vierge, comme sur l'instrument */
+   ordre relevé autour de chaque cartouche : 19.000 côté anti-horaire, 20.000 au droit du
+   cartouche, 21.000 côté horaire. Structure des cellules relevée sur IMG_3555–3576 :
+   chaque colonne est un CAISSON gravé (bords radiaux, arcs de bande sauf entre Vi et Vc,
+   diagonale corner-à-corner des paires heure/minute et de la paire Vi/Vc), valeurs des
+   paires décalées haut-gauche (heure, Vi) / bas-droite (minute, Vc), « ,0 » final non
+   gravé (« 7 », « 13 » : IMG_3558, face131_vue), temps gravé « H,MM » (« 1,33 » IMG_3570).
+   La case 19.000 t/m / 30.000′ n'est pas vierge : elle est remplie d'un HACHURAGE en
+   arête de poisson (traits alternés par bande de ligne, arcs traversants), « sans objet »
+   comme les cases hachurées de la table de distance max ; c'est LE secteur hachuré que
+   la fenêtre découvre (IMG_3555/3576), il tourne avec le disque */
 const STEP3=360/21, regOff={19000:-STEP3,20000:0,21000:STEP3};
 const clipG=el("g",{"clip-path":"url(#winClip)"});
 const discVals=el("g",{id:"discVals",class:"couronne"});
 discVals.appendChild(el("circle",{cx:CX,cy:CY,r:"228",fill:"#f3ead4"}));
 const COLS=[];
+const CHW=6.5;                                   /* demi-largeur angulaire d'un caisson */
+const rowT=k=>FAN.r1-k*bw, rowB=k=>FAN.r1-(k+1)*bw;
+const INK="#1b1812";
+const dline=(g,a0,r0,a1,r1,w)=>{const [xa,ya]=pol(a0,r0),[xb,yb]=pol(a1,r1);
+  g.appendChild(el("line",{x1:xa,y1:ya,x2:xb,y2:yb,stroke:INK,"stroke-width":w||".7"}));};
+const darc=(g,a0,a1,r,w)=>g.appendChild(el("path",{d:arcPath(a0,a1,r),fill:"none",stroke:INK,"stroke-width":w||".7"}));
+const disp0=s=>String(s).replace(/,0$/,"");      /* « 7,0 » gravé « 7 », « 13,0 » gravé « 13 » */
+const dcurve=(g,a0,r0,a1,r1)=>{const [xa,ya]=pol(a0,r0),[xb,yb]=pol(a1,r1),
+  [xc,yc]=pol((a0+a1)/2,r0+(r1-r0)*0.30);        /* renvoi courbe, apex vers le pivot */
+  g.appendChild(el("path",{d:`M${xa} ${ya} Q ${xc} ${yc} ${xb} ${yb}`,fill:"none",stroke:INK,"stroke-width":".6"}));};
 RING.forEach((m,i)=>[19000,20000,21000].forEach(rg=>{
   const A=baseAngle(i)+regOff[rg], row=D[rg][m.z];
   COLS.push({z:m.z,reg:rg,ang:((A%360)+360)%360});
-  if(!row)return;
-  const V={fill:"#1b1812",ls:"0"};
-  arcTextB(discVals,(rg/1000)+".000",bandB(0,10),A,{fs:10,...V});
-  arcTextB(discVals,[{t:row[0]+" ",fs:9},{t:""+row[1],fs:6.5}],bandB(1,9),A,V);
-  arcTextB(discVals,""+row[2],bandB(2,9),A,{fs:9,...V});
-  arcTextB(discVals,""+row[3],bandB(3,9),A,{fs:9,...V});
-  arcTextB(discVals,[{t:row[4]+" ",fs:9},{t:""+row[5],fs:6.5}],bandB(4,9),A,V);
-  arcTextB(discVals,""+row[6],bandB(5,8.5),A,{fs:8.5,...V});
+  if(!row){
+    /* case sans objet (19.000 t/m / 30.000′) : hachurage pleine case, pas de valeurs */
+    const h=STEP3/2-0.15;
+    const hclip=el("clipPath",{id:"hClip"});
+    hclip.appendChild(el("path",{d:wedgePath(A-h,A+h,FAN.r0,FAN.r1)}));
+    defsR.appendChild(hclip);
+    const hg=el("g",{"clip-path":"url(#hClip)"});
+    /* zigzag continu : chaque trait plie sur l'arc de bande (les chevrons se raccordent,
+       arête de poisson de l'original) ; ≈45° du rayon en haut, plafonné à 6° de débattement
+       vers le pivot (les traits des bandes intérieures se raidissent, comme sur les photos) */
+    const da=2.3;
+    for(let a0=A-h-7;a0<=A+h+7;a0+=da){
+      let pts=[], a=a0;
+      pts.push(pol(a,rowT(0)));
+      for(let k=0;k<FAN.n;k++){
+        const rO=rowT(k),rI=rowB(k),rM=(rO+rI)/2,dir=k%2?1:-1;
+        a+=dir*Math.min(6,(rO-rI)/(rM*Math.PI/180));
+        pts.push(pol(a,rI));
+      }
+      hg.appendChild(el("polyline",{points:pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" "),
+        fill:"none",stroke:INK,"stroke-width":".7"}));
+    }
+    for(let k=1;k<FAN.n;k++) darc(hg,A-h,A+h,rowT(k),".6");
+    discVals.appendChild(hg);
+    [A-h,A+h].forEach(a=>dline(discVals,a,FAN.r0,a,FAN.r1,".6"));
+    return;
+  }
+  /* caisson : bords radiaux + arcs de bande (pas d'arc entre Vi et Vc : une diagonale
+     sur deux bandes les sépare, comme les paires heure/minute sur une bande) */
+  [A-CHW,A+CHW].forEach(a=>dline(discVals,a,FAN.r0,a,FAN.r1,".7"));
+  for(let k=1;k<FAN.n;k++){ if(k===3)continue; darc(discVals,A-CHW,A+CHW,rowT(k),".7"); }
+  dcurve(discVals,A-CHW,rowB(1),A+CHW,rowT(1));   /* conso : l/h puis l/min */
+  dcurve(discVals,A-CHW,rowB(3),A+CHW,rowT(2));   /* Vi puis Vc, sur deux bandes */
+  dcurve(discVals,A-CHW,rowB(4),A+CHW,rowT(4));   /* VP : km/h puis km/min */
+  const V={fill:INK,ls:"0"}, dx=CHW*0.45;
+  arcTextB(discVals,(rg/1000)+".000",bandB(0,11),A,{fs:11,...V});
+  arcTextB(discVals,""+row[0],rowT(1)-10.5,A-dx,{fs:9.5,...V});
+  arcTextB(discVals,disp0(row[1]),rowB(1)+3.5,A+dx,{fs:8,...V});
+  arcTextB(discVals,""+row[2],bandB(2,9.5),A-dx,{fs:9.5,...V});
+  arcTextB(discVals,""+row[3],bandB(3,9.5),A+dx,{fs:9.5,...V});
+  arcTextB(discVals,""+row[4],rowT(4)-10.5,A-dx,{fs:9.5,...V});
+  arcTextB(discVals,disp0(row[5]),rowB(4)+3.5,A+dx,{fs:8,...V});
+  arcTextB(discVals,""+row[6],bandB(5,9.5),A,{fs:9.5,...V});
   const tpv=row[7].split(" ");
-  arcTextB(discVals,[{t:tpv[0]+" ",fs:8},{t:"h ",fs:5.5},{t:tpv[2],fs:8}],bandB(6,8),A,V);
+  arcTextB(discVals,tpv[0]+","+tpv[2],bandB(6,8.5),A,{fs:8.5,...V});  /* gravé « H,MM » (IMG_3570 : 1,33) */
 }));
 clipG.appendChild(discVals); wG.appendChild(clipG);
-/* cadre biseauté de la fenêtre */
-wG.appendChild(el("path",{d:wedgePath(FAN.win[0],FAN.win[1],64,226),fill:"none",stroke:"url(#winframe)","stroke-width":"4.5"}));
-wG.appendChild(el("path",{d:wedgePath(FAN.win[0],FAN.win[1],64,226),fill:"none",stroke:"#15130e","stroke-width":"1"}));
+/* découpe biseautée de la fenêtre : trait de coupe sombre, tranche du métal claire,
+   filet d'ombre porté sur le disque (structure des photos, plus de cadre rapporté) */
+wG.appendChild(el("path",{d:wedgePath(FAN.win[0]+0.4,FAN.win[1]-0.4,66.5,223.5),fill:"none",stroke:"rgba(28,24,14,.38)","stroke-width":"1.6"}));
+wG.appendChild(el("path",{d:wedgePath(FAN.win[0],FAN.win[1],64,226),fill:"none",stroke:"#ddd3b6","stroke-width":"3"}));
+wG.appendChild(el("path",{d:wedgePath(FAN.win[0],FAN.win[1],64,226),fill:"none",stroke:"#efe8d2","stroke-width":"1.1"}));
+wG.appendChild(el("path",{d:wedgePath(FAN.win[0]-0.55,FAN.win[1]+0.55,62.2,227.8),fill:"none",stroke:"#2a261c","stroke-width":"1"}));
 
 /* --- render & rotation --- */
 const couronne=document.getElementById("couronne");
@@ -443,7 +501,7 @@ function renderR(){
   if(!row){
     ["t-conso","t-ias","t-cas","t-tas","t-dist","t-temps"].forEach(id=>document.getElementById(id).textContent="—");
     document.getElementById("t-reg").textContent=reg+" t/m";
-    note.textContent="Au régime 19.000 t/m, le cas « 30.000′ » n’est pas gravé sur l’instrument (fenêtre vierge) : à 30.000′ et au-delà, on affiche 20.000 t/m.";
+    note.textContent="Au régime 19.000 t/m, le cas « 30.000′ » n’est pas gravé sur l’instrument : la fenêtre découvre la case hachurée « sans objet » du disque. À 30.000′ et au-delà, on affiche 20.000 t/m.";
   }else{
     const [ch,cm,ias,cas,tas,tm,dist,temps]=row;
     document.getElementById("t-reg").textContent=reg+" t/m";
